@@ -1,0 +1,9 @@
+body {
+    background-color: #ffffff;
+    color: #000000;
+    font-family: 'Menlo', monospace;
+    font-size: 14px;
+	line-height: 20px;
+	white-space: nowrap;
+	-webkit-font-smoothing: antialiased
+}

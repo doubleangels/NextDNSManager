@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".customResolver">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/taskbarImage"
+            android:layout_width="300px"
+            android:layout_height="150px"
+            android:layout_marginRight="20px"
+            android:src="@drawable/taskbar_light"></ImageView>
+
+        <ImageView
+            android:id="@+id/connectionStatus"
+            android:layout_width="75px"
+            android:layout_height="75px"
+            app:srcCompat="@drawable/failure"
+            android:clickable="true"
+            android:focusable="true"></ImageView>
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/customResolverTitleView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="276dp"
+        android:textColor="@color/black"
+        android:text="Custom Private Resolver"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <EditText
+        android:id="@+id/editTextCustomResolver"
+        android:layout_width="291dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textUri"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customResolverInstructionsView"
+        app:layout_constraintVertical_bias="0.003" />
+
+    <TextView
+        android:id="@+id/customResolverInstructionsView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:text="(Enter your custom resolver here and it will be saved.)"
+        android:textSize="10dp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customResolverTitleView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,46 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/refreshNextDNS"
+        android:title="Refresh"
+        android:icon="@drawable/refresh"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/returnHome"
+        android:title="Home"
+        android:icon="@drawable/home"
+        app:showAsAction="ifRoom">
+    </item>
+    <item
+        android:id="@+id/publicResolvers"
+        android:title="Alternate Resolvers"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/pingNextDNS"
+        android:title="NextDNS Ping Test"
+        app:showAsAction="never"
+        android:fontFamily="sans-serif-thin">
+    </item>
+    <item
+        android:id="@+id/testNextDNS"
+        android:title="NextDNS Connection"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/help"
+        android:title="Help"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/version"
+        android:title="Version"
+        app:showAsAction="never">
+    </item>
+    <item
+        android:id="@+id/settings"
+        android:title="Settings"
+        app:showAsAction="never">
+    </item>
+</menu>

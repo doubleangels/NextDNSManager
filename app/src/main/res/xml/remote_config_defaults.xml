@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- START xml_defaults -->
+<defaultsMap>
+    <entry>
+        <key>status_bar_background_color</key>
+        <value>#007BFF</value>
+    </entry>
+    <entry>
+        <key>toolbar_background_color</key>
+        <value>#6C757D</value>
+    </entry>
+    <entry>
+        <key>toolbar_dark_mode_background_color</key>
+        <value>#007BFF</value>
+    </entry>
+    <entry>
+        <key>custom_resolver_underline_color</key>
+        <value>#007BFF</value>
+    </entry>
+    <entry>
+        <key>show_title</key>
+        <value>false</value>
+    </entry>
+    <entry>
+        <key>current_app_version</key>
+        <value>3.3.15</value>
+    </entry>
+</defaultsMap>
+    <!-- END xml_defaults -->
