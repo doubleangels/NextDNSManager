@@ -11,8 +11,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdkVersion 30
-        versionCode 78
-    versionName "3.3.16"
+        versionCode 79
+    versionName "3.3.17"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
