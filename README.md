@@ -6,6 +6,11 @@
 
 ## Issues
 - To report an issue, please open a new issue in this repository.
+- Please make sure to include the following info:
+  - Device you're running the app on
+  - Version of Android you're using
+  - Version of the app you're using
+  - Detailed description of your problem
 
 ## Suggestions/Feedback
 - Same as above.
