@@ -52,6 +52,7 @@ public class ping extends AppCompatActivity {
     private String uniqueKey;
     private Boolean isManualDarkThemeOnSub;
     private Boolean isDarkThemeOn;
+    private Boolean isManualDisableAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class ping extends AppCompatActivity {
 
         try {
             final SharedPreferences sharedPreferences = getSharedPreferences("publicResolverSharedPreferences", MODE_PRIVATE);
+            isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
             storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
             if (storedUniqueKey.contains("defaultValue")) {
                 uniqueKey = UUID.randomUUID().toString();
@@ -72,7 +74,10 @@ public class ping extends AppCompatActivity {
                 FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
             }
 
-            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            if (!isManualDisableAnalytics) {
+                FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
+                mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            }
 
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
             remoteConfigStartTrace.start();

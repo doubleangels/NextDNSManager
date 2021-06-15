@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private String uniqueKey;
     private Boolean isManualDarkThemeOnSub;
     private Boolean isDarkThemeOn;
-    public Boolean isForceLocalFiles;
+    private Boolean isManualDisableAnalytics;
 
     @Override
     @AddTrace(name = "MainActivity_create", enabled = true /* optional */)
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             final SharedPreferences sharedPreferences = getSharedPreferences("publicResolverSharedPreferences", MODE_PRIVATE);
+            isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
             storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
             if (storedUniqueKey.contains("defaultValue")) {
                 uniqueKey = UUID.randomUUID().toString();
@@ -82,7 +83,10 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
             }
 
-            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            if (!isManualDisableAnalytics) {
+                FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
+                mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            }
 
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
             remoteConfigStartTrace.start();
@@ -161,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
             });
 
             provisionWebView();
-            isForceLocalFiles = sharedPreferences.getBoolean("manualDarkMode", false);
             replaceCSS("https://my.nextdns.io/login", isDarkThemeOn);
 
             swipeRefresh = findViewById(R.id.swipeRefresh);

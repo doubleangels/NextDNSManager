@@ -52,6 +52,7 @@ public class customResolver extends AppCompatActivity {
     private String uniqueKey;
     private Boolean isManualDarkThemeOnSub;
     private Boolean isDarkThemeOn;
+    private Boolean isManualDisableAnalytics;
 
     @Override
     @AddTrace(name = "customResolver_create", enabled = true /* optional */)
@@ -61,6 +62,7 @@ public class customResolver extends AppCompatActivity {
 
         try {
             final SharedPreferences sharedPreferences = getSharedPreferences("publicResolverSharedPreferences", MODE_PRIVATE);
+            isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
             storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
             if (storedUniqueKey.contains("defaultValue")) {
                 uniqueKey = UUID.randomUUID().toString();
@@ -73,7 +75,10 @@ public class customResolver extends AppCompatActivity {
                 FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
             }
 
-            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            if (!isManualDisableAnalytics) {
+                FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
+                mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            }
 
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
             remoteConfigStartTrace.start();

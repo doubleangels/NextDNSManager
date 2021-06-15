@@ -60,6 +60,7 @@ public class settings extends AppCompatActivity {
     private String uniqueKey;
     private Boolean isManualDarkThemeOnSub;
     private Boolean isDarkThemeOn;
+    private Boolean isManualDisableAnalytics;
 
 
     @Override
@@ -69,6 +70,7 @@ public class settings extends AppCompatActivity {
 
         try {
             final SharedPreferences sharedPreferences = getSharedPreferences("publicResolverSharedPreferences", MODE_PRIVATE);
+            isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
             storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
             if (storedUniqueKey.contains("defaultValue")) {
                 uniqueKey = UUID.randomUUID().toString();
@@ -81,7 +83,10 @@ public class settings extends AppCompatActivity {
                 FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
             }
 
-            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            if (!isManualDisableAnalytics) {
+                FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
+                mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            }
 
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
             remoteConfigStartTrace.start();
@@ -125,6 +130,7 @@ public class settings extends AppCompatActivity {
             FirebaseCrashlytics.getInstance().setCustomKey("isDarkThemeOn", isDarkThemeOn);
             Switch manualDarkMode = (Switch) findViewById(R.id.manual_dark_mode);
             TextView forceDarkModeInstructionsTextView = (TextView) findViewById(R.id.forceDarkModeInstructionsTextView);
+            Switch manualDisableAnalytics = (Switch) findViewById(R.id.manual_disable_analytics);
             if (isDarkThemeOn) {
                 taskbarImage = (ImageView) findViewById(R.id.taskbarImage);
                 taskbarImage.setImageResource(R.drawable.taskbar_dark);
@@ -135,6 +141,7 @@ public class settings extends AppCompatActivity {
                 settingsDarkModeTextView.setTextColor(getResources().getColor(R.color.white));
                 manualDarkMode.setTextColor(getResources().getColor(R.color.white));
                 forceDarkModeInstructionsTextView.setTextColor(getResources().getColor(R.color.white));
+                manualDisableAnalytics.setTextColor(getResources().getColor(R.color.white));
             } else {
                 taskbarImage = (ImageView) findViewById(R.id.taskbarImage);
                 taskbarImage.setImageResource(R.drawable.taskbar_light);
@@ -169,14 +176,35 @@ public class settings extends AppCompatActivity {
             manualDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", "set_manual_dark_mode");
                     if (isChecked) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", "set_manual_dark_mode");
                         mFirebaseAnalytics.logEvent("manual_dark_mode_true", bundle);
                         sharedPreferences.edit().putBoolean("manualDarkMode", true).apply();
                     } else {
-                        mFirebaseAnalytics.logEvent("manual_dark_mode_false", bundle);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", "set_manual_dark_mode");
                         sharedPreferences.edit().putBoolean("manualDarkMode", false).apply();
+                        Toast.makeText(getApplicationContext(),"Saved!",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            if (isManualDisableAnalytics) {
+                manualDisableAnalytics.setChecked(true);
+            } else {
+                manualDisableAnalytics.setChecked(false);
+            }
+            manualDisableAnalytics.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        sharedPreferences.edit().putBoolean("manualDisableAnalytics", true).apply();
+                    } else {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id", "set_manual_disable_analytics");
+                        mFirebaseAnalytics.logEvent("manual_disable_analytics", bundle);
+                        sharedPreferences.edit().putBoolean("manualDisableAnalytics", false).apply();
                         Toast.makeText(getApplicationContext(),"Saved!",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -211,8 +239,10 @@ public class settings extends AppCompatActivity {
         Bundle bundle = new Bundle();
         switch (item.getItemId()) {
             case R.id.back:
-                bundle.putString("id", "back");
-                mFirebaseAnalytics.logEvent("toolbar_action", bundle);
+                if (isManualDisableAnalytics) {
+                    bundle.putString("id", "back");
+                    mFirebaseAnalytics.logEvent("toolbar_action", bundle);
+                }
                 Intent mainIntent = new Intent(this, MainActivity.class);
                 startActivity(mainIntent);
             default:

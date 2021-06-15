@@ -42,6 +42,7 @@ public class help extends AppCompatActivity {
     private String uniqueKey;
     private Boolean isManualDarkThemeOnSub;
     private Boolean isDarkThemeOn;
+    private Boolean isManualDisableAnalytics;
 
     @Override
     @AddTrace(name = "help_create", enabled = true /* optional */)
@@ -51,6 +52,7 @@ public class help extends AppCompatActivity {
 
         try {
             final SharedPreferences sharedPreferences = getSharedPreferences("publicResolverSharedPreferences", MODE_PRIVATE);
+            isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
             storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
             if (storedUniqueKey.contains("defaultValue")) {
                 uniqueKey = UUID.randomUUID().toString();
@@ -63,6 +65,7 @@ public class help extends AppCompatActivity {
                 FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
             }
 
+            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
@@ -155,8 +158,10 @@ public class help extends AppCompatActivity {
         Bundle bundle = new Bundle();
         switch (item.getItemId()) {
             case R.id.back:
-                bundle.putString("id", "back");
-                mFirebaseAnalytics.logEvent("toolbar_action", bundle);
+                if (!isManualDisableAnalytics) {
+                    bundle.putString("id", "back");
+                    mFirebaseAnalytics.logEvent("toolbar_action", bundle);
+                }
                 Intent mainIntent = new Intent(this, MainActivity.class);
                 startActivity(mainIntent);
             default:

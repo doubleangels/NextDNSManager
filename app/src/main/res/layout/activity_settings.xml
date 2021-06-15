@@ -66,10 +66,33 @@
         android:text="This option may require an app restart to take effect."
         android:textColor="@color/black"
         android:textSize="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/manual_dark_mode" />
+
+    <TextView
+        android:id="@+id/settingsFirebaseTextView"
+        style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="center"
+        android:text="Firebase"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forceDarkModeInstructionsTextView" />
+
+    <Switch
+        android:id="@+id/manual_disable_analytics"
+        android:layout_width="241dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="14dp"
+        android:text="Disable Firebase Analytics"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/manual_dark_mode"
+        app:layout_constraintTop_toBottomOf="@+id/settingsFirebaseTextView"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
