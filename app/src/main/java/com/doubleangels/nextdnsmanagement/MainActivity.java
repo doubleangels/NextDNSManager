@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -35,14 +34,7 @@ import com.google.firebase.perf.metrics.AddTrace;
 import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.channels.Channels;
-import java.nio.channels.FileChannel;
-import java.nio.channels.ReadableByteChannel;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {

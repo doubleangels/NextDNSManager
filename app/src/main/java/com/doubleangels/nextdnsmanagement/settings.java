@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,24 +14,17 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkRequest;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.webkit.CookieManager;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -42,10 +34,6 @@ import com.google.firebase.perf.metrics.AddTrace;
 import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-
-import org.w3c.dom.Text;
-
-import java.io.InputStream;
 import java.util.UUID;
 
 public class settings extends AppCompatActivity {
