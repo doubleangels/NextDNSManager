@@ -43,6 +43,8 @@ import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
+import org.w3c.dom.Text;
+
 import java.io.InputStream;
 import java.util.UUID;
 
@@ -130,6 +132,7 @@ public class settings extends AppCompatActivity {
             FirebaseCrashlytics.getInstance().setCustomKey("isDarkThemeOn", isDarkThemeOn);
             Switch manualDarkMode = (Switch) findViewById(R.id.manual_dark_mode);
             TextView forceDarkModeInstructionsTextView = (TextView) findViewById(R.id.forceDarkModeInstructionsTextView);
+            TextView manualDisableAnalyticsTextView = (TextView) findViewById(R.id.settingsFirebaseTextView);
             Switch manualDisableAnalytics = (Switch) findViewById(R.id.manual_disable_analytics);
             if (isDarkThemeOn) {
                 taskbarImage = (ImageView) findViewById(R.id.taskbarImage);
@@ -141,6 +144,7 @@ public class settings extends AppCompatActivity {
                 settingsDarkModeTextView.setTextColor(getResources().getColor(R.color.white));
                 manualDarkMode.setTextColor(getResources().getColor(R.color.white));
                 forceDarkModeInstructionsTextView.setTextColor(getResources().getColor(R.color.white));
+                manualDisableAnalyticsTextView.setTextColor(getResources().getColor(R.color.white));
                 manualDisableAnalytics.setTextColor(getResources().getColor(R.color.white));
             } else {
                 taskbarImage = (ImageView) findViewById(R.id.taskbarImage);
