@@ -88,7 +88,7 @@
         android:layout_width="241dp"
         android:layout_height="26dp"
         android:layout_marginTop="14dp"
-        android:text="Disable Firebase Analytics"
+        android:text="Enable Firebase Analytics"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
