@@ -72,10 +72,9 @@ public class test extends AppCompatActivity {
                 FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
                 FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
             }
-
-            if (!isManualDisableAnalytics) {
-                FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
-                mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            if (isManualDisableAnalytics) {
+                mFirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
             }
 
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");

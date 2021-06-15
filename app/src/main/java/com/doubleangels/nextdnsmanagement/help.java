@@ -64,9 +64,10 @@ public class help extends AppCompatActivity {
                 FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
                 FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
             }
-
-            FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+            if (isManualDisableAnalytics) {
+                mFirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
+            }
 
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
             remoteConfigStartTrace.start();
@@ -158,10 +159,8 @@ public class help extends AppCompatActivity {
         Bundle bundle = new Bundle();
         switch (item.getItemId()) {
             case R.id.back:
-                if (!isManualDisableAnalytics) {
-                    bundle.putString("id", "back");
-                    mFirebaseAnalytics.logEvent("toolbar_action", bundle);
-                }
+                bundle.putString("id", "back");
+                mFirebaseAnalytics.logEvent("toolbar_action", bundle);
                 Intent mainIntent = new Intent(this, MainActivity.class);
                 startActivity(mainIntent);
             default:
