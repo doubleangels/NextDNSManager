@@ -67,11 +67,11 @@
 
     <TextView
         android:id="@+id/helpStep1TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="351dp"
+        android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="Try clearing the app cache by pressing the button below."
+        android:text="Try clearing the app cache by pressing the button below, press on 'Storage &amp; cache', then 'Clear cache'."
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -166,8 +166,9 @@ public class troubleshooting extends AppCompatActivity {
             Button clearCacheButton = (Button) findViewById(R.id.clearCacheButton);
             clearCacheButton.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
-                    clearCache();
-                    Toast.makeText(getApplicationContext(),"Cache cleared!",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    intent.setData(Uri.parse("package:" + getPackageName()));
+                    startActivity(intent);
                 }
             });
 
@@ -206,11 +207,6 @@ public class troubleshooting extends AppCompatActivity {
             default:
                 return super.onContextItemSelected(item);
         }
-    }
-
-    @AddTrace(name = "clear_cache", enabled = true /* optional */)
-    public void clearCache() {
-        FileUtils.deleteQuietly(getApplicationContext().getCacheDir());
     }
 
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
