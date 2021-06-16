@@ -14,13 +14,13 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkRequest;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -35,6 +35,7 @@ import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.UUID;
 
 public class ping extends AppCompatActivity {
@@ -155,26 +156,7 @@ public class ping extends AppCompatActivity {
             });
 
             provisionWebView();
-            if (isDarkThemeOn) {
-                webView.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-                        injectCSS("ping-dark.css");
-                        super.onPageFinished(view, url);
-                    }
-                });
-                webView.loadUrl("https://ping.nextdns.io");
-            } else {
-                webView.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-                        injectCSS("ping.css");
-                        super.onPageFinished(view, url);
-                    }
-                });
-                webView.loadUrl("https://ping.nextdns.io");
-            }
-
+            replaceCSS("https://ping.nextdns.io");
             swipeRefresh = findViewById(R.id.swipeRefresh);
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -198,21 +180,34 @@ public class ping extends AppCompatActivity {
         return true;
     }
 
-    @AddTrace(name = "inject_ping_css", enabled = true /* optional */)
-    private void injectCSS(String fileName) {
+    @AddTrace(name = "replace_ping_css", enabled = true /* optional */)
+    public void replaceCSS( String url) {
         try {
-            InputStream inputStream = getAssets().open(fileName);
-            byte[] buffer = new byte[inputStream.available()];
-            inputStream.read(buffer);
-            inputStream.close();
-            String encoded = Base64.encodeToString(buffer, Base64.NO_WRAP);
-            webView.loadUrl("javascript:(function() {" +
-                    "var parent = document.getElementsByTagName('head').item(0);" +
-                    "var style = document.createElement('style');" +
-                    "style.type = 'text/css';" +
-                    "style.innerHTML = window.atob('" + encoded + "');" +
-                    "parent.appendChild(style)" +
-                    "})()");
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
+                    if (url.contains(".css")) {
+                        return getCssWebResourceResponseFromAsset();
+                    } else {
+                        return super.shouldInterceptRequest(view, url);
+                    }
+                }
+
+                private WebResourceResponse getCssWebResourceResponseFromAsset() {
+                    try {
+                        InputStream fileStream = new URL("https://docdn.doubleangels.com/ping.css").openStream();
+                        return getUtf8EncodedCssWebResourceResponse(fileStream);
+                    } catch (Exception e) {
+                        FirebaseCrashlytics.getInstance().recordException(e);
+                        return null;
+                    }
+                }
+
+                private WebResourceResponse getUtf8EncodedCssWebResourceResponse(InputStream fileStream) {
+                    return new WebResourceResponse("text/css", "UTF-8", fileStream);
+                }
+            });
+            webView.loadUrl(url);
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
         }
@@ -229,7 +224,7 @@ public class ping extends AppCompatActivity {
             webView.getSettings().setBuiltInZoomControls(true);
             webView.getSettings().setDisplayZoomControls(true);
             webView.getSettings().setDomStorageEnabled(true);
-            webView.getSettings().setAppCachePath("/data/data" + getPackageName() + "/cache");
+            webView.getSettings().setAppCachePath(String.valueOf(getApplicationContext().getCacheDir()));
             webView.getSettings().setSaveFormData(true);
             webView.getSettings().setDatabaseEnabled(true);
             webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);

@@ -14,7 +14,6 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkRequest;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,6 +51,7 @@ public class test extends AppCompatActivity {
     private Boolean isManualDarkThemeOnSub;
     private Boolean isDarkThemeOn;
     private Boolean isManualDisableAnalytics;
+    private InputStream inputStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,18 +154,7 @@ public class test extends AppCompatActivity {
             });
 
             provisionWebView();
-            if (isDarkThemeOn) {
-                webView.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-                        injectCSS("test.css");
-                        super.onPageFinished(view, url);
-                    }
-                });
-                webView.loadUrl("https://test.nextdns.io");
-            } else {
-                webView.loadUrl("https://test.nextdns.io");
-            }
+            webView.loadUrl("https://test.nextdns.io");
 
             swipeRefresh = findViewById(R.id.swipeRefresh);
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -190,26 +179,6 @@ public class test extends AppCompatActivity {
         return true;
     }
 
-    @AddTrace(name = "inject_test_css", enabled = true /* optional */)
-    private void injectCSS(String fileName) {
-        try {
-            InputStream inputStream = getAssets().open(fileName);
-            byte[] buffer = new byte[inputStream.available()];
-            inputStream.read(buffer);
-            inputStream.close();
-            String encoded = Base64.encodeToString(buffer, Base64.NO_WRAP);
-            webView.loadUrl("javascript:(function() {" +
-                    "var parent = document.getElementsByTagName('head').item(0);" +
-                    "var style = document.createElement('style');" +
-                    "style.type = 'text/css';" +
-                    "style.innerHTML = window.atob('" + encoded + "');" +
-                    "parent.appendChild(style)" +
-                    "})()");
-        } catch (Exception e) {
-            FirebaseCrashlytics.getInstance().recordException(e);
-        }
-    }
-
     @AddTrace(name = "provision_web_view", enabled = true /* optional */)
     public void provisionWebView() {
         try {
@@ -221,7 +190,7 @@ public class test extends AppCompatActivity {
             webView.getSettings().setBuiltInZoomControls(true);
             webView.getSettings().setDisplayZoomControls(true);
             webView.getSettings().setDomStorageEnabled(true);
-            webView.getSettings().setAppCachePath("/data/data" + getPackageName() + "/cache");
+            webView.getSettings().setAppCachePath(String.valueOf(getApplicationContext().getCacheDir()));
             webView.getSettings().setSaveFormData(true);
             webView.getSettings().setDatabaseEnabled(true);
             webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);

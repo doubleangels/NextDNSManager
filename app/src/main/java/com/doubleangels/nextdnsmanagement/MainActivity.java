@@ -35,6 +35,7 @@ import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private Boolean isManualDarkThemeOnSub;
     private Boolean isDarkThemeOn;
     private Boolean isManualDisableAnalytics;
+    private InputStream inputStream;
 
     @Override
     @AddTrace(name = "MainActivity_create", enabled = true /* optional */)
@@ -238,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @AddTrace(name = "replace_css", enabled = true /* optional */)
+    @AddTrace(name = "replace_main_css", enabled = true /* optional */)
     public void replaceCSS( String url, boolean isDarkThemeOn) {
         try {
             if (isDarkThemeOn) {
@@ -254,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
 
                     private WebResourceResponse getCssWebResourceResponseFromAsset() {
                         try {
-                            InputStream fileStream = getAssets().open("nextdns.css");
+                            InputStream fileStream = new URL("https://docdn.doubleangels.com/nextdns.css").openStream();
                             return getUtf8EncodedCssWebResourceResponse(fileStream);
                         } catch (Exception e) {
                             FirebaseCrashlytics.getInstance().recordException(e);
@@ -286,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
             webView.getSettings().setBuiltInZoomControls(true);
             webView.getSettings().setDisplayZoomControls(true);
             webView.getSettings().setDomStorageEnabled(true);
-            webView.getSettings().setAppCachePath("/data/data" + getPackageName() + "/cache");
+            webView.getSettings().setAppCachePath(String.valueOf(getApplicationContext().getCacheDir()));
             webView.getSettings().setSaveFormData(true);
             webView.getSettings().setDatabaseEnabled(true);
             webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
