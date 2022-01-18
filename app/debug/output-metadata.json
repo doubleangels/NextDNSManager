@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 3,
   "artifactType": {
     "type": "APK",
     "kind": "Directory"
@@ -10,11 +10,11 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "properties": [],
-      "versionCode": 17,
-      "versionName": "2.3",
-      "enabled": true,
+      "attributes": [],
+      "versionCode": 86,
+      "versionName": "3.4.6",
       "outputFile": "app-debug.apk"
     }
-  ]
+  ],
+  "elementType": "File"
 }

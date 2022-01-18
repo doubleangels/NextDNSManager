@@ -195,7 +195,7 @@ public class ping extends AppCompatActivity {
 
                 private WebResourceResponse getCssWebResourceResponseFromAsset() {
                     try {
-                        InputStream fileStream = new URL("https://docdn.doubleangels.com/ping.css").openStream();
+                        InputStream fileStream = new URL("https://doubleangelscdn.nyc3.cdn.digitaloceanspaces.com/ping.css").openStream();
                         return getUtf8EncodedCssWebResourceResponse(fileStream);
                     } catch (Exception e) {
                         FirebaseCrashlytics.getInstance().recordException(e);

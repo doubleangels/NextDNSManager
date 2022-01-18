@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
 
                     private WebResourceResponse getCssWebResourceResponseFromAsset() {
                         try {
-                            InputStream fileStream = new URL("https://docdn.doubleangels.com/nextdns.css").openStream();
+                            InputStream fileStream = new URL("https://doubleangelscdn.nyc3.cdn.digitaloceanspaces.com/nextdns.css").openStream();
                             return getUtf8EncodedCssWebResourceResponse(fileStream);
                         } catch (Exception e) {
                             FirebaseCrashlytics.getInstance().recordException(e);
