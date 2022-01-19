@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -157,8 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            provisionWebView();
-            replaceCSS("https://my.nextdns.io/login", isDarkThemeOn);
+            provisionWebView("https://my.nextdns.io/login", isDarkThemeOn);
 
             swipeRefresh = findViewById(R.id.swipeRefresh);
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.returnHome:
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "home_icon");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                replaceCSS("https://my.nextdns.io/login", isDarkThemeOn);
+                provisionWebView("https://my.nextdns.io/login", isDarkThemeOn);
                 return true;
             case R.id.publicResolvers:
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "public_resolvers_icon");
@@ -278,26 +279,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @AddTrace(name = "provision_web_view", enabled = true /* optional */)
-    public void provisionWebView() {
+    public void provisionWebView(String url, Boolean isDarkThemeOn) {
         try {
             webView =(WebView) findViewById(R.id.mWebview);
+            webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+            webView.setWebChromeClient(new WebChromeClient());
+            webView.setWebViewClient(new WebViewClient());
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setDomStorageEnabled(true);
+            webView.getSettings().setAppCacheEnabled(true);
+            webView.getSettings().setAppCachePath(String.valueOf(getApplicationContext().getCacheDir()));
+            webView.getSettings().setDatabaseEnabled(true);
+            webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             WebSettings webSettings = webView.getSettings();
             webSettings.setAllowContentAccess(true);
             webSettings.setUseWideViewPort(true);
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.getSettings().setBuiltInZoomControls(true);
-            webView.getSettings().setDisplayZoomControls(true);
-            webView.getSettings().setDomStorageEnabled(true);
-            webView.getSettings().setAppCachePath(String.valueOf(getApplicationContext().getCacheDir()));
-            webView.getSettings().setSaveFormData(true);
-            webView.getSettings().setDatabaseEnabled(true);
-            webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-            webView.setWebViewClient(new WebViewClient() {
-                                         public void onPageFinished(WebView view, String url) {
-                                             CookieManager.getInstance().flush();
-                                         }
-                                     }
-            );
+            webSettings.setAppCachePath(getApplicationContext().getCacheDir().toString());
+            webSettings.setAppCacheEnabled(true);
+            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+            CookieSyncManager.createInstance(this);
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.setAcceptCookie(true);
+            CookieSyncManager.getInstance().startSync();
+
+            replaceCSS(url, isDarkThemeOn);
+
             FirebaseCrashlytics.getInstance().setCustomKey("accepts_third_party_cookies", CookieManager.getInstance().acceptThirdPartyCookies(webView));
             FirebaseCrashlytics.getInstance().setCustomKey("accepts_file_scheme_cookies", CookieManager.getInstance().allowFileSchemeCookies());
             FirebaseCrashlytics.getInstance().setCustomKey("has_cookies", CookieManager.getInstance().hasCookies());

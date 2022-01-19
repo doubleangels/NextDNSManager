@@ -20,6 +20,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -34,6 +37,7 @@ import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.UUID;
 
 public class test extends AppCompatActivity {
@@ -153,8 +157,7 @@ public class test extends AppCompatActivity {
                 }
             });
 
-            provisionWebView();
-            webView.loadUrl("https://test.nextdns.io");
+            provisionWebView("https://test.nextdns.io");
 
             swipeRefresh = findViewById(R.id.swipeRefresh);
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -180,26 +183,32 @@ public class test extends AppCompatActivity {
     }
 
     @AddTrace(name = "provision_web_view", enabled = true /* optional */)
-    public void provisionWebView() {
+    public void provisionWebView(String url) {
         try {
             webView =(WebView) findViewById(R.id.mWebview);
+            webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+            webView.setWebChromeClient(new WebChromeClient());
+            webView.setWebViewClient(new WebViewClient());
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setDomStorageEnabled(true);
+            webView.getSettings().setAppCacheEnabled(true);
+            webView.getSettings().setAppCachePath(String.valueOf(getApplicationContext().getCacheDir()));
+            webView.getSettings().setDatabaseEnabled(true);
+            webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             WebSettings webSettings = webView.getSettings();
             webSettings.setAllowContentAccess(true);
             webSettings.setUseWideViewPort(true);
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.getSettings().setBuiltInZoomControls(true);
-            webView.getSettings().setDisplayZoomControls(true);
-            webView.getSettings().setDomStorageEnabled(true);
-            webView.getSettings().setAppCachePath(String.valueOf(getApplicationContext().getCacheDir()));
-            webView.getSettings().setSaveFormData(true);
-            webView.getSettings().setDatabaseEnabled(true);
-            webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-            webView.setWebViewClient(new WebViewClient() {
-                                         public void onPageFinished(WebView view, String url) {
-                                             CookieManager.getInstance().flush();
-                                         }
-                                     }
-            );
+            webSettings.setAppCachePath(getApplicationContext().getCacheDir().toString());
+            webSettings.setAppCacheEnabled(true);
+            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+            CookieSyncManager.createInstance(this);
+            CookieManager cookieManager = CookieManager.getInstance();
+            cookieManager.setAcceptCookie(true);
+            CookieSyncManager.getInstance().startSync();
+
+            webView.loadUrl(url);
+
             FirebaseCrashlytics.getInstance().setCustomKey("accepts_third_party_cookies", CookieManager.getInstance().acceptThirdPartyCookies(webView));
             FirebaseCrashlytics.getInstance().setCustomKey("accepts_file_scheme_cookies", CookieManager.getInstance().allowFileSchemeCookies());
             FirebaseCrashlytics.getInstance().setCustomKey("has_cookies", CookieManager.getInstance().hasCookies());

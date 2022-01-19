@@ -9,10 +9,10 @@ android {
 
     defaultConfig {
         applicationId "com.doubleangels.nextdnsmanagement"
-        minSdkVersion 28
+        minSdkVersion 27
         targetSdkVersion 30
-        versionCode 86
-    versionName "3.4.6"
+        versionCode 87
+    versionName '3.4.7'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
