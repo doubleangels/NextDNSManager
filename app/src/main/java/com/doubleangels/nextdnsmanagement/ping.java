@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkRequest;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,7 +44,6 @@ import java.util.UUID;
 
 public class ping extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseAnalytics mFirebaseAnalytics;
     private WebView webView;
@@ -235,12 +235,18 @@ public class ping extends AppCompatActivity {
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
     public void updateVisualIndicator(LinkProperties linkProperties) {
         try {
-            if (linkProperties.isPrivateDnsActive()) {
-                if (linkProperties.getPrivateDnsServerName() != null) {
-                    if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
-                        ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
-                        connectionStatus.setImageResource(R.drawable.success);
-                        connectionStatus.setColorFilter(getResources().getColor(R.color.green));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                if (linkProperties.isPrivateDnsActive()) {
+                    if (linkProperties.getPrivateDnsServerName() != null) {
+                        if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
+                            ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
+                            connectionStatus.setImageResource(R.drawable.success);
+                            connectionStatus.setColorFilter(getResources().getColor(R.color.green));
+                        } else {
+                            ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
+                            connectionStatus.setImageResource(R.drawable.success);
+                            connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                        }
                     } else {
                         ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
@@ -248,13 +254,9 @@ public class ping extends AppCompatActivity {
                     }
                 } else {
                     ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
-                    connectionStatus.setImageResource(R.drawable.success);
-                    connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                    connectionStatus.setImageResource(R.drawable.failure);
+                    connectionStatus.setColorFilter(getResources().getColor(R.color.red));
                 }
-            } else {
-                ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
-                connectionStatus.setImageResource(R.drawable.failure);
-                connectionStatus.setColorFilter(getResources().getColor(R.color.red));
             }
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
