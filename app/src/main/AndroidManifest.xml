@@ -9,31 +9,29 @@
 
     <application
         android:allowBackup="true"
-        android:exported="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".settings"></activity>
-        <activity android:name=".troubleshooting" />
-        <activity android:name=".ping" />
-        <activity android:name=".test" />
-        <activity android:name=".help" />
-        <activity android:name=".customResolver" />
-        <activity android:name=".version" />
-        <activity android:name=".publicResolvers" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".settings" android:exported="false" />
+        <activity android:name=".troubleshooting" android:exported="false" />
+        <activity android:name=".ping" android:exported="false" />
+        <activity android:name=".test" android:exported="false" />
+        <activity android:name=".help" android:exported="false" />
+        <activity android:name=".customResolver" android:exported="false" />
+        <activity android:name=".version" android:exported="false"/>
+        <activity android:name=".publicResolvers" android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
-        </activity>
+         </activity>
 
         <meta-data
             android:name="firebase_performance_logcat_enabled"
