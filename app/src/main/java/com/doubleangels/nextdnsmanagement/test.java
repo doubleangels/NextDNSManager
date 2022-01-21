@@ -55,7 +55,6 @@ public class test extends AppCompatActivity {
     private Boolean isManualDarkThemeOnSub;
     private Boolean isDarkThemeOn;
     private Boolean isManualDisableAnalytics;
-    private InputStream inputStream;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

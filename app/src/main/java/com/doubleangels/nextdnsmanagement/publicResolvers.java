@@ -38,7 +38,6 @@ import java.util.UUID;
 
 public class publicResolvers extends AppCompatActivity {
 
-    private static final String TAG = "publicResolvers";
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseAnalytics mFirebaseAnalytics;
     private Toolbar toolbar;

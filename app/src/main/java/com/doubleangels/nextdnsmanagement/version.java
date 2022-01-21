@@ -1,6 +1,7 @@
 package com.doubleangels.nextdnsmanagement;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkRequest;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +36,6 @@ import java.util.UUID;
 
 public class version extends AppCompatActivity {
 
-    private static final String TAG = "version";
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseAnalytics mFirebaseAnalytics;
     private Toolbar toolbar;

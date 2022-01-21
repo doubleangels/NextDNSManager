@@ -11,7 +11,9 @@ import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkRequest;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,7 +44,6 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String CHANNEL_ID = "com.doubleangels.nextdnsmanagement.ANDROID";
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseAnalytics mFirebaseAnalytics;
     private WebView webView;
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     private Boolean isManualDarkThemeOnSub;
     private Boolean isDarkThemeOn;
     private Boolean isManualDisableAnalytics;
-    private InputStream inputStream;
 
     @Override
     @AddTrace(name = "MainActivity_create", enabled = true /* optional */)
@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
 
                     private WebResourceResponse getCssWebResourceResponseFromAsset() {
                         try {
-                            InputStream fileStream = new URL("https://doubleangelscdn.nyc3.cdn.digitaloceanspaces.com/nextdns.css").openStream();
+                            InputStream fileStream = new URL("https://cdn.doubleangels.com/nextdns.css").openStream();
                             return getUtf8EncodedCssWebResourceResponse(fileStream);
                         } catch (Exception e) {
                             FirebaseCrashlytics.getInstance().recordException(e);

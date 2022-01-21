@@ -32,7 +32,6 @@ import java.util.UUID;
 
 public class help extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseAnalytics mFirebaseAnalytics;
     private Window window;
