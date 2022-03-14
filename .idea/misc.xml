@@ -3,8 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/layout/activity_settings.xml" value="0.15390625" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/back.xml" value="0.196" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/failure_red.xml" value="0.196" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/home.xml" value="0.196" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/nextdns_logo.xml" value="0.196" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/nextdns_logo_dark.xml" value="0.196" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/layout/activity_custom_resolver.xml" value="0.275" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/layout/activity_help.xml" value="0.141015625" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/layout/activity_public_resolvers_list.xml" value="0.275" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/layout/activity_settings.xml" value="0.33" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/layout/activity_troubleshooting.xml" value="0.275" />
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/layout/activity_version.xml" value="0.25" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/menu/menu_back_only.xml" value="0.141015625" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/menu/menu_main.xml" value="0.275" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/menu/menu_main_dark.xml" value="0.141015625" />
       </map>
     </option>
   </component>

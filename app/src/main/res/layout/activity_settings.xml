@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,10 +19,10 @@
 
         <ImageView
             android:id="@+id/taskbarImage"
-            android:layout_width="300px"
-            android:layout_height="150px"
-            android:layout_marginRight="20px"
-            android:src="@drawable/taskbar_light"></ImageView>
+            android:layout_width="125px"
+            android:layout_height="125px"
+            android:paddingHorizontal="10px"
+            android:src="@drawable/nextdns_logo"></ImageView>
 
         <ImageView
             android:id="@+id/connectionStatus"
@@ -42,7 +42,7 @@
         android:layout_marginTop="25dp"
         android:gravity="center"
         android:text="Dark Mode"
-        android:textColor="@color/black"
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -53,6 +53,7 @@
         android:layout_height="24dp"
         android:layout_marginTop="14dp"
         android:text="Force Dark Mode"
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsDarkModeTextView" />
@@ -64,7 +65,7 @@
         android:layout_marginTop="14dp"
         android:gravity="center"
         android:text="This option may require an app restart to take effect."
-        android:textColor="@color/black"
+        android:textColor="?android:attr/textColorPrimary"
         android:textSize="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +79,7 @@
         android:layout_marginTop="25dp"
         android:gravity="center"
         android:text="Firebase"
-        android:textColor="@color/black"
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forceDarkModeInstructionsTextView" />
@@ -89,10 +90,24 @@
         android:layout_height="26dp"
         android:layout_marginTop="14dp"
         android:text="Enable Firebase Analytics"
+        android:textColor="?android:attr/textColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settingsFirebaseTextView" />
+
+    <TextView
+        android:id="@+id/analyticsInstructionsTextView"
+        android:layout_width="193dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="14dp"
+        android:text="If you enable this, no personally identifiable information is collected and all data is anonymized. Make sure to whitelist Firebase Analytics in NextDNS!"
+        android:textAlignment="center"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingsFirebaseTextView"
+        app:layout_constraintTop_toBottomOf="@+id/manual_disable_analytics"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

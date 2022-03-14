@@ -13,11 +13,6 @@
         app:showAsAction="ifRoom">
     </item>
     <item
-        android:id="@+id/publicResolvers"
-        android:title="Alternate Resolvers"
-        app:showAsAction="never">
-    </item>
-    <item
         android:id="@+id/pingNextDNS"
         android:title="NextDNS Ping Test"
         app:showAsAction="never"
@@ -31,11 +26,6 @@
     <item
         android:id="@+id/help"
         android:title="Help"
-        app:showAsAction="never">
-    </item>
-    <item
-        android:id="@+id/version"
-        android:title="Version"
         app:showAsAction="never">
     </item>
     <item

@@ -120,24 +120,8 @@ public class settings extends AppCompatActivity {
             FirebaseCrashlytics.getInstance().setCustomKey("isDarkThemeOn", isDarkThemeOn);
             Switch manualDarkMode = (Switch) findViewById(R.id.manual_dark_mode);
             TextView forceDarkModeInstructionsTextView = (TextView) findViewById(R.id.forceDarkModeInstructionsTextView);
-            TextView manualDisableAnalyticsTextView = (TextView) findViewById(R.id.settingsFirebaseTextView);
-            Switch manualDisableAnalytics = (Switch) findViewById(R.id.manual_disable_analytics);
-            if (isDarkThemeOn) {
-                taskbarImage = (ImageView) findViewById(R.id.taskbarImage);
-                taskbarImage.setImageResource(R.drawable.taskbar_dark);
-                FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
-                toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));
-                getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.dark_mode_background));
-                TextView settingsDarkModeTextView = (TextView) findViewById(R.id.settingsDarkModeTextView);
-                settingsDarkModeTextView.setTextColor(getResources().getColor(R.color.white));
-                manualDarkMode.setTextColor(getResources().getColor(R.color.white));
-                forceDarkModeInstructionsTextView.setTextColor(getResources().getColor(R.color.white));
-                manualDisableAnalyticsTextView.setTextColor(getResources().getColor(R.color.white));
-                manualDisableAnalytics.setTextColor(getResources().getColor(R.color.white));
-            } else {
-                taskbarImage = (ImageView) findViewById(R.id.taskbarImage);
-                taskbarImage.setImageResource(R.drawable.taskbar_light);
-            }
+            Switch manualDisableAnalytics = (Switch) findViewById(R.id.manual_disable_analytics);FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
+            toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
@@ -157,7 +141,6 @@ public class settings extends AppCompatActivity {
                 manualDarkMode.setEnabled(false);
                 sharedPreferences.edit().putBoolean("manualDarkMode", false).apply();
                 forceDarkModeInstructionsTextView.setText("This option is disabled because you're already using system-wide dark mode!");
-                forceDarkModeInstructionsTextView.setTextColor(getResources().getColor(R.color.red));
             }
             boolean isManualDarkModeOn = sharedPreferences.getBoolean("manualDarkMode", false);
             if (isManualDarkModeOn) {

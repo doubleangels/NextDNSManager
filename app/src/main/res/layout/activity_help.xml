@@ -58,6 +58,7 @@
         android:layout_marginTop="14dp"
         android:gravity="center"
         android:text="Secure DNS is being used AND device is connected to NextDNS."
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greenDemo" />
@@ -69,6 +70,7 @@
         android:layout_marginTop="14dp"
         android:gravity="center"
         android:text="Secure DNS is being used but device is NOT connected to NextDNS."
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/yellowDemo" />
@@ -91,6 +93,7 @@
         android:layout_marginBottom="64dp"
         android:gravity="center"
         android:text="Secure DNS is NOT being used."
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

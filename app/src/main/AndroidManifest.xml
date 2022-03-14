@@ -19,9 +19,6 @@
         <activity android:name=".ping" android:exported="false" />
         <activity android:name=".test" android:exported="false" />
         <activity android:name=".help" android:exported="false" />
-        <activity android:name=".customResolver" android:exported="false" />
-        <activity android:name=".version" android:exported="false"/>
-        <activity android:name=".publicResolvers" android:exported="false" />
         <activity android:name=".MainActivity" android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

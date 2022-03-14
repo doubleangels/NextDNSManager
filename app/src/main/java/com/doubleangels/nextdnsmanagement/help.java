@@ -114,19 +114,8 @@ public class help extends AppCompatActivity {
             } else {
                 isDarkThemeOn = false;
             }
-            if (isDarkThemeOn) {
-                taskbarImage = (ImageView) findViewById(R.id.taskbarImage);
-                taskbarImage.setImageResource(R.drawable.taskbar_dark);
-                FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
-                toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));
-                getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.dark_mode_background));
-                TextView redDemoText = (TextView) findViewById(R.id.redDemoTextView);
-                redDemoText.setTextColor(getResources().getColor(R.color.white));
-                TextView yellowDemoText = (TextView) findViewById(R.id.yellowDemoTextView);
-                yellowDemoText.setTextColor(getResources().getColor(R.color.white));
-                TextView greenDemoText = (TextView) findViewById(R.id.greenDemoTextView);
-                greenDemoText.setTextColor(getResources().getColor(R.color.white));
-            }
+            FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
+            toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();

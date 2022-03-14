@@ -116,27 +116,8 @@ public class troubleshooting extends AppCompatActivity {
             }
             FirebaseCrashlytics.getInstance().setCustomKey("isDarkThemeOn", isDarkThemeOn);
             ImageView troubleshootingGithub = (ImageView) findViewById(R.id.helpGithubImageView);
-            if (isDarkThemeOn) {
-                taskbarImage = (ImageView) findViewById(R.id.taskbarImage);
-                taskbarImage.setImageResource(R.drawable.taskbar_dark);
-                FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
-                toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));
-                getWindow().getDecorView().setBackgroundColor(getResources().getColor(R.color.dark_mode_background));
-                TextView troubleshootingTitleView = (TextView) findViewById(R.id.troubleshootingTitleView);
-                troubleshootingTitleView.setTextColor(getResources().getColor(R.color.white));
-                TextView directionsTextView = (TextView) findViewById(R.id.directionsTextView);
-                directionsTextView.setTextColor(getResources().getColor(R.color.white));
-                TextView helpStep1TextView = (TextView) findViewById(R.id.helpStep1TextView);
-                helpStep1TextView.setTextColor(getResources().getColor(R.color.white));
-                TextView helpStep2TextView = (TextView) findViewById(R.id.helpStep2TextView);
-                helpStep2TextView.setTextColor(getResources().getColor(R.color.white));
-                TextView helpStep3TextView = (TextView) findViewById(R.id.helpStep3TextView);
-                helpStep3TextView.setTextColor(getResources().getColor(R.color.white));
-                troubleshootingGithub.setImageResource(R.drawable.github_dark);
-            } else {
-                taskbarImage = (ImageView) findViewById(R.id.taskbarImage);
-                taskbarImage.setImageResource(R.drawable.taskbar_light);
-            }
+            FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
+            toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,10 +19,10 @@
 
         <ImageView
             android:id="@+id/taskbarImage"
-            android:layout_width="300px"
-            android:layout_height="150px"
-            android:layout_marginRight="20px"
-            android:src="@drawable/taskbar_light"></ImageView>
+            android:layout_width="125px"
+            android:layout_height="125px"
+            android:paddingHorizontal="10px"
+            android:src="@drawable/nextdns_logo"></ImageView>
 
         <ImageView
             android:id="@+id/connectionStatus"

@@ -3,25 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".version">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent">>
 
         <ImageView
             android:id="@+id/taskbarImage"
-            android:layout_width="300px"
-            android:layout_height="150px"
-            android:layout_marginRight="20px"
-            android:src="@drawable/taskbar_light"></ImageView>
+            android:layout_width="125px"
+            android:layout_height="125px"
+            android:paddingHorizontal="10px"
+            android:src="@drawable/nextdns_logo"></ImageView>
 
         <ImageView
             android:id="@+id/connectionStatus"
@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="Help"
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -50,7 +51,7 @@
         android:layout_marginTop="14dp"
         android:gravity="center"
         android:text="If you experience any problems with this app, there are a couple of things that you can try."
-        android:textColor="@color/black"
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/troubleshootingTitleView" />
@@ -72,7 +73,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Try clearing the app cache by pressing the button below, press on 'Storage &amp; cache', then 'Clear cache'."
-        android:textColor="@color/black"
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/helpdownArrowImageView" />
@@ -106,7 +107,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Try checking for app updates, or reinstalling the app."
-        android:textColor="@color/black"
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/helpdownArrow2ImageView" />
@@ -128,7 +129,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="If your problem is not resolved by either of the steps above, consider reporting your issue on the Github issue tracker. Tap on the icon below to access it."
-        android:textColor="@color/black"
+        android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/helpdownArrow3ImageView" />
@@ -138,6 +139,7 @@
         android:layout_width="200px"
         android:layout_height="200px"
         android:layout_marginTop="20dp"
+        android:fillColor="?attr/colorControlNormal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"

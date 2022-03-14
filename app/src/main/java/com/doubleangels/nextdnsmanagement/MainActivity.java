@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
@@ -14,6 +15,7 @@ import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,8 +29,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -57,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private Boolean isManualDarkThemeOnSub;
     private Boolean isDarkThemeOn;
     private Boolean isManualDisableAnalytics;
+    private Boolean useCustomCSS;
 
     @Override
     @AddTrace(name = "MainActivity_create", enabled = true /* optional */)
@@ -107,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             remoteConfigFetchTrace.stop();
+            useCustomCSS = mFirebaseRemoteConfig.getBoolean("use_custom_css");
             FirebaseCrashlytics.getInstance().setCustomKey("status_bar_background_color", mFirebaseRemoteConfig.getString("status_bar_background_color"));
             window.setStatusBarColor(Color.parseColor(mFirebaseRemoteConfig.getString("status_bar_background_color")));
             toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -123,15 +132,8 @@ public class MainActivity extends AppCompatActivity {
                 isDarkThemeOn = false;
             }
             FirebaseCrashlytics.getInstance().setCustomKey("isDarkThemeOn", isDarkThemeOn);
-            if (isDarkThemeOn) {
-                taskbarImage = (ImageView) findViewById(R.id.taskbarImage);
-                taskbarImage.setImageResource(R.drawable.taskbar_dark);
-                FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
-                toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));
-            } else {
-                taskbarImage = (ImageView) findViewById(R.id.taskbarImage);
-                taskbarImage.setImageResource(R.drawable.taskbar_light);
-            }
+            FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
+            toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
@@ -159,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            provisionWebView("https://my.nextdns.io/login", isDarkThemeOn);
+            provisionWebView("https://my.nextdns.io/login", isDarkThemeOn, useCustomCSS);
 
             swipeRefresh = findViewById(R.id.swipeRefresh);
             swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -210,19 +212,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.returnHome:
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "home_icon");
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                provisionWebView("https://my.nextdns.io/login", isDarkThemeOn);
-                return true;
-            case R.id.publicResolvers:
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "public_resolvers_icon");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                Intent publicResolversIntent = new Intent(this, publicResolvers.class);
-                startActivity(publicResolversIntent);
-                return true;
-            case R.id.version:
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "version_icon");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                Intent versionIntent = new Intent(this, version.class);
-                startActivity(versionIntent);
+                provisionWebView("https://my.nextdns.io/login", isDarkThemeOn, useCustomCSS);
                 return true;
             case R.id.help:
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "help_icon");
@@ -279,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @AddTrace(name = "provision_web_view", enabled = true /* optional */)
-    public void provisionWebView(String url, Boolean isDarkThemeOn) {
+    public void provisionWebView(String url, Boolean isDarkThemeOn, Boolean useCustomCSS) {
         try {
             webView =(WebView) findViewById(R.id.mWebview);
             webView.getSettings().setPluginState(WebSettings.PluginState.ON);
@@ -303,7 +293,20 @@ public class MainActivity extends AppCompatActivity {
             cookieManager.setAcceptCookie(true);
             CookieSyncManager.getInstance().startSync();
 
-            replaceCSS(url, isDarkThemeOn);
+            if (useCustomCSS) {
+                replaceCSS(url, isDarkThemeOn);
+            } else {
+                int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
+                    if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
+                        WebSettingsCompat.setForceDarkStrategy(webView.getSettings(), WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING);
+                    }
+                    if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+                        WebSettingsCompat.setForceDark(webView.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
+                    }
+                }
+                webView.loadUrl(url);
+            }
 
             FirebaseCrashlytics.getInstance().setCustomKey("accepts_third_party_cookies", CookieManager.getInstance().acceptThirdPartyCookies(webView));
             FirebaseCrashlytics.getInstance().setCustomKey("accepts_file_scheme_cookies", CookieManager.getInstance().allowFileSchemeCookies());
