@@ -22,8 +22,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -33,7 +31,6 @@ import com.google.firebase.perf.metrics.AddTrace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.firebase.perf.metrics.Trace;
-import org.apache.commons.io.FileUtils;
 import java.util.UUID;
 
 public class troubleshooting extends AppCompatActivity {
@@ -42,7 +39,6 @@ public class troubleshooting extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
     private Toolbar toolbar;
     private Window window;
-    private ImageView taskbarImage;
     private ImageView statusIcon;
     private String storedUniqueKey;
     private String uniqueKey;

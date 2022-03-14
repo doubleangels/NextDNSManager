@@ -19,7 +19,6 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -37,7 +36,6 @@ public class help extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
     private Window window;
     private Toolbar toolbar;
-    private ImageView taskbarImage;
     private String storedUniqueKey;
     private String uniqueKey;
     private Boolean isManualDarkThemeOnSub;

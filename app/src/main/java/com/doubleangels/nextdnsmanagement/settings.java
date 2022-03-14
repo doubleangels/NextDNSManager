@@ -41,11 +41,8 @@ public class settings extends AppCompatActivity {
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseAnalytics mFirebaseAnalytics;
-    private WebView webView;
     private Window window;
     private Toolbar toolbar;
-    private SwipeRefreshLayout swipeRefresh;
-    private ImageView taskbarImage;
     private ImageView statusIcon;
     private String storedUniqueKey;
     private String uniqueKey;

@@ -1,21 +1,5 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
-        android:shortcutId="publicResolver"
-        android:enabled="true"
-        android:icon="@drawable/dns"
-        android:shortcutShortLabel="@string/publicResolvers_short"
-        android:shortcutLongLabel="@string/publicResolvers_long"
-        android:shortcutDisabledMessage="@string/publicResolvers_disabled">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetPackage="com.doubleangels.nextdnsmanagement"
-            android:targetClass="com.doubleangels.nextdnsmanagement.publicResolvers" />
-        <!-- If your shortcut is associated with multiple intents, include them
-             here. The last intent in the list determines what the user sees when
-             they launch this shortcut. -->
-        <categories android:name="android.shortcut.conversation" />
-    </shortcut>
-    <shortcut
         android:shortcutId="ping"
         android:enabled="true"
         android:icon="@drawable/ping"
@@ -26,9 +10,6 @@
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.doubleangels.nextdnsmanagement"
             android:targetClass="com.doubleangels.nextdnsmanagement.ping" />
-        <!-- If your shortcut is associated with multiple intents, include them
-             here. The last intent in the list determines what the user sees when
-             they launch this shortcut. -->
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
     <shortcut
@@ -42,9 +23,6 @@
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.doubleangels.nextdnsmanagement"
             android:targetClass="com.doubleangels.nextdnsmanagement.test" />
-        <!-- If your shortcut is associated with multiple intents, include them
-             here. The last intent in the list determines what the user sees when
-             they launch this shortcut. -->
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
 

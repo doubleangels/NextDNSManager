@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,7 +25,6 @@ import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -40,8 +38,6 @@ import com.google.firebase.perf.metrics.AddTrace;
 import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.UUID;
 
 public class test extends AppCompatActivity {
@@ -52,7 +48,6 @@ public class test extends AppCompatActivity {
     private Window window;
     private Toolbar toolbar;
     private SwipeRefreshLayout swipeRefresh;
-    private ImageView taskbarImage;
     private ImageView statusIcon;
     private String storedUniqueKey;
     private String uniqueKey;
