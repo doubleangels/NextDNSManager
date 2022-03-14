@@ -35,43 +35,6 @@
 
 
     <TextView
-        android:id="@+id/settingsDarkModeTextView"
-        style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:gravity="center"
-        android:text="Dark Mode"
-        android:textColor="?android:attr/textColorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <Switch
-        android:id="@+id/manual_dark_mode"
-        android:layout_width="170dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="14dp"
-        android:text="Force Dark Mode"
-        android:textColor="?android:attr/textColorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingsDarkModeTextView" />
-
-    <TextView
-        android:id="@+id/forceDarkModeInstructionsTextView"
-        android:layout_width="193dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="14dp"
-        android:gravity="center"
-        android:text="This option may require an app restart to take effect."
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/manual_dark_mode" />
-
-    <TextView
         android:id="@+id/settingsFirebaseTextView"
         style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
         android:layout_width="wrap_content"
@@ -82,7 +45,7 @@
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forceDarkModeInstructionsTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <Switch
         android:id="@+id/manual_disable_analytics"

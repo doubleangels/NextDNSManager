@@ -42,8 +42,6 @@ public class troubleshooting extends AppCompatActivity {
     private ImageView statusIcon;
     private String storedUniqueKey;
     private String uniqueKey;
-    private Boolean isManualDarkThemeOnSub;
-    private Boolean isDarkThemeOn;
     private Boolean isManualDisableAnalytics;
 
     @Override
@@ -102,15 +100,6 @@ public class troubleshooting extends AppCompatActivity {
             FirebaseCrashlytics.getInstance().setCustomKey("toolbar_background_color", mFirebaseRemoteConfig.getString("toolbar_background_color"));
             toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_background_color")));
             getSupportActionBar().setDisplayShowTitleEnabled(mFirebaseRemoteConfig.getBoolean("show_title"));
-
-            boolean isDarkThemeOnSub = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
-            isManualDarkThemeOnSub = sharedPreferences.getBoolean("manualDarkMode", false);
-            if (isDarkThemeOnSub || isManualDarkThemeOnSub) {
-                isDarkThemeOn = true;
-            } else {
-                isDarkThemeOn = false;
-            }
-            FirebaseCrashlytics.getInstance().setCustomKey("isDarkThemeOn", isDarkThemeOn);
             ImageView troubleshootingGithub = (ImageView) findViewById(R.id.helpGithubImageView);
             FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
             toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));

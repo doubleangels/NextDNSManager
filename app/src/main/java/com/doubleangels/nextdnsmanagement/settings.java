@@ -46,8 +46,6 @@ public class settings extends AppCompatActivity {
     private ImageView statusIcon;
     private String storedUniqueKey;
     private String uniqueKey;
-    private Boolean isManualDarkThemeOnSub;
-    private Boolean isDarkThemeOn;
     private Boolean isManualDisableAnalytics;
 
 
@@ -106,17 +104,6 @@ public class settings extends AppCompatActivity {
             FirebaseCrashlytics.getInstance().setCustomKey("toolbar_background_color", mFirebaseRemoteConfig.getString("toolbar_background_color"));
             toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_background_color")));
             getSupportActionBar().setDisplayShowTitleEnabled(mFirebaseRemoteConfig.getBoolean("show_title"));
-
-            boolean isDarkThemeOnSub = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
-            isManualDarkThemeOnSub = sharedPreferences.getBoolean("manualDarkMode", false);
-            if (isDarkThemeOnSub || isManualDarkThemeOnSub) {
-                isDarkThemeOn = true;
-            } else {
-                isDarkThemeOn = false;
-            }
-            FirebaseCrashlytics.getInstance().setCustomKey("isDarkThemeOn", isDarkThemeOn);
-            Switch manualDarkMode = (Switch) findViewById(R.id.manual_dark_mode);
-            TextView forceDarkModeInstructionsTextView = (TextView) findViewById(R.id.forceDarkModeInstructionsTextView);
             Switch manualDisableAnalytics = (Switch) findViewById(R.id.manual_disable_analytics);FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
             toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));
 
@@ -133,34 +120,6 @@ public class settings extends AppCompatActivity {
                     }
                 });
             }
-
-            if (isDarkThemeOnSub) {
-                manualDarkMode.setEnabled(false);
-                sharedPreferences.edit().putBoolean("manualDarkMode", false).apply();
-                forceDarkModeInstructionsTextView.setText("This option is disabled because you're already using system-wide dark mode!");
-            }
-            boolean isManualDarkModeOn = sharedPreferences.getBoolean("manualDarkMode", false);
-            if (isManualDarkModeOn) {
-                manualDarkMode.setChecked(true);
-            } else {
-                manualDarkMode.setChecked(false);
-            }
-            manualDarkMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("id", "set_manual_dark_mode");
-                        mFirebaseAnalytics.logEvent("manual_dark_mode_true", bundle);
-                        sharedPreferences.edit().putBoolean("manualDarkMode", true).apply();
-                    } else {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("id", "set_manual_dark_mode");
-                        sharedPreferences.edit().putBoolean("manualDarkMode", false).apply();
-                        Toast.makeText(getApplicationContext(),"Saved!",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
 
             if (isManualDisableAnalytics) {
                 manualDisableAnalytics.setChecked(true);
