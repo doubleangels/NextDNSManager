@@ -32,6 +32,9 @@ import com.google.firebase.perf.metrics.AddTrace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.firebase.perf.metrics.Trace;
+
+import org.w3c.dom.Text;
+
 import java.util.UUID;
 
 public class version extends AppCompatActivity {
@@ -55,7 +58,7 @@ public class version extends AppCompatActivity {
         setContentView(R.layout.activity_version);
 
         try {
-            final SharedPreferences sharedPreferences = getSharedPreferences("publicResolverSharedPreferences", MODE_PRIVATE);
+            final SharedPreferences sharedPreferences = getSharedPreferences("mainSharedPreferences", MODE_PRIVATE);
             isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
             storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
             if (storedUniqueKey.contains("defaultValue")) {
