@@ -19,10 +19,10 @@
 
         <ImageView
             android:id="@+id/taskbarImage"
-            android:layout_width="300px"
-            android:layout_height="150px"
-            android:layout_marginRight="20px"
-            android:src="@drawable/taskbar_light"></ImageView>
+            android:layout_width="125px"
+            android:layout_height="125px"
+            android:paddingHorizontal="10px"
+            android:src="@drawable/nextdns_logo"></ImageView>
 
         <ImageView
             android:id="@+id/connectionStatus"
