@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -96,8 +97,7 @@ public class help extends AppCompatActivity {
             FirebaseCrashlytics.getInstance().setCustomKey("toolbar_background_color", mFirebaseRemoteConfig.getString("toolbar_background_color"));
             toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_background_color")));
             getSupportActionBar().setDisplayShowTitleEnabled(mFirebaseRemoteConfig.getBoolean("show_title"));
-            FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
-            toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));
+            toolbar.setBackgroundColor(Color.parseColor("#007BFF"));
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
@@ -164,6 +164,9 @@ public class help extends AppCompatActivity {
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(getResources().getColor(R.color.red));
                 }
+            } else {
+                ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
+                connectionStatus.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);

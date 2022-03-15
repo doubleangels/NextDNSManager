@@ -3,6 +3,7 @@ package com.doubleangels.nextdnsmanagement;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
@@ -101,15 +102,11 @@ public class ping extends AppCompatActivity {
                 }
             });
             remoteConfigFetchTrace.stop();
-            FirebaseCrashlytics.getInstance().setCustomKey("status_bar_background_color", mFirebaseRemoteConfig.getString("status_bar_background_color"));
-            window.setStatusBarColor(Color.parseColor(mFirebaseRemoteConfig.getString("status_bar_background_color")));
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_background_color));
+            toolbar =(Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            FirebaseCrashlytics.getInstance().setCustomKey("toolbar_background_color", mFirebaseRemoteConfig.getString("toolbar_background_color"));
-            toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_background_color")));
-            getSupportActionBar().setDisplayShowTitleEnabled(mFirebaseRemoteConfig.getBoolean("show_title"));
-            FirebaseCrashlytics.getInstance().setCustomKey("toolbar_dark_mode_background_color", mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color"));
-            toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_dark_mode_background_color")));
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
@@ -246,6 +243,9 @@ public class ping extends AppCompatActivity {
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(getResources().getColor(R.color.red));
                 }
+            } else {
+                ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
+                connectionStatus.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);

@@ -18,4 +18,6 @@
     <color name="black">#000000</color>
     <color name="both_bars_color">#6c757d</color>
     <color name="dark_mode_background">#161616</color>
+    <color name="toolbar_background_color">#007bff</color>
+    <color name="status_bar_background_color">#007bff</color>
 </resources>

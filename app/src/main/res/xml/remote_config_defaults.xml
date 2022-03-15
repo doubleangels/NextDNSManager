@@ -2,28 +2,12 @@
 <!-- START xml_defaults -->
 <defaultsMap>
     <entry>
-        <key>status_bar_background_color</key>
-        <value>#007BFF</value>
-    </entry>
-    <entry>
-        <key>toolbar_background_color</key>
-        <value>#6C757D</value>
-    </entry>
-    <entry>
-        <key>toolbar_dark_mode_background_color</key>
-        <value>#007BFF</value>
-    </entry>
-    <entry>
-        <key>custom_resolver_underline_color</key>
-        <value>#007BFF</value>
-    </entry>
-    <entry>
         <key>show_title</key>
         <value>false</value>
     </entry>
     <entry>
         <key>current_app_version</key>
-        <value>0.0</value>
+        <value>0.0.0</value>
     </entry>
     <entry>
         <key>use_custom_css</key>

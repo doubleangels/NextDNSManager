@@ -201,6 +201,9 @@ public class troubleshooting extends AppCompatActivity {
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(getResources().getColor(R.color.red));
                 }
+            } else {
+                ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
+                connectionStatus.setVisibility(View.GONE);
             }
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
