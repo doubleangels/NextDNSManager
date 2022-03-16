@@ -3,10 +3,11 @@ package com.doubleangels.nextdnsmanagement;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
@@ -90,14 +91,11 @@ public class help extends AppCompatActivity {
                 }
             });
             remoteConfigFetchTrace.stop();
-            FirebaseCrashlytics.getInstance().setCustomKey("status_bar_background_color", mFirebaseRemoteConfig.getString("status_bar_background_color"));
-            window.setStatusBarColor(Color.parseColor(mFirebaseRemoteConfig.getString("status_bar_background_color")));
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_background_color));
+            toolbar =(Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            FirebaseCrashlytics.getInstance().setCustomKey("toolbar_background_color", mFirebaseRemoteConfig.getString("toolbar_background_color"));
-            toolbar.setBackgroundColor(Color.parseColor(mFirebaseRemoteConfig.getString("toolbar_background_color")));
-            getSupportActionBar().setDisplayShowTitleEnabled(mFirebaseRemoteConfig.getBoolean("show_title"));
-            toolbar.setBackgroundColor(Color.parseColor("#007BFF"));
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
