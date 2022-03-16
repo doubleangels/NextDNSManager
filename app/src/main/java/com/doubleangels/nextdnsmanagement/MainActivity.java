@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 isDarkThemeOn = false;
             }
-            toolbar.setBackgroundColor(Color.parseColor("#007BFF"));
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
