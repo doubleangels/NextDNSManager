@@ -48,7 +48,6 @@ public class test extends AppCompatActivity {
     private WebView webView;
     private Window window;
     private Toolbar toolbar;
-    private SwipeRefreshLayout swipeRefresh;
     private ImageView statusIcon;
     private String storedUniqueKey;
     private String uniqueKey;
@@ -135,18 +134,6 @@ public class test extends AppCompatActivity {
             });
 
             provisionWebView("https://test.nextdns.io");
-
-            swipeRefresh = findViewById(R.id.swipeRefresh);
-            swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "swipe_to_refresh_webview");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                    webView.reload();
-                    swipeRefresh.setRefreshing(false);
-                }
-            });
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
         }
@@ -178,27 +165,21 @@ public class test extends AppCompatActivity {
             webSettings.setAppCachePath(getApplicationContext().getCacheDir().toString());
             webSettings.setAppCacheEnabled(true);
             webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-
-            CookieSyncManager.createInstance(this);
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
-            CookieSyncManager.getInstance().startSync();
 
             int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
+                    FirebaseCrashlytics.getInstance().setCustomKey("force_dark_strategy_supported", true);
                     WebSettingsCompat.setForceDarkStrategy(webView.getSettings(), WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING);
                 }
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
+                    FirebaseCrashlytics.getInstance().setCustomKey("force_dark_supported", true);
                     WebSettingsCompat.setForceDark(webView.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
                 }
             }
-
             webView.loadUrl(url);
-
-            FirebaseCrashlytics.getInstance().setCustomKey("accepts_third_party_cookies", CookieManager.getInstance().acceptThirdPartyCookies(webView));
-            FirebaseCrashlytics.getInstance().setCustomKey("accepts_file_scheme_cookies", CookieManager.getInstance().allowFileSchemeCookies());
-            FirebaseCrashlytics.getInstance().setCustomKey("has_cookies", CookieManager.getInstance().hasCookies());
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
         }
@@ -231,20 +212,24 @@ public class test extends AppCompatActivity {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.green));
+                            FirebaseCrashlytics.getInstance().log("Set connection status to NextDNS.");
                         } else {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                            FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                         }
                     } else {
                         ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
                         connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                        FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                     }
                 } else {
                     ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(getResources().getColor(R.color.red));
+                    FirebaseCrashlytics.getInstance().log("Set connection status to insecure DNS.");
                 }
             } else {
                 ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);

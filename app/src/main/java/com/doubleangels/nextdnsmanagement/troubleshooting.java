@@ -132,6 +132,7 @@ public class troubleshooting extends AppCompatActivity {
             clearCacheButton.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
                     Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                    FirebaseCrashlytics.getInstance().log("Cleared app cache.");
                     intent.setData(Uri.parse("package:" + getPackageName()));
                     startActivity(intent);
                 }
@@ -184,20 +185,24 @@ public class troubleshooting extends AppCompatActivity {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.green));
+                            FirebaseCrashlytics.getInstance().log("Set connection status to NextDNS.");
                         } else {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                            FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                         }
                     } else {
                         ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
                         connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                        FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                     }
                 } else {
                     ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(getResources().getColor(R.color.red));
+                    FirebaseCrashlytics.getInstance().log("Set connection status to insecure DNS.");
                 }
             } else {
                 ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);

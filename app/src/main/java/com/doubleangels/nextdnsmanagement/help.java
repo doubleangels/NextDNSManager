@@ -147,20 +147,24 @@ public class help extends AppCompatActivity {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.green));
+                            FirebaseCrashlytics.getInstance().log("Set connection status to NextDNS.");
                         } else {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                            FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                         }
                     } else {
                         ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
                         connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                        FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                     }
                 } else {
                     ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(getResources().getColor(R.color.red));
+                    FirebaseCrashlytics.getInstance().log("Set connection status to insecure DNS.");
                 }
             } else {
                 ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);

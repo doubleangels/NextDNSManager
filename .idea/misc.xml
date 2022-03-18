@@ -4,11 +4,23 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/back.xml" value="0.196" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/dns.xml" value="0.332" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/down.xml" value="0.332" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/failure.xml" value="0.332" />
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/failure_red.xml" value="0.196" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/github.xml" value="0.332" />
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/home.xml" value="0.196" />
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.332" />
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/nextdns_logo.xml" value="0.196" />
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/nextdns_logo_dark.xml" value="0.196" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/open_in_browser.xml" value="0.332" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/open_in_browser_dark.xml" value="0.332" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/ping.xml" value="0.332" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/refresh.xml" value="0.332" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/success.xml" value="0.332" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/success_green.xml" value="0.332" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/success_yellow.xml" value="0.332" />
+        <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/drawable/test.xml" value="0.332" />
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/layout/activity_custom_resolver.xml" value="0.275" />
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/layout/activity_help.xml" value="0.141015625" />
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/layout/activity_public_resolvers_list.xml" value="0.275" />

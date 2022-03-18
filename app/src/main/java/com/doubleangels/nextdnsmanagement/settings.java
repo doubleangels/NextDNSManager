@@ -36,6 +36,9 @@ import com.google.firebase.perf.metrics.AddTrace;
 import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+
+import org.w3c.dom.Text;
+
 import java.util.UUID;
 
 public class settings extends AppCompatActivity {
@@ -48,6 +51,7 @@ public class settings extends AppCompatActivity {
     private String storedUniqueKey;
     private String uniqueKey;
     private Boolean isManualDisableAnalytics;
+    private TextView versionNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,11 +102,14 @@ public class settings extends AppCompatActivity {
             });
             remoteConfigFetchTrace.stop();
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_background_color));
-            toolbar =(Toolbar) findViewById(R.id.toolbar);
+            toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
             toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
             Switch manualDisableAnalytics = (Switch) findViewById(R.id.manual_disable_analytics);
+            versionNumber = (TextView) findViewById(R.id.versionNumberTextView);
+            versionNumber.setText(BuildConfig.VERSION_NAME);
+            FirebaseCrashlytics.getInstance().log("Set version number to: " + BuildConfig.VERSION_NAME);
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
@@ -128,11 +135,13 @@ public class settings extends AppCompatActivity {
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         sharedPreferences.edit().putBoolean("manualDisableAnalytics", true).apply();
+                        FirebaseCrashlytics.getInstance().log("Changed analytics to enabled.");
                     } else {
                         Bundle bundle = new Bundle();
                         bundle.putString("id", "set_manual_disable_analytics");
                         mFirebaseAnalytics.logEvent("manual_disable_analytics", bundle);
                         sharedPreferences.edit().putBoolean("manualDisableAnalytics", false).apply();
+                        FirebaseCrashlytics.getInstance().log("Changed analytics to disabled.");
                         Toast.makeText(getApplicationContext(),"Saved!",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -188,20 +197,24 @@ public class settings extends AppCompatActivity {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.green));
+                            FirebaseCrashlytics.getInstance().log("Set connection status to NextDNS.");
                         } else {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                            FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                         }
                     } else {
                         ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
                         connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                        FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                     }
                 } else {
                     ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(getResources().getColor(R.color.red));
+                    FirebaseCrashlytics.getInstance().log("Set connection status to insecure DNS.");
                 }
             } else {
                 ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
