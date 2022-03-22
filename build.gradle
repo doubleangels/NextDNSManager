@@ -26,8 +26,8 @@ allprojects {
 sentry {
     includeProguardMapping = true
     autoUploadProguardMapping = true
-    uploadNativeSymbols = false
-    includeNativeSources = false
+    uploadNativeSymbols = true
+    includeNativeSources = true
 }
 
 task clean(type: Delete) {

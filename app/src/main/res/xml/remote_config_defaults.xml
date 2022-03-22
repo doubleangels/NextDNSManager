@@ -7,7 +7,7 @@
     </entry>
     <entry>
         <key>use_custom_css</key>
-        <value>false</value>
+        <value>true</value>
     </entry>
 </defaultsMap>
     <!-- END xml_defaults -->
