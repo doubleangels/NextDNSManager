@@ -92,7 +92,7 @@
         android:layout_width="286dp"
         android:layout_height="28dp"
         android:layout_marginBottom="25dp"
-        android:text="This app is NOT an official NextDNS app. This app and its developer are in any way affiliated or related to NextDNS."
+        android:text="This app is NOT an official NextDNS app. This app and its developer are NOT in any way affiliated or related to NextDNS."
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="10dp"
