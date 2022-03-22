@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -19,7 +18,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -28,7 +26,6 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -57,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private Boolean isDarkThemeOn;
     private Boolean isManualDisableAnalytics;
     private Boolean useCustomCSS;
+
 
     @Override
     @AddTrace(name = "MainActivity_create", enabled = true /* optional */)

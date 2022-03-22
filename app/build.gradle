@@ -43,5 +43,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-perf'
     implementation 'com.google.firebase:firebase-inappmessaging-display'
     implementation 'com.google.firebase:firebase-config'
+    implementation 'com.google.firebase:firebase-dynamic-links'
     implementation 'commons-io:commons-io:2.6'
 }

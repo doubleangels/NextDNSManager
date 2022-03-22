@@ -17,6 +17,8 @@
     <string name="ping_short">Ping</string>
     <string name="ping_long">Quickly check ping times to NextDNS servers.</string>
     <string name="ping_disabled">This action is currently unavailable.</string>
-    <string name="channel_name">Main</string>
-    <string name="channel_description">This is the main notification channel for NextDNS Manager.</string>
+    <string name="fcm_channel_name">FCM</string>
+    <string name="fcm_channel_description">This is the main notification channel for NextDNS Manager.</string>
+    <string name="update_channel_name">Updates</string>
+    <string name="update_channel_description">This is the update notification channel for NextDNS Manager.</string>
 </resources>
