@@ -32,6 +32,7 @@
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/menu/menu_main_dark.xml" value="0.141015625" />
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.332" />
         <entry key="..\:/Users/Matt VerLee/AndroidStudioProjects/NextDNSManager/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.332" />
+        <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2985" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.26875" />
       </map>
     </option>
