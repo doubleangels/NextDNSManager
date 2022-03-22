@@ -12,7 +12,6 @@ import android.net.Network;
 import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;

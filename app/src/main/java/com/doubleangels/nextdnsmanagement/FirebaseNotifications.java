@@ -10,7 +10,6 @@ import androidx.core.app.NotificationManagerCompat;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
 import io.sentry.Sentry;
 
 public class FirebaseNotifications extends FirebaseMessagingService {
