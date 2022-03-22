@@ -51,7 +51,7 @@ public class FirebaseNotifications extends FirebaseMessagingService {
             getSharedPreferences("fcm", MODE_PRIVATE).edit().putString("fcm_token", token).apply();
             Log.e("Set FCM token: ", token);
             FirebaseCrashlytics.getInstance().log("Set FCM token: " + token);
-            Sentry.captureMessage("Set FCM token: " + token);
+            Sentry.addBreadcrumb("Set FCM token: " + token);
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);

@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkRequest;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -61,12 +62,12 @@ public class settings extends AppCompatActivity {
                 sharedPreferences.edit().putString("uuid", uniqueKey).apply();
                 FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
                 FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
-                Sentry.captureMessage("Set UUID to: " + uniqueKey);
+                Sentry.addBreadcrumb("Set UUID to: " + uniqueKey);
             } else {
                 uniqueKey = sharedPreferences.getString("uuid", "defaultValue");
                 FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
                 FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
-                Sentry.captureMessage("Set UUID to: " + uniqueKey);
+                Sentry.addBreadcrumb("Set UUID to: " + uniqueKey);
             }
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             if (isManualDisableAnalytics) {
@@ -92,7 +93,7 @@ public class settings extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         boolean updated = task.getResult();
                         FirebaseCrashlytics.getInstance().log("Remote config fetch succeeded: " + updated);
-                        Sentry.captureMessage("Remote config fetch succeeded: " + updated);
+                        Sentry.addBreadcrumb("Remote config fetch succeeded: " + updated);
                         mFirebaseRemoteConfig.activate();
                     }
                 }
@@ -106,6 +107,7 @@ public class settings extends AppCompatActivity {
             Switch manualDisableAnalytics = (Switch) findViewById(R.id.manual_disable_analytics);
             versionNumber = (TextView) findViewById(R.id.versionNumberTextView);
             versionNumber.setText(BuildConfig.VERSION_NAME);
+            ImageView whitelist = (ImageView) findViewById(R.id.whitelistImageView);
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
@@ -132,14 +134,14 @@ public class settings extends AppCompatActivity {
                     if (isChecked) {
                         sharedPreferences.edit().putBoolean("manualDisableAnalytics", true).apply();
                         FirebaseCrashlytics.getInstance().log("Changed analytics to enabled.");
-                        Sentry.captureMessage("Changed analytics to enabled.");
+                        Sentry.addBreadcrumb("Changed analytics to enabled.");
                     } else {
                         Bundle bundle = new Bundle();
                         bundle.putString("id", "set_manual_disable_analytics");
                         mFirebaseAnalytics.logEvent("manual_disable_analytics", bundle);
                         sharedPreferences.edit().putBoolean("manualDisableAnalytics", false).apply();
                         FirebaseCrashlytics.getInstance().log("Changed analytics to disabled.");
-                        Sentry.captureMessage("Canged analytics to disabled.");
+                        Sentry.addBreadcrumb("Canged analytics to disabled.");
                         Toast.makeText(getApplicationContext(),"Saved!",Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -154,6 +156,16 @@ public class settings extends AppCompatActivity {
                     mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                     Intent helpIntent = new Intent(v.getContext(), help.class);
                     startActivity(helpIntent);
+                }
+            });
+
+            whitelist.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                    intent.setData(Uri.parse("https://nextdns-management.firebaseapp.com/whitelist.txt"));
+                    startActivity(intent);
                 }
             });
         } catch (Exception e) {
@@ -197,27 +209,27 @@ public class settings extends AppCompatActivity {
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.green));
                             FirebaseCrashlytics.getInstance().log("Set connection status to NextDNS.");
-                            Sentry.captureMessage("Set connection status to NextDNS.");
+                            Sentry.addBreadcrumb("Set connection status to NextDNS.");
                         } else {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
                             FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
-                            Sentry.captureMessage("Set connection status to private DNS.");
+                            Sentry.addBreadcrumb("Set connection status to private DNS.");
                         }
                     } else {
                         ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
                         connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
                         FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
-                        Sentry.captureMessage("Set connection status to private DNS.");
+                        Sentry.addBreadcrumb("Set connection status to private DNS.");
                     }
                 } else {
                     ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(getResources().getColor(R.color.red));
                     FirebaseCrashlytics.getInstance().log("Set connection status to insecure DNS.");
-                    Sentry.captureMessage("Set connection status to insecure DNS.");
+                    Sentry.addBreadcrumb("Set connection status to insecure DNS.");
                 }
             } else {
                 ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
