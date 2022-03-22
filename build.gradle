@@ -2,6 +2,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.2'
@@ -11,11 +12,22 @@ buildscript {
     }
 }
 
+plugins {
+    id "io.sentry.android.gradle" version "3.0.0"
+}
+
 allprojects {
     repositories {
         google()
         jcenter()
     }
+}
+
+sentry {
+    includeProguardMapping = true
+    autoUploadProguardMapping = true
+    uploadNativeSymbols = false
+    includeNativeSources = false
 }
 
 task clean(type: Delete) {

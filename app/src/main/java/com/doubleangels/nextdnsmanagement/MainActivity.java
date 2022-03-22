@@ -12,6 +12,7 @@ import android.net.Network;
 import android.net.NetworkRequest;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Telephony;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +41,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.UUID;
+import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -155,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
             provisionWebView("https://my.nextdns.io/login", isDarkThemeOn, useCustomCSS);
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
+            Sentry.captureException(e);
         }
     }
 
@@ -230,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
                             return getUtf8EncodedCssWebResourceResponse(fileStream);
                         } catch (Exception e) {
                             FirebaseCrashlytics.getInstance().recordException(e);
+                            Sentry.captureException(e);
                             return null;
                         }
                     }
@@ -244,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
+            Sentry.captureException(e);
         }
     }
 
@@ -287,6 +292,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
+            Sentry.captureException(e);
         }
     }
 
@@ -301,23 +307,27 @@ public class MainActivity extends AppCompatActivity {
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.green));
                             FirebaseCrashlytics.getInstance().log("Set connection status to NextDNS.");
+                            Sentry.captureMessage("Set connection status to NextDNS.");
                         } else {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
                             FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
+                            Sentry.captureMessage("Set connection status to private DNS.");
                         }
                     } else {
                         ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
                         connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
                         FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
+                        Sentry.captureMessage("Set connection status to private DNS.");
                     }
                 } else {
                     ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(getResources().getColor(R.color.red));
                     FirebaseCrashlytics.getInstance().log("Set connection status to insecure DNS.");
+                    Sentry.captureMessage("Set connection status to insecure DNS.");
                 }
             } else {
                 ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
@@ -325,6 +335,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
+            Sentry.captureException(e);
         }
     }
 }

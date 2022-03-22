@@ -24,17 +24,16 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
-         </activity>
-
+        </activity>
+        <meta-data android:name="io.sentry.dsn" android:value="https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.sentry.io/6270764" />
+        <meta-data android:name="io.sentry.traces.sample-rate" android:value="1.0" />
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
         <meta-data android:name="firebase_analytics_collection_enabled" android:value="false" />
-
         <service android:name=".FirebaseNotifications"
             android:exported="false">
             <intent-filter>
