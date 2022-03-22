@@ -19,6 +19,4 @@
     <string name="ping_disabled">This action is currently unavailable.</string>
     <string name="fcm_channel_name">FCM</string>
     <string name="fcm_channel_description">This is the main notification channel for NextDNS Manager.</string>
-    <string name="update_channel_name">Updates</string>
-    <string name="update_channel_description">This is the update notification channel for NextDNS Manager.</string>
 </resources>
