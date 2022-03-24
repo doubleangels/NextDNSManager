@@ -38,6 +38,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.util.UUID;
 
+import io.sentry.ISpan;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
@@ -176,6 +177,7 @@ public class test extends AppCompatActivity {
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
 
+            ISpan force_dark_mode_span = test_provison_web_view_transaction.startChild("force_dark_mode");
             int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
@@ -190,6 +192,7 @@ public class test extends AppCompatActivity {
                 }
             }
             webView.loadUrl(url);
+            force_dark_mode_span.finish();
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);

@@ -289,9 +289,7 @@ public class MainActivity extends AppCompatActivity {
             cookieManager.setAcceptCookie(true);
 
             if (useCustomCSS == true) {
-                ISpan custom_css_span = MainActivity_provision_web_view_transaction.startChild("replace_css");
                 replaceCSS(url, isDarkThemeOn);
-                custom_css_span.finish();
             } else {
                 ISpan force_dark_mode_span = MainActivity_provision_web_view_transaction.startChild("force_dark_mode");
                 int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
