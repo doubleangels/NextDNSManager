@@ -29,6 +29,8 @@ import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.util.UUID;
+
+import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class help extends AppCompatActivity {
@@ -44,6 +46,7 @@ public class help extends AppCompatActivity {
     @Override
     @AddTrace(name = "help_create", enabled = true /* optional */)
     protected void onCreate(Bundle savedInstanceState) {
+        ITransaction help_create_transaction = Sentry.startTransaction("onCreate()", "help");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 
@@ -115,18 +118,18 @@ public class help extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            help_create_transaction.finish();
         }
     }
 
     @Override
-    @AddTrace(name = "help_inflate", enabled = true /* optional */)
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
 
     @Override
-    @AddTrace(name = "help_switch", enabled = true /* optional */)
     public boolean onOptionsItemSelected(MenuItem item) {
         Bundle bundle = new Bundle();
         switch (item.getItemId()) {
@@ -142,6 +145,7 @@ public class help extends AppCompatActivity {
 
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
     public void updateVisualIndicator(LinkProperties linkProperties) {
+        ITransaction help_update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 if (linkProperties.isPrivateDnsActive()) {
@@ -180,6 +184,8 @@ public class help extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            help_update_visual_indicator_transaction.finish();
         }
     }
 }

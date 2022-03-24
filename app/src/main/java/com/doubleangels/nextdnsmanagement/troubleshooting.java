@@ -31,6 +31,8 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.firebase.perf.metrics.Trace;
 import java.util.UUID;
+
+import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class troubleshooting extends AppCompatActivity {
@@ -47,6 +49,7 @@ public class troubleshooting extends AppCompatActivity {
     @Override
     @AddTrace(name = "troubleshooting_create", enabled = true /* optional */)
     protected void onCreate(Bundle savedInstanceState) {
+        ITransaction troubleshooting_create_transaction = Sentry.startTransaction("onCreate()", "troubleshooting");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_troubleshooting);
 
@@ -153,18 +156,18 @@ public class troubleshooting extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            troubleshooting_create_transaction.finish();
         }
     }
 
     @Override
-    @AddTrace(name = "troubleshooting_inflate", enabled = true /* optional */)
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
 
     @Override
-    @AddTrace(name = "troubleshooting_switch", enabled = true /* optional */)
     public boolean onOptionsItemSelected(MenuItem item) {
         Bundle bundle = new Bundle();
         switch (item.getItemId()) {
@@ -180,6 +183,7 @@ public class troubleshooting extends AppCompatActivity {
 
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
     public void updateVisualIndicator(LinkProperties linkProperties) {
+        ITransaction troubleshooting_update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "troubleshooting");
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 if (linkProperties.isPrivateDnsActive()) {
@@ -218,6 +222,8 @@ public class troubleshooting extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            troubleshooting_update_visual_indicator_transaction.finish();
         }
     }
 }

@@ -34,6 +34,8 @@ import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.util.UUID;
+
+import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class settings extends AppCompatActivity {
@@ -49,7 +51,9 @@ public class settings extends AppCompatActivity {
     private TextView versionNumber;
 
     @Override
+    @AddTrace(name = "settings_create", enabled = true /* optional */)
     protected void onCreate(Bundle savedInstanceState) {
+        ITransaction settings_create_transaction = Sentry.startTransaction("onCreate()", "settings");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -171,18 +175,18 @@ public class settings extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            settings_create_transaction.finish();
         }
     }
 
     @Override
-    @AddTrace(name = "settings_inflate", enabled = true /* optional */)
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
 
     @Override
-    @AddTrace(name = "settings_switch", enabled = true /* optional */)
     public boolean onOptionsItemSelected(MenuItem item) {
         Bundle bundle = new Bundle();
         switch (item.getItemId()) {
@@ -200,6 +204,7 @@ public class settings extends AppCompatActivity {
 
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
     public void updateVisualIndicator(LinkProperties linkProperties) {
+        ITransaction settings_update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "settings");
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 if (linkProperties.isPrivateDnsActive()) {
@@ -238,6 +243,8 @@ public class settings extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            settings_update_visual_indicator_transaction.finish();
         }
     }
 }

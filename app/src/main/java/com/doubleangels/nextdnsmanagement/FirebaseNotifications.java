@@ -10,11 +10,15 @@ import androidx.core.app.NotificationManagerCompat;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.firebase.perf.metrics.AddTrace;
+import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class FirebaseNotifications extends FirebaseMessagingService {
     @Override
+    @AddTrace(name = "on_message_received", enabled = true /* optional */)
     public void onMessageReceived(RemoteMessage remoteMessage) {
+        ITransaction FirebaseNotifications_on_message_received_transaction = Sentry.startTransaction("onNewMessageReceived()", "FirebaseNotifications");
         try {
             String title = remoteMessage.getNotification().getTitle();
             String text = remoteMessage.getNotification().getBody();
@@ -40,11 +44,15 @@ public class FirebaseNotifications extends FirebaseMessagingService {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            FirebaseNotifications_on_message_received_transaction.finish();
         }
     }
 
     @Override
+    @AddTrace(name = "on_new_token", enabled = true /* optional */)
     public void onNewToken(String token) {
+        ITransaction FirebaseNotifications_on_new_token_transaction = Sentry.startTransaction("onNewToken()", "FirebaseNotifications");
         try {
             super.onNewToken(token);
             getSharedPreferences("fcm", MODE_PRIVATE).edit().putString("fcm_token", token).apply();
@@ -54,6 +62,8 @@ public class FirebaseNotifications extends FirebaseMessagingService {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            FirebaseNotifications_on_new_token_transaction.finish();
         }
     }
 }

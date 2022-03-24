@@ -37,9 +37,13 @@ import com.google.firebase.perf.metrics.AddTrace;
 import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+
 import java.io.InputStream;
 import java.net.URL;
 import java.util.UUID;
+
+import io.sentry.ISpan;
+import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity {
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     @AddTrace(name = "MainActivity_create", enabled = true /* optional */)
     protected void onCreate(Bundle savedInstanceState) {
+        ITransaction MainActivity_create_transaction = Sentry.startTransaction("onCreate()", "MainActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -72,14 +77,17 @@ public class MainActivity extends AppCompatActivity {
                 sharedPreferences.edit().putString("uuid", uniqueKey).apply();
                 FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
                 FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
+                Sentry.addBreadcrumb("Set UUID to: " + uniqueKey);
             } else {
                 uniqueKey = sharedPreferences.getString("uuid", "defaultValue");
                 FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
                 FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
+                Sentry.addBreadcrumb("Set UUID to: " + uniqueKey);
             }
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             if (isManualDisableAnalytics) {
                 mFirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
+                Sentry.addBreadcrumb("Analytics collection enabled.");
             }
 
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
@@ -101,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         boolean updated = task.getResult();
                         FirebaseCrashlytics.getInstance().log("Remote config fetch succeeded: " + updated);
+                        Sentry.addBreadcrumb("Remote config fetch succeeded: " + updated);
                         mFirebaseRemoteConfig.activate();
                     }
                 }
@@ -114,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             useCustomCSS = mFirebaseRemoteConfig.getBoolean("use_custom_css");
             if (useCustomCSS) {
                 FirebaseCrashlytics.getInstance().setCustomKey("custom_css", true);
+                Sentry.addBreadcrumb("custom_css: true");
             }
 
             boolean isDarkThemeOnSub = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
@@ -125,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (isDarkThemeOn) {
                 FirebaseCrashlytics.getInstance().setCustomKey("dark_mode_on", true);
+                Sentry.addBreadcrumb("dark_mode_on: true");
             }
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -157,18 +168,18 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            MainActivity_create_transaction.finish();
         }
     }
 
     @Override
-    @AddTrace(name = "MainActivity_inflate", enabled = true /* optional */)
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    @AddTrace(name = "MainActivity_switch", enabled = true /* optional */)
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean isDarkThemeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
         Bundle bundle = new Bundle();
@@ -212,8 +223,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @AddTrace(name = "replace_main_css", enabled = true /* optional */)
+    @AddTrace(name = "replace_css", enabled = true /* optional */)
     public void replaceCSS( String url, boolean isDarkThemeOn) {
+        ITransaction replace_css_transaction = Sentry.startTransaction("replaceCSS()", "MainActivity");
         try {
             if (isDarkThemeOn) {
                 webView.setWebViewClient(new WebViewClient() {
@@ -248,11 +260,14 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            replace_css_transaction.finish();
         }
     }
 
-    @AddTrace(name = "provision_web_view", enabled = true /* optional */)
+    @AddTrace(name = "MainActivity_provision_web_view", enabled = true /* optional */)
     public void provisionWebView(String url, Boolean isDarkThemeOn, Boolean useCustomCSS) {
+        ITransaction MainActivity_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "MainActivity");
         try {
             webView =(WebView) findViewById(R.id.mWebview);
             webView.getSettings().setPluginState(WebSettings.PluginState.ON);
@@ -274,29 +289,38 @@ public class MainActivity extends AppCompatActivity {
             cookieManager.setAcceptCookie(true);
 
             if (useCustomCSS == true) {
+                ISpan custom_css_span = MainActivity_provision_web_view_transaction.startChild("replace_css");
                 replaceCSS(url, isDarkThemeOn);
+                custom_css_span.finish();
             } else {
+                ISpan force_dark_mode_span = MainActivity_provision_web_view_transaction.startChild("force_dark_mode");
                 int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
                 if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
                     if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
                         FirebaseCrashlytics.getInstance().setCustomKey("force_dark_strategy_supported", true);
+                        Sentry.addBreadcrumb("Force dark mode strategy supported.");
                         WebSettingsCompat.setForceDarkStrategy(webView.getSettings(), WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING);
                     }
                     if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
                         FirebaseCrashlytics.getInstance().setCustomKey("force_dark_supported", true);
+                        Sentry.addBreadcrumb("Force dark mode supported.");
                         WebSettingsCompat.setForceDark(webView.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
                     }
                 }
                 webView.loadUrl(url);
+                force_dark_mode_span.finish();
             }
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            MainActivity_provision_web_view_transaction.finish();
         }
     }
 
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
     public void updateVisualIndicator(LinkProperties linkProperties) {
+        ITransaction MainActivity_update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "MainActivity");
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 if (linkProperties.isPrivateDnsActive()) {
@@ -335,6 +359,8 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            MainActivity_update_visual_indicator_transaction.finish();
         }
     }
 }

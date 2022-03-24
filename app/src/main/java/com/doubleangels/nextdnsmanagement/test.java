@@ -37,6 +37,8 @@ import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import java.util.UUID;
+
+import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class test extends AppCompatActivity {
@@ -52,7 +54,9 @@ public class test extends AppCompatActivity {
     private Boolean isManualDisableAnalytics;
 
     @Override
+    @AddTrace(name = "test_create", enabled = true /* optional */)
     protected void onCreate(Bundle savedInstanceState) {
+        ITransaction test_create_transaction = Sentry.startTransaction("onCreate()", "test");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
@@ -138,18 +142,20 @@ public class test extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            test_create_transaction.finish();
         }
     }
 
     @Override
-    @AddTrace(name = "test_inflate", enabled = true /* optional */)
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
 
-    @AddTrace(name = "provision_web_view", enabled = true /* optional */)
+    @AddTrace(name = "test_provision_web_view", enabled = true /* optional */)
     public void provisionWebView(String url) {
+        ITransaction test_provison_web_view_transaction = Sentry.startTransaction("help", "onCreate()");
         try {
             webView =(WebView) findViewById(R.id.mWebview);
             webView.getSettings().setPluginState(WebSettings.PluginState.ON);
@@ -174,10 +180,12 @@ public class test extends AppCompatActivity {
             if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
                     FirebaseCrashlytics.getInstance().setCustomKey("force_dark_strategy_supported", true);
+                    Sentry.addBreadcrumb("Force dark mode strategy supported.");
                     WebSettingsCompat.setForceDarkStrategy(webView.getSettings(), WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING);
                 }
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
                     FirebaseCrashlytics.getInstance().setCustomKey("force_dark_supported", true);
+                    Sentry.addBreadcrumb("Force dark mode supported.");
                     WebSettingsCompat.setForceDark(webView.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
                 }
             }
@@ -185,11 +193,12 @@ public class test extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            test_provison_web_view_transaction.finish();
         }
     }
 
     @Override
-    @AddTrace(name = "test_switch", enabled = true /* optional */)
     public boolean onOptionsItemSelected(MenuItem item) {
         Bundle bundle = new Bundle();
         switch (item.getItemId()) {
@@ -207,6 +216,7 @@ public class test extends AppCompatActivity {
 
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
     public void updateVisualIndicator(LinkProperties linkProperties) {
+        ITransaction test_update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "test");
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 if (linkProperties.isPrivateDnsActive()) {
@@ -245,6 +255,8 @@ public class test extends AppCompatActivity {
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+        } finally {
+            test_update_visual_indicator_transaction.finish();
         }
     }
 }
