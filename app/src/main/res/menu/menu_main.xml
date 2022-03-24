@@ -33,9 +33,4 @@
         android:title="Help"
         app:showAsAction="never">
     </item>
-    <item
-        android:id="@+id/feedback"
-        android:title="Feedback"
-        app:showAsAction="never">
-    </item>
 </menu>

@@ -103,6 +103,11 @@ public class test extends AppCompatActivity {
                         boolean updated = task.getResult();
                         FirebaseCrashlytics.getInstance().log("Remote config fetch succeeded: " + updated);
                         Sentry.addBreadcrumb("Remote config fetch succeeded: " + updated);
+                        if (updated) {
+                            Sentry.setTag("remote_config_fetched", "true");
+                        } else {
+                            Sentry.setTag("remote_config_fetched", "false");
+                        }
                         mFirebaseRemoteConfig.activate();
                     }
                 }
@@ -184,11 +189,13 @@ public class test extends AppCompatActivity {
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
                     FirebaseCrashlytics.getInstance().setCustomKey("force_dark_strategy_supported", true);
                     Sentry.addBreadcrumb("Force dark mode strategy supported.");
+                    Sentry.setTag("force_dark_mode_strategy_supported", "true");
                     WebSettingsCompat.setForceDarkStrategy(webView.getSettings(), WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING);
                 }
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
                     FirebaseCrashlytics.getInstance().setCustomKey("force_dark_supported", true);
                     Sentry.addBreadcrumb("Force dark mode supported.");
+                    Sentry.setTag("force_dark_mode_supported", "true");
                     WebSettingsCompat.setForceDark(webView.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
                 }
             }
@@ -220,7 +227,7 @@ public class test extends AppCompatActivity {
 
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
     public void updateVisualIndicator(LinkProperties linkProperties) {
-        ITransaction test_update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "test");
+        ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 if (linkProperties.isPrivateDnsActive()) {
@@ -231,12 +238,14 @@ public class test extends AppCompatActivity {
                             connectionStatus.setColorFilter(getResources().getColor(R.color.green));
                             FirebaseCrashlytics.getInstance().log("Set connection status to NextDNS.");
                             Sentry.addBreadcrumb("Set connection status to NextDNS.");
+                            Sentry.setTag("private_dns", "nextdns");
                         } else {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
                             FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                             Sentry.addBreadcrumb("Set connection status to private DNS.");
+                            Sentry.setTag("private_dns", "private");
                         }
                     } else {
                         ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
@@ -244,6 +253,7 @@ public class test extends AppCompatActivity {
                         connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
                         FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                         Sentry.addBreadcrumb("Set connection status to private DNS.");
+                        Sentry.setTag("private_dns", "private");
                     }
                 } else {
                     ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
@@ -251,6 +261,7 @@ public class test extends AppCompatActivity {
                     connectionStatus.setColorFilter(getResources().getColor(R.color.red));
                     FirebaseCrashlytics.getInstance().log("Set connection status to insecure DNS.");
                     Sentry.addBreadcrumb("Set connection status to insecure DNS.");
+                    Sentry.setTag("private_dns", "insecure");
                 }
             } else {
                 ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
@@ -260,7 +271,7 @@ public class test extends AppCompatActivity {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
         } finally {
-            test_update_visual_indicator_transaction.finish();
+            update_visual_indicator_transaction.finish();
         }
     }
 }
