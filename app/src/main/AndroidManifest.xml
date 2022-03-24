@@ -14,32 +14,56 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".settings" android:exported="false" />
-        <activity android:name=".troubleshooting" android:exported="false" />
-        <activity android:name=".ping" android:exported="false" />
-        <activity android:name=".test" android:exported="false" />
-        <activity android:name=".help" android:exported="false" />
-        <activity android:name=".MainActivity" android:exported="true" >
+        <activity
+            android:name=".settings"
+            android:exported="false" />
+        <activity
+            android:name=".troubleshooting"
+            android:exported="false" />
+        <activity
+            android:name=".ping"
+            android:exported="false" />
+        <activity
+            android:name=".test"
+            android:exported="false" />
+        <activity
+            android:name=".help"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
-        <meta-data android:name="io.sentry.dsn" android:value="https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.sentry.io/6270764" />
-        <meta-data android:name="io.sentry.traces.sample-rate" android:value="1.0" />
+
+        <meta-data
+            android:name="io.sentry.dsn"
+            android:value="https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.sentry.io/6270764" />
+        <meta-data
+            android:name="io.sentry.traces.sample-rate"
+            android:value="1.0" />
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
-        <meta-data android:name="firebase_analytics_collection_enabled" android:value="false" />
-        <service android:name=".FirebaseNotifications"
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+
+        <service
+            android:name=".FirebaseNotifications"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_launcher_foreground" />
@@ -47,4 +71,5 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/blue" />
     </application>
+
 </manifest>

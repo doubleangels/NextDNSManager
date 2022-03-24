@@ -11,6 +11,7 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.perf.metrics.AddTrace;
+
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 

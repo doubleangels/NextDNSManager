@@ -24,13 +24,18 @@
         app:showAsAction="never">
     </item>
     <item
+        android:id="@+id/settings"
+        android:title="Settings"
+        app:showAsAction="never">
+    </item>
+    <item
         android:id="@+id/help"
         android:title="Help"
         app:showAsAction="never">
     </item>
     <item
-        android:id="@+id/settings"
-        android:title="Settings"
+        android:id="@+id/feedback"
+        android:title="Feedback"
         app:showAsAction="never">
     </item>
 </menu>
