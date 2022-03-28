@@ -2,10 +2,6 @@
 <!-- START xml_defaults -->
 <defaultsMap>
     <entry>
-        <key>show_title</key>
-        <value>false</value>
-    </entry>
-    <entry>
         <key>use_custom_css</key>
         <value>true</value>
     </entry>

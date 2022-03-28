@@ -133,7 +133,6 @@ public class MainActivity extends AppCompatActivity {
                 Sentry.setTag("custom_css", "true");
             }
             customCSSDomain = mFirebaseRemoteConfig.getString("custom_css_domain");
-            getSharedPreferences("main", MODE_PRIVATE).edit().putString("custom_css_domain", customCSSDomain).apply();
 
             boolean isDarkThemeOnSub = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
             if (isDarkThemeOnSub) {
@@ -249,8 +248,7 @@ public class MainActivity extends AppCompatActivity {
 
                     private WebResourceResponse getCssWebResourceResponseFromAsset() {
                         try {
-                            customCSSDomain = getSharedPreferences("main", MODE_PRIVATE).getString("custom_css_domain", customCSSDomain);
-                            InputStream fileStream = new URL( customCSSDomain + "nextdns.css").openStream();
+                            InputStream fileStream = new URL("https://" + customCSSDomain + "/nextdns.css").openStream();
                             return getUtf8EncodedCssWebResourceResponse(fileStream);
                         } catch (Exception e) {
                             FirebaseCrashlytics.getInstance().recordException(e);
