@@ -6,11 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
+import android.net.NetworkInfo;
 import android.net.NetworkRequest;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -140,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (isDarkThemeOn) {
                 FirebaseCrashlytics.getInstance().setCustomKey("dark_mode_on", true);
-                Sentry.setTag("dark_mode_on", "true");
+                Sentry.setTag("dark_mode_on", " true");
             }
 
             ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -326,8 +327,10 @@ public class MainActivity extends AppCompatActivity {
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
     public void updateVisualIndicator(LinkProperties linkProperties) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            if (activeNetworkInfo.isConnected()) {
                 if (linkProperties.isPrivateDnsActive()) {
                     if (linkProperties.getPrivateDnsServerName() != null) {
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
@@ -363,8 +366,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             } else {
                 ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
-                connectionStatus.setVisibility(View.GONE);
+                connectionStatus.setImageResource(R.drawable.failure);
+                connectionStatus.setColorFilter(getResources().getColor(R.color.red));
+                FirebaseCrashlytics.getInstance().log("Set connection status to no connection.");
+                Sentry.addBreadcrumb("Set connection status to no connection.");
+                Sentry.setTag("private_dns", "no_connection");
             }
+        } catch (NullPointerException e) {
+            FirebaseCrashlytics.getInstance().recordException(e);
+            Sentry.captureException(e);
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
