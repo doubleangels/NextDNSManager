@@ -5,9 +5,5 @@
         <key>use_custom_css</key>
         <value>true</value>
     </entry>
-    <entry>
-        <key>custom_css_domain</key>
-        <value>nextdns-management.firebaseapp.com</value>
-    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -60,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
     private Boolean isDarkThemeOn;
     private Boolean isManualDisableAnalytics;
     private Boolean useCustomCSS;
-    private String customCSSDomain;
-
 
     @Override
     @AddTrace(name = "MainActivity_create", enabled = true /* optional */)
@@ -132,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseCrashlytics.getInstance().setCustomKey("custom_css", true);
                 Sentry.setTag("custom_css", "true");
             }
-            customCSSDomain = mFirebaseRemoteConfig.getString("custom_css_domain");
 
             boolean isDarkThemeOnSub = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
             if (isDarkThemeOnSub) {
@@ -248,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
                     private WebResourceResponse getCssWebResourceResponseFromAsset() {
                         try {
-                            InputStream fileStream = new URL("https://" + customCSSDomain + "/nextdns.css").openStream();
+                            InputStream fileStream = new URL("https://nextdns.doubleangels.com/nextdns.css").openStream();
                             return getUtf8EncodedCssWebResourceResponse(fileStream);
                         } catch (Exception e) {
                             FirebaseCrashlytics.getInstance().recordException(e);
