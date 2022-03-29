@@ -119,7 +119,7 @@ public class settings extends AppCompatActivity {
             versionNumber.setText(BuildConfig.VERSION_NAME);
             ImageView whitelist = (ImageView) findViewById(R.id.whitelistImageView);
 
-            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
             LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
             updateVisualIndicator(linkProperties);
@@ -214,7 +214,7 @@ public class settings extends AppCompatActivity {
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
     public void updateVisualIndicator(LinkProperties linkProperties) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         try {
             if (activeNetworkInfo.isConnected()) {

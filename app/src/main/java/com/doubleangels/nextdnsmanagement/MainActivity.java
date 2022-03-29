@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 Sentry.setTag("dark_mode_on", " true");
             }
 
-            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
             LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
             updateVisualIndicator(linkProperties);
@@ -244,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
 
                     private WebResourceResponse getCssWebResourceResponseFromAsset() {
                         try {
-                            InputStream fileStream = new URL("https://nextdns.doubleangels.com/nextdns.css").openStream();
+                            InputStream fileStream = new URL("https://nextdns-management.firebaseapp.com/nextdns.css").openStream();
                             return getUtf8EncodedCssWebResourceResponse(fileStream);
                         } catch (Exception e) {
                             FirebaseCrashlytics.getInstance().recordException(e);
@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity {
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
     public void updateVisualIndicator(LinkProperties linkProperties) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         try {
             if (activeNetworkInfo.isConnected()) {

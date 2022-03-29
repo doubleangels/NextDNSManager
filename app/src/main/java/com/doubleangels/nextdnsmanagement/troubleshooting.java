@@ -112,7 +112,7 @@ public class troubleshooting extends AppCompatActivity {
             toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
             ImageView troubleshootingGithub = (ImageView) findViewById(R.id.helpGithubImageView);
 
-            ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
             LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
             updateVisualIndicator(linkProperties);
@@ -191,7 +191,7 @@ public class troubleshooting extends AppCompatActivity {
     @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
     public void updateVisualIndicator(LinkProperties linkProperties) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         try {
             if (activeNetworkInfo.isConnected()) {
