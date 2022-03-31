@@ -120,17 +120,16 @@ public class ping extends AppCompatActivity {
 
             ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
-            updateVisualIndicator(linkProperties);
-            if (connectivityManager != null) {
-                connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
-                    @Override
-                    public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
-                        super.onLinkPropertiesChanged(network, linkProperties);
-                        updateVisualIndicator(linkProperties);
-                    }
-                });
-            }
+            updateVisualIndicator(linkProperties, network, networkInfo);
+            connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
+                @Override
+                public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
+                    super.onLinkPropertiesChanged(network, linkProperties);
+                    updateVisualIndicator(linkProperties, network, networkInfo);
+                }
+            });
 
             statusIcon = (ImageView) findViewById(R.id.connectionStatus);
             statusIcon.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +158,7 @@ public class ping extends AppCompatActivity {
         return true;
     }
 
-    @AddTrace(name = "ping_provision_web_view", enabled = true /* optional */)
+    @AddTrace(name = "ping_provision_web_view", enabled = true)
     public void provisionWebView(String url) {
         ITransaction ping_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "ping");
         try {
@@ -222,13 +221,11 @@ public class ping extends AppCompatActivity {
         }
     }
 
-    @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
-    public void updateVisualIndicator(LinkProperties linkProperties) {
+    @AddTrace(name = "update_visual_indicator", enabled = true)
+    public void updateVisualIndicator(LinkProperties linkProperties, Network network, NetworkInfo networkInfo) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
-        ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         try {
-            if (activeNetworkInfo.isConnected()) {
+            if (linkProperties != null && network != null && networkInfo != null) {
                 if (linkProperties.isPrivateDnsActive()) {
                     if (linkProperties.getPrivateDnsServerName() != null) {
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
@@ -270,9 +267,6 @@ public class ping extends AppCompatActivity {
                 Sentry.addBreadcrumb("Set connection status to no connection.");
                 Sentry.setTag("private_dns", "no_connection");
             }
-        } catch (NullPointerException e) {
-            FirebaseCrashlytics.getInstance().recordException(e);
-            Sentry.captureException(e);
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);

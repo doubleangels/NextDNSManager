@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private Boolean useCustomCSS;
 
     @Override
-    @AddTrace(name = "MainActivity_create", enabled = true /* optional */)
+    @AddTrace(name = "MainActivity_create", enabled = true)
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction MainActivity_create_transaction = Sentry.startTransaction("onCreate()", "MainActivity");
         super.onCreate(savedInstanceState);
@@ -144,17 +144,16 @@ public class MainActivity extends AppCompatActivity {
 
             ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
-            updateVisualIndicator(linkProperties);
-            if (connectivityManager != null) {
-                connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
-                    @Override
-                    public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
-                        super.onLinkPropertiesChanged(network, linkProperties);
-                        updateVisualIndicator(linkProperties);
-                    }
-                });
-            }
+            updateVisualIndicator(linkProperties, network, networkInfo);
+            connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
+                @Override
+                public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
+                    super.onLinkPropertiesChanged(network, linkProperties);
+                    updateVisualIndicator(linkProperties, network, networkInfo);
+                }
+            });
 
             statusIcon = (ImageView) findViewById(R.id.connectionStatus);
             statusIcon.setOnClickListener(new View.OnClickListener() {
@@ -227,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @AddTrace(name = "replace_css", enabled = true /* optional */)
+    @AddTrace(name = "replace_css", enabled = true)
     public void replaceCSS( String url, boolean isDarkThemeOn) {
         ITransaction replace_css_transaction = Sentry.startTransaction("replaceCSS()", "MainActivity");
         try {
@@ -269,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @AddTrace(name = "MainActivity_provision_web_view", enabled = true /* optional */)
+    @AddTrace(name = "MainActivity_provision_web_view", enabled = true)
     public void provisionWebView(String url, Boolean isDarkThemeOn, Boolean useCustomCSS) {
         ITransaction MainActivity_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "MainActivity");
         try {
@@ -322,13 +321,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @AddTrace(name = "update_visual_indicator", enabled = true /* optional */)
-    public void updateVisualIndicator(LinkProperties linkProperties) {
+    @AddTrace(name = "update_visual_indicator", enabled = true)
+    public void updateVisualIndicator(LinkProperties linkProperties, Network network, NetworkInfo networkInfo) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
-        ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         try {
-            if (activeNetworkInfo.isConnected()) {
+            if (linkProperties != null && network != null && networkInfo != null) {
                 if (linkProperties.isPrivateDnsActive()) {
                     if (linkProperties.getPrivateDnsServerName() != null) {
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
@@ -370,9 +367,6 @@ public class MainActivity extends AppCompatActivity {
                 Sentry.addBreadcrumb("Set connection status to no connection.");
                 Sentry.setTag("private_dns", "no_connection");
             }
-        } catch (NullPointerException e) {
-            FirebaseCrashlytics.getInstance().recordException(e);
-            Sentry.captureException(e);
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
