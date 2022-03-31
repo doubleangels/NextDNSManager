@@ -19,18 +19,21 @@
 
         <ImageView
             android:id="@+id/taskbarImage"
-            android:layout_width="125px"
-            android:layout_height="125px"
-            android:paddingHorizontal="10px"
-            android:src="@drawable/nextdns_logo"></ImageView>
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/nextdns_logo"
+            android:contentDescription="@string/generic_content_description"/>
 
         <ImageView
             android:id="@+id/connectionStatus"
-            android:layout_width="75px"
-            android:layout_height="75px"
-            android:clickable="true"
-            android:focusable="true"
-            app:srcCompat="@drawable/failure"></ImageView>
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/failure"
+            tools:ignore="ImageContrastCheck"
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="17dp"
+            android:contentDescription="@string/generic_content_description"/>
     </androidx.appcompat.widget.Toolbar>
 
 
@@ -41,19 +44,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:gravity="center"
-        android:text="Firebase"
+        android:text="@string/firebase_title"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <Switch
+    <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/manual_disable_analytics"
         android:layout_width="241dp"
         android:layout_height="26dp"
         android:layout_marginTop="14dp"
-        android:text="Enable Firebase Analytics"
+        android:text="@string/enable_firebase_analytics"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,24 +65,25 @@
 
     <ImageView
         android:id="@+id/whitelistImageView"
-        android:layout_width="200px"
-        android:layout_height="200px"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:fillColor="?attr/colorControlNormal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/analyticsInstructionsTextView"
-        app:srcCompat="@drawable/whitelist" />
+        app:srcCompat="@drawable/whitelist"
+        android:contentDescription="@string/generic_content_description"/>
 
     <TextView
         android:id="@+id/analyticsInstructionsTextView"
-        android:layout_width="200dp"
-        android:layout_height="91dp"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
         android:layout_marginTop="14dp"
-        android:text="If you enable this, no personally identifiable information is collected and all data is anonymized. Make sure to whitelist Firebase Analytics in NextDNS! A simple list of domains to whitelist can be found at the link below should you want to enable anonymized crash and error information."
+        android:text="@string/privacy_description"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="10dp"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
-        android:text="NextDNS Manager"
+        android:text="@string/application_name"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/authorTextView"
@@ -100,13 +104,13 @@
 
     <TextView
         android:id="@+id/notAffiliatedTextView"
-        android:layout_width="286dp"
-        android:layout_height="28dp"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:layout_marginBottom="25dp"
-        android:text="This app is NOT an official NextDNS app. This app and its developer are NOT in any way affiliated or related to NextDNS."
+        android:text="@string/disclaimer"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="10dp"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -118,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="10dp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/notAffiliatedTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -129,10 +133,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
-        android:text="Matt VerLee"
+        android:text="@string/author_name"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="12dp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/versionNumberTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

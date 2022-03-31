@@ -6,22 +6,26 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.perf.metrics.AddTrace;
 
+import java.util.Objects;
+
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class FirebaseNotifications extends FirebaseMessagingService {
     @Override
-    @AddTrace(name = "on_message_received", enabled = true /* optional */)
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    @AddTrace(name = "on_message_received"  /* optional */)
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         ITransaction FirebaseNotifications_on_message_received_transaction = Sentry.startTransaction("onNewMessageReceived()", "FirebaseNotifications");
         try {
-            String title = remoteMessage.getNotification().getTitle();
+            String title = Objects.requireNonNull(remoteMessage.getNotification()).getTitle();
             String text = remoteMessage.getNotification().getBody();
             Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -51,8 +55,8 @@ public class FirebaseNotifications extends FirebaseMessagingService {
     }
 
     @Override
-    @AddTrace(name = "on_new_token", enabled = true /* optional */)
-    public void onNewToken(String token) {
+    @AddTrace(name = "on_new_token"  /* optional */)
+    public void onNewToken(@NonNull String token) {
         ITransaction FirebaseNotifications_on_new_token_transaction = Sentry.startTransaction("onNewToken()", "FirebaseNotifications");
         try {
             super.onNewToken(token);

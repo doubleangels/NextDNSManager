@@ -8,6 +8,8 @@
     <string name="hello_world">Hello Square World!</string>
     <string name="personal_website"><a href="https://doubleangels.com">Website</a></string>
     <string name="github_url"><a href="https://github.com/mtverlee">Github</a></string>
+    <string name="author_name">Matt VerLee</string>
+    <string name="application_name">NextDNS Manager</string>
     <string name="publicResolvers_short">Public Resolvers</string>
     <string name="publicResolvers_long">Quickly switch between NextDNS and public resolvers.</string>
     <string name="publicResolvers_disabled">This action is currently unavailable.</string>
@@ -19,4 +21,18 @@
     <string name="ping_disabled">This action is currently unavailable.</string>
     <string name="fcm_channel_name">FCM</string>
     <string name="fcm_channel_description">This is the main notification channel for NextDNS Manager.</string>
+    <string name="help_green">Secure DNS is being used AND device is connected to NextDNS.</string>
+    <string name="help_yellow">Secure DNS is being used but device is NOT connected to NextDNS.</string>
+    <string name="help_red">Secure DNS is NOT being used or there is no connection.</string>
+    <string name="generic_content_description">This is a generic content description.</string>
+    <string name="disclaimer">This app is NOT an official NextDNS app. This app and its developer are NOT in any way affiliated or related to NextDNS.</string>
+    <string name="firebase_title">Firebase</string>
+    <string name="enable_firebase_analytics">Enable Firebase Analytics</string>
+    <string name="privacy_description">If you enable this, no personally identifiable information is collected and all data is anonymized. Make sure to whitelist Firebase Analytics in NextDNS! A simple list of domains to whitelist can be found at the link below should you want to enable anonymized crash and error information.</string>
+    <string name="troubleshooting_title">Troubleshooting</string>
+    <string name="troubleshooting_description">If you experience any problems with this app, there are a couple of things that you can try.</string>
+    <string name="troubleshooting_step_one">Try clearing the app cache by pressing the button below.</string>
+    <string name="troubleshooting_step_two">Try checking for app updates, or reinstalling the app.</string>
+    <string name="troubleshooting_button">Clear Cache</string>
+    <string name="troubleshooting_step_three">If your problem is not resolved by either of the steps above, consider reporting your issue on the Github issue tracker. Tap on the icon below to access it.</string>
 </resources>

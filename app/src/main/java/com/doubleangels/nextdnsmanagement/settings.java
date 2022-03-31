@@ -1,9 +1,5 @@
 package com.doubleangels.nextdnsmanagement;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,16 +12,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.perf.FirebasePerformance;
@@ -34,6 +31,7 @@ import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import io.sentry.ITransaction;
@@ -43,16 +41,9 @@ public class settings extends AppCompatActivity {
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseAnalytics mFirebaseAnalytics;
-    private Window window;
-    private Toolbar toolbar;
-    private ImageView statusIcon;
-    private String storedUniqueKey;
-    private String uniqueKey;
-    private Boolean isManualDisableAnalytics;
-    private TextView versionNumber;
 
     @Override
-    @AddTrace(name = "settings_create", enabled = true)
+    @AddTrace(name = "settings_create")
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction settings_create_transaction = Sentry.startTransaction("onCreate()", "settings");
         super.onCreate(savedInstanceState);
@@ -60,23 +51,22 @@ public class settings extends AppCompatActivity {
 
         try {
             final SharedPreferences sharedPreferences = getSharedPreferences("mainSharedPreferences", MODE_PRIVATE);
-            isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
-            storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
+            boolean isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
+            String storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
+            String uniqueKey;
             if (storedUniqueKey.contains("defaultValue")) {
                 uniqueKey = UUID.randomUUID().toString();
                 sharedPreferences.edit().putString("uuid", uniqueKey).apply();
-                FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
-                FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
-                Sentry.addBreadcrumb("Set UUID to: " + uniqueKey);
             } else {
                 uniqueKey = sharedPreferences.getString("uuid", "defaultValue");
-                FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
-                FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
-                Sentry.addBreadcrumb("Set UUID to: " + uniqueKey);
             }
+            FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
+            FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
+            Sentry.addBreadcrumb("Set UUID to: " + uniqueKey);
+
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             if (isManualDisableAnalytics) {
-                mFirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
+                FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
             }
 
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
@@ -87,35 +77,32 @@ public class settings extends AppCompatActivity {
             mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);
             remoteConfigStartTrace.stop();
 
-            window = this.getWindow();
+            Window window = this.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             Trace remoteConfigFetchTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_fetch");
             remoteConfigFetchTrace.start();
-            mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
-                @Override
-                public void onComplete(@NonNull Task<Boolean> task) {
-                    if (task.isSuccessful()) {
-                        boolean updated = task.getResult();
-                        FirebaseCrashlytics.getInstance().log("Remote config fetch succeeded: " + updated);
-                        Sentry.addBreadcrumb("Remote config fetch succeeded: " + updated);
-                        if (updated) {
-                            Sentry.setTag("remote_config_fetched", "true");
-                        } else {
-                            Sentry.setTag("remote_config_fetched", "false");
-                        }
-                        mFirebaseRemoteConfig.activate();
+            mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, task -> {
+                if (task.isSuccessful()) {
+                    boolean updated = task.getResult();
+                    FirebaseCrashlytics.getInstance().log("Remote config fetch succeeded: " + updated);
+                    Sentry.addBreadcrumb("Remote config fetch succeeded: " + updated);
+                    if (updated) {
+                        Sentry.setTag("remote_config_fetched", "true");
+                    } else {
+                        Sentry.setTag("remote_config_fetched", "false");
                     }
+                    mFirebaseRemoteConfig.activate();
                 }
             });
             remoteConfigFetchTrace.stop();
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_background_color));
-            toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
-            Switch manualDisableAnalytics = (Switch) findViewById(R.id.manual_disable_analytics);
-            versionNumber = (TextView) findViewById(R.id.versionNumberTextView);
+            SwitchCompat manualDisableAnalytics = (SwitchCompat) findViewById(R.id.manual_disable_analytics);
+            TextView versionNumber = (TextView) findViewById(R.id.versionNumberTextView);
             versionNumber.setText(BuildConfig.VERSION_NAME);
             ImageView whitelist = (ImageView) findViewById(R.id.whitelistImageView);
 
@@ -132,53 +119,41 @@ public class settings extends AppCompatActivity {
                 }
             });
 
-            if (isManualDisableAnalytics) {
-                manualDisableAnalytics.setChecked(true);
-            } else {
-                manualDisableAnalytics.setChecked(false);
-            }
-            manualDisableAnalytics.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked) {
-                        sharedPreferences.edit().putBoolean("manualDisableAnalytics", true).apply();
-                        FirebaseCrashlytics.getInstance().log("Changed analytics to enabled.");
-                        Sentry.addBreadcrumb("Changed analytics to enabled.");
-                        Sentry.setTag("analytics_manual_control", "enabled");
+            manualDisableAnalytics.setChecked(isManualDisableAnalytics);
+            manualDisableAnalytics.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    sharedPreferences.edit().putBoolean("manualDisableAnalytics", true).apply();
+                    FirebaseCrashlytics.getInstance().log("Changed analytics to enabled.");
+                    Sentry.addBreadcrumb("Changed analytics to enabled.");
+                    Sentry.setTag("analytics_manual_control", "enabled");
 
-                    } else {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("id", "set_manual_disable_analytics");
-                        mFirebaseAnalytics.logEvent("manual_disable_analytics", bundle);
-                        sharedPreferences.edit().putBoolean("manualDisableAnalytics", false).apply();
-                        FirebaseCrashlytics.getInstance().log("Changed analytics to disabled.");
-                        Sentry.addBreadcrumb("Canged analytics to disabled.");
-                        Sentry.setTag("analytics_manual_control", "disabled");
-                        Toast.makeText(getApplicationContext(),"Saved!",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-
-            statusIcon = (ImageView) findViewById(R.id.connectionStatus);
-            statusIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+                } else {
                     Bundle bundle = new Bundle();
-                    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "help_icon");
-                    mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-                    Intent helpIntent = new Intent(v.getContext(), help.class);
-                    startActivity(helpIntent);
+                    bundle.putString("id", "set_manual_disable_analytics");
+                    mFirebaseAnalytics.logEvent("manual_disable_analytics", bundle);
+                    sharedPreferences.edit().putBoolean("manualDisableAnalytics", false).apply();
+                    FirebaseCrashlytics.getInstance().log("Changed analytics to disabled.");
+                    Sentry.addBreadcrumb("Changed analytics to disabled.");
+                    Sentry.setTag("analytics_manual_control", "disabled");
+                    Toast.makeText(getApplicationContext(),"Saved!",Toast.LENGTH_SHORT).show();
                 }
             });
 
-            whitelist.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                    intent.setData(Uri.parse("https://nextdns-management.firebaseapp.com/whitelist.txt"));
-                    startActivity(intent);
-                }
+            ImageView statusIcon = (ImageView) findViewById(R.id.connectionStatus);
+            statusIcon.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "help_icon");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+                Intent helpIntent = new Intent(v.getContext(), help.class);
+                startActivity(helpIntent);
+            });
+
+            whitelist.setOnClickListener(v -> {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://nextdns-management.firebaseapp.com/whitelist.txt"));
+                startActivity(intent);
             });
         } catch (Exception e) {
             FirebaseCrashlytics.getInstance().recordException(e);
@@ -197,20 +172,16 @@ public class settings extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Bundle bundle = new Bundle();
-        switch (item.getItemId()) {
-            case R.id.back:
-                if (isManualDisableAnalytics) {
-                    bundle.putString("id", "back");
-                    mFirebaseAnalytics.logEvent("toolbar_action", bundle);
-                }
-                Intent mainIntent = new Intent(this, MainActivity.class);
-                startActivity(mainIntent);
-            default:
-                return super.onContextItemSelected(item);
+        if (item.getItemId() == R.id.back) {
+            bundle.putString("id", "back");
+            mFirebaseAnalytics.logEvent("toolbar_action", bundle);
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            startActivity(mainIntent);
         }
+        return super.onContextItemSelected(item);
     }
 
-    @AddTrace(name = "update_visual_indicator", enabled = true)
+    @AddTrace(name = "update_visual_indicator")
     public void updateVisualIndicator(LinkProperties linkProperties, Network network, NetworkInfo networkInfo) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
         try {
@@ -220,14 +191,14 @@ public class settings extends AppCompatActivity {
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
-                            connectionStatus.setColorFilter(getResources().getColor(R.color.green));
+                            connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.green));
                             FirebaseCrashlytics.getInstance().log("Set connection status to NextDNS.");
                             Sentry.addBreadcrumb("Set connection status to NextDNS.");
                             Sentry.setTag("private_dns", "nextdns");
                         } else {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
-                            connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                            connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
                             FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                             Sentry.addBreadcrumb("Set connection status to private DNS.");
                             Sentry.setTag("private_dns", "private");
@@ -235,7 +206,7 @@ public class settings extends AppCompatActivity {
                     } else {
                         ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
-                        connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                        connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
                         FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                         Sentry.addBreadcrumb("Set connection status to private DNS.");
                         Sentry.setTag("private_dns", "private");
@@ -243,7 +214,7 @@ public class settings extends AppCompatActivity {
                 } else {
                     ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
-                    connectionStatus.setColorFilter(getResources().getColor(R.color.red));
+                    connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red));
                     FirebaseCrashlytics.getInstance().log("Set connection status to insecure DNS.");
                     Sentry.addBreadcrumb("Set connection status to insecure DNS.");
                     Sentry.setTag("private_dns", "insecure");
@@ -251,7 +222,7 @@ public class settings extends AppCompatActivity {
             } else {
                 ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                 connectionStatus.setImageResource(R.drawable.failure);
-                connectionStatus.setColorFilter(getResources().getColor(R.color.red));
+                connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red));
                 FirebaseCrashlytics.getInstance().log("Set connection status to no connection.");
                 Sentry.addBreadcrumb("Set connection status to no connection.");
                 Sentry.setTag("private_dns", "no_connection");

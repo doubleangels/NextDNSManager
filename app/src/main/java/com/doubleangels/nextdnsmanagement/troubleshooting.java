@@ -1,9 +1,5 @@
 package com.doubleangels.nextdnsmanagement;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,21 +12,24 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.AddTrace;
+import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
-import com.google.firebase.perf.metrics.Trace;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import io.sentry.ITransaction;
@@ -40,15 +39,9 @@ public class troubleshooting extends AppCompatActivity {
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private FirebaseAnalytics mFirebaseAnalytics;
-    private Toolbar toolbar;
-    private Window window;
-    private ImageView statusIcon;
-    private String storedUniqueKey;
-    private String uniqueKey;
-    private Boolean isManualDisableAnalytics;
 
     @Override
-    @AddTrace(name = "troubleshooting_create", enabled = true)
+    @AddTrace(name = "troubleshooting_create")
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction troubleshooting_create_transaction = Sentry.startTransaction("onCreate()", "troubleshooting");
         super.onCreate(savedInstanceState);
@@ -56,23 +49,22 @@ public class troubleshooting extends AppCompatActivity {
 
         try {
             final SharedPreferences sharedPreferences = getSharedPreferences("mainSharedPreferences", MODE_PRIVATE);
-            isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
-            storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
+            boolean isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
+            String storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
+            String uniqueKey;
             if (storedUniqueKey.contains("defaultValue")) {
                 uniqueKey = UUID.randomUUID().toString();
                 sharedPreferences.edit().putString("uuid", uniqueKey).apply();
-                FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
-                FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
-                Sentry.addBreadcrumb("Set UUID to: " + uniqueKey);
             } else {
                 uniqueKey = sharedPreferences.getString("uuid", "defaultValue");
-                FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
-                FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
-                Sentry.addBreadcrumb("Set UUID to: " + uniqueKey);
             }
+            FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
+            FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
+            Sentry.addBreadcrumb("Set UUID to: " + uniqueKey);
+
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             if (isManualDisableAnalytics) {
-                mFirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
+                FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
             }
 
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
@@ -83,32 +75,29 @@ public class troubleshooting extends AppCompatActivity {
             mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);
             remoteConfigStartTrace.stop();
 
-            window = this.getWindow();
+            Window window = this.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             Trace remoteConfigFetchTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_fetch");
             remoteConfigFetchTrace.start();
-            mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, new OnCompleteListener<Boolean>() {
-                @Override
-                public void onComplete(@NonNull Task<Boolean> task) {
-                    if (task.isSuccessful()) {
-                        boolean updated = task.getResult();
-                        FirebaseCrashlytics.getInstance().log("Remote config fetch succeeded: " + updated);
-                        Sentry.addBreadcrumb("Remote config fetch succeeded: " + updated);
-                        if (updated) {
-                            Sentry.setTag("remote_config_fetched", "true");
-                        } else {
-                            Sentry.setTag("remote_config_fetched", "false");
-                        }
-                        mFirebaseRemoteConfig.activate();
+            mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, task -> {
+                if (task.isSuccessful()) {
+                    boolean updated = task.getResult();
+                    FirebaseCrashlytics.getInstance().log("Remote config fetch succeeded: " + updated);
+                    Sentry.addBreadcrumb("Remote config fetch succeeded: " + updated);
+                    if (updated) {
+                        Sentry.setTag("remote_config_fetched", "true");
+                    } else {
+                        Sentry.setTag("remote_config_fetched", "false");
                     }
+                    mFirebaseRemoteConfig.activate();
                 }
             });
             remoteConfigFetchTrace.stop();
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_background_color));
-            toolbar =(Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
             ImageView troubleshootingGithub = (ImageView) findViewById(R.id.helpGithubImageView);
 
@@ -125,38 +114,31 @@ public class troubleshooting extends AppCompatActivity {
                 }
             });
 
-            statusIcon = (ImageView) findViewById(R.id.connectionStatus);
-            statusIcon.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("id", "help");
-                    mFirebaseAnalytics.logEvent("toolbar_action", bundle);
-                    Intent helpIntent = new Intent(v.getContext(), help.class);
-                    startActivity(helpIntent);
-                }
+            ImageView statusIcon = (ImageView) findViewById(R.id.connectionStatus);
+            statusIcon.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putString("id", "help");
+                mFirebaseAnalytics.logEvent("toolbar_action", bundle);
+                Intent helpIntent = new Intent(v.getContext(), help.class);
+                startActivity(helpIntent);
             });
 
             Button clearCacheButton = (Button) findViewById(R.id.clearCacheButton);
-            clearCacheButton.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                    FirebaseCrashlytics.getInstance().log("Cleared app cache.");
-                    Sentry.addBreadcrumb("Cleared app cache.");
-                    Sentry.setTag("cleared_cache", "true");
-                    intent.setData(Uri.parse("package:" + getPackageName()));
-                    startActivity(intent);
-                }
+            clearCacheButton.setOnClickListener(v -> {
+                Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                FirebaseCrashlytics.getInstance().log("Cleared app cache.");
+                Sentry.addBreadcrumb("Cleared app cache.");
+                Sentry.setTag("cleared_cache", "true");
+                intent.setData(Uri.parse("package:" + getPackageName()));
+                startActivity(intent);
             });
 
-            troubleshootingGithub.setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
-                    Intent intent = new Intent();
-                    intent.setAction(Intent.ACTION_VIEW);
-                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                    intent.setData(Uri.parse("https://github.com/mtverlee/NextDNSManager/issues"));
-                    startActivity(intent);
-                }
+            troubleshootingGithub.setOnClickListener(v -> {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                intent.setData(Uri.parse("https://github.com/mtverlee/NextDNSManager/issues"));
+                startActivity(intent);
             });
 
         } catch (Exception e) {
@@ -176,18 +158,16 @@ public class troubleshooting extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Bundle bundle = new Bundle();
-        switch (item.getItemId()) {
-            case R.id.back:
-                bundle.putString("id", "back");
-                mFirebaseAnalytics.logEvent("toolbar_action", bundle);
-                Intent mainIntent = new Intent(this, MainActivity.class);
-                startActivity(mainIntent);
-            default:
-                return super.onContextItemSelected(item);
+        if (item.getItemId() == R.id.back) {
+            bundle.putString("id", "back");
+            mFirebaseAnalytics.logEvent("toolbar_action", bundle);
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            startActivity(mainIntent);
         }
+        return super.onContextItemSelected(item);
     }
 
-    @AddTrace(name = "update_visual_indicator", enabled = true)
+    @AddTrace(name = "update_visual_indicator")
     public void updateVisualIndicator(LinkProperties linkProperties, Network network, NetworkInfo networkInfo) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
         try {
@@ -197,14 +177,14 @@ public class troubleshooting extends AppCompatActivity {
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
-                            connectionStatus.setColorFilter(getResources().getColor(R.color.green));
+                            connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.green));
                             FirebaseCrashlytics.getInstance().log("Set connection status to NextDNS.");
                             Sentry.addBreadcrumb("Set connection status to NextDNS.");
                             Sentry.setTag("private_dns", "nextdns");
                         } else {
                             ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
-                            connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                            connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
                             FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                             Sentry.addBreadcrumb("Set connection status to private DNS.");
                             Sentry.setTag("private_dns", "private");
@@ -212,7 +192,7 @@ public class troubleshooting extends AppCompatActivity {
                     } else {
                         ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
-                        connectionStatus.setColorFilter(getResources().getColor(R.color.yellow));
+                        connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
                         FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
                         Sentry.addBreadcrumb("Set connection status to private DNS.");
                         Sentry.setTag("private_dns", "private");
@@ -220,7 +200,7 @@ public class troubleshooting extends AppCompatActivity {
                 } else {
                     ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
-                    connectionStatus.setColorFilter(getResources().getColor(R.color.red));
+                    connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red));
                     FirebaseCrashlytics.getInstance().log("Set connection status to insecure DNS.");
                     Sentry.addBreadcrumb("Set connection status to insecure DNS.");
                     Sentry.setTag("private_dns", "insecure");
@@ -228,7 +208,7 @@ public class troubleshooting extends AppCompatActivity {
             } else {
                 ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
                 connectionStatus.setImageResource(R.drawable.failure);
-                connectionStatus.setColorFilter(getResources().getColor(R.color.red));
+                connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red));
                 FirebaseCrashlytics.getInstance().log("Set connection status to no connection.");
                 Sentry.addBreadcrumb("Set connection status to no connection.");
                 Sentry.setTag("private_dns", "no_connection");

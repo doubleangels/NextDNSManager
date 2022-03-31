@@ -19,18 +19,21 @@
 
         <ImageView
             android:id="@+id/taskbarImage"
-            android:layout_width="125px"
-            android:layout_height="125px"
-            android:paddingHorizontal="10px"
-            android:src="@drawable/nextdns_logo"></ImageView>
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/nextdns_logo"
+            android:contentDescription="@string/generic_content_description"/>
 
         <ImageView
             android:id="@+id/connectionStatus"
-            android:layout_width="75px"
-            android:layout_height="75px"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             app:srcCompat="@drawable/failure"
-            android:clickable="true"
-            android:focusable="true"></ImageView>
+            tools:ignore="ImageContrastCheck"
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="17dp"
+            android:contentDescription="@string/generic_content_description"/>
     </androidx.appcompat.widget.Toolbar>
 
     <WebView

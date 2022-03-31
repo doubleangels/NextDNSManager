@@ -14,22 +14,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">>
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/taskbarImage"
-            android:layout_width="125px"
-            android:layout_height="125px"
-            android:paddingHorizontal="10px"
-            android:src="@drawable/nextdns_logo"></ImageView>
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/nextdns_logo"
+            android:contentDescription="@string/generic_content_description"/>
 
         <ImageView
             android:id="@+id/connectionStatus"
-            android:layout_width="75px"
-            android:layout_height="75px"
-            android:clickable="true"
-            android:focusable="true"
-            app:srcCompat="@drawable/failure"></ImageView>
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/failure"
+            tools:ignore="ImageContrastCheck"
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="17dp"
+            android:contentDescription="@string/generic_content_description"/>
     </androidx.appcompat.widget.Toolbar>
 
     <TextView
@@ -38,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:text="Help"
+        android:text="@string/troubleshooting_title"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +54,7 @@
         android:layout_height="33dp"
         android:layout_marginTop="14dp"
         android:gravity="center"
-        android:text="If you experience any problems with this app, there are a couple of things that you can try."
+        android:text="@string/troubleshooting_description"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,13 +63,14 @@
 
     <ImageView
         android:id="@+id/helpdownArrowImageView"
-        android:layout_width="200px"
-        android:layout_height="200px"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/directionsTextView"
-        app:srcCompat="@drawable/down" />
+        app:srcCompat="@drawable/down"
+        android:contentDescription="@string/generic_content_description"/>
 
     <TextView
         android:id="@+id/helpStep1TextView"
@@ -74,7 +78,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="Try clearing the app cache by pressing the button below, press on 'Storage &amp; cache', then 'Clear cache'."
+        android:text="@string/troubleshooting_step_one"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -87,21 +91,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Clear Cache"
+        android:text="@string/troubleshooting_button"
         android:textColor="@color/green"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/helpStep1TextView" />
+        app:layout_constraintTop_toBottomOf="@+id/helpStep1TextView"
+        tools:ignore="TextContrastCheck" />
 
     <ImageView
         android:id="@+id/helpdownArrow2ImageView"
-        android:layout_width="200px"
-        android:layout_height="200px"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clearCacheButton"
-        app:srcCompat="@drawable/down" />
+        app:srcCompat="@drawable/down"
+        android:contentDescription="@string/generic_content_description"/>
 
     <TextView
         android:id="@+id/helpStep2TextView"
@@ -109,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="Try checking for app updates, or reinstalling the app."
+        android:text="@string/troubleshooting_step_two"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,13 +124,14 @@
 
     <ImageView
         android:id="@+id/helpdownArrow3ImageView"
-        android:layout_width="200px"
-        android:layout_height="200px"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/helpStep2TextView"
-        app:srcCompat="@drawable/down" />
+        app:srcCompat="@drawable/down"
+        android:contentDescription="@string/generic_content_description"/>
 
     <TextView
         android:id="@+id/helpStep3TextView"
@@ -132,7 +139,7 @@
         android:layout_height="54dp"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="If your problem is not resolved by either of the steps above, consider reporting your issue on the Github issue tracker. Tap on the icon below to access it."
+        android:text="@string/troubleshooting_step_three"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -141,8 +148,8 @@
 
     <ImageView
         android:id="@+id/helpGithubImageView"
-        android:layout_width="200px"
-        android:layout_height="200px"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_marginTop="4dp"
         android:fillColor="?attr/colorControlNormal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -151,7 +158,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/helpStep3TextView"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/github" />
+        app:srcCompat="@drawable/github"
+        android:contentDescription="@string/generic_content_description"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
