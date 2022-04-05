@@ -102,7 +102,7 @@ public class ping extends AppCompatActivity {
             });
             remoteConfigFetchTrace.stop();
             window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_background_color));
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
@@ -111,16 +111,16 @@ public class ping extends AppCompatActivity {
             Network network = connectivityManager.getActiveNetwork();
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
-            updateVisualIndicator(linkProperties, network, networkInfo);
+            updateVisualIndicator(linkProperties, networkInfo);
             connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
                 @Override
                 public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
                     super.onLinkPropertiesChanged(network, linkProperties);
-                    updateVisualIndicator(linkProperties, network, networkInfo);
+                    updateVisualIndicator(linkProperties, networkInfo);
                 }
             });
 
-            ImageView statusIcon = (ImageView) findViewById(R.id.connectionStatus);
+            ImageView statusIcon = findViewById(R.id.connectionStatus);
             statusIcon.setOnClickListener(v -> {
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "help_icon");
@@ -149,7 +149,7 @@ public class ping extends AppCompatActivity {
     public void provisionWebView(String url) {
         ITransaction ping_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "ping");
         try {
-            WebView webView = (WebView) findViewById(R.id.mWebview);
+            WebView webView = findViewById(R.id.mWebview);
             webView.setWebChromeClient(new WebChromeClient());
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
@@ -206,21 +206,21 @@ public class ping extends AppCompatActivity {
     }
 
     @AddTrace(name = "update_visual_indicator")
-    public void updateVisualIndicator(LinkProperties linkProperties, Network network, NetworkInfo networkInfo) {
+    public void updateVisualIndicator(LinkProperties linkProperties, NetworkInfo networkInfo) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
         try {
-            if (linkProperties != null && network != null && networkInfo != null) {
+            if (networkInfo != null) {
                 if (linkProperties.isPrivateDnsActive()) {
                     if (linkProperties.getPrivateDnsServerName() != null) {
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
-                            ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
+                            ImageView connectionStatus = findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.green));
                             FirebaseCrashlytics.getInstance().log("Set connection status to NextDNS.");
                             Sentry.addBreadcrumb("Set connection status to NextDNS.");
                             Sentry.setTag("private_dns", "nextdns");
                         } else {
-                            ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
+                            ImageView connectionStatus = findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
                             FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
@@ -228,7 +228,7 @@ public class ping extends AppCompatActivity {
                             Sentry.setTag("private_dns", "private");
                         }
                     } else {
-                        ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
+                        ImageView connectionStatus = findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
                         connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
                         FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
@@ -236,7 +236,7 @@ public class ping extends AppCompatActivity {
                         Sentry.setTag("private_dns", "private");
                     }
                 } else {
-                    ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
+                    ImageView connectionStatus = findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red));
                     FirebaseCrashlytics.getInstance().log("Set connection status to insecure DNS.");
@@ -244,9 +244,9 @@ public class ping extends AppCompatActivity {
                     Sentry.setTag("private_dns", "insecure");
                 }
             } else {
-                ImageView connectionStatus = (ImageView) findViewById(R.id.connectionStatus);
+                ImageView connectionStatus = findViewById(R.id.connectionStatus);
                 connectionStatus.setImageResource(R.drawable.failure);
-                connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.gray));
                 FirebaseCrashlytics.getInstance().log("Set connection status to no connection.");
                 Sentry.addBreadcrumb("Set connection status to no connection.");
                 Sentry.setTag("private_dns", "no_connection");

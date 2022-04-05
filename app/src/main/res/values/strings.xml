@@ -25,7 +25,7 @@
     <string name="update_channel_description">This is the main update channel for NextDNS Manager.</string>
     <string name="help_green">Secure DNS is being used AND device is connected to NextDNS.</string>
     <string name="help_yellow">Secure DNS is being used but device is NOT connected to NextDNS.</string>
-    <string name="help_red">Secure DNS is NOT being used or there is no connection.</string>
+    <string name="help_red">Secure DNS is NOT being used.</string>
     <string name="generic_content_description">This is a generic content description.</string>
     <string name="disclaimer">This app is NOT an official NextDNS app. This app and its developer are NOT in any way affiliated or related to NextDNS.</string>
     <string name="firebase_title">Firebase</string>
