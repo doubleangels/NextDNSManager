@@ -230,8 +230,6 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             InputStream fileStream = new URL("https://nextdns-management.firebaseapp.com/nextdns.css").openStream();
                             return getUtf8EncodedCssWebResourceResponse(fileStream);
-                        } catch (UnknownHostException e) {
-                            return null;
                         } catch (Exception e) {
                             FirebaseCrashlytics.getInstance().recordException(e);
                             Sentry.captureException(e);
