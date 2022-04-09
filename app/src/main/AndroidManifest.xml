@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
         android:allowBackup="true"
@@ -38,32 +38,30 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
-
         <meta-data
             android:name="io.sentry.dsn"
             android:value="https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.sentry.io/6270764" />
         <meta-data
             android:name="io.sentry.traces.sample-rate"
             android:value="1.0" />
+        <meta-data android:name="io.sentry.attach-screenshot" android:value="true" />
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />
         <meta-data
             android:name="firebase_analytics_collection_enabled"
             android:value="false" />
-
-        <service android:name=".FCMNotifications"
+        <service
+            android:name=".FCMNotifications"
             android:exported="false">
             <intent-filter android:priority="1">
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_launcher_foreground" />
@@ -71,4 +69,5 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/blue" />
     </application>
+
 </manifest>
