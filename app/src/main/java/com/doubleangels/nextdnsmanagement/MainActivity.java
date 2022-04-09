@@ -39,7 +39,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.io.InputStream;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -62,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         try {
+
             final SharedPreferences sharedPreferences = getSharedPreferences("mainSharedPreferences", MODE_PRIVATE);
             boolean isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
             String storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
@@ -357,4 +357,6 @@ public class MainActivity extends AppCompatActivity {
             update_visual_indicator_transaction.finish();
         }
     }
+
+
 }
