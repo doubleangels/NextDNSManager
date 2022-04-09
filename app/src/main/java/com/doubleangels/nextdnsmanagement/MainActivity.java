@@ -39,17 +39,17 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
 import io.sentry.ISpan;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
-import io.sentry.instrumentation.file.SentryFileOutputStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAnalytics mFirebaseAnalytics;
     private WebView webView;
     private Boolean useCustomCSS;
+    private Double cacheTime;
 
     @Override
     @AddTrace(name = "MainActivity_create")
@@ -234,22 +235,32 @@ public class MainActivity extends AppCompatActivity {
 
                     private WebResourceResponse getCssWebResourceResponseFromAsset() {
                         try {
-                            InputStream fileStream = new URL("https://nextdns-management.firebaseapp.com/nextdns.css").openStream();
-                            File file = new File(getCacheDir(), "nextdns.css");
-                            writeStreamToFile(fileStream, file);
-                            FileInputStream fileInput = new FileInputStream(new File(getCacheDir(), "nextdns.css"));
-                            return getUtf8EncodedCssWebResourceResponse(fileInput);
+                            File checkFile = new File(getCacheDir(), "nextdns.css");
+                            cacheTime = mFirebaseRemoteConfig.getDouble("cache_time");
+                            if (checkFile.exists()) {
+                                long diff = new Date().getTime() - checkFile.lastModified();
+                                if (diff > cacheTime * 86400000) {
+                                    checkFile.delete();
+                                    InputStream fileStream = new URL("https://nextdns-management.firebaseapp.com/nextdns.css").openStream();
+                                    File file = new File(getCacheDir(), "nextdns.css");
+                                    writeStreamToFile(fileStream, file);
+                                    FileInputStream fileInput = new FileInputStream(new File(getCacheDir(), "nextdns.css"));
+                                    return getUtf8EncodedCssWebResourceResponse(fileInput);
+                                } else {
+                                    FileInputStream fileInput = new FileInputStream(new File(getCacheDir(), "nextdns.css"));
+                                    return getUtf8EncodedCssWebResourceResponse(fileInput);
+                                }
+                            } else {
+                                InputStream fileStream = new URL("https://nextdns-management.firebaseapp.com/nextdns.css").openStream();
+                                File file = new File(getCacheDir(), "nextdns.css");
+                                writeStreamToFile(fileStream, file);
+                                FileInputStream fileInput = new FileInputStream(new File(getCacheDir(), "nextdns.css"));
+                                return getUtf8EncodedCssWebResourceResponse(fileInput);
+                            }
                         } catch (Exception e) {
                             Sentry.captureException(e);
                             FirebaseCrashlytics.getInstance().recordException(e);
-                            try {
-                                FileInputStream cachedFile = new FileInputStream(new File(getCacheDir(), "nextdns.css"));
-                                return getUtf8EncodedCssWebResourceResponse(cachedFile);
-                            } catch (FileNotFoundException f) {
-                                Sentry.captureException(f);
-                                FirebaseCrashlytics.getInstance().recordException(f);
-                                return null;
-                            }
+                            return null;
                         }
                     }
 
@@ -260,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
                     void writeStreamToFile(InputStream input, File file) {
                         ITransaction MainActivity_write_stream_to_file_transaction = Sentry.startTransaction("writeStreamToFile()", "MainActivity");
                         try {
-                            try (OutputStream output = new SentryFileOutputStream(file)) {
+                            try (OutputStream output = new FileOutputStream(file)) {
                                 byte[] buffer = new byte[4 * 1024];
                                 int read;
                                 while ((read = input.read(buffer)) != -1) {

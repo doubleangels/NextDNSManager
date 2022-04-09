@@ -5,5 +5,9 @@
         <key>use_custom_css</key>
         <value>true</value>
     </entry>
+    <entry>
+        <key>cache_time</key>
+        <value>0.5</value>
+    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->
