@@ -64,12 +64,17 @@ public class test extends AppCompatActivity {
             if (storedUniqueKey.contains("defaultValue")) {
                 uniqueKey = UUID.randomUUID().toString();
                 sharedPreferences.edit().putString("uuid", uniqueKey).apply();
+                FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
+                Sentry.setTag("uuid", uniqueKey);
+                Sentry.setTag("uuid_set", "true");
+                Sentry.setTag("uuid_new", "true");
             } else {
                 uniqueKey = sharedPreferences.getString("uuid", "defaultValue");
+                FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
+                Sentry.setTag("uuid", uniqueKey);
+                Sentry.setTag("uuid_set", "true");
+                Sentry.setTag("uuid_new", "false");
             }
-            FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
-            FirebaseCrashlytics.getInstance().log("Set UUID to: " + uniqueKey);
-            Sentry.addBreadcrumb("Set UUID to: " + uniqueKey);
 
             mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
             if (isManualDisableAnalytics) {
@@ -92,8 +97,6 @@ public class test extends AppCompatActivity {
             mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, task -> {
                 if (task.isSuccessful()) {
                     boolean updated = task.getResult();
-                    FirebaseCrashlytics.getInstance().log("Remote config fetch succeeded: " + updated);
-                    Sentry.addBreadcrumb("Remote config fetch succeeded: " + updated);
                     if (updated) {
                         Sentry.setTag("remote_config_fetched", "true");
                     } else {
@@ -133,8 +136,8 @@ public class test extends AppCompatActivity {
 
             provisionWebView("https://test.nextdns.io");
         } catch (Exception e) {
-            FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+            FirebaseCrashlytics.getInstance().recordException(e);
         } finally {
             test_create_transaction.finish();
         }
@@ -173,14 +176,10 @@ public class test extends AppCompatActivity {
             int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
-                    FirebaseCrashlytics.getInstance().setCustomKey("force_dark_strategy_supported", true);
-                    Sentry.addBreadcrumb("Force dark mode strategy supported.");
                     Sentry.setTag("force_dark_mode_strategy_supported", "true");
                     WebSettingsCompat.setForceDarkStrategy(webView.getSettings(), WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING);
                 }
                 if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                    FirebaseCrashlytics.getInstance().setCustomKey("force_dark_supported", true);
-                    Sentry.addBreadcrumb("Force dark mode supported.");
                     Sentry.setTag("force_dark_mode_supported", "true");
                     WebSettingsCompat.setForceDark(webView.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
                 }
@@ -188,8 +187,8 @@ public class test extends AppCompatActivity {
             webView.loadUrl(url);
             force_dark_mode_span.finish();
         } catch (Exception e) {
-            FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+            FirebaseCrashlytics.getInstance().recordException(e);
         } finally {
             test_provision_web_view_transaction.finish();
         }
@@ -220,44 +219,34 @@ public class test extends AppCompatActivity {
                             ImageView connectionStatus = findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.green));
-                            FirebaseCrashlytics.getInstance().log("Set connection status to NextDNS.");
-                            Sentry.addBreadcrumb("Set connection status to NextDNS.");
                             Sentry.setTag("private_dns", "nextdns");
                         } else {
                             ImageView connectionStatus = findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
-                            FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
-                            Sentry.addBreadcrumb("Set connection status to private DNS.");
                             Sentry.setTag("private_dns", "private");
                         }
                     } else {
                         ImageView connectionStatus = findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
                         connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
-                        FirebaseCrashlytics.getInstance().log("Set connection status to private DNS.");
-                        Sentry.addBreadcrumb("Set connection status to private DNS.");
                         Sentry.setTag("private_dns", "private");
                     }
                 } else {
                     ImageView connectionStatus = findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red));
-                    FirebaseCrashlytics.getInstance().log("Set connection status to insecure DNS.");
-                    Sentry.addBreadcrumb("Set connection status to insecure DNS.");
                     Sentry.setTag("private_dns", "insecure");
                 }
             } else {
                 ImageView connectionStatus = findViewById(R.id.connectionStatus);
                 connectionStatus.setImageResource(R.drawable.failure);
                 connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.gray));
-                FirebaseCrashlytics.getInstance().log("Set connection status to no connection.");
-                Sentry.addBreadcrumb("Set connection status to no connection.");
                 Sentry.setTag("private_dns", "no_connection");
             }
         } catch (Exception e) {
-            FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+            FirebaseCrashlytics.getInstance().recordException(e);
         } finally {
             update_visual_indicator_transaction.finish();
         }

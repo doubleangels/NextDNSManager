@@ -69,8 +69,8 @@ public class FCMNotifications extends FirebaseMessagingService {
             }
             super.onMessageReceived(remoteMessage);
         } catch (Exception e) {
-            FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+            FirebaseCrashlytics.getInstance().recordException(e);
         } finally {
             FirebaseNotifications_on_message_received_transaction.finish();
         }
@@ -84,12 +84,11 @@ public class FCMNotifications extends FirebaseMessagingService {
             super.onNewToken(token);
             getSharedPreferences("fcm", MODE_PRIVATE).edit().putString("fcm_token", token).apply();
             Log.e("Set FCM token: ", token);
-            FirebaseCrashlytics.getInstance().log("Set FCM token: " + token);
-            Sentry.addBreadcrumb("Set FCM token: " + token);
+            Sentry.setTag("fcm_token", token);
             Sentry.setTag("fcm_token_generated", "true");
         } catch (Exception e) {
-            FirebaseCrashlytics.getInstance().recordException(e);
             Sentry.captureException(e);
+            FirebaseCrashlytics.getInstance().recordException(e);
         } finally {
             FirebaseNotifications_on_new_token_transaction.finish();
         }

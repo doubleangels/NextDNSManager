@@ -44,7 +44,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-iid'
     implementation 'commons-io:commons-io:20030203.000550'
-    implementation 'io.sentry:sentry-android:6.0.0-alpha.5'
+    implementation 'io.sentry:sentry-android:5.7.2'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
