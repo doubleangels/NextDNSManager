@@ -114,12 +114,12 @@ public class ping extends AppCompatActivity {
             Network network = connectivityManager.getActiveNetwork();
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
-            updateVisualIndicator(linkProperties, networkInfo);
+            updateVisualIndicator(linkProperties, networkInfo, getApplicationContext());
             connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
                 @Override
                 public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
                     super.onLinkPropertiesChanged(network, linkProperties);
-                    updateVisualIndicator(linkProperties, networkInfo);
+                    updateVisualIndicator(linkProperties, networkInfo, getApplicationContext());
                 }
             });
 
@@ -205,7 +205,7 @@ public class ping extends AppCompatActivity {
     }
 
     @AddTrace(name = "update_visual_indicator")
-    public void updateVisualIndicator(LinkProperties linkProperties, NetworkInfo networkInfo) {
+    public void updateVisualIndicator(LinkProperties linkProperties, NetworkInfo networkInfo, Context context) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
         try {
             if (networkInfo != null) {
@@ -214,30 +214,30 @@ public class ping extends AppCompatActivity {
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
                             ImageView connectionStatus = findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
-                            connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.green));
+                            connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.green));
                             Sentry.setTag("private_dns", "nextdns");
                         } else {
                             ImageView connectionStatus = findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
-                            connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
+                            connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
                             Sentry.setTag("private_dns", "private");
                         }
                     } else {
                         ImageView connectionStatus = findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
-                        connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.yellow));
+                        connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
                         Sentry.setTag("private_dns", "private");
                     }
                 } else {
                     ImageView connectionStatus = findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
-                    connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                    connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.red));
                     Sentry.setTag("private_dns", "insecure");
                 }
             } else {
                 ImageView connectionStatus = findViewById(R.id.connectionStatus);
                 connectionStatus.setImageResource(R.drawable.failure);
-                connectionStatus.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.gray));
+                connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.gray));
                 Sentry.setTag("private_dns", "no_connection");
             }
         } catch (Exception e) {
