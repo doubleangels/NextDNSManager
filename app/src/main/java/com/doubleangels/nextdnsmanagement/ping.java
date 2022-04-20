@@ -132,7 +132,7 @@ public class ping extends AppCompatActivity {
                 startActivity(helpIntent);
             });
 
-            provisionWebView("https://ping.nextdns.io");
+            provisionWebView(getString(R.string.ping_url));
         } catch (Exception e) {
             Sentry.captureException(e);
             FirebaseCrashlytics.getInstance().recordException(e);

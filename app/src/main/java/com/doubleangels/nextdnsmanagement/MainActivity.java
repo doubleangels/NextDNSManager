@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(helpIntent);
             });
 
-            provisionWebView("https://my.nextdns.io/login", isDarkThemeOn, useCustomCSS);
+            provisionWebView(getString(R.string.main_url), isDarkThemeOn, useCustomCSS);
         } catch (Exception e) {
             Sentry.captureException(e);
             FirebaseCrashlytics.getInstance().recordException(e);

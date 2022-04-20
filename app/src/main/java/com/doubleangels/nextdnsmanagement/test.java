@@ -134,7 +134,7 @@ public class test extends AppCompatActivity {
                 startActivity(helpIntent);
             });
 
-            provisionWebView("https://test.nextdns.io");
+            provisionWebView(getString(R.string.test_url));
         } catch (Exception e) {
             Sentry.captureException(e);
             FirebaseCrashlytics.getInstance().recordException(e);

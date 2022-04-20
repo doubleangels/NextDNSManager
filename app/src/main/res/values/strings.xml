@@ -37,4 +37,7 @@
     <string name="troubleshooting_step_two">Try checking for app updates, or reinstalling the app.</string>
     <string name="troubleshooting_button">Clear Cache</string>
     <string name="troubleshooting_step_three">If your problem is not resolved by either of the steps above, consider reporting your issue on the Github issue tracker. Tap on the icon below to access it.</string>
+    <string name="main_url">https://my.nextdns.io/login</string>
+    <string name="ping_url">https://ping.nextdns.io</string>
+    <string name="test_url">https://test.nextdns.io</string>
 </resources>
