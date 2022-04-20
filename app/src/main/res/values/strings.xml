@@ -1,18 +1,8 @@
 <resources>
-    <string name="app_name">NextDNS Manager</string>
-    <string name="title_activity_public_resolvers">publicResolvers</string>
-    <!--
-    This string is used for square devices and overridden by hello_world in
-    values-round/strings.xml for round devices.
-    -->
     <string name="hello_world">Hello Square World!</string>
-    <string name="personal_website"><a href="https://doubleangels.com">Website</a></string>
-    <string name="github_url"><a href="https://github.com/mtverlee">Github</a></string>
+    <string name="app_name">NextDNS Manager</string>
     <string name="author_name">Matt VerLee</string>
     <string name="application_name">NextDNS Manager</string>
-    <string name="publicResolvers_short">Public Resolvers</string>
-    <string name="publicResolvers_long">Quickly switch between NextDNS and public resolvers.</string>
-    <string name="publicResolvers_disabled">This action is currently unavailable.</string>
     <string name="test_short">Test</string>
     <string name="test_long">Quickly get important test information about your connection to NextDNS.</string>
     <string name="test_disabled">This action is currently unavailable.</string>
@@ -40,4 +30,7 @@
     <string name="main_url">https://my.nextdns.io/login</string>
     <string name="ping_url">https://ping.nextdns.io</string>
     <string name="test_url">https://test.nextdns.io</string>
+    <string name="css_url">https://nextdns-management.firebaseapp.com/nextdns.css</string>
+    <string name="whitelist_url">https://nextdns-management.firebaseapp.com/whitelist.txt</string>
+    <string name="github_url">"https://github.com/mtverlee/NextDNSManager/issues"</string>
 </resources>

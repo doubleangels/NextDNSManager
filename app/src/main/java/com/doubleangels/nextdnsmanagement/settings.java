@@ -151,7 +151,7 @@ public class settings extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("https://nextdns-management.firebaseapp.com/whitelist.txt"));
+                intent.setData(Uri.parse(getString(R.string.whitelist_url)));
                 startActivity(intent);
             });
         } catch (Exception e) {

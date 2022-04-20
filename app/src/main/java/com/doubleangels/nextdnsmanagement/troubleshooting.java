@@ -138,7 +138,7 @@ public class troubleshooting extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse("https://github.com/mtverlee/NextDNSManager/issues"));
+                intent.setData(Uri.parse(getString(R.string.github_url)));
                 startActivity(intent);
             });
 

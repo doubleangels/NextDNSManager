@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.returnHome) {
             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "home_icon");
             mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-            provisionWebView("https://my.nextdns.io/login", isDarkThemeOn, useCustomCSS);
+            provisionWebView(getString(R.string.main_url), isDarkThemeOn, useCustomCSS);
             return true;
         }
         if (item.getItemId() == R.id.help) {
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                                 long diff = new Date().getTime() - checkFile.lastModified();
                                 if (diff > cacheTime * 86400000) {
                                     checkFile.delete();
-                                    InputStream fileStream = new URL("https://nextdns-management.firebaseapp.com/nextdns.css").openStream();
+                                    InputStream fileStream = new URL(getString(R.string.css_url)).openStream();
                                     File file = new File(getCacheDir(), "nextdns.css");
                                     writeStreamToFile(fileStream, file);
                                     FileInputStream fileInput = new FileInputStream(new File(getCacheDir(), "nextdns.css"));
@@ -251,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                                     return getUtf8EncodedCssWebResourceResponse(fileInput);
                                 }
                             } else {
-                                InputStream fileStream = new URL("https://nextdns-management.firebaseapp.com/nextdns.css").openStream();
+                                InputStream fileStream = new URL(getString(R.string.css_url)).openStream();
                                 File file = new File(getCacheDir(), "nextdns.css");
                                 writeStreamToFile(fileStream, file);
                                 FileInputStream fileInput = new FileInputStream(new File(getCacheDir(), "nextdns.css"));
