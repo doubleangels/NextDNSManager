@@ -36,7 +36,7 @@ public class FCMNotifications extends FirebaseMessagingService {
                 PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
                 final String FCM_CHANNEL_ID = "fcm";
                 NotificationChannel update_channel = new NotificationChannel(FCM_CHANNEL_ID, getString(R.string.fcm_channel_name), NotificationManager.IMPORTANCE_HIGH);
-                update_channel.setDescription(getString(R.string.fcm_channel_description));
+                update_channel.setDescription(getString(R.string.update_channel_description));
                 getSystemService(NotificationManager.class)
                         .createNotificationChannel(update_channel);
                 Notification.Builder notification;
