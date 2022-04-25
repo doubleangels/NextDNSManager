@@ -17,11 +17,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -42,10 +45,14 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
+
+import javax.net.ssl.SSLException;
 
 import io.sentry.ISpan;
 import io.sentry.ITransaction;
@@ -257,6 +264,11 @@ public class MainActivity extends AppCompatActivity {
                                 FileInputStream fileInput = new FileInputStream(new File(getCacheDir(), "nextdns.css"));
                                 return getUtf8EncodedCssWebResourceResponse(fileInput);
                             }
+                        } catch (SSLException| ConnectException | UnknownHostException e) {
+                            Toast.makeText(MainActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+                            Sentry.captureException(e);
+                            FirebaseCrashlytics.getInstance().recordException(e);
+                            return null;
                         } catch (Exception e) {
                             Sentry.captureException(e);
                             FirebaseCrashlytics.getInstance().recordException(e);
@@ -298,12 +310,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
+    @SuppressWarnings("unused")
     @AddTrace(name = "MainActivity_provision_web_view")
     public void provisionWebView(String url, Boolean isDarkThemeOn, Boolean useCustomCSS) {
         ITransaction MainActivity_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "MainActivity");
         try {
             webView = findViewById(R.id.mWebview);
-            webView.setWebChromeClient(new WebChromeClient());
+            webView.setWebChromeClient(new WebChromeClient() {
+                public void onReceivedError(WebView webView, WebResourceRequest request, WebResourceError error){
+                    Toast.makeText(MainActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+                }
+            });
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setDomStorageEnabled(true);

@@ -17,10 +17,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -150,12 +153,17 @@ public class test extends AppCompatActivity {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
+    @SuppressWarnings("unused")
     @AddTrace(name = "test_provision_web_view")
     public void provisionWebView(String url) {
         ITransaction test_provision_web_view_transaction = Sentry.startTransaction("help", "onCreate()");
         try {
             WebView webView = findViewById(R.id.mWebview);
-            webView.setWebChromeClient(new WebChromeClient());
+            webView.setWebChromeClient(new WebChromeClient() {
+                public void onReceivedError(WebView webView, WebResourceRequest request, WebResourceError error){
+                    Toast.makeText(test.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+                }
+            });
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setDomStorageEnabled(true);
