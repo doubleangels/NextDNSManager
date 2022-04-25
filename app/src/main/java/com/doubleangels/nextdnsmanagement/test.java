@@ -220,7 +220,7 @@ public class test extends AppCompatActivity {
     public void updateVisualIndicator(LinkProperties linkProperties, NetworkInfo networkInfo, Context context) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
         try {
-            if (networkInfo != null) {
+            if (networkInfo != null && linkProperties != null) {
                 if (linkProperties.isPrivateDnsActive()) {
                     if (linkProperties.getPrivateDnsServerName() != null) {
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
