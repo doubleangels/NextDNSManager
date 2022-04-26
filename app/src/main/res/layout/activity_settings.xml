@@ -21,19 +21,19 @@
             android:id="@+id/taskbarImage"
             android:layout_width="55dp"
             android:layout_height="55dp"
+            android:contentDescription="@string/generic_content_description"
             android:paddingHorizontal="10dp"
-            android:src="@drawable/nextdns_logo"
-            android:contentDescription="@string/generic_content_description"/>
+            android:src="@drawable/nextdns_logo" />
 
         <ImageView
             android:id="@+id/connectionStatus"
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:contentDescription="@string/generic_content_description"
             app:srcCompat="@drawable/failure"
             tools:ignore="ImageContrastCheck"
             tools:layout_editor_absoluteX="66dp"
-            tools:layout_editor_absoluteY="17dp"
-            android:contentDescription="@string/generic_content_description"/>
+            tools:layout_editor_absoluteY="17dp" />
     </androidx.appcompat.widget.Toolbar>
 
 
@@ -51,50 +51,38 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/manual_disable_analytics"
-        android:layout_width="241dp"
-        android:layout_height="26dp"
-        android:layout_marginTop="14dp"
-        android:text="@string/enable_firebase_analytics"
-        android:textAlignment="center"
-        android:textColor="?android:attr/textColorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settingsFirebaseTextView" />
-
     <ImageView
         android:id="@+id/whitelistImageView"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="@string/generic_content_description"
         android:fillColor="?attr/colorControlNormal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/analyticsInstructionsTextView"
-        app:srcCompat="@drawable/whitelist"
-        android:contentDescription="@string/generic_content_description"/>
+        app:srcCompat="@drawable/whitelist" />
 
     <TextView
         android:id="@+id/analyticsInstructionsTextView"
         android:layout_width="300dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="14dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="12dp"
         android:text="@string/privacy_description"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="11sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/manual_disable_analytics"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/settingsFirebaseTextView" />
 
     <TextView
         android:id="@+id/appNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="12dp"
         android:text="@string/application_name"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
@@ -120,7 +108,7 @@
         android:id="@+id/versionNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="12dp"
         android:textColor="?android:attr/textColorPrimary"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/notAffiliatedTextView"
@@ -132,7 +120,7 @@
         android:id="@+id/authorTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
+        android:layout_marginBottom="12dp"
         android:text="@string/author_name"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"

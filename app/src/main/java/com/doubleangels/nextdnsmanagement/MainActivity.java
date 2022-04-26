@@ -3,7 +3,6 @@ package com.doubleangels.nextdnsmanagement;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
@@ -39,7 +38,6 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.io.InputStream;
 import java.util.Objects;
-import java.util.UUID;
 
 import io.sentry.ISpan;
 import io.sentry.ITransaction;
@@ -48,10 +46,8 @@ import io.sentry.Sentry;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
-    private FirebaseAnalytics mFirebaseAnalytics;
     private WebView webView;
     private Boolean useCustomCSS;
-    private Double cacheTime;
 
     @Override
     @AddTrace(name = "MainActivity_create")
@@ -61,32 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         try {
-
-            final SharedPreferences sharedPreferences = getSharedPreferences("mainSharedPreferences", MODE_PRIVATE);
-            boolean isManualDisableAnalytics = sharedPreferences.getBoolean("manualDisableAnalytics", false);
-            String storedUniqueKey = sharedPreferences.getString("uuid", "defaultValue");
-            String uniqueKey;
-            if (storedUniqueKey.contains("defaultValue")) {
-                uniqueKey = UUID.randomUUID().toString();
-                sharedPreferences.edit().putString("uuid", uniqueKey).apply();
-                FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
-                Sentry.setTag("uuid", uniqueKey);
-                Sentry.setTag("uuid_set", "true");
-                Sentry.setTag("uuid_new", "true");
-            } else {
-                uniqueKey = sharedPreferences.getString("uuid", "defaultValue");
-                FirebaseCrashlytics.getInstance().setUserId(uniqueKey);
-                Sentry.setTag("uuid", uniqueKey);
-                Sentry.setTag("uuid_set", "true");
-                Sentry.setTag("uuid_new", "false");
-            }
-
-            mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
-            if (isManualDisableAnalytics) {
-                FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
-                Sentry.setTag("analytics", "true");
-            }
-
+            // Get our remote configuration information.
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
             remoteConfigStartTrace.start();
             mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
@@ -94,10 +65,6 @@ public class MainActivity extends AppCompatActivity {
             mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
             mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);
             remoteConfigStartTrace.stop();
-
-            Window window = this.getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             Trace remoteConfigFetchTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_fetch");
             remoteConfigFetchTrace.start();
             mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, task -> {
@@ -112,21 +79,30 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             remoteConfigFetchTrace.stop();
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_background_color));
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
+
+            // Determine if we're using custom CSS.
             useCustomCSS = mFirebaseRemoteConfig.getBoolean("use_custom_css");
             if (useCustomCSS) {
                 Sentry.setTag("custom_css", "true");
             }
 
+            // Determine if dark theme is on.
             boolean isDarkThemeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
             if (isDarkThemeOn) {
                 Sentry.setTag("dark_mode_on", " true");
             }
 
+            // Set up our window, status bar, and toolbar.
+            Window window = this.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_background_color));
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
+
+            // Check if we're using private DNS and watch DNS type over time to change visual indicator.
             ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             Network network = connectivityManager.getActiveNetwork();
@@ -140,15 +116,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+            // Let us touch the visual indicator to open an explanation.
             ImageView statusIcon = findViewById(R.id.connectionStatus);
             statusIcon.setOnClickListener(v -> {
                 Bundle bundle = new Bundle();
                 bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "help_icon");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
                 Intent helpIntent = new Intent(v.getContext(), help.class);
                 startActivity(helpIntent);
             });
 
+            // Provision our web view.
             provisionWebView(getString(R.string.main_url), isDarkThemeOn, useCustomCSS);
         } catch (Exception e) {
             Sentry.captureException(e);
@@ -170,40 +147,29 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         if (item.getItemId() == R.id.refreshNextDNS) {
             bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "refresh_icon");
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             webView.reload();
             return true;
         }
         if (item.getItemId() == R.id.pingNextDNS) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "ping_icon");
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             Intent pingIntent = new Intent(this, ping.class);
             startActivity(pingIntent);
             return true;
         }
         if (item.getItemId() == R.id.testNextDNS) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "test_icon");
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             Intent testIntent = new Intent(this, test.class);
             startActivity(testIntent);
             return true;
         }
         if (item.getItemId() == R.id.returnHome) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "home_icon");
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             provisionWebView(getString(R.string.main_url), isDarkThemeOn, useCustomCSS);
             return true;
         }
         if (item.getItemId() == R.id.help) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "help_icon");
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             Intent troubleshootingIntent = new Intent(this, troubleshooting.class);
             startActivity(troubleshootingIntent);
             return true;
         }
         if (item.getItemId() ==  R.id.settings) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "settings_icon");
-            mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
             Intent settingsIntent = new Intent(this, settings.class);
             startActivity(settingsIntent);
             return true;
@@ -229,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
                     private WebResourceResponse getCssWebResourceResponseFromAsset() {
                         try {
+                            // Return custom CSS file from assets.
                             InputStream fileInput = getAssets().open("nextdns.css");
                             return getUtf8EncodedCssWebResourceResponse(fileInput);
                         } catch (Exception e) {
@@ -243,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
             }
+            // Load the webview with the URL and the custom CSS.
             webView.loadUrl(url);
         } catch (Exception e) {
             Sentry.captureException(e);
@@ -260,7 +228,11 @@ public class MainActivity extends AppCompatActivity {
         try {
             webView = findViewById(R.id.mWebview);
             webView.setWebChromeClient(new WebChromeClient());
-            webView.setWebViewClient(new WebViewClient());
+            webView.setWebViewClient(new WebViewClient() {
+                public void onPageError() {
+
+                }
+            });
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setDomStorageEnabled(true);
             webView.getSettings().setAppCacheEnabled(true);
@@ -276,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
 
+            // If we're using custom CSS, don't use the built in dark mode.
             if (useCustomCSS) {
                 replaceCSS(url, isDarkThemeOn);
             } else {
@@ -309,30 +282,35 @@ public class MainActivity extends AppCompatActivity {
             if (networkInfo != null) {
                 if (linkProperties.isPrivateDnsActive()) {
                     if (linkProperties.getPrivateDnsServerName() != null) {
+                        // If we're connected to NextDNS, show green.
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
                             ImageView connectionStatus = findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.green));
                             Sentry.setTag("private_dns", "nextdns");
                         } else {
+                            // If we're connected to private DNS but not NextDNS, show yellow.
                             ImageView connectionStatus = findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
                             Sentry.setTag("private_dns", "private");
                         }
                     } else {
+                        // If we're connected to private DNS but not NextDNS, show yellow.
                         ImageView connectionStatus = findViewById(R.id.connectionStatus);
                         connectionStatus.setImageResource(R.drawable.success);
                         connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
                         Sentry.setTag("private_dns", "private");
                     }
                 } else {
+                    // If we're not using private DNS, show red.
                     ImageView connectionStatus = findViewById(R.id.connectionStatus);
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.red));
                     Sentry.setTag("private_dns", "insecure");
                 }
             } else {
+                // If we have no internet connection, show gray.
                 ImageView connectionStatus = findViewById(R.id.connectionStatus);
                 connectionStatus.setImageResource(R.drawable.failure);
                 connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.gray));

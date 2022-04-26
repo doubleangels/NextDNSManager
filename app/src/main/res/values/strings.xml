@@ -18,9 +18,8 @@
     <string name="help_red">Secure DNS is NOT being used.</string>
     <string name="generic_content_description">This is a generic content description.</string>
     <string name="disclaimer">This app is NOT an official NextDNS app. This app and its developer are NOT in any way affiliated or related to NextDNS.</string>
-    <string name="firebase_title">Firebase</string>
-    <string name="enable_firebase_analytics">Enable Firebase Analytics</string>
-    <string name="privacy_description">If you enable this, no personally identifiable information is collected and all data is anonymized. Make sure to whitelist Firebase Analytics in NextDNS! A simple list of domains to whitelist can be found at the link below should you want to enable anonymized crash and error information.</string>
+    <string name="firebase_title">Error Reporting</string>
+    <string name="privacy_description">Please consider whitelisting the list of domains below to allow anonymized crash and error reporting. This greatly helps in my effort to make this app better!</string>
     <string name="troubleshooting_title">Troubleshooting</string>
     <string name="troubleshooting_description">If you experience any problems with this app, there are a couple of things that you can try.</string>
     <string name="troubleshooting_step_one">Try clearing the app cache by pressing the button below.</string>
