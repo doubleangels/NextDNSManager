@@ -10647,7 +10647,7 @@ body {
 }
 
 .list-group-flush>.list-group-item:last-child {
-	background: #252528!important;
+	background: #1D1D20!important;
 }
 
 a {
@@ -10669,7 +10669,7 @@ a:hover {
 
 .nav-tabs {
 	background: #1f1f22!important;
-	border-bottom: 1px solid #252528;
+	border-bottom: 1px solid #1D1D20;
 }
 
 .nav-tabs .nav-item.show .nav-link,.nav-tabs .nav-link.active {
@@ -10704,13 +10704,13 @@ a:hover {
 
 .btn-light:not(:disabled):not(.disabled).active,.btn-light:not(:disabled):not(.disabled):active,.show>.btn-light.dropdown-toggle {
 	color: #fff;
-	background-color: #252528;
+	background-color: #1D1D20;
 	border-color: #3d3d3f;
 }
 
 .btn-light.focus,.btn-light:focus,.btn-light:hover {
 	color: #fff;
-	background-color: #252528;
+	background-color: #1D1D20;
 	border-color: #3d3d3f;
 }
 
@@ -10854,7 +10854,7 @@ a.text-primary:focus,a.text-primary:hover {
 
 .close {
 	color: #fff;
-	text-shadow: 0 1px 0 #252528;
+	text-shadow: 0 1px 0 #1D1D20;
 }
 
 .close:hover {
@@ -10880,7 +10880,7 @@ a.text-primary:focus,a.text-primary:hover {
 }
 
 .modal-header {
-	background: #252528;
+	background: #1D1D20;
 	border-bottom: 1px solid #29292d;
 }
 
@@ -10899,7 +10899,7 @@ a.text-primary:focus,a.text-primary:hover {
 
 .form-control:focus {
 	color: #fff;
-	background-color: #252528;
+	background-color: #1D1D20;
 	border-color: #161616;
 	outline: 0;
 	box-shadow: 0 0 0 .1rem rgb(37 37 40);
@@ -10914,17 +10914,17 @@ a.text-primary:focus,a.text-primary:hover {
 }
 
 .planCard {
-	background: #252528;
+	background: #1D1D20;
 	border: 2px solid #1d1d1d;
 }
 
 .planCard:not(.selected):hover {
-	background: #252528bf;
-	border-color: #252528;
+	background: #1D1D20bf;
+	border-color: #1D1D20;
 }
 
 .custom-select {
-	background-color: #252528;
+	background-color: #1D1D20;
 	color: #fff;
 	border: 1px solid #2f2f33;
 	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0JyBoZWlnaHQ9JzUnPjxwYXRoIGZpbGw9JyNmZmZmZmYnIGQ9J00yIDBMMCAyaDR6bTAgNUwwIDNoNHonLz48L3N2Zz4=);
@@ -10937,7 +10937,7 @@ a.text-primary:focus,a.text-primary:hover {
 }
 
 .modal-footer {
-	background: #252528;
+	background: #1D1D20;
 	border: none;
 }
 
@@ -11007,7 +11007,7 @@ span.d-inline-block>.btn-outline-primary {
 }
 
 .progress {
-	background-color: #252528!important;
+	background-color: #1D1D20!important;
 }
 
 .progress-bar {
