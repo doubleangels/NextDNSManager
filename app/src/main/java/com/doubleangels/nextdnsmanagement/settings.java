@@ -106,7 +106,8 @@ public class settings extends AppCompatActivity {
             toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
             SwitchCompat manualDisableAnalytics = findViewById(R.id.manual_disable_analytics);
             TextView versionNumber = findViewById(R.id.versionNumberTextView);
-            versionNumber.setText(BuildConfig.VERSION_NAME);
+            String versionText = BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
+            versionNumber.setText(versionText);
             ImageView whitelist = findViewById(R.id.whitelistImageView);
 
             ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -184,7 +185,7 @@ public class settings extends AppCompatActivity {
     public void updateVisualIndicator(LinkProperties linkProperties, NetworkInfo networkInfo, Context context) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
         try {
-            if (networkInfo != null && linkProperties != null) {
+            if (networkInfo != null) {
                 if (linkProperties.isPrivateDnsActive()) {
                     if (linkProperties.getPrivateDnsServerName() != null) {
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {

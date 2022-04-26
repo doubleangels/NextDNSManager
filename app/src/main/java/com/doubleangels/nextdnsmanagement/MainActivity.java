@@ -17,14 +17,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -40,19 +37,9 @@ import com.google.firebase.perf.metrics.Trace;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.ConnectException;
-import java.net.URL;
-import java.net.UnknownHostException;
-import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
-
-import javax.net.ssl.SSLException;
 
 import io.sentry.ISpan;
 import io.sentry.ITransaction;
@@ -242,33 +229,8 @@ public class MainActivity extends AppCompatActivity {
 
                     private WebResourceResponse getCssWebResourceResponseFromAsset() {
                         try {
-                            File checkFile = new File(getCacheDir(), "nextdns.css");
-                            cacheTime = mFirebaseRemoteConfig.getDouble("cache_time");
-                            if (checkFile.exists()) {
-                                long diff = new Date().getTime() - checkFile.lastModified();
-                                if (diff > cacheTime * 86400000) {
-                                    checkFile.delete();
-                                    InputStream fileStream = new URL(getString(R.string.css_url)).openStream();
-                                    File file = new File(getCacheDir(), "nextdns.css");
-                                    writeStreamToFile(fileStream, file);
-                                    FileInputStream fileInput = new FileInputStream(new File(getCacheDir(), "nextdns.css"));
-                                    return getUtf8EncodedCssWebResourceResponse(fileInput);
-                                } else {
-                                    FileInputStream fileInput = new FileInputStream(new File(getCacheDir(), "nextdns.css"));
-                                    return getUtf8EncodedCssWebResourceResponse(fileInput);
-                                }
-                            } else {
-                                InputStream fileStream = new URL(getString(R.string.css_url)).openStream();
-                                File file = new File(getCacheDir(), "nextdns.css");
-                                writeStreamToFile(fileStream, file);
-                                FileInputStream fileInput = new FileInputStream(new File(getCacheDir(), "nextdns.css"));
-                                return getUtf8EncodedCssWebResourceResponse(fileInput);
-                            }
-                        } catch (SSLException| ConnectException | UnknownHostException e) {
-                            Toast.makeText(MainActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
-                            Sentry.captureException(e);
-                            FirebaseCrashlytics.getInstance().recordException(e);
-                            return null;
+                            InputStream fileInput = getAssets().open("nextdns.css");
+                            return getUtf8EncodedCssWebResourceResponse(fileInput);
                         } catch (Exception e) {
                             Sentry.captureException(e);
                             FirebaseCrashlytics.getInstance().recordException(e);
@@ -278,25 +240,6 @@ public class MainActivity extends AppCompatActivity {
 
                     private WebResourceResponse getUtf8EncodedCssWebResourceResponse(InputStream fileStream) {
                         return new WebResourceResponse("text/css", "UTF-8", fileStream);
-                    }
-
-                    void writeStreamToFile(InputStream input, File file) {
-                        ITransaction MainActivity_write_stream_to_file_transaction = Sentry.startTransaction("writeStreamToFile()", "MainActivity");
-                        try {
-                            try (OutputStream output = new FileOutputStream(file)) {
-                                byte[] buffer = new byte[4 * 1024];
-                                int read;
-                                while ((read = input.read(buffer)) != -1) {
-                                    output.write(buffer, 0, read);
-                                }
-                                output.flush();
-                            }
-                        } catch (Exception e) {
-                            Sentry.captureException(e);
-                            FirebaseCrashlytics.getInstance().recordException(e);
-                        } finally {
-                            MainActivity_write_stream_to_file_transaction.finish();
-                        }
                     }
                 });
             }
@@ -316,11 +259,7 @@ public class MainActivity extends AppCompatActivity {
         ITransaction MainActivity_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "MainActivity");
         try {
             webView = findViewById(R.id.mWebview);
-            webView.setWebChromeClient(new WebChromeClient() {
-                public void onReceivedError(WebView webView, WebResourceRequest request, WebResourceError error){
-                    Toast.makeText(MainActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
-                }
-            });
+            webView.setWebChromeClient(new WebChromeClient());
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setDomStorageEnabled(true);
@@ -367,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
     public void updateVisualIndicator(LinkProperties linkProperties, NetworkInfo networkInfo, Context context) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
         try {
-            if (networkInfo != null && linkProperties != null) {
+            if (networkInfo != null) {
                 if (linkProperties.isPrivateDnsActive()) {
                     if (linkProperties.getPrivateDnsServerName() != null) {
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {

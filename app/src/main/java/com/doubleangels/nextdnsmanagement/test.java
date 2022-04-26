@@ -17,13 +17,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -159,11 +156,7 @@ public class test extends AppCompatActivity {
         ITransaction test_provision_web_view_transaction = Sentry.startTransaction("help", "onCreate()");
         try {
             WebView webView = findViewById(R.id.mWebview);
-            webView.setWebChromeClient(new WebChromeClient() {
-                public void onReceivedError(WebView webView, WebResourceRequest request, WebResourceError error){
-                    Toast.makeText(test.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
-                }
-            });
+            webView.setWebChromeClient(new WebChromeClient());
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setDomStorageEnabled(true);
@@ -220,7 +213,7 @@ public class test extends AppCompatActivity {
     public void updateVisualIndicator(LinkProperties linkProperties, NetworkInfo networkInfo, Context context) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
         try {
-            if (networkInfo != null && linkProperties != null) {
+            if (networkInfo != null) {
                 if (linkProperties.isPrivateDnsActive()) {
                     if (linkProperties.getPrivateDnsServerName() != null) {
                         if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
