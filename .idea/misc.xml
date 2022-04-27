@@ -47,7 +47,7 @@
         <entry key="app/src/main/res/drawable/success_green.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/test.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/whitelist.xml" value="0.2985" />
-        <entry key="app/src/main/res/layout/activity_feedback.xml" value="0.26875" />
+        <entry key="app/src/main/res/layout/activity_feedback.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_help.xml" value="0.26875" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.67" />
         <entry key="app/src/main/res/layout/activity_troubleshooting.xml" value="0.21" />

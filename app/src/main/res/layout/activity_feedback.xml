@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/taskbarImage"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:contentDescription="@string/generic_content_description"
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/nextdns_logo" />
+
+        <ImageView
+            android:id="@+id/connectionStatus"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:contentDescription="@string/generic_content_description"
+            app:srcCompat="@drawable/failure"
+            tools:ignore="ImageContrastCheck"
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="17dp" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/feedbackTextView"
+        android:layout_width="330dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="16dp"
+        android:hint="@string/feedback_hint"
+        android:textColorHint="?android:attr/textColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <Button
+        android:id="@+id/feedbackButton"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/blue"
+        android:textColor="?android:attr/textColorPrimary"
+        android:text="@string/feedback_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feedbackTextView"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

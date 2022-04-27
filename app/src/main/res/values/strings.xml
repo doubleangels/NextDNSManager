@@ -32,4 +32,7 @@
     <string name="css_url">https://nextdns-management.firebaseapp.com/nextdns.css</string>
     <string name="whitelist_url">https://nextdns-management.firebaseapp.com/whitelist.txt</string>
     <string name="github_url">"https://github.com/mtverlee/NextDNSManager/issues"</string>
+    <string name="feedback_directions">Thanks for agreeing to share your feedback! Please enter a description of what you were doing when the error occurred and then submit.</string>
+    <string name="feedback_hint">What were you doing when the error occurred?</string>
+    <string name="feedback_button">Submit</string>
 </resources>

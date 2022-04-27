@@ -1,26 +1,22 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
-import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.AddTrace;
@@ -32,17 +28,18 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
+import io.sentry.UserFeedback;
+import io.sentry.protocol.SentryId;
 
-public class settings extends AppCompatActivity {
+public class feedback extends AppCompatActivity {
 
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     @Override
-    @AddTrace(name = "settings_create")
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction settings_create_transaction = Sentry.startTransaction("onCreate()", "settings");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        ITransaction feedback_create_transaction = Sentry.startTransaction("onCreate()", "feedback");
+        setContentView(R.layout.activity_feedback);
 
         try {
             // Get our remote configuration information.
@@ -66,11 +63,6 @@ public class settings extends AppCompatActivity {
                     mFirebaseRemoteConfig.activate();
                 }
             });
-
-            // Show the version and build numbers.
-            TextView versionNumber = findViewById(R.id.versionNumberTextView);
-            String versionText = BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
-            versionNumber.setText(versionText);
 
             // Set up our window, status bar, and toolbar.
             Window window = this.getWindow();
@@ -96,45 +88,33 @@ public class settings extends AppCompatActivity {
                 }
             });
 
-            // Set up our various buttons.
-            ImageView statusIcon = findViewById(R.id.connectionStatus);
-            statusIcon.setOnClickListener(v -> {
-                Intent helpIntent = new Intent(v.getContext(), help.class);
-                startActivity(helpIntent);
-            });
-            ImageView whitelist = findViewById(R.id.whitelistImageView);
-            whitelist.setOnClickListener(v -> {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse(getString(R.string.whitelist_url)));
-                startActivity(intent);
+            // Get our exception from whatever activity sent us here.
+            Bundle bundle = getIntent().getExtras();
+            Throwable exception = (Throwable) bundle.getSerializable("e");
+
+            // Get feedback comments and submit them along with the error when submit button is pressed.
+            Button feedbackSubmitButton = findViewById(R.id.feedbackButton);
+            feedbackSubmitButton.setOnClickListener(v -> {
+                EditText feedbackTextView = findViewById(R.id.feedbackTextView);
+                String feedbackString = feedbackTextView.getText().toString();
+                SentryId sentryID = Sentry.captureException(exception);
+                UserFeedback userFeedback = new UserFeedback(sentryID);
+                userFeedback.setComments(feedbackString);
+                Sentry.captureUserFeedback(userFeedback);
+                FirebaseCrashlytics.getInstance().recordException(exception);
+                finish();
             });
         } catch (Exception e) {
-            captureExceptionAndFeedback(e);
+            Sentry.captureException(e);
+            FirebaseCrashlytics.getInstance().recordException(e);
         } finally {
-            settings_create_transaction.finish();
+            feedback_create_transaction.finish();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_back_only, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.back) {
-            Intent mainIntent = new Intent(this, MainActivity.class);
-            startActivity(mainIntent);
-        }
-        return super.onContextItemSelected(item);
     }
 
     @AddTrace(name = "update_visual_indicator")
     public void updateVisualIndicator(LinkProperties linkProperties, NetworkInfo networkInfo, Context context) {
-        ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "settings");
+        ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "feedback");
         try {
             if (networkInfo != null) {
                 if (linkProperties.isPrivateDnsActive()) {
@@ -174,45 +154,10 @@ public class settings extends AppCompatActivity {
                 Sentry.setTag("private_dns", "no_connection");
             }
         } catch (Exception e) {
-            captureExceptionAndFeedback(e);
-        } finally {
-            update_visual_indicator_transaction.finish();
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    public void captureExceptionAndFeedback(Exception exception) {
-        ITransaction capture_exception_and_feedback_transaction = Sentry.startTransaction("captureExceptionAndFeedback()", "MainActivity");
-        try {
-            // Generate our snackbar used to ask the user if they want to make feedback.
-            Snackbar snackbar = Snackbar.make(this.getWindow().getDecorView().getRootView(), "Error occurred! Share feedback?", Snackbar.LENGTH_LONG);
-
-            // If user wants to provide feedback, send them to the feedback activity.
-            snackbar.setAction("SHARE", view -> {
-                int LAUNCH_SECOND_ACTIVITY = 1;
-                Intent feedbackIntent = new Intent(this, feedback.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("e", exception);
-                feedbackIntent.putExtras(bundle);
-                this.startActivityForResult(feedbackIntent, LAUNCH_SECOND_ACTIVITY);
-            });
-
-            // If snackbar is dismissed on its own, proceed with normal error report.
-            snackbar.addCallback(new Snackbar.Callback() {
-                @Override
-                public void onDismissed(Snackbar snackbar, int event) {
-                    if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-                        Sentry.captureException(exception);
-                        FirebaseCrashlytics.getInstance().recordException(exception);
-                    }
-                }
-            });
-            snackbar.show();
-        } catch (Exception e) {
             Sentry.captureException(e);
             FirebaseCrashlytics.getInstance().recordException(e);
         } finally {
-            capture_exception_and_feedback_transaction.finish();
+            update_visual_indicator_transaction.finish();
         }
     }
 }

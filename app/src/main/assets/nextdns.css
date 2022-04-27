@@ -10987,8 +10987,7 @@ path.recharts-curve.recharts-area-area {
 }
 
 .rsm-svg {
-	filter: none;
-	!important;
+	filter: none!important;
 }
 
 g.recharts-pie-sector[name=others] {
@@ -11002,8 +11001,7 @@ span.d-inline-block {
 }
 
 span.d-inline-block>.btn-outline-primary {
-	border-color: #0b5bb1;
-	!important;
+	border-color: #0b5bb1!important;
 }
 
 .progress {

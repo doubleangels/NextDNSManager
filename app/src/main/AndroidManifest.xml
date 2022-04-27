@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.doubleangels.nextdnsmanagement"
-    android:versionCode="2">
+    android:versionCode="2" >
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -9,13 +9,16 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <application
+        android:name=".ApplicationClass"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".ApplicationClass">
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".feedback"
+            android:exported="false" />
         <activity
             android:name=".settings"
             android:exported="false" />
@@ -33,23 +36,27 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
+
         <meta-data
             android:name="io.sentry.dsn"
             android:value="https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.sentry.io/6270764" />
         <meta-data
             android:name="io.sentry.traces.sample-rate"
             android:value="1.0" />
-        <meta-data android:name="io.sentry.attach-screenshot" android:value="true" />
+        <meta-data
+            android:name="io.sentry.attach-screenshot"
+            android:value="true" />
         <meta-data
             android:name="firebase_performance_logcat_enabled"
             android:value="true" />

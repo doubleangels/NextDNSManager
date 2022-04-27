@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat;
 import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.AddTrace;
@@ -109,8 +110,7 @@ public class test extends AppCompatActivity {
             // Provision our web view.
             provisionWebView(getString(R.string.test_url));
         } catch (Exception e) {
-            Sentry.captureException(e);
-            FirebaseCrashlytics.getInstance().recordException(e);
+            captureExceptionAndFeedback(e);
         } finally {
             test_create_transaction.finish();
         }
@@ -126,7 +126,7 @@ public class test extends AppCompatActivity {
     @SuppressWarnings("unused")
     @AddTrace(name = "test_provision_web_view")
     public void provisionWebView(String url) {
-        ITransaction test_provision_web_view_transaction = Sentry.startTransaction("help", "onCreate()");
+        ITransaction test_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "test");
         try {
             WebView webView = findViewById(R.id.mWebview);
             webView.setWebChromeClient(new WebChromeClient());
@@ -162,8 +162,7 @@ public class test extends AppCompatActivity {
             webView.loadUrl(url);
             force_dark_mode_span.finish();
         } catch (Exception e) {
-            Sentry.captureException(e);
-            FirebaseCrashlytics.getInstance().recordException(e);
+            captureExceptionAndFeedback(e);
         } finally {
             test_provision_web_view_transaction.finish();
         }
@@ -180,7 +179,7 @@ public class test extends AppCompatActivity {
 
     @AddTrace(name = "update_visual_indicator")
     public void updateVisualIndicator(LinkProperties linkProperties, NetworkInfo networkInfo, Context context) {
-        ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "help");
+        ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "test");
         try {
             if (networkInfo != null) {
                 if (linkProperties.isPrivateDnsActive()) {
@@ -220,10 +219,45 @@ public class test extends AppCompatActivity {
                 Sentry.setTag("private_dns", "no_connection");
             }
         } catch (Exception e) {
+            captureExceptionAndFeedback(e);
+        } finally {
+            update_visual_indicator_transaction.finish();
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    public void captureExceptionAndFeedback(Exception exception) {
+        ITransaction capture_exception_and_feedback_transaction = Sentry.startTransaction("captureExceptionAndFeedback()", "MainActivity");
+        try {
+            // Generate our snackbar used to ask the user if they want to make feedback.
+            Snackbar snackbar = Snackbar.make(this.getWindow().getDecorView().getRootView(), "Error occurred! Share feedback?", Snackbar.LENGTH_LONG);
+
+            // If user wants to provide feedback, send them to the feedback activity.
+            snackbar.setAction("SHARE", view -> {
+                int LAUNCH_SECOND_ACTIVITY = 1;
+                Intent feedbackIntent = new Intent(this, feedback.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("e", exception);
+                feedbackIntent.putExtras(bundle);
+                this.startActivityForResult(feedbackIntent, LAUNCH_SECOND_ACTIVITY);
+            });
+
+            // If snackbar is dismissed on its own, proceed with normal error report.
+            snackbar.addCallback(new Snackbar.Callback() {
+                @Override
+                public void onDismissed(Snackbar snackbar, int event) {
+                    if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
+                        Sentry.captureException(exception);
+                        FirebaseCrashlytics.getInstance().recordException(exception);
+                    }
+                }
+            });
+            snackbar.show();
+        } catch (Exception e) {
             Sentry.captureException(e);
             FirebaseCrashlytics.getInstance().recordException(e);
         } finally {
-            update_visual_indicator_transaction.finish();
+            capture_exception_and_feedback_transaction.finish();
         }
     }
 }
