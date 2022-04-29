@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
-import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,11 +21,7 @@ import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.AddTrace;
-import com.google.firebase.perf.metrics.Trace;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.util.Objects;
 
@@ -34,8 +29,6 @@ import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class settings extends AppCompatActivity {
-
-    private FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     @Override
     @AddTrace(name = "settings_create")
@@ -45,28 +38,6 @@ public class settings extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         try {
-            // Get our remote configuration information.
-            Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
-            remoteConfigStartTrace.start();
-            mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-            FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(1800).build();
-            mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
-            mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);
-            remoteConfigStartTrace.stop();
-            Trace remoteConfigFetchTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_fetch");
-            remoteConfigFetchTrace.start();
-            mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, task -> {
-                if (task.isSuccessful()) {
-                    boolean updated = task.getResult();
-                    if (updated) {
-                        Sentry.setTag("remote_config_fetched", "true");
-                    } else {
-                        Sentry.setTag("remote_config_fetched", "false");
-                    }
-                    mFirebaseRemoteConfig.activate();
-                }
-            });
-
             // Show the version and build numbers.
             TextView versionNumber = findViewById(R.id.versionNumberTextView);
             String versionText = BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
@@ -85,14 +56,13 @@ public class settings extends AppCompatActivity {
             // Check if we're using private DNS and watch DNS type over time to change visual indicator.
             ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
             Network network = connectivityManager.getActiveNetwork();
-            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
-            updateVisualIndicator(linkProperties, networkInfo, getApplicationContext());
+            updateVisualIndicator(linkProperties, getApplicationContext());
             connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
                 @Override
                 public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
                     super.onLinkPropertiesChanged(network, linkProperties);
-                    updateVisualIndicator(linkProperties, networkInfo, getApplicationContext());
+                    updateVisualIndicator(linkProperties, getApplicationContext());
                 }
             });
 
@@ -133,10 +103,10 @@ public class settings extends AppCompatActivity {
     }
 
     @AddTrace(name = "update_visual_indicator")
-    public void updateVisualIndicator(LinkProperties linkProperties, NetworkInfo networkInfo, Context context) {
+    public void updateVisualIndicator(LinkProperties linkProperties, Context context) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "settings");
         try {
-            if (networkInfo != null) {
+            if (linkProperties != null) {
                 if (linkProperties.isPrivateDnsActive()) {
                     if (linkProperties.getPrivateDnsServerName() != null) {
                         // If we're connected to NextDNS, show green.
@@ -209,10 +179,14 @@ public class settings extends AppCompatActivity {
             });
             snackbar.show();
         } catch (Exception e) {
-            Sentry.captureException(e);
-            FirebaseCrashlytics.getInstance().recordException(e);
+            captureException(e);
         } finally {
             capture_exception_and_feedback_transaction.finish();
         }
+    }
+
+    public void captureException(Exception exception) {
+        Sentry.captureException(exception);
+        FirebaseCrashlytics.getInstance().recordException(exception);
     }
 }

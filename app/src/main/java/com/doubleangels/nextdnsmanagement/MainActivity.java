@@ -4,11 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.ConnectivityManager;
 import android.net.LinkProperties;
-import android.net.Network;
-import android.net.NetworkInfo;
-import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,30 +21,21 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.webkit.WebSettingsCompat;
-import androidx.webkit.WebViewFeature;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.google.firebase.perf.FirebasePerformance;
 import com.google.firebase.perf.metrics.AddTrace;
-import com.google.firebase.perf.metrics.Trace;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 
 import java.io.InputStream;
 import java.util.Objects;
 
-import io.sentry.ISpan;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseRemoteConfig mFirebaseRemoteConfig;
     private WebView webView;
-    private Boolean useCustomCSS;
 
     @Override
     @AddTrace(name = "MainActivity_create")
@@ -58,37 +45,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         try {
-
-
-            // Get our remote configuration information.
-            Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
-            remoteConfigStartTrace.start();
-            mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-            FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder().setMinimumFetchIntervalInSeconds(1800).build();
-            mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings);
-            mFirebaseRemoteConfig.setDefaultsAsync(R.xml.remote_config_defaults);
-            remoteConfigStartTrace.stop();
-            Trace remoteConfigFetchTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_fetch");
-            remoteConfigFetchTrace.start();
-            mFirebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, task -> {
-                if (task.isSuccessful()) {
-                    boolean updated = task.getResult();
-                    if (updated) {
-                        Sentry.setTag("remote_config_fetched", "true");
-                    } else {
-                        Sentry.setTag("remote_config_fetched", "false");
-                    }
-                    mFirebaseRemoteConfig.activate();
-                }
-            });
-            remoteConfigFetchTrace.stop();
-
-            // Determine if we're using custom CSS.
-            useCustomCSS = mFirebaseRemoteConfig.getBoolean("use_custom_css");
-            if (useCustomCSS) {
-                Sentry.setTag("custom_css", "true");
-            }
-
             // Determine if dark theme is on.
             boolean isDarkThemeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
             if (isDarkThemeOn) {
@@ -105,20 +61,6 @@ public class MainActivity extends AppCompatActivity {
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
 
-            // Check if we're using private DNS and watch DNS type over time to change visual indicator.
-            ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-            Network network = connectivityManager.getActiveNetwork();
-            LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
-            updateVisualIndicator(linkProperties, networkInfo, getApplicationContext());
-            connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
-                @Override
-                public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
-                    super.onLinkPropertiesChanged(network, linkProperties);
-                    updateVisualIndicator(linkProperties, networkInfo, getApplicationContext());
-                }
-            });
-
             // Let us touch the visual indicator to open an explanation.
             ImageView statusIcon = findViewById(R.id.connectionStatus);
             statusIcon.setOnClickListener(v -> {
@@ -129,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
             });
 
             // Provision our web view.
-            provisionWebView(getString(R.string.main_url), isDarkThemeOn, useCustomCSS);
+            provisionWebView(getString(R.string.main_url), isDarkThemeOn);
         } catch (Exception e) {
             captureExceptionAndFeedback(e);
         } finally {
@@ -163,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.returnHome) {
-            provisionWebView(getString(R.string.main_url), isDarkThemeOn, useCustomCSS);
+            provisionWebView(getString(R.string.main_url), isDarkThemeOn);
             return true;
         }
         if (item.getItemId() == R.id.help) {
@@ -222,18 +164,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    @SuppressWarnings("unused")
+    @SuppressWarnings({"unused", "deprecation"})
     @AddTrace(name = "MainActivity_provision_web_view")
-    public void provisionWebView(String url, Boolean isDarkThemeOn, Boolean useCustomCSS) {
+    public void provisionWebView(String url, Boolean isDarkThemeOn) {
         ITransaction MainActivity_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "MainActivity");
         try {
             webView = findViewById(R.id.mWebview);
             webView.setWebChromeClient(new WebChromeClient());
-            webView.setWebViewClient(new WebViewClient() {
-                public void onPageError() {
-
-                }
-            });
+            webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setDomStorageEnabled(true);
             webView.getSettings().setAppCacheEnabled(true);
@@ -246,28 +184,12 @@ public class MainActivity extends AppCompatActivity {
             webSettings.setAppCachePath(getApplicationContext().getCacheDir().toString());
             webSettings.setAppCacheEnabled(true);
             webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+            webSettings.setRenderPriority(WebSettings.RenderPriority.HIGH);
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
 
-            // If we're using custom CSS, don't use the built in dark mode.
-            if (useCustomCSS) {
-                replaceCSS(url, isDarkThemeOn);
-            } else {
-                ISpan force_dark_mode_span = MainActivity_provision_web_view_transaction.startChild("force_dark_mode");
-                int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
-                    if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
-                        Sentry.setTag("force_dark_mode_strategy_supported", "true");
-                        WebSettingsCompat.setForceDarkStrategy(webView.getSettings(), WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING);
-                    }
-                    if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                        Sentry.setTag("force_dark_mode_supported", "true");
-                        WebSettingsCompat.setForceDark(webView.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
-                    }
-                }
-                webView.loadUrl(url);
-                force_dark_mode_span.finish();
-            }
+            replaceCSS(url, isDarkThemeOn);
+            webView.loadUrl(url);
         } catch (Exception e) {
             captureExceptionAndFeedback(e);
         } finally {
@@ -276,10 +198,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @AddTrace(name = "update_visual_indicator")
-    public void updateVisualIndicator(LinkProperties linkProperties, NetworkInfo networkInfo, Context context) {
+    public void updateVisualIndicator(LinkProperties linkProperties, Context context) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "MainActivity");
         try {
-            if (networkInfo != null) {
+            if (linkProperties != null) {
                 if (linkProperties.isPrivateDnsActive()) {
                     if (linkProperties.getPrivateDnsServerName() != null) {
                         // If we're connected to NextDNS, show green.
@@ -352,10 +274,14 @@ public class MainActivity extends AppCompatActivity {
             });
             snackbar.show();
         } catch (Exception e) {
-            Sentry.captureException(e);
-            FirebaseCrashlytics.getInstance().recordException(e);
+            captureException(e);
         } finally {
             capture_exception_and_feedback_transaction.finish();
         }
+    }
+
+    public void captureException(Exception exception) {
+        Sentry.captureException(exception);
+        FirebaseCrashlytics.getInstance().recordException(exception);
     }
 }
