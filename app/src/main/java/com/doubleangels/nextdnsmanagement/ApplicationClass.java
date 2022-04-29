@@ -1,7 +1,6 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.app.Application;
-import android.content.SharedPreferences;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.firebase.perf.FirebasePerformance;
@@ -30,9 +29,6 @@ public class ApplicationClass extends Application {
             OneSignal.initWithContext(this);
             OneSignal.setAppId(ONESIGNAL_APP_ID);
 
-            // Set up our shared preferences.
-            SharedPreferences sharedPreferences = getSharedPreferences("sharedPreferences", MODE_PRIVATE);
-
             // Get our remote configuration information.
             Trace remoteConfigStartTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_setup");
             remoteConfigStartTrace.start();
@@ -43,7 +39,7 @@ public class ApplicationClass extends Application {
             remoteConfigStartTrace.stop();
             Trace remoteConfigFetchTrace = FirebasePerformance.getInstance().newTrace("remoteConfig_fetch");
             remoteConfigFetchTrace.start();
-            firebaseRemoteConfig.fetchAndActivate().addOnCompleteListener((Executor) this, task -> {
+            firebaseRemoteConfig.fetchAndActivate().addOnCompleteListener(this, task -> {
                 if (task.isSuccessful()) {
                     boolean updated = task.getResult();
                     if (updated) {
