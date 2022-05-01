@@ -1,13 +1,8 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.ConnectivityManager;
-import android.net.LinkProperties;
-import android.net.Network;
-import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,8 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
 
-import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.perf.metrics.AddTrace;
 
 import java.util.Objects;
@@ -37,6 +31,8 @@ import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class ping extends AppCompatActivity {
+
+    public ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,22 +51,15 @@ public class ping extends AppCompatActivity {
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
 
-            // Check if we're using private DNS and watch DNS type over time to change visual indicator.
-            ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            Network network = connectivityManager.getActiveNetwork();
-            LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
-            updateVisualIndicator(linkProperties, getApplicationContext());
-            connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
-                @Override
-                public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
-                    super.onLinkPropertiesChanged(network, linkProperties);
-                    updateVisualIndicator(linkProperties, getApplicationContext());
-                }
-            });
+            // Set up the visual indicator.
+            VisualIndicator visualIndicator = new VisualIndicator();
+            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
 
             // Let us touch the visual indicator to open an explanation.
             ImageView statusIcon = findViewById(R.id.connectionStatus);
             statusIcon.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "help_icon");
                 Intent helpIntent = new Intent(v.getContext(), help.class);
                 startActivity(helpIntent);
             });
@@ -78,7 +67,7 @@ public class ping extends AppCompatActivity {
             // Provision our web view.
             provisionWebView(getString(R.string.ping_url));
         } catch (Exception e) {
-            captureExceptionAndFeedback(e);
+            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
         } finally {
             ping_create_transaction.finish();
         }
@@ -130,7 +119,7 @@ public class ping extends AppCompatActivity {
             webView.loadUrl(url);
             force_dark_mode_span.finish();
         } catch (Exception e) {
-            captureExceptionAndFeedback(e);
+            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
         } finally {
             ping_provision_web_view_transaction.finish();
         }
@@ -143,93 +132,5 @@ public class ping extends AppCompatActivity {
             startActivity(mainIntent);
         }
         return super.onContextItemSelected(item);
-    }
-
-    @AddTrace(name = "update_visual_indicator")
-    public void updateVisualIndicator(LinkProperties linkProperties, Context context) {
-        ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "ping");
-        try {
-            if (linkProperties != null) {
-                if (linkProperties.isPrivateDnsActive()) {
-                    if (linkProperties.getPrivateDnsServerName() != null) {
-                        // If we're connected to NextDNS, show green.
-                        if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
-                            ImageView connectionStatus = findViewById(R.id.connectionStatus);
-                            connectionStatus.setImageResource(R.drawable.success);
-                            connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.green));
-                            Sentry.setTag("private_dns", "nextdns");
-                        } else {
-                            // If we're connected to private DNS but not NextDNS, show yellow.
-                            ImageView connectionStatus = findViewById(R.id.connectionStatus);
-                            connectionStatus.setImageResource(R.drawable.success);
-                            connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
-                            Sentry.setTag("private_dns", "private");
-                        }
-                    } else {
-                        // If we're connected to private DNS but not NextDNS, show yellow.
-                        ImageView connectionStatus = findViewById(R.id.connectionStatus);
-                        connectionStatus.setImageResource(R.drawable.success);
-                        connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
-                        Sentry.setTag("private_dns", "private");
-                    }
-                } else {
-                    // If we're not using private DNS, show red.
-                    ImageView connectionStatus = findViewById(R.id.connectionStatus);
-                    connectionStatus.setImageResource(R.drawable.failure);
-                    connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.red));
-                    Sentry.setTag("private_dns", "insecure");
-                }
-            } else {
-                // If we have no internet connection, show gray.
-                ImageView connectionStatus = findViewById(R.id.connectionStatus);
-                connectionStatus.setImageResource(R.drawable.failure);
-                connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.gray));
-                Sentry.setTag("private_dns", "no_connection");
-            }
-        } catch (Exception e) {
-            captureExceptionAndFeedback(e);
-        } finally {
-            update_visual_indicator_transaction.finish();
-        }
-    }
-
-    @SuppressWarnings("deprecation")
-    public void captureExceptionAndFeedback(Exception exception) {
-        ITransaction capture_exception_and_feedback_transaction = Sentry.startTransaction("captureExceptionAndFeedback()", "MainActivity");
-        try {
-            // Generate our snackbar used to ask the user if they want to make feedback.
-            Snackbar snackbar = Snackbar.make(this.getWindow().getDecorView().getRootView(), "Error occurred! Share feedback?", Snackbar.LENGTH_LONG);
-
-            // If user wants to provide feedback, send them to the feedback activity.
-            snackbar.setAction("SHARE", view -> {
-                int LAUNCH_SECOND_ACTIVITY = 1;
-                Intent feedbackIntent = new Intent(this, feedback.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("e", exception);
-                feedbackIntent.putExtras(bundle);
-                this.startActivityForResult(feedbackIntent, LAUNCH_SECOND_ACTIVITY);
-            });
-
-            // If snackbar is dismissed on its own, proceed with normal error report.
-            snackbar.addCallback(new Snackbar.Callback() {
-                @Override
-                public void onDismissed(Snackbar snackbar, int event) {
-                    if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
-                        Sentry.captureException(exception);
-                        FirebaseCrashlytics.getInstance().recordException(exception);
-                    }
-                }
-            });
-            snackbar.show();
-        } catch (Exception e) {
-            captureException(e);
-        } finally {
-            capture_exception_and_feedback_transaction.finish();
-        }
-    }
-
-    public void captureException(Exception exception) {
-        Sentry.captureException(exception);
-        FirebaseCrashlytics.getInstance().recordException(exception);
     }
 }

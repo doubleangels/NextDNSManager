@@ -1,10 +1,6 @@
 package com.doubleangels.nextdnsmanagement;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.LinkProperties;
-import android.net.Network;
-import android.net.NetworkRequest;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -16,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.google.firebase.perf.metrics.AddTrace;
 
 import java.util.Objects;
 
@@ -27,6 +23,8 @@ import io.sentry.UserFeedback;
 import io.sentry.protocol.SentryId;
 
 public class feedback extends AppCompatActivity {
+
+    public ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +43,17 @@ public class feedback extends AppCompatActivity {
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
             toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
 
-            // Check if we're using private DNS and watch DNS type over time to change visual indicator.
-            ConnectivityManager connectivityManager = (ConnectivityManager) this.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-            Network network = connectivityManager.getActiveNetwork();
-            LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
-            updateVisualIndicator(linkProperties, getApplicationContext());
-            connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
-                @Override
-                public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
-                    super.onLinkPropertiesChanged(network, linkProperties);
-                    updateVisualIndicator(linkProperties, getApplicationContext());
-                }
+            // Set up the visual indicator.
+            VisualIndicator visualIndicator = new VisualIndicator();
+            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+
+            // Let us touch the visual indicator to open an explanation.
+            ImageView statusIcon = findViewById(R.id.connectionStatus);
+            statusIcon.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "help_icon");
+                Intent helpIntent = new Intent(v.getContext(), help.class);
+                startActivity(helpIntent);
             });
 
             // Get our exception from whatever activity sent us here.
@@ -75,62 +73,9 @@ public class feedback extends AppCompatActivity {
                 finish();
             });
         } catch (Exception e) {
-            captureException(e);
+            exceptionHandler.captureException(e);
         } finally {
             feedback_create_transaction.finish();
         }
-    }
-
-    @AddTrace(name = "update_visual_indicator")
-    public void updateVisualIndicator(LinkProperties linkProperties, Context context) {
-        ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "feedback");
-        try {
-            if (linkProperties != null) {
-                if (linkProperties.isPrivateDnsActive()) {
-                    if (linkProperties.getPrivateDnsServerName() != null) {
-                        // If we're connected to NextDNS, show green.
-                        if (linkProperties.getPrivateDnsServerName().contains("nextdns")) {
-                            ImageView connectionStatus = findViewById(R.id.connectionStatus);
-                            connectionStatus.setImageResource(R.drawable.success);
-                            connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.green));
-                            Sentry.setTag("private_dns", "nextdns");
-                        } else {
-                            // If we're connected to private DNS but not NextDNS, show yellow.
-                            ImageView connectionStatus = findViewById(R.id.connectionStatus);
-                            connectionStatus.setImageResource(R.drawable.success);
-                            connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
-                            Sentry.setTag("private_dns", "private");
-                        }
-                    } else {
-                        // If we're connected to private DNS but not NextDNS, show yellow.
-                        ImageView connectionStatus = findViewById(R.id.connectionStatus);
-                        connectionStatus.setImageResource(R.drawable.success);
-                        connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
-                        Sentry.setTag("private_dns", "private");
-                    }
-                } else {
-                    // If we're not using private DNS, show red.
-                    ImageView connectionStatus = findViewById(R.id.connectionStatus);
-                    connectionStatus.setImageResource(R.drawable.failure);
-                    connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.red));
-                    Sentry.setTag("private_dns", "insecure");
-                }
-            } else {
-                // If we have no internet connection, show gray.
-                ImageView connectionStatus = findViewById(R.id.connectionStatus);
-                connectionStatus.setImageResource(R.drawable.failure);
-                connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.gray));
-                Sentry.setTag("private_dns", "no_connection");
-            }
-        } catch (Exception e) {
-            captureException(e);
-        } finally {
-            update_visual_indicator_transaction.finish();
-        }
-    }
-
-    public void captureException(Exception exception) {
-        Sentry.captureException(exception);
-        FirebaseCrashlytics.getInstance().recordException(exception);
     }
 }

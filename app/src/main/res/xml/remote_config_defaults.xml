@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- START xml_defaults -->
 <defaultsMap>
-    <entry>
-        <key>use_custom_css</key>
-        <value>true</value>
-    </entry>
-    <entry>
-        <key>cache_time</key>
-        <value>7</value>
-    </entry>
 </defaultsMap>
     <!-- END xml_defaults -->
