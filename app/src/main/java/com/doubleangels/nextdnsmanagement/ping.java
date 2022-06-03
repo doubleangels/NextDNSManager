@@ -67,7 +67,7 @@ public class ping extends AppCompatActivity {
             // Provision our web view.
             provisionWebView(getString(R.string.ping_url));
         } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
+            exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
             ping_create_transaction.finish();
         }
@@ -119,7 +119,7 @@ public class ping extends AppCompatActivity {
             webView.loadUrl(url);
             force_dark_mode_span.finish();
         } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
+            exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
             ping_provision_web_view_transaction.finish();
         }

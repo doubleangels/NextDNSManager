@@ -55,7 +55,7 @@ public class help extends AppCompatActivity {
                 startActivity(helpIntent);
             });
         } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
+            exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
             help_create_transaction.finish();
         }

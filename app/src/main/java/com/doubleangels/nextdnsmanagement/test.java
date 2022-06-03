@@ -68,7 +68,7 @@ public class test extends AppCompatActivity {
             // Provision our web view.
             provisionWebView(getString(R.string.test_url));
         } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
+            exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
             test_create_transaction.finish();
         }
@@ -120,7 +120,7 @@ public class test extends AppCompatActivity {
             webView.loadUrl(url);
             force_dark_mode_span.finish();
         } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
+            exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
             test_provision_web_view_transaction.finish();
         }

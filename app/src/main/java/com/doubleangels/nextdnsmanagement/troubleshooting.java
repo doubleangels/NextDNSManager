@@ -74,7 +74,7 @@ public class troubleshooting extends AppCompatActivity {
                 startActivity(intent);
             });
         } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
+            exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
             troubleshooting_create_transaction.finish();
         }

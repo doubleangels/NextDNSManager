@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             // Provision our web view.
             provisionWebView(getString(R.string.main_url), isDarkThemeOn);
         } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
+            exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
             MainActivity_create_transaction.finish();
         }
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             // Load the webview with the URL and the custom CSS.
             webView.loadUrl(url);
         } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
+            exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
             replace_css_transaction.finish();
         }
@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
             replaceCSS(url, isDarkThemeOn);
             webView.loadUrl(url);
         } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
+            exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
             MainActivity_provision_web_view_transaction.finish();
         }

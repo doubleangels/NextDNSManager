@@ -1,7 +1,6 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,7 +11,7 @@ import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class ExceptionHandler {
-    public void captureExceptionAndFeedback(Exception exception, Activity activity, Context context) {
+    public void captureExceptionAndFeedback(Exception exception, Activity activity) {
         ITransaction capture_exception_and_feedback_transaction = Sentry.startTransaction("captureExceptionAndFeedback()", "ExceptionHandler");
         try {
             // Generate our snackbar used to ask the user if they want to make feedback.

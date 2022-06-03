@@ -72,7 +72,7 @@ public class settings extends AppCompatActivity {
             String versionText = BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
             versionNumber.setText(versionText);
         } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this, getApplicationContext());
+            exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
             settings_create_transaction.finish();
         }
