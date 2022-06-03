@@ -1,7 +1,9 @@
 package com.doubleangels.nextdnsmanagement;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -58,14 +61,17 @@ public class settings extends AppCompatActivity {
             });
 
             // Set up our various buttons.
-            ImageView whitelist = findViewById(R.id.whitelistImageView);
-            whitelist.setOnClickListener(v -> {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_VIEW);
-                intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                intent.setData(Uri.parse(getString(R.string.whitelist_url)));
-                startActivity(intent);
-            });
+            ImageView whitelistDomain1ImageView = findViewById(R.id.whitelistDomain1ImageView);
+            TextView whitelistDomain1TextView = findViewById(R.id.whitelistDomain1TextView);
+            whitelistDomain1ImageView.setOnClickListener(v -> copyURL(whitelistDomain1TextView));
+
+            ImageView whitelistDomain2ImageView = findViewById(R.id.whitelistDomain2ImageView);
+            TextView whitelistDomain2TextView = findViewById(R.id.whitelistDomain2TextView);
+            whitelistDomain2ImageView.setOnClickListener(v -> copyURL(whitelistDomain2TextView));
+
+            ImageView whitelistDomain3ImageView = findViewById(R.id.whitelistDomain3ImageView);
+            TextView whitelistDomain3TextView = findViewById(R.id.whitelistDomain3TextView);
+            whitelistDomain3ImageView.setOnClickListener(v -> copyURL(whitelistDomain3TextView));
 
             // Show the version and build numbers.
             TextView versionNumber = findViewById(R.id.versionNumberTextView);
@@ -91,5 +97,16 @@ public class settings extends AppCompatActivity {
             startActivity(mainIntent);
         }
         return super.onContextItemSelected(item);
+    }
+
+    public void copyURL(TextView textView) {
+        try {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clip = ClipData.newPlainText("whitelist_url", textView.getText());
+            clipboard.setPrimaryClip(clip);
+            Toast.makeText(this, "Copied!", Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            exceptionHandler.captureExceptionAndFeedback(e, this);
+        }
     }
 }

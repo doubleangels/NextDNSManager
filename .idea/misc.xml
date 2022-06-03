@@ -39,6 +39,7 @@
         <entry key="app/src/main/res/drawable/failure_red.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/github.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/home.xml" value="0.2985" />
+        <entry key="app/src/main/res/drawable/ic_content_copy.xml" value="0.1905" />
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/nextdns_logo.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/ping.xml" value="0.2985" />
@@ -49,7 +50,7 @@
         <entry key="app/src/main/res/drawable/whitelist.xml" value="0.2985" />
         <entry key="app/src/main/res/layout/activity_feedback.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_help.xml" value="0.26875" />
-        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_troubleshooting.xml" value="0.21" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.26875" />
       </map>

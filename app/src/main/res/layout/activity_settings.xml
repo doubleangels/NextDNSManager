@@ -40,9 +40,9 @@
     <TextView
         android:id="@+id/settingsFirebaseTextView"
         style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="24dp"
         android:gravity="center"
         android:text="@string/firebase_title"
         android:textAlignment="center"
@@ -51,18 +51,83 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <ImageView
-        android:id="@+id/whitelistImageView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <TextView
+        android:id="@+id/whitelistDomain1TextView"
+        android:layout_width="120dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="124dp"
         android:layout_marginTop="12dp"
-        android:contentDescription="@string/generic_content_description"
-        android:fillColor="?attr/colorControlNormal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        android:layout_marginEnd="23dp"
+        android:text="@string/whitelist_domain_1"
+        android:textAlignment="center"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toStartOf="@+id/whitelistDomain1ImageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/analyticsInstructionsTextView"
-        app:srcCompat="@drawable/whitelist" />
+        app:layout_constraintTop_toBottomOf="@+id/analyticsInstructionsTextView" />
+
+    <TextView
+        android:id="@+id/whitelistDomain2TextView"
+        android:layout_width="130dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="13dp"
+        android:text="@string/whitelist_domain_2"
+        android:textAlignment="center"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toStartOf="@+id/whitelistDomain2ImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/whitelistDomain1TextView" />
+
+    <ImageView
+        android:id="@+id/whitelistDomain3ImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="124dp"
+        android:contentDescription="@string/generic_content_description"
+        android:src="@drawable/ic_content_copy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/whitelistDomain2ImageView" />
+
+    <TextView
+        android:id="@+id/whitelistDomain3TextView"
+        android:layout_width="90dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="124dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="53dp"
+        android:text="@string/whitelist_domain_3"
+        android:textAlignment="center"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toStartOf="@+id/whitelistDomain3ImageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/whitelistDomain2TextView" />
+
+    <ImageView
+        android:id="@+id/whitelistDomain2ImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="124dp"
+        android:contentDescription="@string/generic_content_description"
+        android:src="@drawable/ic_content_copy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/whitelistDomain1ImageView" />
+
+    <ImageView
+        android:id="@+id/whitelistDomain1ImageView"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="124dp"
+        android:contentDescription="@string/generic_content_description"
+        android:src="@drawable/ic_content_copy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/analyticsInstructionsTextView" />
 
     <TextView
         android:id="@+id/analyticsInstructionsTextView"
