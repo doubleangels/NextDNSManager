@@ -15,7 +15,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.perf.metrics.AddTrace;
 
 import java.util.Objects;
 
@@ -27,7 +26,6 @@ public class troubleshooting extends AppCompatActivity {
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     @Override
-    @AddTrace(name = "troubleshooting_create")
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction troubleshooting_create_transaction = Sentry.startTransaction("onCreate()", "troubleshooting");
         super.onCreate(savedInstanceState);

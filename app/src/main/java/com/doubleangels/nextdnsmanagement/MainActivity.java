@@ -22,7 +22,6 @@ import androidx.core.content.ContextCompat;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.google.firebase.perf.metrics.AddTrace;
 
 import java.io.InputStream;
 import java.util.Objects;
@@ -36,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     @Override
-    @AddTrace(name = "MainActivity_create")
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction MainActivity_create_transaction = Sentry.startTransaction("onCreate()", "MainActivity");
         super.onCreate(savedInstanceState);
@@ -114,16 +112,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(troubleshootingIntent);
             return true;
         }
-        if (item.getItemId() ==  R.id.settings) {
-            Intent settingsIntent = new Intent(this, settings.class);
-            startActivity(settingsIntent);
+        if (item.getItemId() ==  R.id.preferences) {
+            Intent preferencesIntent = new Intent(this, preferences.class);
+            startActivity(preferencesIntent);
             return true;
         }
         return super.onContextItemSelected(item);
     }
 
     @SuppressWarnings("deprecation")
-    @AddTrace(name = "replace_css")
     public void replaceCSS( String url, boolean isDarkThemeOn) {
         ITransaction replace_css_transaction = Sentry.startTransaction("replaceCSS()", "MainActivity");
         try {
@@ -166,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     @SuppressWarnings({"unused"})
-    @AddTrace(name = "MainActivity_provision_web_view")
     public void provisionWebView(String url, Boolean isDarkThemeOn) {
         ITransaction MainActivity_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "MainActivity");
         try {

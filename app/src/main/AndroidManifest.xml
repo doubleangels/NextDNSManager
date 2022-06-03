@@ -20,7 +20,7 @@
             android:name=".feedback"
             android:exported="false" />
         <activity
-            android:name=".settings"
+            android:name=".preferences"
             android:exported="false" />
         <activity
             android:name=".troubleshooting"

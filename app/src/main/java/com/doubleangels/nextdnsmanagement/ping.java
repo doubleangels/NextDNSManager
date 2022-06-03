@@ -22,7 +22,6 @@ import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.perf.metrics.AddTrace;
 
 import java.util.Objects;
 
@@ -81,7 +80,6 @@ public class ping extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     @SuppressWarnings("unused")
-    @AddTrace(name = "ping_provision_web_view")
     public void provisionWebView(String url) {
         ITransaction ping_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "ping");
         try {

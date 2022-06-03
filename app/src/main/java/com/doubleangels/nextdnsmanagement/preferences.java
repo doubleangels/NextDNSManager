@@ -18,21 +18,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.perf.metrics.AddTrace;
 
 import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
-public class settings extends AppCompatActivity {
+public class preferences extends AppCompatActivity {
 
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     @Override
-    @AddTrace(name = "settings_create")
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction settings_create_transaction = Sentry.startTransaction("onCreate()", "settings");
+        ITransaction preferences_create_transaction = Sentry.startTransaction("onCreate()", "preferences");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -80,7 +78,7 @@ public class settings extends AppCompatActivity {
         } catch (Exception e) {
             exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
-            settings_create_transaction.finish();
+            preferences_create_transaction.finish();
         }
     }
 
@@ -100,6 +98,7 @@ public class settings extends AppCompatActivity {
     }
 
     public void copyURL(TextView textView) {
+        ITransaction preferences_copy_url_transaction = Sentry.startTransaction("copyURL()", "settings");
         try {
             ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("whitelist_url", textView.getText());
@@ -107,6 +106,8 @@ public class settings extends AppCompatActivity {
             Toast.makeText(this, "Copied!", Toast.LENGTH_LONG).show();
         } catch (Exception e) {
             exceptionHandler.captureExceptionAndFeedback(e, this);
+        } finally {
+            preferences_copy_url_transaction.finish();
         }
     }
 }

@@ -22,7 +22,6 @@ import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.perf.metrics.AddTrace;
 
 import java.util.Objects;
 
@@ -35,7 +34,6 @@ public class test extends AppCompatActivity {
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     @Override
-    @AddTrace(name = "test_create")
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction test_create_transaction = Sentry.startTransaction("onCreate()", "test");
         super.onCreate(savedInstanceState);
@@ -82,7 +80,6 @@ public class test extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     @SuppressWarnings("unused")
-    @AddTrace(name = "test_provision_web_view")
     public void provisionWebView(String url) {
         ITransaction test_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "test");
         try {

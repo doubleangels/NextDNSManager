@@ -11,13 +11,11 @@ import android.widget.ImageView;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.google.firebase.perf.metrics.AddTrace;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class VisualIndicator {
-    @AddTrace(name = "update_visual_indicator")
     public void updateVisualIndicator(LinkProperties linkProperties, Activity activity, Context context) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "VisualIndicator");
         try {

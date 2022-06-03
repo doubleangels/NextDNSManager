@@ -13,7 +13,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.perf.metrics.AddTrace;
 
 import java.util.Objects;
 
@@ -25,7 +24,6 @@ public class help extends AppCompatActivity {
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
 
     @Override
-    @AddTrace(name = "help_create"  /* optional */)
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction help_create_transaction = Sentry.startTransaction("onCreate()", "help");
         super.onCreate(savedInstanceState);

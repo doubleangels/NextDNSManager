@@ -37,4 +37,10 @@
     <string name="whitelist_domain_1">*.o244019.sentry.io</string>
     <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
     <string name="whitelist_domain_3">*.onesignal.com</string>
+    <string name="refresh_title">Refresh</string>
+    <string name="home_title">Home</string>
+    <string name="ping_title">NextDNS Ping Test</string>
+    <string name="test_title">NextDNS Connection</string>
+    <string name="preferences_title">Preferences</string>
+    <string name="help_title">Help</string>
 </resources>
