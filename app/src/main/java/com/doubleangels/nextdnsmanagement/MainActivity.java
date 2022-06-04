@@ -117,6 +117,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(preferencesIntent);
             return true;
         }
+        if (item.getItemId() == R.id.about) {
+            Intent aboutIntent = new Intent(this, about.class);
+            startActivity(aboutIntent);
+            return true;
+        }
         return super.onContextItemSelected(item);
     }
 

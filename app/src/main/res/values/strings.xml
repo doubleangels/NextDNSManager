@@ -18,7 +18,7 @@
     <string name="help_red">Secure DNS is NOT being used.</string>
     <string name="generic_content_description">This is a generic content description.</string>
     <string name="disclaimer">This app is NOT an official NextDNS app. This app and its developer are NOT in any way affiliated or related to NextDNS.</string>
-    <string name="firebase_title">Error Reporting</string>
+    <string name="error_reporting_title">Error Reporting</string>
     <string name="privacy_description">Please consider whitelisting the list of domains below to allow anonymized crash and error reporting as well as push notifications. This greatly helps in my effort to make this app better!</string>
     <string name="troubleshooting_title">Troubleshooting</string>
     <string name="troubleshooting_description">If you experience any problems with this app, there are a couple of things that you can try.</string>
@@ -43,4 +43,10 @@
     <string name="test_title">NextDNS Connection</string>
     <string name="preferences_title">Preferences</string>
     <string name="help_title">Help</string>
+    <string name="about_title">About</string>
+    <string name="author_title">Author</string>
+    <string name="author_github">Github</string>
+    <string name="author_github_url">https://github.com/mtverlee</string>
+    <string name="author_website">Website</string>
+    <string name="author_website_url">https://doubleangels.com</string>
 </resources>

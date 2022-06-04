@@ -33,4 +33,9 @@
         android:title="@string/help_title"
         app:showAsAction="never">
     </item>
+    <item
+        android:id="@+id/about"
+        android:title="@string/about_title"
+        app:showAsAction="never">
+    </item>
 </menu>

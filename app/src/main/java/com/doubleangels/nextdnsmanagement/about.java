@@ -1,9 +1,7 @@
 package com.doubleangels.nextdnsmanagement;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,7 +9,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,7 +21,7 @@ import java.util.Objects;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
-public class preferences extends AppCompatActivity {
+public class about extends AppCompatActivity {
 
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
 
@@ -32,7 +29,7 @@ public class preferences extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction preferences_create_transaction = Sentry.startTransaction("onCreate()", "preferences");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preferences);
+        setContentView(R.layout.activity_about);
 
         try {
             // Set up our window, status bar, and toolbar.
@@ -59,17 +56,21 @@ public class preferences extends AppCompatActivity {
             });
 
             // Set up our various buttons.
-            ImageView whitelistDomain1ImageView = findViewById(R.id.whitelistDomain1ImageView);
-            TextView whitelistDomain1TextView = findViewById(R.id.whitelistDomain1TextView);
-            whitelistDomain1ImageView.setOnClickListener(v -> copyURL(whitelistDomain1TextView));
+            TextView authorGithubTextView = findViewById(R.id.authorGithubTextView);
+            authorGithubTextView.setOnClickListener(v -> {
+                Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.author_github_url)));
+                startActivity(githubIntent);
+            });
+            TextView authorWebsiteTextView = findViewById(R.id.authorWebsiteTextView);
+            authorWebsiteTextView.setOnClickListener(v -> {
+                Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.author_website_url)));
+                startActivity(githubIntent);
+            });
 
-            ImageView whitelistDomain2ImageView = findViewById(R.id.whitelistDomain2ImageView);
-            TextView whitelistDomain2TextView = findViewById(R.id.whitelistDomain2TextView);
-            whitelistDomain2ImageView.setOnClickListener(v -> copyURL(whitelistDomain2TextView));
-
-            ImageView whitelistDomain3ImageView = findViewById(R.id.whitelistDomain3ImageView);
-            TextView whitelistDomain3TextView = findViewById(R.id.whitelistDomain3TextView);
-            whitelistDomain3ImageView.setOnClickListener(v -> copyURL(whitelistDomain3TextView));
+            // Show the version and build numbers.
+            TextView versionNumber = findViewById(R.id.versionNumberTextView);
+            String versionText = BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
+            versionNumber.setText(versionText);
         } catch (Exception e) {
             exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
@@ -90,19 +91,5 @@ public class preferences extends AppCompatActivity {
             startActivity(mainIntent);
         }
         return super.onContextItemSelected(item);
-    }
-
-    public void copyURL(TextView textView) {
-        ITransaction preferences_copy_url_transaction = Sentry.startTransaction("copyURL()", "settings");
-        try {
-            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("whitelist_url", textView.getText());
-            clipboard.setPrimaryClip(clip);
-            Toast.makeText(this, "Copied!", Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this);
-        } finally {
-            preferences_copy_url_transaction.finish();
-        }
     }
 }
