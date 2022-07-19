@@ -37,7 +37,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.0'
     implementation 'androidx.webkit:webkit:1.4.0'
     implementation 'androidx.core:core:1.8.0'
-    implementation platform('com.google.firebase:firebase-bom:29.3.0')
+    implementation platform('com.google.firebase:firebase-bom:30.3.0')
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-crashlytics'
     implementation 'com.google.firebase:firebase-perf'
@@ -47,8 +47,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-iid'
     implementation 'commons-io:commons-io:20030203.000550'
-    implementation 'io.sentry:sentry-android:6.0.0-alpha.5'
-    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
+    implementation 'io.sentry:sentry-android:6.2.1'
+    implementation 'com.onesignal:OneSignal:4.8.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
