@@ -2,7 +2,6 @@ package com.doubleangels.nextdnsmanagement;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,12 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.webkit.WebSettingsCompat;
-import androidx.webkit.WebViewFeature;
 
 import java.util.Objects;
 
-import io.sentry.ISpan;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
@@ -94,21 +90,7 @@ public class ping extends AppCompatActivity {
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
 
-            // Use the built in dark mode.
-            ISpan force_dark_mode_span = ping_provision_web_view_transaction.startChild("force_dark_mode");
-            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) {
-                if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK_STRATEGY)) {
-                    Sentry.setTag("force_dark_mode_strategy_supported", "true");
-                    WebSettingsCompat.setForceDarkStrategy(webView.getSettings(), WebSettingsCompat.DARK_STRATEGY_PREFER_WEB_THEME_OVER_USER_AGENT_DARKENING);
-                }
-                if (WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)) {
-                    Sentry.setTag("force_dark_mode_supported", "true");
-                    WebSettingsCompat.setForceDark(webView.getSettings(), WebSettingsCompat.FORCE_DARK_ON);
-                }
-            }
             webView.loadUrl(url);
-            force_dark_mode_span.finish();
         } catch (Exception e) {
             exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {

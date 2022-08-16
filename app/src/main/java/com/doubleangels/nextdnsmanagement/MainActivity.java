@@ -179,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
             cookieManager.setAcceptCookie(true);
 
             replaceCSS(url, isDarkThemeOn);
-            webView.loadUrl(url);
         } catch (Exception e) {
             exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
