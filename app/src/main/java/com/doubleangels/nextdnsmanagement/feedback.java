@@ -12,9 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
-
 import java.util.Objects;
 
 import io.sentry.ITransaction;
@@ -50,8 +47,6 @@ public class feedback extends AppCompatActivity {
             // Let us touch the visual indicator to open an explanation.
             ImageView statusIcon = findViewById(R.id.connectionStatus);
             statusIcon.setOnClickListener(v -> {
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "help_icon");
                 Intent helpIntent = new Intent(v.getContext(), help.class);
                 startActivity(helpIntent);
             });
@@ -69,7 +64,6 @@ public class feedback extends AppCompatActivity {
                 UserFeedback userFeedback = new UserFeedback(sentryID);
                 userFeedback.setComments(feedbackString);
                 Sentry.captureUserFeedback(userFeedback);
-                FirebaseCrashlytics.getInstance().recordException(exception);
                 finish();
             });
         } catch (Exception e) {

@@ -16,12 +16,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.io.InputStream;
 import java.util.Objects;
@@ -57,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
             // Let us touch the visual indicator to open an explanation.
             ImageView statusIcon = findViewById(R.id.connectionStatus);
             statusIcon.setOnClickListener(v -> {
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "help_icon");
                 Intent helpIntent = new Intent(v.getContext(), help.class);
                 startActivity(helpIntent);
             });
@@ -79,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -87,9 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean isDarkThemeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
-        Bundle bundle = new Bundle();
         if (item.getItemId() == R.id.refreshNextDNS) {
-            bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "refresh_icon");
             webView.reload();
             return true;
         }
@@ -147,7 +141,6 @@ public class MainActivity extends AppCompatActivity {
                             return getUtf8EncodedCssWebResourceResponse(fileInput);
                         } catch (Exception e) {
                             Sentry.captureException(e);
-                            FirebaseCrashlytics.getInstance().recordException(e);
                             return null;
                         }
                     }

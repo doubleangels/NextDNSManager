@@ -10,8 +10,6 @@ import android.widget.ImageView;
 
 import androidx.core.content.ContextCompat;
 
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
-
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
@@ -80,6 +78,5 @@ public class VisualIndicator {
 
     public void captureException(Exception exception) {
         Sentry.captureException(exception);
-        FirebaseCrashlytics.getInstance().recordException(exception);
     }
 }

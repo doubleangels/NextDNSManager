@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
@@ -33,7 +32,6 @@ public class ExceptionHandler {
                 public void onDismissed(Snackbar snackbar, int event) {
                     if (event == Snackbar.Callback.DISMISS_EVENT_TIMEOUT) {
                         Sentry.captureException(exception);
-                        FirebaseCrashlytics.getInstance().recordException(exception);
                     }
                 }
             });
@@ -47,6 +45,5 @@ public class ExceptionHandler {
 
     public void captureException(Exception exception) {
         Sentry.captureException(exception);
-        FirebaseCrashlytics.getInstance().recordException(exception);
     }
 }
