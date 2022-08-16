@@ -169,15 +169,11 @@ public class MainActivity extends AppCompatActivity {
             webView.setWebViewClient(new WebViewClient());
             webView.getSettings().setJavaScriptEnabled(true);
             webView.getSettings().setDomStorageEnabled(true);
-            webView.getSettings().setAppCacheEnabled(true);
-            webView.getSettings().setAppCachePath(String.valueOf(getApplicationContext().getCacheDir()));
             webView.getSettings().setDatabaseEnabled(true);
             webView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             WebSettings webSettings = webView.getSettings();
             webSettings.setAllowContentAccess(true);
             webSettings.setUseWideViewPort(true);
-            webSettings.setAppCachePath(getApplicationContext().getCacheDir().toString());
-            webSettings.setAppCacheEnabled(true);
             webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
