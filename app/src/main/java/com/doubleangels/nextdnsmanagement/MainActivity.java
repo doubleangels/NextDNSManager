@@ -129,9 +129,26 @@ public class MainActivity extends AppCompatActivity {
                     public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
                         if (url.contains(".css")) {
                             return getCssWebResourceResponseFromAsset();
+                        } if (url.contains("ens-image.010effe074fead9f3c3fc3fdd87b2260.svg")) {
+                            return getSvgWebResourceResponseFromAsset();
                         } else {
                             return super.shouldInterceptRequest(view, url);
                         }
+                    }
+
+                    private WebResourceResponse getSvgWebResourceResponseFromAsset() {
+                        try {
+                            // Return custom CSS file from assets.
+                            InputStream fileInput = getAssets().open("ens.svg");
+                            return getUtf8EncodedSvgWebResourceResponse(fileInput);
+                        } catch (Exception e) {
+                            Sentry.captureException(e);
+                            return null;
+                        }
+                    }
+
+                    private WebResourceResponse getUtf8EncodedSvgWebResourceResponse(InputStream fileStream) {
+                        return new WebResourceResponse("image/svg+xml", "UTF-8", fileStream);
                     }
 
                     private WebResourceResponse getCssWebResourceResponseFromAsset() {
@@ -174,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
             WebSettings webSettings = webView.getSettings();
             webSettings.setAllowContentAccess(true);
             webSettings.setUseWideViewPort(true);
-            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
 

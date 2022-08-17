@@ -86,7 +86,7 @@ public class test extends AppCompatActivity {
             WebSettings webSettings = webView.getSettings();
             webSettings.setAllowContentAccess(true);
             webSettings.setUseWideViewPort(true);
-            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
 
