@@ -17,12 +17,15 @@ public class ApplicationClass extends Application {
         ITransaction ApplicationClass_create_transaction = Sentry.startTransaction("onCreate()", "ApplicationClass");
         super.onCreate();
         try{
+
             // Set up our notifications.
             OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
             OneSignal.initWithContext(this);
             OneSignal.setAppId(ONESIGNAL_APP_ID);
             OneSignal.sendTag("app_version_name", BuildConfig.VERSION_NAME);
             OneSignal.sendTag("app_version_code", String.valueOf(BuildConfig.VERSION_CODE));
+            // Request push notification permissions.
+            OneSignal.promptForPushNotifications();
         } catch (Exception e){
             exceptionHandler.captureException(e);
         } finally {
