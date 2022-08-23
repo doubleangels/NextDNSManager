@@ -89,7 +89,6 @@ public class test extends AppCompatActivity {
             webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
-
             webView.loadUrl(url);
         } catch (Exception e) {
             exceptionHandler.captureExceptionAndFeedback(e, this);

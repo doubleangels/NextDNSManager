@@ -177,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
             webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
             CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.setAcceptCookie(true);
-
             replaceCSS(url, isDarkThemeOn);
         } catch (Exception e) {
             exceptionHandler.captureExceptionAndFeedback(e, this);
