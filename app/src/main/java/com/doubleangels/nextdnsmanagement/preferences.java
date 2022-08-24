@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -26,6 +27,8 @@ import io.sentry.Sentry;
 public class preferences extends AppCompatActivity {
 
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
+    private ClipboardManager clipboard;
+    private ClipData clip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +59,46 @@ public class preferences extends AppCompatActivity {
             });
 
             // Set up our various buttons.
-            ImageView whitelistDomain1ImageView = findViewById(R.id.whitelistDomain1ImageView);
+            clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             TextView whitelistDomain1TextView = findViewById(R.id.whitelistDomain1TextView);
-            whitelistDomain1ImageView.setOnClickListener(v -> copyURL(whitelistDomain1TextView));
-
-            ImageView whitelistDomain2ImageView = findViewById(R.id.whitelistDomain2ImageView);
+            whitelistDomain1TextView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    String text;
+                    text = whitelistDomain1TextView.getText().toString();
+                    clip = ClipData.newPlainText("text", text);
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(getApplicationContext(), "Text Copied",
+                            Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
             TextView whitelistDomain2TextView = findViewById(R.id.whitelistDomain2TextView);
-            whitelistDomain2ImageView.setOnClickListener(v -> copyURL(whitelistDomain2TextView));
-
-            ImageView whitelistDomain3ImageView = findViewById(R.id.whitelistDomain3ImageView);
+            whitelistDomain2TextView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    String text;
+                    text = whitelistDomain2TextView.getText().toString();
+                    clip = ClipData.newPlainText("text", text);
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(getApplicationContext(), "Text Copied",
+                            Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
             TextView whitelistDomain3TextView = findViewById(R.id.whitelistDomain3TextView);
-            whitelistDomain3ImageView.setOnClickListener(v -> copyURL(whitelistDomain3TextView));
+            whitelistDomain3TextView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    String text;
+                    text = whitelistDomain3TextView.getText().toString();
+                    clip = ClipData.newPlainText("text", text);
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(getApplicationContext(), "Text Copied",
+                            Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
         } catch (Exception e) {
             exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
