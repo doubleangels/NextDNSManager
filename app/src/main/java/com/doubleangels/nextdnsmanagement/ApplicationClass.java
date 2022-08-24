@@ -17,7 +17,6 @@ public class ApplicationClass extends Application {
         ITransaction ApplicationClass_create_transaction = Sentry.startTransaction("onCreate()", "ApplicationClass");
         super.onCreate();
         try{
-
             // Set up our notifications.
             OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE);
             OneSignal.initWithContext(this);
