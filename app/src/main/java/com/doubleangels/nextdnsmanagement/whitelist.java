@@ -24,7 +24,7 @@ import java.util.Objects;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
-public class preferences extends AppCompatActivity {
+public class whitelist extends AppCompatActivity {
 
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
     private ClipboardManager clipboard;
@@ -32,9 +32,9 @@ public class preferences extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction preferences_create_transaction = Sentry.startTransaction("onCreate()", "preferences");
+        ITransaction preferences_create_transaction = Sentry.startTransaction("onCreate()", "whitelist");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preferences);
+        setContentView(R.layout.activity_whitelist);
 
         try {
             // Set up our window, status bar, and toolbar.

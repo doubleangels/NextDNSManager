@@ -26,7 +26,7 @@ public class about extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction preferences_create_transaction = Sentry.startTransaction("onCreate()", "preferences");
+        ITransaction preferences_create_transaction = Sentry.startTransaction("onCreate()", "whitelist");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 

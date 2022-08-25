@@ -54,41 +54,53 @@
     <TextView
         android:id="@+id/errorReportingInstructionsTextView"
         android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_height="70dp"
         android:layout_marginTop="12dp"
-        android:text="@string/privacy_description"
+        android:text="@string/whitelist_description"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="11sp"
+        android:textSize="13dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/errorReportingTextView" />
 
+    <ImageView
+        android:id="@+id/whitelistDownArrowImageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/generic_content_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/errorReportingInstructionsTextView"
+        app:srcCompat="@drawable/down" />
+
     <TextView
         android:id="@+id/longPressToCopyTextView"
         android:layout_width="300dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="12dp"
-        android:text="@string/privacy_copy"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/whitelist_copy"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="9sp"
+        android:textSize="13dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/errorReportingInstructionsTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/whitelistDownArrowImageView" />
 
     <TextView
         android:id="@+id/whitelistDomain1TextView"
         android:layout_width="200dp"
         android:layout_height="20dp"
         android:layout_marginStart="104dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         android:text="@string/whitelist_domain_1"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="12sp"
+        android:textSize="13dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/longPressToCopyTextView" />
@@ -98,11 +110,11 @@
         android:layout_width="200dp"
         android:layout_height="20dp"
         android:layout_marginStart="104dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="14dp"
         android:text="@string/whitelist_domain_2"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="12sp"
+        android:textSize="13dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/whitelistDomain1TextView" />
@@ -112,13 +124,37 @@
         android:layout_width="200dp"
         android:layout_height="20dp"
         android:layout_marginStart="104dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="14dp"
         android:text="@string/whitelist_domain_3"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="12sp"
+        android:textSize="13dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/whitelistDomain2TextView" />
+
+    <ImageView
+        android:id="@+id/whitelistDownArrowImageView2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/generic_content_description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/whitelistDomain3TextView"
+        app:srcCompat="@drawable/down" />
+
+    <TextView
+        android:id="@+id/whitelistTextView"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/whitelist_whitelist"
+        android:textAlignment="center"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/whitelistDownArrowImageView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

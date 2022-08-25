@@ -1,5 +1,5 @@
 <resources>
-    <string name="hello_world">Hello Round World!</string>
+    <string name="hello_world">Hello Square World!</string>
     <string name="app_name">NextDNS Manager</string>
     <string name="author_name">Matt VerLee</string>
     <string name="application_name">NextDNS Manager</string>
@@ -19,8 +19,9 @@
     <string name="generic_content_description">This is a generic content description.</string>
     <string name="disclaimer">This app is NOT an official NextDNS app. This app and its developer are NOT in any way affiliated or related to NextDNS.</string>
     <string name="error_reporting_title">Error Reporting</string>
-    <string name="privacy_description">Please consider whitelisting the list of domains below to allow anonymized crash and error reporting as well as push notifications. This greatly helps in my effort to make this app better!</string>
-    <string name="privacy_copy">Long press on each domain to copy it to the clipboard.</string>
+    <string name="whitelist_description">Please consider whitelisting the list of domains below to allow anonymized crash and error reporting as well as push notifications. This greatly helps in my effort to make this app better!</string>
+    <string name="whitelist_copy">Long press on each domain to copy it to the clipboard.</string>
+    <string name="whitelist_whitelist">Whitelist each domain in your NextDNS configuration.</string>
     <string name="troubleshooting_title">Troubleshooting</string>
     <string name="troubleshooting_description">If you experience any problems with this app, there are a couple of things that you can try.</string>
     <string name="troubleshooting_step_one">Try clearing the app cache by pressing the button below.</string>
@@ -42,7 +43,7 @@
     <string name="home_title">Home</string>
     <string name="ping_title">NextDNS Ping Test</string>
     <string name="test_title">NextDNS Connection</string>
-    <string name="preferences_title">Preferences</string>
+    <string name="whitelist_title">Whitelist</string>
     <string name="help_title">Help</string>
     <string name="about_title">About</string>
     <string name="author_title">Author</string>

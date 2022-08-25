@@ -24,8 +24,8 @@
         app:showAsAction="never">
     </item>
     <item
-        android:id="@+id/preferences"
-        android:title="@string/preferences_title"
+        android:id="@+id/whitelist"
+        android:title="@string/whitelist_title"
         app:showAsAction="never">
     </item>
     <item

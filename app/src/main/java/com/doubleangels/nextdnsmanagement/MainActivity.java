@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(troubleshootingIntent);
             return true;
         }
-        if (item.getItemId() ==  R.id.preferences) {
-            Intent preferencesIntent = new Intent(this, preferences.class);
+        if (item.getItemId() ==  R.id.whitelist) {
+            Intent preferencesIntent = new Intent(this, whitelist.class);
             startActivity(preferencesIntent);
             return true;
         }
