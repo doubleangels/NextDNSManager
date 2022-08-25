@@ -9,8 +9,8 @@ import io.sentry.Sentry;
 
 public class ApplicationClass extends Application {
 
-    private static final String ONESIGNAL_APP_ID = "dabc92aa-6dc5-4c29-a096-ac6eba076214";
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
+    private static final String ONESIGNAL_APP_ID = "dabc92aa-6dc5-4c29-a096-ac6eba076214";
 
     @Override
     public void onCreate() {
