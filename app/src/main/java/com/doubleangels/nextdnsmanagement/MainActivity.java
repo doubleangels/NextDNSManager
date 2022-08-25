@@ -29,8 +29,8 @@ import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity {
 
-    private WebView webView;
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
+    private WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +129,39 @@ public class MainActivity extends AppCompatActivity {
                     public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
                         if (url.contains(".css")) {
                             return getCssWebResourceResponseFromAsset();
+                        } else if (url.contains("ens-text.174d0fb96836a3e4cde0338d1f9bbe36.svg")) {
+                            try {
+                                InputStream is = getAssets().open("ens-text.png");
+                                return new WebResourceResponse("image/*", "base64", is);
+                            } catch (Exception e) {
+                                Sentry.captureException(e);
+                                return null;
+                            }
+                        } else if (url.contains("unstoppabledomains.ff6c5299ea094f70f72d4276898d5cb7.svg")) {
+                            try {
+                                InputStream is = getAssets().open("unstoppabledomains.png");
+                                return new WebResourceResponse("image/*", "base64", is);
+                            } catch (Exception e) {
+                                Sentry.captureException(e);
+                                return null;
+                            }
+
+                        } else if (url.contains("handshake.41f677899dce13d473e16bc247dda52b.svg")) {
+                            try {
+                                InputStream is = getAssets().open("handshake.png");
+                                return new WebResourceResponse("image/*", "base64", is);
+                            } catch (Exception e) {
+                                Sentry.captureException(e);
+                                return null;
+                            }
+                        } else if (url.contains("ipfs.74e89455fca824894e90734312409fc1.svg")) {
+                            try {
+                                InputStream is = getAssets().open("ipfs.png");
+                                return new WebResourceResponse("image/*", "base64", is);
+                            } catch (Exception e) {
+                                Sentry.captureException(e);
+                                return null;
+                            }
                         } else {
                             return super.shouldInterceptRequest(view, url);
                         }
@@ -186,3 +219,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+

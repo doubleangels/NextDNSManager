@@ -249,6 +249,11 @@ html[lang^=ja] .Header .nav-link.menu {
 	font-size: .95em;
 }
 
+div.mt-2.mb-4.text-center img {
+	background-color: rgba(0, 123, 255, 0.7);
+	border-radius: 5px;
+}
+
 /* END Custom NextDNS CSS */
 
 /*!* Bootstrap v4.6.0 (https://getbootstrap.com/)
