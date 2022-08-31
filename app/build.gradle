@@ -9,8 +9,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdkVersion 33
-        versionCode 134
-        versionName '4.2.9'
+        versionCode 135
+        versionName '4.2.10'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles
     }
@@ -32,12 +32,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.preference:preference:1.2.0'
-    implementation 'androidx.webkit:webkit:1.4.0'
+    implementation 'androidx.webkit:webkit:1.5.0'
     implementation 'androidx.core:core:1.8.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     implementation 'commons-io:commons-io:20030203.000550'
-    implementation 'io.sentry:sentry-android:6.4.0'
+    implementation 'io.sentry:sentry-android:6.4.1'
     implementation 'com.onesignal:OneSignal:4.8.2'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     testImplementation 'junit:junit:4.13.2'
