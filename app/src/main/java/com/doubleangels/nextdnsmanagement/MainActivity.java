@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction MainActivity_create_transaction = Sentry.startTransaction("onCreate()", "MainActivity");
+        ITransaction MainActivity_create_transaction = Sentry.startTransaction("MainActivity_onCreate()", "MainActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try {
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressWarnings("deprecation")
     public void replaceCSS( String url, boolean isDarkThemeOn) {
-        ITransaction replace_css_transaction = Sentry.startTransaction("replaceCSS()", "MainActivity");
+        ITransaction replace_css_transaction = Sentry.startTransaction("MainActivity_replaceCSS()", "MainActivity");
         try {
             if (isDarkThemeOn) {
                 webView.setWebViewClient(new WebViewClient() {
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetJavaScriptEnabled")
     @SuppressWarnings({"unused"})
     public void provisionWebView(String url, Boolean isDarkThemeOn) {
-        ITransaction MainActivity_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "MainActivity");
+        ITransaction MainActivity_provision_web_view_transaction = Sentry.startTransaction("MainActivity_provisionWebView()", "MainActivity");
         try {
             webView = findViewById(R.id.mWebview);
             webView.setWebChromeClient(new WebChromeClient());

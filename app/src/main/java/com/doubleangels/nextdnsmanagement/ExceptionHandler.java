@@ -11,7 +11,7 @@ import io.sentry.Sentry;
 
 public class ExceptionHandler {
     public void captureExceptionAndFeedback(Exception exception, Activity activity) {
-        ITransaction capture_exception_and_feedback_transaction = Sentry.startTransaction("captureExceptionAndFeedback()", "ExceptionHandler");
+        ITransaction capture_exception_and_feedback_transaction = Sentry.startTransaction("ExceptionHandler_captureExceptionAndFeedback()", "ExceptionHandler");
         try {
             // Generate our snackbar used to ask the user if they want to make feedback.
             Snackbar snackbar = Snackbar.make(activity.getWindow().getDecorView().getRootView(), "Error occurred! Share feedback?", Snackbar.LENGTH_LONG);

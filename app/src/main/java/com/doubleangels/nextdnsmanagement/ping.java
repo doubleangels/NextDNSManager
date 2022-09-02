@@ -30,7 +30,7 @@ public class ping extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction ping_create_transaction = Sentry.startTransaction("onCreate()", "ping");
+        ITransaction ping_create_transaction = Sentry.startTransaction("ping_onCreate()", "ping");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping);
 
@@ -74,7 +74,7 @@ public class ping extends AppCompatActivity {
     @SuppressLint("SetJavaScriptEnabled")
     @SuppressWarnings("unused")
     public void provisionWebView(String url) {
-        ITransaction ping_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "ping");
+        ITransaction ping_provision_web_view_transaction = Sentry.startTransaction("ping_provisionWebView()", "ping");
         try {
             WebView webView = findViewById(R.id.mWebview);
             webView.setWebChromeClient(new WebChromeClient());

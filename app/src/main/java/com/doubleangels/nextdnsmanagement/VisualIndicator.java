@@ -15,7 +15,7 @@ import io.sentry.Sentry;
 
 public class VisualIndicator {
     public void updateVisualIndicator(LinkProperties linkProperties, Activity activity, Context context) {
-        ITransaction update_visual_indicator_transaction = Sentry.startTransaction("updateVisualIndicator()", "VisualIndicator");
+        ITransaction update_visual_indicator_transaction = Sentry.startTransaction("VisualIndicator_updateVisualIndicator()", "VisualIndicator");
         try {
             if (linkProperties != null) {
                 if (linkProperties.isPrivateDnsActive()) {

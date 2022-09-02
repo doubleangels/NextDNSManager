@@ -26,7 +26,7 @@ public class troubleshooting extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction troubleshooting_create_transaction = Sentry.startTransaction("onCreate()", "troubleshooting");
+        ITransaction troubleshooting_create_transaction = Sentry.startTransaction("troubleshooting_onCreate()", "troubleshooting");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_troubleshooting);
 

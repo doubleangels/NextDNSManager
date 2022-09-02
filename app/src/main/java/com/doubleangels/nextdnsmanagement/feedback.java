@@ -26,7 +26,7 @@ public class feedback extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ITransaction feedback_create_transaction = Sentry.startTransaction("onCreate()", "feedback");
+        ITransaction feedback_create_transaction = Sentry.startTransaction("feedback_onCreate()", "feedback");
         setContentView(R.layout.activity_feedback);
 
         try {

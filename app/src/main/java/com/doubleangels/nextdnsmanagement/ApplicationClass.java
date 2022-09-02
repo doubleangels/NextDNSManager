@@ -14,7 +14,7 @@ public class ApplicationClass extends Application {
 
     @Override
     public void onCreate() {
-        ITransaction ApplicationClass_create_transaction = Sentry.startTransaction("onCreate()", "ApplicationClass");
+        ITransaction ApplicationClass_create_transaction = Sentry.startTransaction("ApplicationClass_onCreate()", "ApplicationClass");
         super.onCreate();
         try{
             // Set up our notifications.

@@ -24,7 +24,7 @@ public class help extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction help_create_transaction = Sentry.startTransaction("onCreate()", "help");
+        ITransaction help_create_transaction = Sentry.startTransaction("help_onCreate()", "help");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
 

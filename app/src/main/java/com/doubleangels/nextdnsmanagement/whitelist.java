@@ -2,12 +2,10 @@ package com.doubleangels.nextdnsmanagement;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -32,7 +30,7 @@ public class whitelist extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction preferences_create_transaction = Sentry.startTransaction("onCreate()", "whitelist");
+        ITransaction preferences_create_transaction = Sentry.startTransaction("whitelist_onCreate()", "whitelist");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whitelist);
 
@@ -61,43 +59,34 @@ public class whitelist extends AppCompatActivity {
             // Set up our various buttons.
             clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             TextView whitelistDomain1TextView = findViewById(R.id.whitelistDomain1TextView);
-            whitelistDomain1TextView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    String text;
-                    text = whitelistDomain1TextView.getText().toString();
-                    clip = ClipData.newPlainText("text", text);
-                    clipboard.setPrimaryClip(clip);
-                    Toast.makeText(getApplicationContext(), "Text Copied",
-                            Toast.LENGTH_SHORT).show();
-                    return true;
-                }
+            whitelistDomain1TextView.setOnLongClickListener(v -> {
+                String text;
+                text = whitelistDomain1TextView.getText().toString();
+                clip = ClipData.newPlainText("text", text);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "Text Copied",
+                        Toast.LENGTH_SHORT).show();
+                return true;
             });
             TextView whitelistDomain2TextView = findViewById(R.id.whitelistDomain2TextView);
-            whitelistDomain2TextView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    String text;
-                    text = whitelistDomain2TextView.getText().toString();
-                    clip = ClipData.newPlainText("text", text);
-                    clipboard.setPrimaryClip(clip);
-                    Toast.makeText(getApplicationContext(), "Text Copied",
-                            Toast.LENGTH_SHORT).show();
-                    return true;
-                }
+            whitelistDomain2TextView.setOnLongClickListener(v -> {
+                String text;
+                text = whitelistDomain2TextView.getText().toString();
+                clip = ClipData.newPlainText("text", text);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "Text Copied",
+                        Toast.LENGTH_SHORT).show();
+                return true;
             });
             TextView whitelistDomain3TextView = findViewById(R.id.whitelistDomain3TextView);
-            whitelistDomain3TextView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    String text;
-                    text = whitelistDomain3TextView.getText().toString();
-                    clip = ClipData.newPlainText("text", text);
-                    clipboard.setPrimaryClip(clip);
-                    Toast.makeText(getApplicationContext(), "Text Copied",
-                            Toast.LENGTH_SHORT).show();
-                    return true;
-                }
+            whitelistDomain3TextView.setOnLongClickListener(v -> {
+                String text;
+                text = whitelistDomain3TextView.getText().toString();
+                clip = ClipData.newPlainText("text", text);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(getApplicationContext(), "Text Copied",
+                        Toast.LENGTH_SHORT).show();
+                return true;
             });
         } catch (Exception e) {
             exceptionHandler.captureExceptionAndFeedback(e, this);
@@ -119,19 +108,5 @@ public class whitelist extends AppCompatActivity {
             startActivity(mainIntent);
         }
         return super.onContextItemSelected(item);
-    }
-
-    public void copyURL(TextView textView) {
-        ITransaction preferences_copy_url_transaction = Sentry.startTransaction("copyURL()", "settings");
-        try {
-            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-            ClipData clip = ClipData.newPlainText("whitelist_url", textView.getText());
-            clipboard.setPrimaryClip(clip);
-            Toast.makeText(this, "Copied!", Toast.LENGTH_LONG).show();
-        } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this);
-        } finally {
-            preferences_copy_url_transaction.finish();
-        }
     }
 }

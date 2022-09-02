@@ -30,7 +30,7 @@ public class test extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction test_create_transaction = Sentry.startTransaction("onCreate()", "test");
+        ITransaction test_create_transaction = Sentry.startTransaction("test_onCreate()", "test");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
@@ -74,7 +74,7 @@ public class test extends AppCompatActivity {
     @SuppressLint("SetJavaScriptEnabled")
     @SuppressWarnings("unused")
     public void provisionWebView(String url) {
-        ITransaction test_provision_web_view_transaction = Sentry.startTransaction("provisionWebView()", "test");
+        ITransaction test_provision_web_view_transaction = Sentry.startTransaction("test_provisionWebView()", "test");
         try {
             WebView webView = findViewById(R.id.mWebview);
             webView.setWebChromeClient(new WebChromeClient());
