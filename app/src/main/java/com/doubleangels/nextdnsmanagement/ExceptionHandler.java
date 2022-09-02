@@ -44,6 +44,8 @@ public class ExceptionHandler {
     }
 
     public void captureException(Exception exception) {
+        ITransaction capture_exception_transaction = Sentry.startTransaction("ExceptionHandler_captureException()", "ExceptionHandler");
         Sentry.captureException(exception);
+        capture_exception_transaction.finish();
     }
 }

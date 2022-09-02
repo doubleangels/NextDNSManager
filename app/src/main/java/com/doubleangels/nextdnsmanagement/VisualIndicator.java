@@ -62,6 +62,7 @@ public class VisualIndicator {
     }
 
     public void initiateVisualIndicator(Activity activity, Context context) {
+        ITransaction initiate_visual_indicator_transaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
         // Check if we're using private DNS and watch DNS type over time to change visual indicator.
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         Network network = connectivityManager.getActiveNetwork();
@@ -74,6 +75,7 @@ public class VisualIndicator {
                 updateVisualIndicator(linkProperties, activity, context);
             }
         });
+        initiate_visual_indicator_transaction.finish();
     }
 
     public void captureException(Exception exception) {
