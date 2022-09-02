@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
         android:importantForAutofill="no"
-        android:inputType="TYPE_CLASS_TEXT" />
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/feedbackButton"
