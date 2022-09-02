@@ -50,7 +50,7 @@
         <entry key="app/src/main/res/drawable/test.xml" value="0.2985" />
         <entry key="app/src/main/res/drawable/whitelist.xml" value="0.2985" />
         <entry key="app/src/main/res/layout/activity_about.xml" value="0.266796875" />
-        <entry key="app/src/main/res/layout/activity_feedback.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_feedback.xml" value="0.13671875" />
         <entry key="app/src/main/res/layout/activity_help.xml" value="0.26875" />
         <entry key="app/src/main/res/layout/activity_preferences.xml" value="0.34" />
         <entry key="app/src/main/res/layout/activity_settings.xml" value="0.5" />

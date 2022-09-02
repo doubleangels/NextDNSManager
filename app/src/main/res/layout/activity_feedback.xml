@@ -46,7 +46,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:importantForAutofill="no"
+        android:inputType="TYPE_CLASS_TEXT" />
 
     <Button
         android:id="@+id/feedbackButton"
