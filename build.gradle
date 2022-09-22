@@ -6,9 +6,9 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.2'
-        classpath 'com.google.gms:google-services:4.3.13'
-        classpath 'io.sentry:sentry-android-gradle-plugin:3.0.1'
+        classpath 'com.google.gms:google-services:4.3.14'
         classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.14.0'
+        classpath 'io.sentry:sentry-android-gradle-plugin:3.0.1'
     }
 }
 
