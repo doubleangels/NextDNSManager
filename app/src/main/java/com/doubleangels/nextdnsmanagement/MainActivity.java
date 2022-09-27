@@ -1,9 +1,12 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
@@ -15,6 +18,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -204,6 +208,17 @@ public class MainActivity extends AppCompatActivity {
             webView.getSettings().setDomStorageEnabled(true);
             webView.getSettings().setDatabaseEnabled(true);
             webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+            webView.setDownloadListener((url1, userAgent, contentDisposition, mimetype, contentLength) -> {
+                DownloadManager.Request request = new DownloadManager.Request(
+                        Uri.parse(url1));
+                request.allowScanningByMediaScanner();
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "NextDNS-Configuration.mobileconfig");
+                DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                dm.enqueue(request);
+                Toast.makeText(getApplicationContext(), "Downloading file!",
+                        Toast.LENGTH_LONG).show();
+            });
             WebSettings webSettings = webView.getSettings();
             webSettings.setAllowContentAccess(true);
             webSettings.setUseWideViewPort(true);
