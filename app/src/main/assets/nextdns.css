@@ -256,6 +256,10 @@ div.mt-2.mb-4.text-center img {
 	border-radius: 5px;
 }
 
+.d-sm-table-cell, .d-md-table-cell, .text-right, .d-table-cell {
+    color: #ffffff;
+}
+
 /* END Custom NextDNS CSS */
 
 /*!* Bootstrap v4.6.0 (https://getbootstrap.com/)
