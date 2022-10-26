@@ -32,7 +32,7 @@ dependencies {
     implementation 'androidx.core:core:1.9.0'
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'com.onesignal:OneSignal:4.8.2'
     implementation 'commons-io:commons-io:20030203.000550'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
