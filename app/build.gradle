@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
 android {
     compileSdkVersion 33
@@ -8,8 +7,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdkVersion 33
-        versionCode 139
-        versionName '4.2.14'
+        versionCode 140
+        versionName '4.3'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles
     }
@@ -33,12 +32,11 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     implementation 'com.google.android.material:material:1.7.0'
-    implementation 'com.onesignal:OneSignal:4.8.3'
     implementation 'commons-io:commons-io:20030203.000550'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'io.sentry:sentry-android:6.9.1'
+    implementation 'io.sentry:sentry-android:6.11.0'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
