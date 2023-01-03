@@ -78,16 +78,6 @@ public class whitelist extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 return true;
             });
-            TextView whitelistDomain3TextView = findViewById(R.id.whitelistDomain3TextView);
-            whitelistDomain3TextView.setOnLongClickListener(v -> {
-                String text;
-                text = whitelistDomain3TextView.getText().toString();
-                clip = ClipData.newPlainText("text", text);
-                clipboard.setPrimaryClip(clip);
-                Toast.makeText(getApplicationContext(), "Text Copied",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            });
         } catch (Exception e) {
             exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
