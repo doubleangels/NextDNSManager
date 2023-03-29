@@ -7,8 +7,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdkVersion 33
-        versionCode 141
-        versionName '4.3.1'
+        versionCode 142
+        versionName '4.3.2'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles
     }
