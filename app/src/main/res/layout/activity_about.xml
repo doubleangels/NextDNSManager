@@ -85,9 +85,9 @@
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notAffiliatedTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/privacyPolicyTextView" />
 
     <TextView
         android:id="@+id/authorNameTextView"
@@ -102,6 +102,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/authorTitleTextView" />
 
+
+    <TextView
+        android:id="@+id/privacyPolicyTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/privacy"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notAffiliatedTextView" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"

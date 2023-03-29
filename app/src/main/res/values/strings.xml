@@ -51,4 +51,6 @@
     <string name="author_github_url">https://github.com/mtverlee</string>
     <string name="author_website">Website</string>
     <string name="author_website_url">https://doubleangels.com</string>
+    <string name="privacy">Privacy Policy</string>
+    <string name="privacy_policy_url">https://doubleangels.com/privacy/nextdns.html</string>
 </resources>

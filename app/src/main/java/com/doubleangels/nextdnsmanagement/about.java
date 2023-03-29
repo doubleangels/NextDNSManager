@@ -53,6 +53,11 @@ public class about extends AppCompatActivity {
             });
 
             // Set up our various buttons.
+            TextView privacyPolicyTextView = findViewById(R.id.privacyPolicyTextView);
+            privacyPolicyTextView.setOnClickListener(v -> {
+                Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacy_policy_url)));
+                startActivity(githubIntent);
+            });
             TextView authorGithubTextView = findViewById(R.id.authorGithubTextView);
             authorGithubTextView.setOnClickListener(v -> {
                 Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.author_github_url)));
