@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".help">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/taskbarImage"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:paddingHorizontal="10dp"
+            android:src="@drawable/nextdns_logo"
+            android:contentDescription="@string/generic_content_description"/>
+
+        <ImageView
+            android:id="@+id/connectionStatus"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/failure"
+            tools:ignore="ImageContrastCheck"
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="17dp"
+            android:contentDescription="@string/generic_content_description"/>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ImageView
+        android:id="@+id/redDemo"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yellowDemoTextView"
+        app:srcCompat="@drawable/failure_red"
+        android:contentDescription="@string/generic_content_description"/>
+
+    <ImageView
+        android:id="@+id/greenDemo"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:srcCompat="@drawable/success_green"
+        android:contentDescription="@string/generic_content_description"/>
+
+    <TextView
+        android:id="@+id/greenDemoTextView"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:text="@string/help_green"
+        android:textColor="?android:attr/textColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/greenDemo" />
+
+    <TextView
+        android:id="@+id/yellowDemoTextView"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:text="@string/help_yellow"
+        android:textColor="?android:attr/textColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yellowDemo" />
+
+    <ImageView
+        android:id="@+id/yellowDemo"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/greenDemoTextView"
+        app:srcCompat="@drawable/success_yellow"
+        android:contentDescription="@string/generic_content_description"
+        tools:ignore="ImageContrastCheck" />
+
+    <TextView
+        android:id="@+id/redDemoTextView"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="64dp"
+        android:gravity="center"
+        android:text="@string/help_red"
+        android:textColor="?android:attr/textColorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/redDemo"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

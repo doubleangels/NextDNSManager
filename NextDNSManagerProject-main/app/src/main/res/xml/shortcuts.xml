@@ -1,0 +1,29 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="ping"
+        android:enabled="true"
+        android:icon="@drawable/ping"
+        android:shortcutShortLabel="@string/ping_short"
+        android:shortcutLongLabel="@string/ping_long"
+        android:shortcutDisabledMessage="@string/ping_disabled">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.doubleangels.nextdnsmanagement"
+            android:targetClass="com.doubleangels.nextdnsmanagement.ping" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+    <shortcut
+        android:shortcutId="test"
+        android:enabled="true"
+        android:icon="@drawable/test"
+        android:shortcutShortLabel="@string/test_short"
+        android:shortcutLongLabel="@string/test_long"
+        android:shortcutDisabledMessage="@string/test_disabled">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.doubleangels.nextdnsmanagement"
+            android:targetClass="com.doubleangels.nextdnsmanagement.test" /> 
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+</shortcuts>
