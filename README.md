@@ -1,7 +1,12 @@
 # NextDNSManager
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmtverlee%2FNextDNSManager.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmtverlee%2FNextDNSManager?ref=badge_small) ![maintained - yes](https://img.shields.io/badge/maintained-yes-blue)
 
-This is the open source repository for the NextDNS Manager app located [here](https://play.google.com/store/apps/details?id=com.doubleangels.nextdnsmanagement).
+<div align="center">
+
+[![https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.doubleangels.nextdnsmanagement)
+
+</div>
+      
 
 ![Screenshot](screenshot.png)
 
