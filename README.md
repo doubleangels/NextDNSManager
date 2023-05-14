@@ -1,5 +1,5 @@
 # NextDNSManager
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmtverlee%2FNextDNSManager.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmtverlee%2FNextDNSManager?ref=badge_small) ![Testing](https://img.shields.io/github/actions/workflow/status/mtverlee/NextDNSManager/.github/workflows/codeql.yml) ![Dependencies](https://img.shields.io/librariesio/github/mtverlee/NextDNSManager)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmtverlee%2FNextDNSManager.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmtverlee%2FNextDNSManager?ref=badge_small) ![Scanning](https://img.shields.io/github/actions/workflow/status/mtverlee/NextDNSManager/.github/workflows/codeql.yml) ![Dependencies](https://img.shields.io/librariesio/github/mtverlee/NextDNSManager) ![Last Commit](https://img.shields.io/github/last-commit/mtverlee/NextDNSManager) ![License](https://img.shields.io/github/license/mtverlee/NextDNSManager) 
 
 <div align="center">
 
