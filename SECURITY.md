@@ -14,4 +14,3 @@
   - Version of Android you're using
   - Version of the app you're using
   - Detailed description of the vulnerability
-
