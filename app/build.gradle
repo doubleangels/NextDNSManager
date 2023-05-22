@@ -7,8 +7,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdkVersion 33
-        versionCode 142
-        versionName '4.3.2'
+        versionCode 143
+        versionName '4.3.3'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles
     }
@@ -25,23 +25,10 @@ android {
 
 dependencies {
 
-    implementation 'androidx.gridlayout:gridlayout:1.0.0'
-    implementation 'androidx.preference:preference:1.2.0'
     implementation 'androidx.webkit:webkit:1.6.1'
-    implementation 'androidx.core:core:1.9.0'
-    implementation "androidx.lifecycle:lifecycle-viewmodel:2.6.1"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
-    implementation 'com.google.android.material:material:1.8.0'
-    implementation 'commons-io:commons-io:20030203.000550'
+    implementation 'androidx.core:core:1.10.1'
+    implementation 'com.google.android.material:material:1.9.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'io.sentry:sentry-android:6.16.0'
-    constraints {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0") {
-            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
-        }
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0") {
-            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
-        }
-    }
+    implementation 'io.sentry:sentry-android:6.19.1'
 }
