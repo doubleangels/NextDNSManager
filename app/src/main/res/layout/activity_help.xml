@@ -41,22 +41,22 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_marginTop="30dp"
+        android:contentDescription="@string/generic_content_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yellowDemoTextView"
-        app:srcCompat="@drawable/failure_red"
-        android:contentDescription="@string/generic_content_description"/>
+        app:layout_constraintTop_toBottomOf="@+id/orangeDemoTextView"
+        app:srcCompat="@drawable/failure_red" />
 
     <ImageView
         android:id="@+id/greenDemo"
         android:layout_width="75dp"
         android:layout_height="75dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/generic_content_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:srcCompat="@drawable/success_green"
-        android:contentDescription="@string/generic_content_description"/>
+        app:srcCompat="@drawable/success_green" />
 
     <TextView
         android:id="@+id/greenDemoTextView"
@@ -99,14 +99,33 @@
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="14dp"
-        android:layout_marginBottom="64dp"
         android:gravity="center"
         android:text="@string/help_red"
         android:textColor="?android:attr/textColorPrimary"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/redDemo"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/redDemo" />
+
+    <ImageView
+        android:id="@+id/orangeDemo"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/yellowDemoTextView"
+        app:srcCompat="@drawable/failure_orange" />
+
+    <TextView
+        android:id="@+id/orangeDemoTextView"
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:text="@string/help_orange"
+        android:textColor="?android:attr/textColorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orangeDemo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
