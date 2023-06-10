@@ -20,10 +20,13 @@ public class TestClient {
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
             }
+            TestClient_create_transaction.finish();
+            return retrofit;
         } catch (Exception e) {
             Sentry.captureException(e);
+            TestClient_create_transaction.finish();
+            return retrofit;
         }
-        TestClient_create_transaction.finish();
-        return retrofit;
+
     }
 }
