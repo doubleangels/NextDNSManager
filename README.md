@@ -12,7 +12,12 @@
       
 ![Screenshot](screenshot.png)
 
+<div align="center">
+
 ## Issues
+      
+</div>
+
 - To report an issue, please open a new issue in this repository.
 - Please make sure to include the following info:
   - Device you're running the app on
@@ -20,20 +25,32 @@
   - Version of the app you're using
   - Detailed description of your problem
 
+<div align="center">
+
 ## Suggestions/Feedback
+      
+</div>
 - To make a suggestion or to report feedback, please open a new issue in this repository.
 - Please make sure to inclide the following info:
   - Detailed description of your suggestion or feedback.
 
+<div align="center">
+      
 ## Security Policy
 ### Supported Versions
+      
+</div>
 
 | Version | Supported          |
 | ------- | ------------------ |
 | > 4.x   | :white_check_mark: |
 | < 4.x   | :x:                |
+       
+<div align="center">
 
 ### Reporting a Vulnerability
+
+</div>
 
 - Please open an issue and include the following information:
   - Device you're running the app on
