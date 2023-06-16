@@ -7,8 +7,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdkVersion 33
-        versionCode 145
-        versionName '4.3.5'
+        versionCode 146
+        versionName '4.3.6'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles
     }
@@ -39,6 +39,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'io.sentry:sentry-android:6.22.0'
+    implementation 'io.sentry:sentry-android:6.23.0'
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 }
