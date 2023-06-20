@@ -8,6 +8,7 @@ import android.net.Network;
 import android.net.NetworkRequest;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.doubleangels.nextdnsmanagement.checktest.TestApi;
@@ -93,23 +94,22 @@ public class VisualIndicator {
     private void checkInheritedDNS(Context c, Activity activity) {
         TestApi nextdnsApi = TestClient.getBaseClient(c).create(TestApi.class);
         Call<JsonObject> responseCall = nextdnsApi.getResponse();
-        responseCall.enqueue(new Callback<JsonObject>() {
+        responseCall.enqueue(new Callback<>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 JsonObject testResponse = response.body();
                 if (testResponse != null) {
                     String nextdns_status = testResponse.get(c.getString(R.string.nextdns_status)).getAsString();
                     if (nextdns_status != null && nextdns_status.toUpperCase().equals(c.getString(R.string.using_nextdns_status))) {
                         String nextdns_protocol = testResponse.get(c.getString(R.string.nextdns_protocol)).getAsString();
+                        Sentry.setTag("inherited_protocol", nextdns_protocol);
                         ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
-                        if (nextdns_protocol != null) {
-                            for (String s : c.getResources().getStringArray(R.array.secure_protocols)) {
-                                if (nextdns_protocol.toUpperCase().equals(s)) {
-                                    connectionStatus.setImageResource(R.drawable.success);
-                                    connectionStatus.setColorFilter(ContextCompat.getColor(c, R.color.green));
-                                    Sentry.setTag("inherited_nextdns", "secure");
-                                    return;
-                                }
+                        for (String s : c.getResources().getStringArray(R.array.secure_protocols)) {
+                            if (nextdns_protocol.toUpperCase().equals(s)) {
+                                connectionStatus.setImageResource(R.drawable.success);
+                                connectionStatus.setColorFilter(ContextCompat.getColor(c, R.color.green));
+                                Sentry.setTag("inherited_nextdns", "secure");
+                                return;
                             }
                         }
                         connectionStatus.setImageResource(R.drawable.failure);
@@ -120,7 +120,7 @@ public class VisualIndicator {
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
+            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
                 captureException(t);
             }
         });
