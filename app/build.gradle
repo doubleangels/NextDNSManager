@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 34
 
     defaultConfig {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
-        targetSdkVersion 33
-        versionCode 146
-        versionName '4.3.6'
+        targetSdkVersion 34
+        versionCode 147
+        versionName '4.3.7'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles
     }
@@ -21,7 +21,7 @@ android {
         }
     }
     namespace 'com.doubleangels.nextdnsmanagement'
-    buildToolsVersion '33.0.1'
+    buildToolsVersion '34.0.0'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
