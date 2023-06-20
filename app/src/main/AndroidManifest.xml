@@ -67,11 +67,7 @@
             android:name="io.sentry.traces.user-interaction.enable"
             android:value="true" />
         <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_launcher_foreground" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/blue" />
+            android:name="io.sentry.anr.enable" android:value="true" />
     </application>
 
 </manifest>
