@@ -18,11 +18,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/taskbarImage"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:paddingHorizontal="10dp"
-            android:src="@drawable/nextdns_logo"
+            app:srcCompat="@drawable/nextdns_logo"
             android:contentDescription="@string/generic_content_description"/>
 
         <ImageView
@@ -95,7 +94,6 @@
         tools:ignore="ImageContrastCheck" />
 
     <TextView
-        android:id="@+id/redDemoTextView"
         android:layout_width="250dp"
         android:layout_height="40dp"
         android:layout_marginTop="14dp"

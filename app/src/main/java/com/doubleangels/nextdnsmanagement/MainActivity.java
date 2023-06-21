@@ -3,6 +3,7 @@ package com.doubleangels.nextdnsmanagement;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,8 +23,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import java.io.InputStream;
 import java.util.Objects;
@@ -34,6 +37,9 @@ import io.sentry.Sentry;
 public class MainActivity extends AppCompatActivity {
 
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
+    public Boolean overrideDarkMode;
+    public Boolean manualDarkMode;
+    public Boolean isDarkModeOn;
     private WebView webView;
 
     @Override
@@ -63,18 +69,45 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(helpIntent);
             });
 
-            // Determine if dark theme is on.
-            boolean isDarkThemeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
-            if (isDarkThemeOn) {
-                Sentry.setTag("dark_mode_on", " true");
+            // Get dark mode settings.
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            overrideDarkMode = sharedPreferences.getBoolean(settings.OVERRIDE_DARK_MODE, false);
+            manualDarkMode = sharedPreferences.getBoolean(settings.MANUAL_DARK_MODE, false);
+            if (overrideDarkMode) {
+                isDarkModeOn = manualDarkMode;
+            } else {
+                isDarkModeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
+            }
+            if (isDarkModeOn) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
 
             // Provision our web view.
-            provisionWebView(getString(R.string.main_url), isDarkThemeOn);
+            provisionWebView(getString(R.string.main_url), isDarkModeOn);
         } catch (Exception e) {
             exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
             MainActivity_create_transaction.finish();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        overrideDarkMode = sharedPreferences.getBoolean(settings.OVERRIDE_DARK_MODE, false);
+        manualDarkMode = sharedPreferences.getBoolean(settings.MANUAL_DARK_MODE, false);
+        if (overrideDarkMode) {
+            isDarkModeOn = manualDarkMode;
+        } else {
+            isDarkModeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
+        }
+        if (isDarkModeOn) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 
@@ -86,7 +119,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        boolean isDarkThemeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
         if (item.getItemId() == R.id.refreshNextDNS) {
             webView.reload();
             return true;
@@ -102,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.returnHome) {
-            provisionWebView(getString(R.string.main_url), isDarkThemeOn);
+            provisionWebView(getString(R.string.main_url), isDarkModeOn);
             return true;
         }
         if (item.getItemId() == R.id.help) {
@@ -118,6 +150,11 @@ public class MainActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.about) {
             Intent aboutIntent = new Intent(this, about.class);
             startActivity(aboutIntent);
+            return true;
+        }
+        if (item.getItemId() == R.id.settings) {
+            Intent settingsIntent = new Intent(this, settings.class);
+            startActivity(settingsIntent);
             return true;
         }
         return super.onContextItemSelected(item);

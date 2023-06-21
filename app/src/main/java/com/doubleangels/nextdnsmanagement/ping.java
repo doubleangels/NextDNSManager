@@ -2,6 +2,8 @@ package com.doubleangels.nextdnsmanagement;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,8 +18,10 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import java.util.Objects;
 
@@ -27,6 +31,9 @@ import io.sentry.Sentry;
 public class ping extends AppCompatActivity {
 
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
+    public Boolean overrideDarkMode;
+    public Boolean manualDarkMode;
+    public Boolean isDarkModeOn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +76,24 @@ public class ping extends AppCompatActivity {
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        overrideDarkMode = sharedPreferences.getBoolean(settings.OVERRIDE_DARK_MODE, false);
+        manualDarkMode = sharedPreferences.getBoolean(settings.MANUAL_DARK_MODE, false);
+        if (overrideDarkMode) {
+            isDarkModeOn = manualDarkMode;
+        } else {
+            isDarkModeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
+        }
+        if (isDarkModeOn) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")

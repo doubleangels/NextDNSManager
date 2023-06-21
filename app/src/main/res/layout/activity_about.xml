@@ -18,12 +18,11 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/taskbarImage"
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:contentDescription="@string/generic_content_description"
             android:paddingHorizontal="10dp"
-            android:src="@drawable/nextdns_logo" />
+            app:srcCompat="@drawable/nextdns_logo" />
 
         <ImageView
             android:id="@+id/connectionStatus"

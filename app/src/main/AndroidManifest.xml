@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
     android:versionCode="2">
+
+    <dist:module dist:instant="true" />
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,6 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".settings"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".about"
             android:exported="false" />
@@ -66,7 +73,8 @@
             android:name="io.sentry.traces.user-interaction.enable"
             android:value="true" />
         <meta-data
-            android:name="io.sentry.anr.enable" android:value="true" />
+            android:name="io.sentry.anr.enable"
+            android:value="true" />
     </application>
 
 </manifest>

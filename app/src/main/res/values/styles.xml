@@ -8,12 +8,12 @@
     </style>
     <style name= "AppTheme" parent= "AppBaseTheme" >
         <item name= "android:textViewStyle" > @style/RobotoTextViewStyle </item>
-        <item name= "android:buttonStyle" > @style/RobotoButtonStyle </item>
+        <item name= "buttonStyle" > @style/RobotoButtonStyle </item>
     </style>
     <style name= "RobotoTextViewStyle" parent= "android:Widget.TextView" >
-        <item name= "android:fontFamily" > sans-serif </item>
+        <item name= "fontFamily" > sans-serif </item>
     </style>
-    <style name= "RobotoButtonStyle" parent= "android:Widget.Holo.Button" >
-        <item name= "android:fontFamily" > sans-serif </item>
+    <style name= "RobotoButtonStyle" parent= "Widget.AppCompat.Button" >
+        <item name= "fontFamily" > sans-serif </item>
     </style>
 </resources>

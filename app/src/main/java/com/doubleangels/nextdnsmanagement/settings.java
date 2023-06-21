@@ -4,37 +4,51 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
-import io.sentry.UserFeedback;
-import io.sentry.protocol.SentryId;
 
-public class feedback extends AppCompatActivity {
+public class settings extends AppCompatActivity {
 
     public ExceptionHandler exceptionHandler = new ExceptionHandler();
     public Boolean overrideDarkMode;
     public Boolean manualDarkMode;
     public Boolean isDarkModeOn;
+    public static final String OVERRIDE_DARK_MODE = "override_dark_mode";
+    public static final String MANUAL_DARK_MODE = "manual_dark_mode";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ITransaction settings_create_transaction = Sentry.startTransaction("settings_onCreate()", "settings");
         super.onCreate(savedInstanceState);
-        ITransaction feedback_create_transaction = Sentry.startTransaction("feedback_onCreate()", "feedback");
-        setContentView(R.layout.activity_feedback);
+        setContentView(R.layout.activity_settings);
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.settings, new SettingsFragment())
+                    .commit();
+        }
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         try {
             // Set up our window, status bar, and toolbar.
@@ -57,26 +71,10 @@ public class feedback extends AppCompatActivity {
                 Intent helpIntent = new Intent(v.getContext(), help.class);
                 startActivity(helpIntent);
             });
-
-            // Get our exception from whatever activity sent us here.
-            Bundle bundle = getIntent().getExtras();
-            Throwable exception = (Throwable) bundle.getSerializable("e");
-
-            // Get feedback comments and submit them along with the error when submit button is pressed.
-            Button feedbackSubmitButton = findViewById(R.id.feedbackButton);
-            feedbackSubmitButton.setOnClickListener(v -> {
-                EditText feedbackTextView = findViewById(R.id.feedbackTextView);
-                String feedbackString = feedbackTextView.getText().toString();
-                SentryId sentryID = Sentry.captureException(exception);
-                UserFeedback userFeedback = new UserFeedback(sentryID);
-                userFeedback.setComments(feedbackString);
-                Sentry.captureUserFeedback(userFeedback);
-                finish();
-            });
         } catch (Exception e) {
-            exceptionHandler.captureException(e);
+            exceptionHandler.captureExceptionAndFeedback(e, this);
         } finally {
-            feedback_create_transaction.finish();
+            settings_create_transaction.finish();
         }
     }
 
@@ -96,5 +94,27 @@ public class feedback extends AppCompatActivity {
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
+    }
+
+    public static class SettingsFragment extends PreferenceFragmentCompat {
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_back_only, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.back) {
+            Intent mainIntent = new Intent(this, MainActivity.class);
+            startActivity(mainIntent);
+        }
+        return super.onContextItemSelected(item);
     }
 }

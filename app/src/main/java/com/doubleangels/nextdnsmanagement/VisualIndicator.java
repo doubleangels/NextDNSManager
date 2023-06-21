@@ -1,6 +1,5 @@
 package com.doubleangels.nextdnsmanagement;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
@@ -9,6 +8,7 @@ import android.net.NetworkRequest;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.doubleangels.nextdnsmanagement.checktest.TestApi;
@@ -22,7 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VisualIndicator {
-    public void updateVisualIndicator(LinkProperties linkProperties, Activity activity, Context context) {
+    public void updateVisualIndicator(LinkProperties linkProperties, AppCompatActivity activity, Context context) {
         ITransaction update_visual_indicator_transaction = Sentry.startTransaction("VisualIndicator_updateVisualIndicator()", "VisualIndicator");
         try {
             if (linkProperties != null) {
@@ -70,7 +70,7 @@ public class VisualIndicator {
         }
     }
 
-    public void initiateVisualIndicator(Activity activity, Context context) {
+    public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
         ITransaction initiate_visual_indicator_transaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
         // Check if we're using private DNS and watch DNS type over time to change visual indicator.
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -91,7 +91,7 @@ public class VisualIndicator {
         Sentry.captureException(exception);
     }
 
-    private void checkInheritedDNS(Context c, Activity activity) {
+    private void checkInheritedDNS(Context c, AppCompatActivity activity) {
         TestApi nextdnsApi = TestClient.getBaseClient(c).create(TestApi.class);
         Call<JsonObject> responseCall = nextdnsApi.getResponse();
         responseCall.enqueue(new Callback<>() {
