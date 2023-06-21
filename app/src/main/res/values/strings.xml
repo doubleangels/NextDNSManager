@@ -34,8 +34,8 @@
     <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
     <string name="refresh_title">Refresh</string>
     <string name="home_title">Home</string>
-    <string name="ping_title">NextDNS Ping Test</string>
-    <string name="test_title">NextDNS Connection</string>
+    <string name="ping_title">Ping Test</string>
+    <string name="test_title">Connection Test</string>
     <string name="whitelist_title">Whitelist</string>
     <string name="help_title">Help</string>
     <string name="about_title">About</string>
