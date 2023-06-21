@@ -9,10 +9,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TestClient {
     private static Retrofit retrofit = null;
-    public static Retrofit getBaseClient(Context c) {
+    public static Retrofit getBaseClient(Context context) {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
-                    .baseUrl(c.getString(R.string.test_url))
+                    .baseUrl(context.getString(R.string.test_url))
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

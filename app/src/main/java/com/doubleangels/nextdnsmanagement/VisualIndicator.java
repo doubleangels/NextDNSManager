@@ -91,29 +91,29 @@ public class VisualIndicator {
         Sentry.captureException(exception);
     }
 
-    private void checkInheritedDNS(Context c, AppCompatActivity activity) {
-        TestApi nextdnsApi = TestClient.getBaseClient(c).create(TestApi.class);
+    private void checkInheritedDNS(Context context, AppCompatActivity activity) {
+        TestApi nextdnsApi = TestClient.getBaseClient(context).create(TestApi.class);
         Call<JsonObject> responseCall = nextdnsApi.getResponse();
         responseCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 JsonObject testResponse = response.body();
                 if (testResponse != null) {
-                    String nextdns_status = testResponse.get(c.getString(R.string.nextdns_status)).getAsString();
-                    if (nextdns_status != null && nextdns_status.toUpperCase().equals(c.getString(R.string.using_nextdns_status))) {
-                        String nextdns_protocol = testResponse.get(c.getString(R.string.nextdns_protocol)).getAsString();
+                    String nextdns_status = testResponse.get(context.getString(R.string.nextdns_status)).getAsString();
+                    if (nextdns_status != null && nextdns_status.toUpperCase().equals(context.getString(R.string.using_nextdns_status))) {
+                        String nextdns_protocol = testResponse.get(context.getString(R.string.nextdns_protocol)).getAsString();
                         Sentry.setTag("inherited_protocol", nextdns_protocol);
                         ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
-                        for (String s : c.getResources().getStringArray(R.array.secure_protocols)) {
+                        for (String s : context.getResources().getStringArray(R.array.secure_protocols)) {
                             if (nextdns_protocol.toUpperCase().equals(s)) {
                                 connectionStatus.setImageResource(R.drawable.success);
-                                connectionStatus.setColorFilter(ContextCompat.getColor(c, R.color.green));
+                                connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.green));
                                 Sentry.setTag("inherited_nextdns", "secure");
                                 return;
                             }
                         }
                         connectionStatus.setImageResource(R.drawable.failure);
-                        connectionStatus.setColorFilter(ContextCompat.getColor(c, R.color.orange));
+                        connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.orange));
                         Sentry.setTag("inherited_nextdns", "insecure");
                     }
                 }

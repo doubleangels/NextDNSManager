@@ -260,6 +260,10 @@ div.mt-2.mb-4.text-center img {
     color: #ffffff;
 }
 
+.py-5.px-md-5.list-group-item a {
+	color: #007bff;
+}
+
 /* END Custom NextDNS CSS */
 
 /*!* Bootstrap v4.6.0 (https://getbootstrap.com/)

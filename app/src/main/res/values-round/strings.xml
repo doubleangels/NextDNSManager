@@ -52,9 +52,7 @@
     <string name="title_activity_settings">Settings</string>
     <string name="override_dark_mode_title">Override Dark Mode</string>
     <string name="dark_mode_header">Dark Mode</string>
-    <string name="dark_mode_title">Manually override dark mode settings</string>
     <string name="manual_dark_mode_summary_off">Light</string>
     <string name="manual_dark_mode_summary_on">Dark</string>
-    <string name="manual_dark_mode_title">Manual Dark Mode</string>
     <string name="dark_mode_summary">Changes might require a app restart.</string>
 </resources>

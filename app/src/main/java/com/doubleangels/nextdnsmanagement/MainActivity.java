@@ -147,14 +147,14 @@ public class MainActivity extends AppCompatActivity {
             startActivity(preferencesIntent);
             return true;
         }
-        if (item.getItemId() == R.id.about) {
-            Intent aboutIntent = new Intent(this, about.class);
-            startActivity(aboutIntent);
-            return true;
-        }
         if (item.getItemId() == R.id.settings) {
             Intent settingsIntent = new Intent(this, settings.class);
             startActivity(settingsIntent);
+            return true;
+        }
+        if (item.getItemId() == R.id.about) {
+            Intent aboutIntent = new Intent(this, about.class);
+            startActivity(aboutIntent);
             return true;
         }
         return super.onContextItemSelected(item);
@@ -168,7 +168,9 @@ public class MainActivity extends AppCompatActivity {
                 webView.setWebViewClient(new WebViewClient() {
                     @Override
                     public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
-                        if (url.contains(".css")) {
+                        if (url.contains("apple.nextdns.io")) {
+                            return null;
+                        } else if (url.contains(".css")) {
                             return getCssWebResourceResponseFromAsset();
                         } else if (url.contains("ens-text.174d0fb96836a3e4cde0338d1f9bbe36.svg")) {
                             try {
