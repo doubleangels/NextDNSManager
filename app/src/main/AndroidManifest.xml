@@ -26,9 +26,6 @@
             android:name=".about"
             android:exported="false" />
         <activity
-            android:name=".feedback"
-            android:exported="false" />
-        <activity
             android:name=".whitelist"
             android:exported="false" />
         <activity
