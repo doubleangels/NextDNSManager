@@ -13,9 +13,9 @@
     <string name="help_orange">Secure DNS is NOT being used AND device is connected to NextDNS.</string>
     <string name="help_red">Secure DNS is NOT being used.</string>
     <string name="generic_content_description">This is a generic content description.</string>
-    <string name="disclaimer">This app is NOT an official NextDNS app. This app and its developer are NOT in any way affiliated or related to NextDNS.</string>
+    <string name="disclaimer">This app is NOT an official NextDNS app.</string>
     <string name="error_reporting_title">Error Reporting</string>
-    <string name="whitelist_description">Please consider whitelisting the list of domains below to allow anonymized crash and error reporting as well as push notifications. This greatly helps in my effort to make this app better!</string>
+    <string name="whitelist_description">Please consider whitelisting the list of domains below to allow anonymized crash and error reporting. This greatly helps in my effort to make this app better!</string>
     <string name="whitelist_copy">Long press on each domain to copy it to the clipboard.</string>
     <string name="whitelist_whitelist">Whitelist each domain in your NextDNS configuration.</string>
     <string name="troubleshooting_title">Troubleshooting</string>
