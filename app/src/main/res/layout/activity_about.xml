@@ -37,11 +37,11 @@
 
     <TextView
         android:id="@+id/appNameTextView"
-        style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/application_name"
+        android:textSize="20sp"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,25 +62,26 @@
 
     <TextView
         android:id="@+id/notAffiliatedTextView"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/disclaimer"
-        android:textAlignment="center"
+        android:gravity="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/versionNumberTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/versionNumberTextView"
+        tools:ignore="VisualLintLongText" />
 
     <TextView
         android:id="@+id/authorTitleTextView"
-        style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="24dp"
         android:text="@string/author_title"
+        android:textSize="20sp"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -90,12 +91,13 @@
 
     <TextView
         android:id="@+id/authorNameTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/author_name"
+        android:gravity="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,12 +106,13 @@
 
     <TextView
         android:id="@+id/privacyPolicyTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/privacy"
+        android:gravity="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/notAffiliatedTextView" />
@@ -118,7 +121,7 @@
         android:id="@+id/profile_image"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="20dp"
         android:src="@mipmap/author_photo"
         app:civ_border_color="?android:attr/textColorPrimary"
         app:civ_border_width="2dp"
@@ -128,24 +131,26 @@
 
     <TextView
         android:id="@+id/authorGithubTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/author_github"
+        android:gravity="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
     <TextView
         android:id="@+id/authorWebsiteTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/author_website"
+        android:gravity="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/authorGithubTextView" />

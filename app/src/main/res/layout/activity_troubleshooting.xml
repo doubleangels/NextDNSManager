@@ -36,11 +36,11 @@
 
     <TextView
         android:id="@+id/troubleshootingTitleView"
-        style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="@string/troubleshooting_title"
+        android:textSize="20sp"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,14 +49,14 @@
 
     <TextView
         android:id="@+id/directionsTextView"
-        android:layout_width="301dp"
-        android:layout_height="33dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:gravity="center"
         android:text="@string/troubleshooting_description"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/troubleshootingTitleView" />
@@ -74,13 +74,13 @@
 
     <TextView
         android:id="@+id/helpStep1TextView"
-        android:layout_width="351dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/troubleshooting_step_one"
         android:textAlignment="center"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -118,7 +118,7 @@
         android:gravity="center"
         android:text="@string/troubleshooting_step_two"
         android:textAlignment="center"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -137,17 +137,18 @@
 
     <TextView
         android:id="@+id/helpStep3TextView"
-        android:layout_width="368dp"
-        android:layout_height="54dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/troubleshooting_step_three"
         android:textAlignment="center"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/helpdownArrow3ImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/helpdownArrow3ImageView"
+        tools:ignore="VisualLintLongText" />
 
     <ImageView
         android:id="@+id/helpGithubImageView"
@@ -163,6 +164,5 @@
         app:layout_constraintTop_toBottomOf="@+id/helpStep3TextView"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/github" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

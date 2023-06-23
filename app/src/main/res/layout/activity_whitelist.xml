@@ -38,8 +38,8 @@
 
     <TextView
         android:id="@+id/errorReportingTextView"
-        style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
-        android:layout_width="150dp"
+        android:textSize="20sp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:gravity="center"
@@ -52,17 +52,18 @@
 
     <TextView
         android:id="@+id/errorReportingInstructionsTextView"
-        android:layout_width="300dp"
-        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/whitelist_description"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/errorReportingTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/errorReportingTextView"
+        tools:ignore="VisualLintLongText" />
 
     <ImageView
         android:id="@+id/whitelistDownArrowImageView"
@@ -78,13 +79,13 @@
 
     <TextView
         android:id="@+id/longPressToCopyTextView"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/whitelist_copy"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,28 +93,26 @@
 
     <TextView
         android:id="@+id/whitelistDomain1TextView"
-        android:layout_width="200dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="104dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/whitelist_domain_1"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/longPressToCopyTextView" />
 
     <TextView
         android:id="@+id/whitelistDomain2TextView"
-        android:layout_width="200dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="104dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:text="@string/whitelist_domain_2"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/whitelistDomain1TextView" />
@@ -130,13 +129,13 @@
         app:srcCompat="@drawable/down" />
 
     <TextView
-        android:layout_width="300dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/whitelist_whitelist"
         android:textAlignment="center"
         android:textColor="?android:attr/textColorPrimary"
-        android:textSize="13sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/whitelistDownArrowImageView2" />
