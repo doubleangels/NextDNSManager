@@ -1,8 +1,6 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,10 +12,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
 
 import java.util.Objects;
 
@@ -26,10 +22,7 @@ import io.sentry.Sentry;
 
 public class about extends AppCompatActivity {
 
-    public ExceptionHandler exceptionHandler = new ExceptionHandler();
-    public Boolean overrideDarkMode;
-    public Boolean manualDarkMode;
-    public Boolean isDarkModeOn;
+    public DarkModeHandler darkModeHandler = new DarkModeHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,16 +56,19 @@ public class about extends AppCompatActivity {
             TextView privacyPolicyTextView = findViewById(R.id.privacyPolicyTextView);
             privacyPolicyTextView.setOnClickListener(v -> {
                 Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacy_policy_url)));
+                Sentry.addBreadcrumb("Visited privacy policy");
                 startActivity(githubIntent);
             });
             TextView authorGithubTextView = findViewById(R.id.authorGithubTextView);
             authorGithubTextView.setOnClickListener(v -> {
                 Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.author_github_url)));
+                Sentry.addBreadcrumb("Visited Github page");
                 startActivity(githubIntent);
             });
             TextView authorWebsiteTextView = findViewById(R.id.authorWebsiteTextView);
             authorWebsiteTextView.setOnClickListener(v -> {
                 Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.author_website_url)));
+                Sentry.addBreadcrumb("Visited personal website");
                 startActivity(githubIntent);
             });
 
@@ -81,7 +77,7 @@ public class about extends AppCompatActivity {
             String versionText = BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")";
             versionNumber.setText(versionText);
         } catch (Exception e) {
-            exceptionHandler.captureExceptionAndFeedback(e, this);
+            Sentry.captureException(e);
         } finally {
             preferences_create_transaction.finish();
         }
@@ -90,19 +86,7 @@ public class about extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        overrideDarkMode = sharedPreferences.getBoolean(settings.OVERRIDE_DARK_MODE, false);
-        manualDarkMode = sharedPreferences.getBoolean(settings.MANUAL_DARK_MODE, false);
-        if (overrideDarkMode) {
-            isDarkModeOn = manualDarkMode;
-        } else {
-            isDarkModeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
-        }
-        if (isDarkModeOn) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        darkModeHandler.handleDarkMode(this);
     }
 
     @Override

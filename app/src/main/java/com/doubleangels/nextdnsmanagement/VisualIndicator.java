@@ -34,12 +34,14 @@ public class VisualIndicator {
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.green));
                             Sentry.setTag("private_dns", "nextdns");
+                            Sentry.addBreadcrumb("Visual indicator shows NextDNS private DNS with a secure connection (DOT/DOH)");
                         } else {
                             // If we're connected to private DNS but not NextDNS, show yellow.
                             ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
                             connectionStatus.setImageResource(R.drawable.success);
                             connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
                             Sentry.setTag("private_dns", "private");
+                            Sentry.addBreadcrumb("Visual indicator shows private DNS, but not NextDNS");
                         }
                     } else {
                         // If we're connected to private DNS but not NextDNS, show yellow.
@@ -47,6 +49,7 @@ public class VisualIndicator {
                         connectionStatus.setImageResource(R.drawable.success);
                         connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
                         Sentry.setTag("private_dns", "private");
+                        Sentry.addBreadcrumb("Visual indicator shows private DNS, but not NextDNS");
                     }
                 } else {
                     // If we're not using private DNS, show red.
@@ -54,6 +57,7 @@ public class VisualIndicator {
                     connectionStatus.setImageResource(R.drawable.failure);
                     connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.red));
                     Sentry.setTag("private_dns", "insecure");
+                    Sentry.addBreadcrumb("Visual indicator shows no private DNS");
                 }
             } else {
                 // If we have no internet connection, show gray.
@@ -61,10 +65,11 @@ public class VisualIndicator {
                 connectionStatus.setImageResource(R.drawable.failure);
                 connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.gray));
                 Sentry.setTag("private_dns", "no_connection");
+                Sentry.addBreadcrumb("Visual indicator shows no connection");
             }
             checkInheritedDNS(context, activity);
         } catch (Exception e) {
-            captureException(e);
+            Sentry.captureException(e);
         } finally {
             update_visual_indicator_transaction.finish();
         }
@@ -81,14 +86,11 @@ public class VisualIndicator {
             @Override
             public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
                 super.onLinkPropertiesChanged(network, linkProperties);
+                Sentry.addBreadcrumb("Link properties changed");
                 updateVisualIndicator(linkProperties, activity, context);
             }
         });
         initiate_visual_indicator_transaction.finish();
-    }
-
-    public void captureException(Throwable exception) {
-        Sentry.captureException(exception);
     }
 
     private void checkInheritedDNS(Context context, AppCompatActivity activity) {
@@ -110,19 +112,22 @@ public class VisualIndicator {
                                 connectionStatus.setImageResource(R.drawable.success);
                                 connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.green));
                                 Sentry.setTag("inherited_nextdns", "secure");
+                                Sentry.addBreadcrumb("Visual indicator shows NextDNS private DNS with a secure connection (DOT/DOH)");
                                 return;
                             }
                         }
                         connectionStatus.setImageResource(R.drawable.failure);
                         connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.orange));
                         Sentry.setTag("inherited_nextdns", "insecure");
+                        Sentry.addBreadcrumb("Visual indicator shows NextDNS private DNS, but without a secure connection (DOT/DOH)");
+
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                captureException(t);
+                Sentry.captureException(t);
             }
         });
     }
