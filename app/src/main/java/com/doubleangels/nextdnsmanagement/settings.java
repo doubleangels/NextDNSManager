@@ -28,7 +28,6 @@ import io.sentry.Sentry;
 
 public class settings extends AppCompatActivity {
     public DarkModeHandler darkModeHandler = new DarkModeHandler();
-    public static final String ENABLE_SENTRY = "enable_sentry";
     public static final String OVERRIDE_DARK_MODE = "override_dark_mode";
     public static final String MANUAL_DARK_MODE = "manual_dark_mode";
     @Override
@@ -89,63 +88,59 @@ public class settings extends AppCompatActivity {
 
             // Set up settings buttons.
             Preference whitelist1Button = getPreferenceManager().findPreference("whitelist_domain_1_button");
-            whitelist1Button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    ClipboardManager clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    CharSequence copiedText = getString(R.string.whitelist_domain_1);
-                    ClipData copiedData = ClipData.newPlainText("text", copiedText);
-                    clipboardManager.setPrimaryClip(copiedData);
-                    Sentry.addBreadcrumb("Whitelist domain 1 copied to clipboard");
-                    Toast.makeText(getContext(), "Text copied!",
-                            Toast.LENGTH_SHORT).show();
-                    return true;
-                }
+            assert whitelist1Button != null;
+            whitelist1Button.setOnPreferenceClickListener(preference -> {
+                ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                CharSequence copiedText = getString(R.string.whitelist_domain_1);
+                ClipData copiedData = ClipData.newPlainText("text", copiedText);
+                clipboardManager.setPrimaryClip(copiedData);
+                Sentry.addBreadcrumb("Whitelist domain 1 copied to clipboard");
+                Toast.makeText(getContext(), "Text copied!",
+                        Toast.LENGTH_SHORT).show();
+                return true;
             });
             Preference whitelist2Button = getPreferenceManager().findPreference("whitelist_domain_2_button");
-            whitelist2Button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    ClipboardManager clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    CharSequence copiedText = getString(R.string.whitelist_domain_2);
-                    ClipData copiedData = ClipData.newPlainText("text", copiedText);
-                    clipboardManager.setPrimaryClip(copiedData);
-                    Sentry.addBreadcrumb("Whitelist domain 2 copied to clipboard");
-                    Toast.makeText(getContext(), "Text copied!",
-                            Toast.LENGTH_SHORT).show();
-                    return true;
-                }
+            assert whitelist2Button != null;
+            whitelist2Button.setOnPreferenceClickListener(preference -> {
+                ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                CharSequence copiedText = getString(R.string.whitelist_domain_2);
+                ClipData copiedData = ClipData.newPlainText("text", copiedText);
+                clipboardManager.setPrimaryClip(copiedData);
+                Sentry.addBreadcrumb("Whitelist domain 2 copied to clipboard");
+                Toast.makeText(getContext(), "Text copied!",
+                        Toast.LENGTH_SHORT).show();
+                return true;
             });
             Preference privacyButton = getPreferenceManager().findPreference("privacy_policy_button");
-            privacyButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacy_policy_url)));
-                    Sentry.addBreadcrumb("Visited privacy policy");
-                    startActivity(githubIntent);
-                    return true;
-                }
+            assert privacyButton != null;
+            privacyButton.setOnPreferenceClickListener(preference -> {
+                Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacy_policy_url)));
+                Sentry.addBreadcrumb("Visited privacy policy");
+                startActivity(githubIntent);
+                return true;
             });
             Preference authorButton = getPreferenceManager().findPreference("author_button");
-            authorButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent authorIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.author_url)));
-                    Sentry.addBreadcrumb("Visited personal webpage");
-                    startActivity(authorIntent);
-                    return true;
-                }
+            assert authorButton != null;
+            authorButton.setOnPreferenceClickListener(preference -> {
+                Intent authorIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.author_url)));
+                Sentry.addBreadcrumb("Visited personal webpage");
+                startActivity(authorIntent);
+                return true;
             });
             Preference githubButton = getPreferenceManager().findPreference("github_button");
-            githubButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_url)));
-                    Sentry.addBreadcrumb("Visited Github repository");
-                    startActivity(githubIntent);
-                    return true;
-                }
+            assert githubButton != null;
+            githubButton.setOnPreferenceClickListener(preference -> {
+                Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_url)));
+                Sentry.addBreadcrumb("Visited Github repository");
+                startActivity(githubIntent);
+                return true;
             });
+
+            //Update version and build numbers.
+            String versionName = BuildConfig.VERSION_NAME;
+            Preference versionPreference = findPreference( "version" );
+            assert versionPreference != null;
+            versionPreference.setSummary(versionName);
         }
     }
 
