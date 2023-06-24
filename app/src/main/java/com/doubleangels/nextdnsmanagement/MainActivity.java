@@ -44,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try {
+            // Get shared preferences.
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
             // Set up our window, status bar, and toolbar.
             Window window = this.getWindow();
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -66,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             });
 
             // Get dark mode settings.
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             boolean overrideDarkMode = sharedPreferences.getBoolean(settings.OVERRIDE_DARK_MODE, false);
             boolean manualDarkMode = sharedPreferences.getBoolean(settings.MANUAL_DARK_MODE, false);
             if (overrideDarkMode) {
@@ -130,24 +132,9 @@ public class MainActivity extends AppCompatActivity {
             provisionWebView(getString(R.string.main_url), isDarkModeOn);
             return true;
         }
-        if (item.getItemId() == R.id.help) {
-            Intent troubleshootingIntent = new Intent(this, troubleshooting.class);
-            startActivity(troubleshootingIntent);
-            return true;
-        }
-        if (item.getItemId() ==  R.id.whitelist) {
-            Intent preferencesIntent = new Intent(this, whitelist.class);
-            startActivity(preferencesIntent);
-            return true;
-        }
         if (item.getItemId() == R.id.settings) {
             Intent settingsIntent = new Intent(this, settings.class);
             startActivity(settingsIntent);
-            return true;
-        }
-        if (item.getItemId() == R.id.about) {
-            Intent aboutIntent = new Intent(this, about.class);
-            startActivity(aboutIntent);
             return true;
         }
         return super.onContextItemSelected(item);

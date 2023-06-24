@@ -24,23 +24,8 @@
         app:showAsAction="never">
     </item>
     <item
-        android:id="@+id/whitelist"
-        android:title="@string/whitelist_title"
-        app:showAsAction="never">
-    </item>
-    <item
-        android:id="@+id/help"
-        android:title="@string/help_title"
-        app:showAsAction="never">
-    </item>
-    <item
         android:id="@+id/settings"
-        android:title="Settings"
-        app:showAsAction="never">
-    </item>
-    <item
-        android:id="@+id/about"
-        android:title="@string/about_title"
+        android:title="@string/settings"
         app:showAsAction="never">
     </item>
 </menu>

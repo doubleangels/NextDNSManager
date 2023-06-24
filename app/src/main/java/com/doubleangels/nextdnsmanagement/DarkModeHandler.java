@@ -15,7 +15,10 @@ public class DarkModeHandler {
     public Boolean isDarkModeOn;
     public void handleDarkMode(Context context) {
         try {
+            // Get shared preferences.
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+            // Set up dark mode.
             overrideDarkMode = sharedPreferences.getBoolean(settings.OVERRIDE_DARK_MODE, false);
             manualDarkMode = sharedPreferences.getBoolean(settings.MANUAL_DARK_MODE, false);
             if (overrideDarkMode) {

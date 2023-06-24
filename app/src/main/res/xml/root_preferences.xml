@@ -3,18 +3,53 @@
     <PreferenceCategory
         app:title="@string/dark_mode_header"
         app:key="dark_mode"
-        app:allowDividerBelow="true"
-        app:summary="@string/dark_mode_summary">
+        app:allowDividerBelow="true">
+        <Preference
+            app:summary="@string/dark_mode_summary"/>
 
         <SwitchPreferenceCompat
             app:key="override_dark_mode"
-            app:summary="@string/override_dark_mode_title" />
+            app:summary="@string/override_dark_mode_title"/>
 
         <SwitchPreferenceCompat
             app:dependency="override_dark_mode"
             app:key="manual_dark_mode"
             app:summaryOff="@string/manual_dark_mode_summary_off"
-            app:summaryOn="@string/manual_dark_mode_summary_on" />
+            app:summaryOn="@string/manual_dark_mode_summary_on"/>
 
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:title="Sentry Error Tracking"
+        app:key="sentry">
+        <Preference
+            app:summary="@string/whitelist_instructions"/>
+        <Preference
+            app:summary="@string/whitelist_domain_1"
+            app:key="whitelist_domain_1_button"/>
+        <Preference
+            app:summary="@string/whitelist_domain_2"
+            app:key="whitelist_domain_2_button"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:title="@string/privacy"
+        app:key="privacy">
+        <Preference
+            app:key="privacy_policy_button"
+            app:summary="@string/privacy_policy"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:title="@string/developer">
+        <Preference
+            app:title="@string/author"
+            app:summary="@string/author_name"
+            app:key="author_button"/>
+        <Preference
+            app:title="@string/github"
+            app:summary="@string/github_url"
+            app:key="github_button"/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:title="@string/disclaimer_title"
+        app:summary="@string/disclaimer">
     </PreferenceCategory>
 </PreferenceScreen>

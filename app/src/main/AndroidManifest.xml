@@ -23,15 +23,6 @@
             android:exported="false"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".about"
-            android:exported="false" />
-        <activity
-            android:name=".whitelist"
-            android:exported="false" />
-        <activity
-            android:name=".troubleshooting"
-            android:exported="false" />
-        <activity
             android:name=".ping"
             android:exported="false" />
         <activity
