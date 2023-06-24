@@ -23,6 +23,7 @@
     <string name="manual_dark_mode_summary_on">Dark</string>
     <string name="nextdns_protocol">protocol</string>
     <string name="nextdns_status">status</string>
+    <string name="other">Other</string>
     <string name="override_dark_mode_title">Override Dark Mode</string>
     <string name="ping_disabled">This action is currently unavailable.</string>
     <string name="ping_long">Quickly check ping times to NextDNS servers.</string>
@@ -41,6 +42,7 @@
     <string name="test_url">https://test.nextdns.io</string>
     <string name="title_activity_settings">Settings</string>
     <string name="using_nextdns_status">OK</string>
+    <string name="version">Version</string>
     <string name="whitelist">Whitelist</string>
     <string name="whitelist_domain_1">*.o244019.sentry.io</string>
     <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
