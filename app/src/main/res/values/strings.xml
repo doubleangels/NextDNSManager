@@ -11,7 +11,7 @@
     <string name="disclaimer_title">Disclaimer</string>
     <string name="generic_content_description">This is a generic content description.</string>
     <string name="github">Github</string>
-    <string name="github_url">https://github.com/mtverlee/NextDNSManager</string>
+    <string name="github_url">https://github.com/doubleangels/NextDNSManager</string>
     <string name="help_green">Secure DNS is being used AND device is connected to NextDNS.</string>
     <string name="help_orange">Secure DNS is NOT being used AND device is connected to NextDNS.</string>
     <string name="help_red">Secure DNS is NOT being used.</string>
