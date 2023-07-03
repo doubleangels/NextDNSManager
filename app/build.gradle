@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 34
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
-        targetSdkVersion 34
-        versionCode 157
-        versionName '4.6'
+        targetSdk 33
+        versionCode 158
+        versionName '4.6.1'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles
     }
@@ -21,7 +21,7 @@ android {
         }
     }
     namespace 'com.doubleangels.nextdnsmanagement'
-    buildToolsVersion '34.0.0'
+    buildToolsVersion '30.0.3'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.9.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'io.sentry:sentry-android:6.23.0'
+    implementation 'io.sentry:sentry-android:6.24.0'
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
     implementation 'androidx.preference:preference:1.2.0'
