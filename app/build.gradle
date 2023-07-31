@@ -43,6 +43,6 @@ dependencies {
     implementation 'io.sentry:sentry-android:6.25.2'
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.0'))
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
-    implementation 'androidx.preference:preference:1.2.0'
+    implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
 }
