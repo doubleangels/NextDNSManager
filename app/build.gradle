@@ -8,7 +8,7 @@ android {
         minSdkVersion 28
         targetSdk 33
         versionCode 159
-        versionName '4.6.w'
+        versionName '4.6.2'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles
     }
