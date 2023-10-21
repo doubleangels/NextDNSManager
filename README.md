@@ -15,6 +15,14 @@
 
 <div align="center">
 
+## F-Droid
+      
+</div>
+
+- NextDNSManager is available on the ```https://apt.izzysoft.de/fdroid/repo``` repo, maintained by [@IzzySoft](https://github.com/IzzySoft).
+
+<div align="center">
+
 ## Issues
       
 </div>
