@@ -9,4 +9,5 @@
     <color name="darkgray">#343a40</color>
     <color name="toolbar_background_color">#007bff</color>
     <color name="status_bar_background_color">#007bff</color>
+    <color name="navigation_bar_background_color">#007bff</color>
 </resources>
