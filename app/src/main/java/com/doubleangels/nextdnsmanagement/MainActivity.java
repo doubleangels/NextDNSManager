@@ -151,6 +151,9 @@ public class MainActivity extends AppCompatActivity {
                         if (url.contains("apple.nextdns.io")) {
                             Sentry.addBreadcrumb("Visited Apple mobile configuration page");
                             return null;
+                        } else if (url.contains("help.nextdns.io")) {
+                            Sentry.addBreadcrumb("Visited help page");
+                            return null;
                         } else if (url.contains(".css")) {
                             return getCssWebResourceResponseFromAsset();
                         } else if (url.contains("ens-text.174d0fb96836a3e4cde0338d1f9bbe36.svg")) {
