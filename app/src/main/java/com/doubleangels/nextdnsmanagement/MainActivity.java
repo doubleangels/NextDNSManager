@@ -1,4 +1,3 @@
-// Import statements for required libraries and classes.
 package com.doubleangels.nextdnsmanagement;
 
 import android.annotation.SuppressLint;
@@ -34,14 +33,12 @@ import java.util.Objects;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
-// Definition of the MainActivity class, which extends AppCompatActivity.
 public class MainActivity extends AppCompatActivity {
     private final DarkModeHandler darkModeHandler = new DarkModeHandler();
     private Boolean isDarkNavigation;
     private Boolean isDarkModeOn;
     private WebView webView;
 
-    // Method called when the activity is created.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,21 +56,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Method called when the activity is resumed.
     @Override
     protected void onResume() {
         super.onResume();
         darkModeHandler.handleDarkMode(this);
     }
 
-    // Method to create the options menu.
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
-    // Method to handle menu item selection.
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -87,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Method to replace CSS for dark mode or light mode.
     @SuppressLint("SetJavaScriptEnabled")
     public void replaceCSS(String url, boolean isDarkThemeOn) {
         ITransaction replaceCSSTransaction = Sentry.startTransaction("MainActivity_replaceCSS()", "MainActivity");
@@ -101,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Method to set up the WebView with the provided URL and dark mode setting.
     @SuppressLint("SetJavaScriptEnabled")
     public void provisionWebView(String url, Boolean isDarkThemeOn) {
         ITransaction provisionWebViewTransaction = Sentry.startTransaction("MainActivity_provisionWebView()", "MainActivity");
@@ -117,7 +109,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Method to initialize preferences and styles.
     private void initializePreferencesAndStyles() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         isDarkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
@@ -127,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
         setAppCompatDelegate();
     }
 
-    // Method to configure window styles based on dark navigation.
     private void setupWindowStyles() {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -140,7 +130,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Method to set up styles for dark navigation.
     private void setupDarkNavigationStyles(Window window) {
         int darkGrayColor = ContextCompat.getColor(this, R.color.darkgray);
         window.setStatusBarColor(darkGrayColor);
@@ -149,14 +138,12 @@ public class MainActivity extends AppCompatActivity {
         Sentry.setTag("dark_navigation", "true");
     }
 
-    // Method to set up styles for default (non-dark) navigation.
     private void setupDefaultNavigationStyles() {
         int blueColor = ContextCompat.getColor(this, R.color.blue);
         setToolbarStyles(blueColor);
         Sentry.setTag("dark_navigation", "false");
     }
 
-    // Method to set toolbar styles.
     private void setToolbarStyles(int backgroundColor) {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -164,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setBackgroundColor(backgroundColor);
     }
 
-    // Method to configure dark mode settings based on user preferences.
     private void configureDarkModeSettings(SharedPreferences sharedPreferences) {
         boolean overrideDarkMode = sharedPreferences.getBoolean(SettingsActivity.OVERRIDE_DARK_MODE, false);
         boolean manualDarkMode = sharedPreferences.getBoolean(SettingsActivity.MANUAL_DARK_MODE, false);
@@ -178,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Method to set the AppCompat delegate for dark or light mode.
     private void setAppCompatDelegate() {
         if (isDarkModeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -189,14 +174,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Method to set up the WebView.
     private void setupWebView() {
         webView = findViewById(R.id.mWebview);
         configureWebView(webView);
     }
 
-    // Method to configure WebView settings.
-    @SuppressLint("SetJavaScriptEnabled")
     private void configureWebView(WebView webView) {
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
@@ -207,7 +189,6 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
     }
 
-    // Method to set up the WebViewClient based on dark or light theme.
     private void setupWebViewClient(boolean isDarkThemeOn) {
         if (isDarkThemeOn) {
             webView.setWebViewClient(new WebViewClient() {
@@ -269,7 +250,6 @@ public class MainActivity extends AppCompatActivity {
         return new WebResourceResponse("text/css", "UTF-8", fileStream);
     }
 
-    // Method to set up the DownloadManager for handling file downloads.
     private void setupDownloadManager() {
         webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
@@ -282,20 +262,17 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Method to configure the CookieManager for handling cookies in the WebView.
     private void configureCookieManager() {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.setAcceptThirdPartyCookies(webView, true);
     }
 
-    // Method to set up a visual indicator.
     private void setupVisualIndicator() {
         VisualIndicator visualIndicator = new VisualIndicator();
         visualIndicator.initiateVisualIndicator(this, getApplicationContext());
     }
 
-    // Method to start a new activity.
     private void startIntent(Class<?> targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);

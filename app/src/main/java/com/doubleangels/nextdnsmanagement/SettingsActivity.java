@@ -1,4 +1,3 @@
-// Import statements for required libraries and classes.
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.ClipData;
@@ -28,24 +27,21 @@ import java.util.Objects;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
-// Definition of the SettingsActivity class, which extends AppCompatActivity.
 public class SettingsActivity extends AppCompatActivity {
     public DarkModeHandler darkModeHandler = new DarkModeHandler();
     public Boolean darkNavigation;
 
-    // Definition of constants for shared preferences keys.
     public static final String DARK_NAVIGATION = "dark_navigation";
     public static final String OVERRIDE_DARK_MODE = "override_dark_mode";
     public static final String MANUAL_DARK_MODE = "manual_dark_mode";
 
-    // Method called when the activity is created.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction settingsCreateTransaction = Sentry.startTransaction("settings_onCreate()", "SettingsActivity");
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-
         try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_settings);
+
             initializeViews(savedInstanceState);
             setActionBar();
             setVisualIndicator();
@@ -56,7 +52,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    // Method to initialize views and preferences.
     private void initializeViews(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -66,7 +61,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    // Method to set up the action bar and window styles.
     private void setActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -78,7 +72,6 @@ public class SettingsActivity extends AppCompatActivity {
         setWindowAndToolbar(darkNavigation);
     }
 
-    // Method to set window and toolbar styles based on dark navigation.
     private void setWindowAndToolbar(boolean isDark) {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -105,22 +98,18 @@ public class SettingsActivity extends AppCompatActivity {
         Sentry.setTag("dark_navigation", String.valueOf(isDark));
     }
 
-    // Method to set up a visual indicator.
     private void setVisualIndicator() {
         VisualIndicator visualIndicator = new VisualIndicator();
         visualIndicator.initiateVisualIndicator(this, getApplicationContext());
     }
 
-    // Method called when the activity is resumed.
     @Override
     protected void onResume() {
         super.onResume();
         darkModeHandler.handleDarkMode(this);
     }
 
-    // Nested SettingsFragment class to handle preferences.
     public static class SettingsFragment extends PreferenceFragmentCompat {
-        // Method to create preferences from a resource and set up buttons.
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
@@ -131,7 +120,6 @@ public class SettingsActivity extends AppCompatActivity {
             setupButton("author_button", R.string.author_url);
             setupButton("github_button", R.string.github_url);
 
-            // Set the version name.
             String versionName = BuildConfig.VERSION_NAME;
             Preference versionPreference = findPreference("version");
             if (versionPreference != null) {
@@ -139,7 +127,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
 
-        // Method to set up buttons and handle click events.
         private void setupButton(String buttonKey, int textResource) {
             Preference button = findPreference(buttonKey);
             if (button != null) {
@@ -161,14 +148,12 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    // Method to create the options menu.
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
 
-    // Method to handle menu item selection, e.g., back button.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {

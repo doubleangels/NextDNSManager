@@ -1,4 +1,3 @@
-// Import statements for required libraries and classes.
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.Context;
@@ -23,7 +22,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-// Definition of the VisualIndicator class.
 public class VisualIndicator {
     // Method to update the visual indicator based on link properties.
     public void updateVisualIndicator(LinkProperties linkProperties, AppCompatActivity activity, Context context) {

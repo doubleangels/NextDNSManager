@@ -1,4 +1,3 @@
-// Import statements for required libraries and classes.
 package com.doubleangels.nextdnsmanagement;
 
 import android.annotation.SuppressLint;
@@ -27,19 +26,17 @@ import java.util.Objects;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
-// Definition of the PingActivity class, which extends AppCompatActivity.
 public class PingActivity extends AppCompatActivity {
     private final DarkModeHandler darkModeHandler = new DarkModeHandler();
     private WebView webView;
 
-    // Method called when the activity is created.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction pingCreateTransaction = Sentry.startTransaction("ping_onCreate()", "PingActivity");
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ping);
-
         try {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_ping);
+
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
             initializeViews(sharedPreferences);
@@ -53,13 +50,11 @@ public class PingActivity extends AppCompatActivity {
         }
     }
 
-    // Method to initialize views and preferences.
     private void initializeViews(SharedPreferences sharedPreferences) {
         boolean darkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
         setWindowAndToolbar(darkNavigation);
     }
 
-    // Method to set window and toolbar styles based on dark navigation.
     private void setWindowAndToolbar(boolean isDark) {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -86,13 +81,11 @@ public class PingActivity extends AppCompatActivity {
         Sentry.setTag("dark_navigation", String.valueOf(isDark));
     }
 
-    // Method to set up a visual indicator.
     private void setVisualIndicator() {
         VisualIndicator visualIndicator = new VisualIndicator();
         visualIndicator.initiateVisualIndicator(this, getApplicationContext());
     }
 
-    // Method to set click listeners, e.g., for status icon.
     private void setClickListeners() {
         ImageView statusIcon = findViewById(R.id.connectionStatus);
         statusIcon.setOnClickListener(v -> {
@@ -101,21 +94,18 @@ public class PingActivity extends AppCompatActivity {
         });
     }
 
-    // Method to create the options menu.
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
 
-    // Method called when the activity is resumed.
     @Override
     protected void onResume() {
         super.onResume();
         darkModeHandler.handleDarkMode(this);
     }
 
-    // Method to provision the WebView with the provided URL.
     @SuppressLint("SetJavaScriptEnabled")
     @SuppressWarnings("unused")
     public void provisionWebView(String url) {
@@ -133,7 +123,6 @@ public class PingActivity extends AppCompatActivity {
         }
     }
 
-    // Method to configure WebView settings.
     @SuppressLint("SetJavaScriptEnabled")
     private void setupWebViewSettings() {
         webView.setWebChromeClient(new WebChromeClient());
@@ -149,7 +138,6 @@ public class PingActivity extends AppCompatActivity {
         cookieManager.setAcceptThirdPartyCookies(webView, true);
     }
 
-    // Method to handle menu item selection, e.g., back button.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
