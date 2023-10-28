@@ -3,6 +3,7 @@ package com.doubleangels.nextdnsmanagement;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.view.Window;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
@@ -19,14 +20,8 @@ public class DarkModeHandler {
             // Get shared preferences.
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-            // Set up white text when dark navigation is enabled on light theme.
-            darkNavigation = sharedPreferences.getBoolean(settings.DARK_NAVIGATION, false);
-            if (darkNavigation) {
-                isDarkModeOn = true;
-                isDarkModeOn = (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
-            }
-
             // Set up dark mode.
+            overrideDarkMode = sharedPreferences.getBoolean(settings.OVERRIDE_DARK_MODE, false);
             manualDarkMode = sharedPreferences.getBoolean(settings.MANUAL_DARK_MODE, false);
             darkNavigation = sharedPreferences.getBoolean(settings.DARK_NAVIGATION, false);
 
@@ -38,6 +33,13 @@ public class DarkModeHandler {
                 isDarkModeOn = (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
                 Sentry.setTag("overridden_dark_mode", "false");
                 Sentry.addBreadcrumb("Turned off override for dark mode");
+            }
+
+            // Set up white text if dark navigation is used on a light theme.
+            if (darkNavigation) {
+                isDarkModeOn = true;
+            } else {
+                isDarkModeOn = (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
             }
 
             if (isDarkModeOn) {
