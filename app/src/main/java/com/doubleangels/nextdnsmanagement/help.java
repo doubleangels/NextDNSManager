@@ -1,6 +1,7 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import java.util.Objects;
 
@@ -20,6 +22,7 @@ import io.sentry.Sentry;
 
 public class help extends AppCompatActivity {
     public DarkModeHandler darkModeHandler = new DarkModeHandler();
+    public Boolean darkNavigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction help_create_transaction = Sentry.startTransaction("help_onCreate()", "help");
@@ -27,15 +30,34 @@ public class help extends AppCompatActivity {
         setContentView(R.layout.activity_help);
 
         try {
+            // Get shared preferences.
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
             // Set up our window, status bar, and toolbar.
-            Window window = this.getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.setStatusBarColor(ContextCompat.getColor(this, R.color.status_bar_background_color));
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-            toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.toolbar_background_color));
+            darkNavigation = sharedPreferences.getBoolean(settings.DARK_NAVIGATION, false);
+            if (darkNavigation) {
+                Window window = this.getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                window.setStatusBarColor(ContextCompat.getColor(this, R.color.darkgray));
+                window.setNavigationBarColor(ContextCompat.getColor(this, R.color.darkgray));
+                Toolbar toolbar = findViewById(R.id.toolbar);
+                setSupportActionBar(toolbar);
+                Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.darkgray));
+                Sentry.setTag("dark_navigation", "true");
+                Sentry.addBreadcrumb("Turned on dark navigation");
+            } else {
+                Window window = this.getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                Toolbar toolbar = findViewById(R.id.toolbar);
+                setSupportActionBar(toolbar);
+                Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.blue));
+                Sentry.setTag("dark_navigation", "false");
+                Sentry.addBreadcrumb("Turned off dark navigation");
+            }
 
             // Set up the visual indicator.
             VisualIndicator visualIndicator = new VisualIndicator();

@@ -84,7 +84,7 @@ public class VisualIndicator {
         updateVisualIndicator(linkProperties, activity, context);
         connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
             @Override
-            public void onLinkPropertiesChanged(Network network, LinkProperties linkProperties) {
+            public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
                 super.onLinkPropertiesChanged(network, linkProperties);
                 Sentry.addBreadcrumb("Link properties changed");
                 updateVisualIndicator(linkProperties, activity, context);
@@ -97,7 +97,7 @@ public class VisualIndicator {
         TestApi nextdnsApi = TestClient.getBaseClient(context).create(TestApi.class);
         Call<JsonObject> responseCall = nextdnsApi.getResponse();
 
-        responseCall.enqueue(new Callback<JsonObject>() {
+        responseCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
                 JsonObject testResponse = response.body();
