@@ -179,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         configureWebView(webView);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void configureWebView(WebView webView) {
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
