@@ -3,7 +3,6 @@ package com.doubleangels.nextdnsmanagement;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.view.Window;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
