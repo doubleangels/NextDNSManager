@@ -2,6 +2,7 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -30,6 +31,12 @@ public class VisualIndicator {
         try {
             ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
             String privateDnsServerName = linkProperties != null ? linkProperties.getPrivateDnsServerName() : null;
+
+            // Set an OnClickListener to open HelpActivity when the image is tapped.
+            connectionStatus.setOnClickListener(v -> {
+                Intent helpIntent = new Intent(activity, HelpActivity.class);
+                activity.startActivity(helpIntent);
+            });
 
             if (linkProperties != null && linkProperties.isPrivateDnsActive()) {
                 if (privateDnsServerName != null) {
