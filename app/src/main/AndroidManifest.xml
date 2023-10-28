@@ -19,17 +19,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".settings"
+            android:name=".SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".ping"
+            android:name=".PingActivity"
             android:exported="false" />
         <activity
-            android:name=".test"
+            android:name=".TestActivity"
             android:exported="false" />
         <activity
-            android:name=".help"
+            android:name=".HelpActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -28,7 +28,7 @@ import java.util.Objects;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
-public class settings extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
     public DarkModeHandler darkModeHandler = new DarkModeHandler();
     public Boolean darkNavigation;
     public static final String DARK_NAVIGATION = "dark_navigation";
@@ -36,11 +36,11 @@ public class settings extends AppCompatActivity {
     public static final String MANUAL_DARK_MODE = "manual_dark_mode";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction settings_create_transaction = Sentry.startTransaction("settings_onCreate()", "settings");
+        ITransaction settings_create_transaction = Sentry.startTransaction("settings_onCreate()", "SettingsActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         try {
-            // Set up our settings fragment.
+            // Set up our SettingsActivity fragment.
             if (savedInstanceState == null) {
                 getSupportFragmentManager()
                         .beginTransaction()
@@ -56,7 +56,7 @@ public class settings extends AppCompatActivity {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
             // Set up our window, status bar, and toolbar.
-            darkNavigation = sharedPreferences.getBoolean(settings.DARK_NAVIGATION, false);
+            darkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
             if (darkNavigation) {
                 Window window = this.getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -88,7 +88,7 @@ public class settings extends AppCompatActivity {
             // Let us touch the visual indicator to open an explanation.
             ImageView statusIcon = findViewById(R.id.connectionStatus);
             statusIcon.setOnClickListener(v -> {
-                Intent helpIntent = new Intent(v.getContext(), help.class);
+                Intent helpIntent = new Intent(v.getContext(), HelpActivity.class);
                 startActivity(helpIntent);
             });
         } catch (Exception e) {
@@ -109,7 +109,7 @@ public class settings extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-            // Set up settings buttons.
+            // Set up SettingsActivity buttons.
             Preference whitelist1Button = getPreferenceManager().findPreference("whitelist_domain_1_button");
             assert whitelist1Button != null;
             whitelist1Button.setOnPreferenceClickListener(preference -> {

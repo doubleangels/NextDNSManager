@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
             // Set up our window, status bar, and toolbar.
-            darkNavigation = sharedPreferences.getBoolean(settings.DARK_NAVIGATION, false);
+            darkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
             if (darkNavigation) {
                 Window window = this.getWindow();
                 window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -81,13 +81,13 @@ public class MainActivity extends AppCompatActivity {
             // Let us touch the visual indicator to open an explanation.
             ImageView statusIcon = findViewById(R.id.connectionStatus);
             statusIcon.setOnClickListener(v -> {
-                Intent helpIntent = new Intent(v.getContext(), help.class);
+                Intent helpIntent = new Intent(v.getContext(), HelpActivity.class);
                 startActivity(helpIntent);
             });
 
             // Get dark mode settings.
-            boolean overrideDarkMode = sharedPreferences.getBoolean(settings.OVERRIDE_DARK_MODE, false);
-            boolean manualDarkMode = sharedPreferences.getBoolean(settings.MANUAL_DARK_MODE, false);
+            boolean overrideDarkMode = sharedPreferences.getBoolean(SettingsActivity.OVERRIDE_DARK_MODE, false);
+            boolean manualDarkMode = sharedPreferences.getBoolean(SettingsActivity.MANUAL_DARK_MODE, false);
             if (overrideDarkMode) {
                 isDarkModeOn = manualDarkMode;
                 Sentry.setTag("overridden_dark_mode", "true");
@@ -136,12 +136,12 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.pingNextDNS) {
-            Intent pingIntent = new Intent(this, ping.class);
+            Intent pingIntent = new Intent(this, PingActivity.class);
             startActivity(pingIntent);
             return true;
         }
         if (item.getItemId() == R.id.testNextDNS) {
-            Intent testIntent = new Intent(this, test.class);
+            Intent testIntent = new Intent(this, TestActivity.class);
             startActivity(testIntent);
             return true;
         }
@@ -150,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.settings) {
-            Intent settingsIntent = new Intent(this, settings.class);
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
             return true;
         }
@@ -274,4 +274,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
