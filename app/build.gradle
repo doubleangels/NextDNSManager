@@ -29,6 +29,10 @@ android {
         includeInApk true
         includeInBundle true
     }
+
+    task printVersionInformation {
+        println defaultConfig.versionName
+    }
 }
 
 dependencies {
