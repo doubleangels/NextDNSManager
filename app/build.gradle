@@ -21,7 +21,6 @@ android {
         }
     }
     namespace 'com.doubleangels.nextdnsmanagement'
-    buildToolsVersion '34.0.0'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
@@ -38,7 +37,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.10.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava:2.9.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'io.sentry:sentry-android:6.32.0'
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.10'))
