@@ -45,6 +45,7 @@
 ## Suggestions/Feedback
 
 </div>
+
 - To make a suggestion or to report feedback, please open a new issue in this repository.
 - Please make sure to include the following info:
   - Detailed description of your suggestion or feedback.
