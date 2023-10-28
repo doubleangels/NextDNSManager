@@ -20,6 +20,7 @@ jobs:
       - name: Assemble Release Bundle
         run: |
           ./gradlew bundleRelease
+
       - name: Sign Release
         uses: r0adkll/sign-android-release@v1
         with:
@@ -29,12 +30,6 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Tag Release
-        run: |
-          version_name=${GITHUB_REF##*/}
-          echo "Tagging release with tag $version_name"
-          git tag $version_name release/$version_name
-          git push origin --tags
       - name: Create service_account.json
         run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
 
