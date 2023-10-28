@@ -6,7 +6,6 @@ on:
 
 jobs:
   deploy:
-  
     runs-on: ubuntu-latest
 
     steps:
@@ -39,6 +38,7 @@ jobs:
           packageName: com.doubleangels.nextdnsmanagement
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: beta
+          whatsNewDirectory: whatsnew
       - name: Deploy to production
         uses: r0adkll/upload-google-play@v1
         with:
@@ -46,3 +46,4 @@ jobs:
           packageName: com.doubleangels.nextdnsmanagement
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: production
+          whatsNewDirectory: whatsnew
