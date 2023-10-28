@@ -1,3 +1,4 @@
+// Import statements for required libraries and classes.
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.Context;
@@ -21,7 +22,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+// Definition of the VisualIndicator class.
 public class VisualIndicator {
+    // Method to update the visual indicator based on link properties.
     public void updateVisualIndicator(LinkProperties linkProperties, AppCompatActivity activity, Context context) {
         ITransaction updateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_updateVisualIndicator()", "VisualIndicator");
         try {
@@ -61,6 +64,7 @@ public class VisualIndicator {
         checkInheritedDNS(context, activity);
     }
 
+    // Method to initiate the visual indicator.
     public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
         ITransaction initiateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
 
@@ -81,6 +85,7 @@ public class VisualIndicator {
         initiateVisualIndicatorTransaction.finish();
     }
 
+    // Method to check for inherited DNS settings.
     private void checkInheritedDNS(Context context, AppCompatActivity activity) {
         TestApi nextdnsApi = TestClient.getBaseClient(context).create(TestApi.class);
         Call<JsonObject> responseCall = nextdnsApi.getResponse();

@@ -1,3 +1,4 @@
+// Import statements for required libraries and classes.
 package com.doubleangels.nextdnsmanagement;
 
 import android.annotation.SuppressLint;
@@ -18,7 +19,6 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,243 +34,270 @@ import java.util.Objects;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
+// Definition of the MainActivity class, which extends AppCompatActivity.
 public class MainActivity extends AppCompatActivity {
-    public DarkModeHandler darkModeHandler = new DarkModeHandler();
-    public Boolean darkNavigation;
-    public Boolean isDarkModeOn;
+    private final DarkModeHandler darkModeHandler = new DarkModeHandler();
+    private Boolean isDarkNavigation;
+    private Boolean isDarkModeOn;
     private WebView webView;
+
+    // Method called when the activity is created.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction MainActivity_create_transaction = Sentry.startTransaction("MainActivity_onCreate()", "MainActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ITransaction mainActivityCreateTransaction = Sentry.startTransaction("MainActivity_onCreate()", "MainActivity");
+
         try {
-            // Get shared preferences.
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-            // Set up our window, status bar, and toolbar.
-            darkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
-            if (darkNavigation) {
-                Window window = this.getWindow();
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                window.setStatusBarColor(ContextCompat.getColor(this, R.color.darkgray));
-                window.setNavigationBarColor(ContextCompat.getColor(this, R.color.darkgray));
-                Toolbar toolbar = findViewById(R.id.toolbar);
-                setSupportActionBar(toolbar);
-                Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.darkgray));
-                Sentry.setTag("dark_navigation", "true");
-                Sentry.addBreadcrumb("Turned on dark navigation");
-            } else {
-                Window window = this.getWindow();
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                Toolbar toolbar = findViewById(R.id.toolbar);
-                setSupportActionBar(toolbar);
-                Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.blue));
-                Sentry.setTag("dark_navigation", "false");
-                Sentry.addBreadcrumb("Turned off dark navigation");
-            }
-
-            // Set up the visual indicator.
-            VisualIndicator visualIndicator = new VisualIndicator();
-            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
-
-            // Let us touch the visual indicator to open an explanation.
-            ImageView statusIcon = findViewById(R.id.connectionStatus);
-            statusIcon.setOnClickListener(v -> {
-                Intent helpIntent = new Intent(v.getContext(), HelpActivity.class);
-                startActivity(helpIntent);
-            });
-
-            // Get dark mode settings.
-            boolean overrideDarkMode = sharedPreferences.getBoolean(SettingsActivity.OVERRIDE_DARK_MODE, false);
-            boolean manualDarkMode = sharedPreferences.getBoolean(SettingsActivity.MANUAL_DARK_MODE, false);
-            if (overrideDarkMode) {
-                isDarkModeOn = manualDarkMode;
-                Sentry.setTag("overridden_dark_mode", "true");
-                Sentry.addBreadcrumb("Turned on override for dark mode");
-            } else {
-                isDarkModeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
-                Sentry.setTag("overridden_dark_mode", "false");
-                Sentry.addBreadcrumb("Turned off override for dark mode");
-
-            }
-            if (isDarkModeOn) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                Sentry.setTag("manual_dark_mode", "true");
-                Sentry.addBreadcrumb("Set manual dark mode to true");
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                Sentry.setTag("manual_dark_mode", "false");
-                Sentry.addBreadcrumb("Set manual dark mode to false");
-            }
-
-            // Provision our web view.
+            initializePreferencesAndStyles();
+            setupVisualIndicator();
             provisionWebView(getString(R.string.main_url), isDarkModeOn);
         } catch (Exception e) {
             Sentry.captureException(e);
         } finally {
-            MainActivity_create_transaction.finish();
+            mainActivityCreateTransaction.finish();
         }
     }
 
+    // Method called when the activity is resumed.
     @Override
     protected void onResume() {
         super.onResume();
         darkModeHandler.handleDarkMode(this);
     }
 
+    // Method to create the options menu.
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
+    // Method to handle menu item selection.
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.refreshNextDNS) {
-            webView.reload();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.refreshNextDNS -> webView.reload();
+            case R.id.pingNextDNS -> startIntent(PingActivity.class);
+            case R.id.testNextDNS -> startIntent(TestActivity.class);
+            case R.id.returnHome -> provisionWebView(getString(R.string.main_url), isDarkModeOn);
+            case R.id.settings -> startIntent(SettingsActivity.class);
         }
-        if (item.getItemId() == R.id.pingNextDNS) {
-            Intent pingIntent = new Intent(this, PingActivity.class);
-            startActivity(pingIntent);
-            return true;
-        }
-        if (item.getItemId() == R.id.testNextDNS) {
-            Intent testIntent = new Intent(this, TestActivity.class);
-            startActivity(testIntent);
-            return true;
-        }
-        if (item.getItemId() == R.id.returnHome) {
-            provisionWebView(getString(R.string.main_url), isDarkModeOn);
-            return true;
-        }
-        if (item.getItemId() == R.id.settings) {
-            Intent settingsIntent = new Intent(this, SettingsActivity.class);
-            startActivity(settingsIntent);
-            return true;
-        }
-        return super.onContextItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("deprecation")
-    public void replaceCSS( String url, boolean isDarkThemeOn) {
-        ITransaction replace_css_transaction = Sentry.startTransaction("MainActivity_replaceCSS()", "MainActivity");
+    // Method to replace CSS for dark mode or light mode.
+    @SuppressLint("SetJavaScriptEnabled")
+    public void replaceCSS(String url, boolean isDarkThemeOn) {
+        ITransaction replaceCSSTransaction = Sentry.startTransaction("MainActivity_replaceCSS()", "MainActivity");
         try {
-            if (isDarkThemeOn) {
-                webView.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
-                        if (url.contains("apple.nextdns.io")) {
-                            Sentry.addBreadcrumb("Visited Apple mobile configuration page");
-                            return null;
-                        } else if (url.contains("help.nextdns.io")) {
-                            Sentry.addBreadcrumb("Visited help page");
-                            return null;
-                        } else if (url.contains(".css")) {
-                            return getCssWebResourceResponseFromAsset();
-                        } else if (url.contains("ens-text.174d0fb96836a3e4cde0338d1f9bbe36.svg")) {
-                            try {
-                                InputStream is = getAssets().open("ens-text.png");
-                                return new WebResourceResponse("image/*", "base64", is);
-                            } catch (Exception e) {
-                                Sentry.captureException(e);
-                                return null;
-                            }
-                        } else if (url.contains("unstoppabledomains.ff6c5299ea094f70f72d4276898d5cb7.svg")) {
-                            try {
-                                InputStream is = getAssets().open("unstoppabledomains.png");
-                                return new WebResourceResponse("image/*", "base64", is);
-                            } catch (Exception e) {
-                                Sentry.captureException(e);
-                                return null;
-                            }
-
-                        } else if (url.contains("handshake.41f677899dce13d473e16bc247dda52b.svg")) {
-                            try {
-                                InputStream is = getAssets().open("handshake.png");
-                                return new WebResourceResponse("image/*", "base64", is);
-                            } catch (Exception e) {
-                                Sentry.captureException(e);
-                                return null;
-                            }
-                        } else if (url.contains("ipfs.74e89455fca824894e90734312409fc1.svg")) {
-                            try {
-                                InputStream is = getAssets().open("ipfs.png");
-                                return new WebResourceResponse("image/*", "base64", is);
-                            } catch (Exception e) {
-                                Sentry.captureException(e);
-                                return null;
-                            }
-                        } else {
-                            return super.shouldInterceptRequest(view, url);
-                        }
-                    }
-
-                    private WebResourceResponse getCssWebResourceResponseFromAsset() {
-                        try {
-                            // Return custom CSS file from assets.
-                            InputStream fileInput = getAssets().open("nextdns.css");
-                            return getUtf8EncodedCssWebResourceResponse(fileInput);
-                        } catch (Exception e) {
-                            Sentry.captureException(e);
-                            return null;
-                        }
-                    }
-
-                    private WebResourceResponse getUtf8EncodedCssWebResourceResponse(InputStream fileStream) {
-                        return new WebResourceResponse("text/css", "UTF-8", fileStream);
-                    }
-                });
-            }
-            // Load the webview with the URL and the custom CSS.
+            setupWebViewClient(isDarkThemeOn);
             webView.loadUrl(url);
         } catch (Exception e) {
             Sentry.captureException(e);
         } finally {
-            replace_css_transaction.finish();
+            replaceCSSTransaction.finish();
         }
     }
 
+    // Method to set up the WebView with the provided URL and dark mode setting.
     @SuppressLint("SetJavaScriptEnabled")
-    @SuppressWarnings({"unused"})
     public void provisionWebView(String url, Boolean isDarkThemeOn) {
-        ITransaction MainActivity_provision_web_view_transaction = Sentry.startTransaction("MainActivity_provisionWebView()", "MainActivity");
+        ITransaction provisionWebViewTransaction = Sentry.startTransaction("MainActivity_provisionWebView()", "MainActivity");
         try {
-            webView = findViewById(R.id.mWebview);
-            webView.setWebChromeClient(new WebChromeClient());
-            webView.setWebViewClient(new WebViewClient());
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.getSettings().setDomStorageEnabled(true);
-            webView.getSettings().setDatabaseEnabled(true);
-            webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-            webView.setDownloadListener((url1, userAgent, contentDisposition, mimetype, contentLength) -> {
-                DownloadManager.Request request = new DownloadManager.Request(
-                        Uri.parse(url1));
-                request.allowScanningByMediaScanner();
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "NextDNS-Configuration.mobileconfig");
-                DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                dm.enqueue(request);
-                Toast.makeText(getApplicationContext(), "Downloading file!",
-                        Toast.LENGTH_LONG).show();
-            });
-            WebSettings webSettings = webView.getSettings();
-            webSettings.setAllowContentAccess(true);
-            webSettings.setUseWideViewPort(true);
-            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-            CookieManager cookieManager = CookieManager.getInstance();
-            cookieManager.setAcceptCookie(true);
-            cookieManager.setAcceptThirdPartyCookies(webView, true);
+            setupWebView();
+            setupDownloadManager();
+            configureCookieManager();
             replaceCSS(url, isDarkThemeOn);
         } catch (Exception e) {
             Sentry.captureException(e);
         } finally {
-            MainActivity_provision_web_view_transaction.finish();
+            provisionWebViewTransaction.finish();
         }
+    }
+
+    // Method to initialize preferences and styles.
+    private void initializePreferencesAndStyles() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        isDarkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
+        setupWindowStyles();
+        setupVisualIndicator();
+        configureDarkModeSettings(sharedPreferences);
+        setAppCompatDelegate();
+    }
+
+    // Method to configure window styles based on dark navigation.
+    private void setupWindowStyles() {
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        if (isDarkNavigation) {
+            setupDarkNavigationStyles(window);
+        } else {
+            setupDefaultNavigationStyles();
+        }
+    }
+
+    // Method to set up styles for dark navigation.
+    private void setupDarkNavigationStyles(Window window) {
+        int darkGrayColor = ContextCompat.getColor(this, R.color.darkgray);
+        window.setStatusBarColor(darkGrayColor);
+        window.setNavigationBarColor(darkGrayColor);
+        setToolbarStyles(darkGrayColor);
+        Sentry.setTag("dark_navigation", "true");
+    }
+
+    // Method to set up styles for default (non-dark) navigation.
+    private void setupDefaultNavigationStyles() {
+        int blueColor = ContextCompat.getColor(this, R.color.blue);
+        setToolbarStyles(blueColor);
+        Sentry.setTag("dark_navigation", "false");
+    }
+
+    // Method to set toolbar styles.
+    private void setToolbarStyles(int backgroundColor) {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        toolbar.setBackgroundColor(backgroundColor);
+    }
+
+    // Method to configure dark mode settings based on user preferences.
+    private void configureDarkModeSettings(SharedPreferences sharedPreferences) {
+        boolean overrideDarkMode = sharedPreferences.getBoolean(SettingsActivity.OVERRIDE_DARK_MODE, false);
+        boolean manualDarkMode = sharedPreferences.getBoolean(SettingsActivity.MANUAL_DARK_MODE, false);
+
+        if (overrideDarkMode) {
+            isDarkModeOn = manualDarkMode;
+            Sentry.setTag("overridden_dark_mode", "true");
+        } else {
+            isDarkModeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+            Sentry.setTag("overridden_dark_mode", "false");
+        }
+    }
+
+    // Method to set the AppCompat delegate for dark or light mode.
+    private void setAppCompatDelegate() {
+        if (isDarkModeOn) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            Sentry.setTag("manual_dark_mode", "true");
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            Sentry.setTag("manual_dark_mode", "false");
+        }
+    }
+
+    // Method to set up the WebView.
+    private void setupWebView() {
+        webView = findViewById(R.id.mWebview);
+        configureWebView(webView);
+    }
+
+    // Method to configure WebView settings.
+    @SuppressLint("SetJavaScriptEnabled")
+    private void configureWebView(WebView webView) {
+        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebViewClient(new WebViewClient());
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+    }
+
+    // Method to set up the WebViewClient based on dark or light theme.
+    private void setupWebViewClient(boolean isDarkThemeOn) {
+        if (isDarkThemeOn) {
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
+                    return handleWebResourceRequests(url);
+                }
+            });
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private WebResourceResponse handleWebResourceRequests(String url) {
+        if (url.contains("apple.nextdns.io")) {
+            Sentry.addBreadcrumb("Visited Apple mobile configuration page");
+            return null;
+        } else if (url.contains("help.nextdns.io")) {
+            Sentry.addBreadcrumb("Visited help page");
+            return null;
+        } else if (url.endsWith(".css")) {
+            return getCssWebResourceResponseFromAsset();
+        } else if (url.contains("ens-text")) {
+            return getPngWebResourceResponse("ens-text.png");
+        } else if (url.contains("unstoppabledomains")) {
+            return getPngWebResourceResponse("unstoppabledomains.png");
+        } else if (url.contains("handshake")) {
+            return getPngWebResourceResponse("handshake.png");
+        } else if (url.contains("ipfs")) {
+            return getPngWebResourceResponse("ipfs.png");
+        } else {
+            return null;
+        }
+    }
+
+    @SuppressLint("NewApi")
+    private WebResourceResponse getCssWebResourceResponseFromAsset() {
+        try {
+            InputStream fileInput = getAssets().open("nextdns.css");
+            return getUtf8EncodedCssWebResourceResponse(fileInput);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
+        return null;
+    }
+
+    @SuppressLint("NewApi")
+    private WebResourceResponse getPngWebResourceResponse(String assetFileName) {
+        try {
+            InputStream is = getAssets().open(assetFileName);
+            return new WebResourceResponse("image/png", "UTF-8", is);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
+        return null;
+    }
+
+    @SuppressLint("NewApi")
+    private WebResourceResponse getUtf8EncodedCssWebResourceResponse(InputStream fileStream) {
+        return new WebResourceResponse("text/css", "UTF-8", fileStream);
+    }
+
+    // Method to set up the DownloadManager for handling file downloads.
+    private void setupDownloadManager() {
+        webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            request.allowScanningByMediaScanner();
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "NextDNS-Configuration.mobileconfig");
+            DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+            dm.enqueue(request);
+            Toast.makeText(getApplicationContext(), "Downloading file!", Toast.LENGTH_LONG).show();
+        });
+    }
+
+    // Method to configure the CookieManager for handling cookies in the WebView.
+    private void configureCookieManager() {
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.setAcceptThirdPartyCookies(webView, true);
+    }
+
+    // Method to set up a visual indicator.
+    private void setupVisualIndicator() {
+        VisualIndicator visualIndicator = new VisualIndicator();
+        visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+    }
+
+    // Method to start a new activity.
+    private void startIntent(Class<?> targetClass) {
+        Intent intent = new Intent(this, targetClass);
+        startActivity(intent);
     }
 }
