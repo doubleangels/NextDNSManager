@@ -44,7 +44,7 @@ public class TestActivity extends AppCompatActivity {
             setClickListeners();
             provisionWebView(getString(R.string.test_url));
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
         } finally {
             testCreateTransaction.finish();
         }
@@ -144,6 +144,6 @@ public class TestActivity extends AppCompatActivity {
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }
-        return super.onContextItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 }

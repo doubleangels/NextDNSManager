@@ -2,12 +2,16 @@
 package com.doubleangels.nextdnsmanagement.checktest;
 import android.content.Context;
 import com.doubleangels.nextdnsmanagement.R;
+
+import io.sentry.Sentry;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import java.io.File;
+import java.io.IOException;
 
 // Definition of the TestClient class.
 public class TestClient {
@@ -22,7 +26,17 @@ public class TestClient {
 
             // Create an OkHttpClient instance with caching enabled.
             OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
-                    .cache(cache);
+                    .cache(cache)
+                    .addInterceptor(chain -> {
+                        try {
+                            Request request = chain.request();
+                            return chain.proceed(request);
+                        } catch (IOException e) {
+                            // Capture the exception with Sentry.
+                            Sentry.captureException(e);
+                            throw e; // Rethrow the exception to propagate it.
+                        }
+                    });
 
             // Build a Retrofit instance with various configurations:
             retrofit = new Retrofit.Builder()

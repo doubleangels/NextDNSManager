@@ -1,6 +1,7 @@
-// Import statements for required libraries and classes.
 package com.doubleangels.nextdnsmanagement.checktest;
+
 import com.google.gson.JsonObject;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -17,4 +18,5 @@ public interface TestApi {
     @GET("/")
     // Method signature for making an HTTP GET request and receiving a JsonObject response.
     Call<JsonObject> getResponse();
+
 }

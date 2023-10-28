@@ -62,8 +62,10 @@ public class VisualIndicator {
                 Sentry.addBreadcrumb("Visual indicator shows no private DNS");
             }
         } catch (Exception e) {
+            // Handle and log exceptions with Sentry
             Sentry.captureException(e);
         } finally {
+            // Finish the Sentry transaction
             updateVisualIndicatorTransaction.finish();
         }
         checkInheritedDNS(context, activity);
@@ -87,6 +89,7 @@ public class VisualIndicator {
             }
         });
 
+        // Finish the Sentry transaction
         initiateVisualIndicatorTransaction.finish();
     }
 
@@ -123,6 +126,7 @@ public class VisualIndicator {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
+                // Handle and log exceptions with Sentry
                 Sentry.captureException(t);
             }
         });

@@ -46,7 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
             setActionBar();
             setVisualIndicator();
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
         } finally {
             settingsCreateTransaction.finish();
         }

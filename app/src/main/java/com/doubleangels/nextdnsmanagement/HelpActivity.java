@@ -49,6 +49,8 @@ public class HelpActivity extends AppCompatActivity {
                 Intent helpIntent = new Intent(v.getContext(), HelpActivity.class);
                 startActivity(helpIntent);
             });
+        } catch (Exception e) {
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
         } finally {
             // Finish the Sentry transaction for this method, whether there was an exception or not.
             helpCreateTransaction.finish();

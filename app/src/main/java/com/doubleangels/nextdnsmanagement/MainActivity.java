@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             setupVisualIndicator();
             provisionWebView(getString(R.string.main_url), isDarkModeOn);
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
         } finally {
             mainActivityCreateTransaction.finish();
         }
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             setupWebViewClient(isDarkThemeOn);
             webView.loadUrl(url);
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
         } finally {
             replaceCSSTransaction.finish();
         }
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
             configureCookieManager();
             replaceCSS(url, isDarkThemeOn);
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
         } finally {
             provisionWebViewTransaction.finish();
         }
@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
             InputStream fileInput = getAssets().open("nextdns.css");
             return getUtf8EncodedCssWebResourceResponse(fileInput);
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
         }
         return null;
     }
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
             InputStream is = getAssets().open(assetFileName);
             return new WebResourceResponse("image/png", "UTF-8", is);
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
         }
         return null;
     }

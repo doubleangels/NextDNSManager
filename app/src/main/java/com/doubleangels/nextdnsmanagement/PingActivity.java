@@ -44,7 +44,7 @@ public class PingActivity extends AppCompatActivity {
             setClickListeners();
             provisionWebView(getString(R.string.ping_url));
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
         } finally {
             pingCreateTransaction.finish();
         }
@@ -117,7 +117,7 @@ public class PingActivity extends AppCompatActivity {
             }
             webView.loadUrl(url);
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
         } finally {
             provisionWebViewTransaction.finish();
         }
