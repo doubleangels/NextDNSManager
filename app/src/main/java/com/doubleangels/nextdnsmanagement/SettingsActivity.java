@@ -1,3 +1,4 @@
+// Import statements for required libraries and classes.
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.ClipData;
@@ -11,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,151 +28,147 @@ import java.util.Objects;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
+// Definition of the SettingsActivity class, which extends AppCompatActivity.
 public class SettingsActivity extends AppCompatActivity {
     public DarkModeHandler darkModeHandler = new DarkModeHandler();
     public Boolean darkNavigation;
+
+    // Definition of constants for shared preferences keys.
     public static final String DARK_NAVIGATION = "dark_navigation";
     public static final String OVERRIDE_DARK_MODE = "override_dark_mode";
     public static final String MANUAL_DARK_MODE = "manual_dark_mode";
+
+    // Method called when the activity is created.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction settings_create_transaction = Sentry.startTransaction("settings_onCreate()", "SettingsActivity");
+        ITransaction settingsCreateTransaction = Sentry.startTransaction("settings_onCreate()", "SettingsActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
         try {
-            // Set up our SettingsActivity fragment.
-            if (savedInstanceState == null) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.settings, new SettingsFragment())
-                        .commit();
-            }
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setDisplayHomeAsUpEnabled(true);
-            }
-
-            // Get shared preferences.
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-            // Set up our window, status bar, and toolbar.
-            darkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
-            if (darkNavigation) {
-                Window window = this.getWindow();
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                window.setStatusBarColor(ContextCompat.getColor(this, R.color.darkgray));
-                window.setNavigationBarColor(ContextCompat.getColor(this, R.color.darkgray));
-                Toolbar toolbar = findViewById(R.id.toolbar);
-                setSupportActionBar(toolbar);
-                Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.darkgray));
-                Sentry.setTag("dark_navigation", "true");
-                Sentry.addBreadcrumb("Turned on dark navigation");
-            } else {
-                Window window = this.getWindow();
-                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                Toolbar toolbar = findViewById(R.id.toolbar);
-                setSupportActionBar(toolbar);
-                Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-                toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.blue));
-                Sentry.setTag("dark_navigation", "false");
-                Sentry.addBreadcrumb("Turned off dark navigation");
-            }
-
-            // Set up the visual indicator.
-            VisualIndicator visualIndicator = new VisualIndicator();
-            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
-
-            // Let us touch the visual indicator to open an explanation.
-            ImageView statusIcon = findViewById(R.id.connectionStatus);
-            statusIcon.setOnClickListener(v -> {
-                Intent helpIntent = new Intent(v.getContext(), HelpActivity.class);
-                startActivity(helpIntent);
-            });
+            initializeViews(savedInstanceState);
+            setActionBar();
+            setVisualIndicator();
         } catch (Exception e) {
             Sentry.captureException(e);
         } finally {
-            settings_create_transaction.finish();
+            settingsCreateTransaction.finish();
         }
     }
 
+    // Method to initialize views and preferences.
+    private void initializeViews(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.settings, new SettingsFragment())
+                    .commit();
+        }
+    }
+
+    // Method to set up the action bar and window styles.
+    private void setActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        darkNavigation = sharedPreferences.getBoolean(DARK_NAVIGATION, false);
+        setWindowAndToolbar(darkNavigation);
+    }
+
+    // Method to set window and toolbar styles based on dark navigation.
+    private void setWindowAndToolbar(boolean isDark) {
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        int statusBarColor;
+        int toolbarColor;
+
+        if (isDark) {
+            statusBarColor = ContextCompat.getColor(this, R.color.darkgray);
+            toolbarColor = ContextCompat.getColor(this, R.color.darkgray);
+        } else {
+            statusBarColor = ContextCompat.getColor(this, R.color.blue);
+            toolbarColor = ContextCompat.getColor(this, R.color.blue);
+        }
+
+        window.setStatusBarColor(statusBarColor);
+        window.setNavigationBarColor(statusBarColor);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        toolbar.setBackgroundColor(toolbarColor);
+        Sentry.setTag("dark_navigation", String.valueOf(isDark));
+    }
+
+    // Method to set up a visual indicator.
+    private void setVisualIndicator() {
+        VisualIndicator visualIndicator = new VisualIndicator();
+        visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+    }
+
+    // Method called when the activity is resumed.
     @Override
     protected void onResume() {
         super.onResume();
         darkModeHandler.handleDarkMode(this);
     }
 
+    // Nested SettingsFragment class to handle preferences.
     public static class SettingsFragment extends PreferenceFragmentCompat {
+        // Method to create preferences from a resource and set up buttons.
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-            // Set up SettingsActivity buttons.
-            Preference whitelist1Button = getPreferenceManager().findPreference("whitelist_domain_1_button");
-            assert whitelist1Button != null;
-            whitelist1Button.setOnPreferenceClickListener(preference -> {
-                ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                CharSequence copiedText = getString(R.string.whitelist_domain_1);
-                ClipData copiedData = ClipData.newPlainText("text", copiedText);
-                clipboardManager.setPrimaryClip(copiedData);
-                Sentry.addBreadcrumb("Whitelist domain 1 copied to clipboard");
-                Toast.makeText(getContext(), "Text copied!",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            });
-            Preference whitelist2Button = getPreferenceManager().findPreference("whitelist_domain_2_button");
-            assert whitelist2Button != null;
-            whitelist2Button.setOnPreferenceClickListener(preference -> {
-                ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                CharSequence copiedText = getString(R.string.whitelist_domain_2);
-                ClipData copiedData = ClipData.newPlainText("text", copiedText);
-                clipboardManager.setPrimaryClip(copiedData);
-                Sentry.addBreadcrumb("Whitelist domain 2 copied to clipboard");
-                Toast.makeText(getContext(), "Text copied!",
-                        Toast.LENGTH_SHORT).show();
-                return true;
-            });
-            Preference privacyButton = getPreferenceManager().findPreference("privacy_policy_button");
-            assert privacyButton != null;
-            privacyButton.setOnPreferenceClickListener(preference -> {
-                Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.privacy_policy_url)));
-                Sentry.addBreadcrumb("Visited privacy policy");
-                startActivity(githubIntent);
-                return true;
-            });
-            Preference authorButton = getPreferenceManager().findPreference("author_button");
-            assert authorButton != null;
-            authorButton.setOnPreferenceClickListener(preference -> {
-                Intent authorIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.author_url)));
-                Sentry.addBreadcrumb("Visited personal webpage");
-                startActivity(authorIntent);
-                return true;
-            });
-            Preference githubButton = getPreferenceManager().findPreference("github_button");
-            assert githubButton != null;
-            githubButton.setOnPreferenceClickListener(preference -> {
-                Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_url)));
-                Sentry.addBreadcrumb("Visited Github repository");
-                startActivity(githubIntent);
-                return true;
-            });
+            setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
+            setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
+            setupButton("privacy_policy_button", R.string.privacy_policy_url);
+            setupButton("author_button", R.string.author_url);
+            setupButton("github_button", R.string.github_url);
 
-            //Update version and build numbers.
+            // Set the version name.
             String versionName = BuildConfig.VERSION_NAME;
-            Preference versionPreference = findPreference( "version" );
-            assert versionPreference != null;
-            versionPreference.setSummary(versionName);
+            Preference versionPreference = findPreference("version");
+            if (versionPreference != null) {
+                versionPreference.setSummary(versionName);
+            }
+        }
+
+        // Method to set up buttons and handle click events.
+        private void setupButton(String buttonKey, int textResource) {
+            Preference button = findPreference(buttonKey);
+            if (button != null) {
+                button.setOnPreferenceClickListener(preference -> {
+                    ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    CharSequence copiedText = getString(textResource);
+                    ClipData copiedData = ClipData.newPlainText("text", copiedText);
+                    clipboardManager.setPrimaryClip(copiedData);
+                    Sentry.addBreadcrumb(buttonKey + " copied to clipboard");
+                    Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
+                    if (buttonKey.equals("privacy_policy_button") || buttonKey.equals("author_button") || buttonKey.equals("github_button")) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
+                        Sentry.addBreadcrumb("Visited " + buttonKey);
+                        startActivity(intent);
+                    }
+                    return true;
+                });
+            }
         }
     }
 
+    // Method to create the options menu.
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
 
+    // Method to handle menu item selection, e.g., back button.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
