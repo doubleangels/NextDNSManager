@@ -5,6 +5,7 @@ on:
 
 jobs:
   deploy:
+  
     runs-on: ubuntu-latest
 
     steps:
@@ -35,6 +36,5 @@ jobs:
         with:
           serviceAccountJson: service_account.json
           packageName: com.doubleangels.nextdnsmanagement
-          releaseFile: app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: beta
-          whatsNewDirectory: distribution/
