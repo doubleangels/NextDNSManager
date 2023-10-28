@@ -9,7 +9,7 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.doubleangels.nextdnsmanagement"
-            android:targetClass="com.doubleangels.nextdnsmanagement.ping" />
+            android:targetClass="com.doubleangels.nextdnsmanagement.PingActivity" />
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
     <shortcut
@@ -22,7 +22,7 @@
         <intent
             android:action="android.intent.action.VIEW"
             android:targetPackage="com.doubleangels.nextdnsmanagement"
-            android:targetClass="com.doubleangels.nextdnsmanagement.test" /> 
+            android:targetClass="com.doubleangels.nextdnsmanagement.TestActivity" />
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
 
