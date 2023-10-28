@@ -9,7 +9,8 @@
     <style name= "AppTheme" parent= "AppBaseTheme" >
         <item name= "android:textViewStyle" > @style/RobotoTextViewStyle </item>
         <item name= "buttonStyle" > @style/RobotoButtonStyle </item>
-        <item name="android:navigationBarColor"> @color/navigation_bar_background_color </item>
+        <item name= "android:statusBarColor">@color/blue</item>
+        <item name= "android:navigationBarColor"> @color/blue </item>
     </style>
     <style name= "RobotoTextViewStyle" parent= "android:Widget.TextView" >
         <item name= "fontFamily" > sans-serif </item>

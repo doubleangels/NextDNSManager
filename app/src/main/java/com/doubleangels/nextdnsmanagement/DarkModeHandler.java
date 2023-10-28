@@ -3,9 +3,15 @@ package com.doubleangels.nextdnsmanagement;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
+
+import java.util.Objects;
 
 import io.sentry.Sentry;
 

@@ -8,6 +8,10 @@
             app:summary="@string/dark_mode_summary"/>
 
         <SwitchPreferenceCompat
+            app:key="dark_navigation"
+            app:summary="@string/dark_navigation_title"/>
+
+        <SwitchPreferenceCompat
             app:key="override_dark_mode"
             app:summary="@string/override_dark_mode_title"/>
 
