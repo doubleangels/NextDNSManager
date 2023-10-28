@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   deploy:
@@ -26,6 +26,29 @@ jobs:
       - name: Assemble Release Bundle
         run: |
           ./gradlew bundleRelease
+
+      - name: Get version number for release
+        run: echo "VERSION_INFORMATION=$(${{github.workspace}}/gradlew -q printVersionInformation)" >> $GITHUB_ENV
+
+      - name: Create Github release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION_INFORMATION }}
+          release_name: Release ${{ env.VERSION_INFORMATION }}
+
+      - name: Upload APK for Github release
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: apk/app-release.apk
+          asset_name: app-release.apk
+          asset_content_type: application/zip
 
       - name: Sign release
         uses: r0adkll/sign-android-release@v1
