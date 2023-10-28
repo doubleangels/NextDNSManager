@@ -6,47 +6,52 @@ import android.content.res.Configuration;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceManager;
 import io.sentry.Sentry;
+import io.sentry.Breadcrumb;
 
-// Definition of the DarkModeHandler class.
 public class DarkModeHandler {
-    // Constants for shared preferences keys.
     private static final String OVERRIDE_DARK_MODE = "override_dark_mode";
     private static final String MANUAL_DARK_MODE = "manual_dark_mode";
     private static final String DARK_NAVIGATION = "dark_navigation";
 
-    // Method to handle the dark mode settings with error handling.
     public void handleDarkMode(Context context) {
         try {
-            // Access the default shared preferences for the app.
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            // Create a breadcrumb to track entering the 'handleDarkMode' method.
+            Breadcrumb breadcrumb = new Breadcrumb();
+            breadcrumb.setMessage("Entering handleDarkMode method");
+            Sentry.addBreadcrumb(breadcrumb);
 
-            // Retrieve the values of dark mode-related preferences.
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             boolean overrideDarkMode = sharedPreferences.getBoolean(OVERRIDE_DARK_MODE, false);
             boolean manualDarkMode = sharedPreferences.getBoolean(MANUAL_DARK_MODE, false);
             boolean darkNavigation = sharedPreferences.getBoolean(DARK_NAVIGATION, false);
             boolean isDarkModeOn;
 
-            // Determine the dark mode state based on user preferences.
             if (overrideDarkMode) {
-                // If dark mode is overridden, use the manual setting.
                 isDarkModeOn = manualDarkMode;
                 Sentry.setTag("overridden_dark_mode", "true");
             } else {
-                // If dark mode is not overridden, use the system-wide dark mode setting.
                 isDarkModeOn = (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
                 Sentry.setTag("overridden_dark_mode", "false");
             }
 
-            // Apply dark mode for navigation if specified.
             if (darkNavigation) {
                 isDarkModeOn = true;
             }
 
-            // Set the app's default night mode based on the determined state.
             AppCompatDelegate.setDefaultNightMode(isDarkModeOn ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+
+            // Add a breadcrumb to track the result of the dark mode calculation.
+            Breadcrumb resultBreadcrumb = new Breadcrumb();
+            resultBreadcrumb.setMessage("Dark mode set to " + isDarkModeOn);
+            Sentry.addBreadcrumb(resultBreadcrumb);
+
             Sentry.setTag("manual_dark_mode", String.valueOf(isDarkModeOn));
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
+            // Capture and report any exceptions to Sentry with a breadcrumb.
+            Breadcrumb errorBreadcrumb = new Breadcrumb();
+            errorBreadcrumb.setMessage("An exception occurred in handleDarkMode method");
+            Sentry.addBreadcrumb(errorBreadcrumb);
+            Sentry.captureException(e);
         }
     }
 }

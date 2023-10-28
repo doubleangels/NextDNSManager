@@ -19,6 +19,7 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
+import io.sentry.Breadcrumb;
 
 public class HelpActivity extends AppCompatActivity {
     private final DarkModeHandler darkModeHandler = new DarkModeHandler();
@@ -30,6 +31,11 @@ public class HelpActivity extends AppCompatActivity {
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_help);
+
+            // Create a breadcrumb to track entering the 'onCreate' method.
+            Breadcrumb breadcrumb = new Breadcrumb();
+            breadcrumb.setMessage("Entering onCreate method in HelpActivity");
+            Sentry.addBreadcrumb(breadcrumb);
 
             // Access the app's shared preferences.
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -50,7 +56,11 @@ public class HelpActivity extends AppCompatActivity {
                 startActivity(helpIntent);
             });
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
+            // Capture and report any exceptions to Sentry with a breadcrumb.
+            Breadcrumb errorBreadcrumb = new Breadcrumb();
+            errorBreadcrumb.setMessage("An exception occurred in onCreate method in HelpActivity");
+            Sentry.addBreadcrumb(errorBreadcrumb);
+            Sentry.captureException(e);
         } finally {
             // Finish the Sentry transaction for this method, whether there was an exception or not.
             helpCreateTransaction.finish();
@@ -62,7 +72,6 @@ public class HelpActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
         if (darkNavigation) {

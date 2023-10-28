@@ -32,6 +32,7 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
+import io.sentry.Breadcrumb;
 
 public class MainActivity extends AppCompatActivity {
     private final DarkModeHandler darkModeHandler = new DarkModeHandler();
@@ -46,11 +47,20 @@ public class MainActivity extends AppCompatActivity {
         ITransaction mainActivityCreateTransaction = Sentry.startTransaction("MainActivity_onCreate()", "MainActivity");
 
         try {
+            // Create a breadcrumb to track entering the 'onCreate' method.
+            Breadcrumb breadcrumb = new Breadcrumb();
+            breadcrumb.setMessage("Entering onCreate method in MainActivity");
+            Sentry.addBreadcrumb(breadcrumb);
+
             initializePreferencesAndStyles();
             setupVisualIndicator();
             provisionWebView(getString(R.string.main_url), isDarkModeOn);
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
+            // Capture and report any exceptions to Sentry with a breadcrumb.
+            Breadcrumb errorBreadcrumb = new Breadcrumb();
+            errorBreadcrumb.setMessage("An exception occurred in onCreate method in MainActivity");
+            Sentry.addBreadcrumb(errorBreadcrumb);
+            Sentry.captureException(e);
         } finally {
             mainActivityCreateTransaction.finish();
         }
@@ -88,7 +98,11 @@ public class MainActivity extends AppCompatActivity {
             setupWebViewClient(isDarkThemeOn);
             webView.loadUrl(url);
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
+            // Capture and report any exceptions to Sentry with a breadcrumb.
+            Breadcrumb errorBreadcrumb = new Breadcrumb();
+            errorBreadcrumb.setMessage("An exception occurred in replaceCSS method in MainActivity");
+            Sentry.addBreadcrumb(errorBreadcrumb);
+            Sentry.captureException(e);
         } finally {
             replaceCSSTransaction.finish();
         }
@@ -103,7 +117,11 @@ public class MainActivity extends AppCompatActivity {
             configureCookieManager();
             replaceCSS(url, isDarkThemeOn);
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
+            // Capture and report any exceptions to Sentry with a breadcrumb.
+            Breadcrumb errorBreadcrumb = new Breadcrumb();
+            errorBreadcrumb.setMessage("An exception occurred in provisionWebView method in MainActivity");
+            Sentry.addBreadcrumb(errorBreadcrumb);
+            Sentry.captureException(e);
         } finally {
             provisionWebViewTransaction.finish();
         }
@@ -230,7 +248,11 @@ public class MainActivity extends AppCompatActivity {
             InputStream fileInput = getAssets().open("nextdns.css");
             return getUtf8EncodedCssWebResourceResponse(fileInput);
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
+            // Capture and report any exceptions to Sentry with a breadcrumb.
+            Breadcrumb errorBreadcrumb = new Breadcrumb();
+            errorBreadcrumb.setMessage("An exception occurred in getCssWebResourceResponseFromAsset method in MainActivity");
+            Sentry.addBreadcrumb(errorBreadcrumb);
+            Sentry.captureException(e);
         }
         return null;
     }
@@ -241,7 +263,11 @@ public class MainActivity extends AppCompatActivity {
             InputStream is = getAssets().open(assetFileName);
             return new WebResourceResponse("image/png", "UTF-8", is);
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
+            // Capture and report any exceptions to Sentry with a breadcrumb.
+            Breadcrumb errorBreadcrumb = new Breadcrumb();
+            errorBreadcrumb.setMessage("An exception occurred in getPngWebResourceResponse method in MainActivity");
+            Sentry.addBreadcrumb(errorBreadcrumb);
+            Sentry.captureException(e);
         }
         return null;
     }
