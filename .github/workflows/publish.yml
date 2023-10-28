@@ -13,14 +13,13 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
-
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
       - name: Build
         run: ./gradlew build
-
       - name: Assemble Release Bundle
         run: |
           ./gradlew bundleRelease
-
       - name: Sign Release
         uses: r0adkll/sign-android-release@v1
         with:
@@ -29,10 +28,8 @@ jobs:
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
-
       - name: Create service_account.json
         run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
-
       - name: Deploy to Beta
         uses: r0adkll/upload-google-play@v1
         with:
