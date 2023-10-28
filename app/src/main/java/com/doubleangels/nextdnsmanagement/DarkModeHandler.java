@@ -3,15 +3,9 @@ package com.doubleangels.nextdnsmanagement;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.view.Window;
-import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
-
-import java.util.Objects;
 
 import io.sentry.Sentry;
 
@@ -19,14 +13,23 @@ public class DarkModeHandler {
     public Boolean overrideDarkMode;
     public Boolean manualDarkMode;
     public Boolean isDarkModeOn;
+    public Boolean darkNavigation;
     public void handleDarkMode(Context context) {
         try {
             // Get shared preferences.
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
+            // Set up white text when dark navigation is enabled on light theme.
+            darkNavigation = sharedPreferences.getBoolean(settings.DARK_NAVIGATION, false);
+            if (darkNavigation) {
+                isDarkModeOn = true;
+                isDarkModeOn = (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
+            }
+
             // Set up dark mode.
-            overrideDarkMode = sharedPreferences.getBoolean(settings.OVERRIDE_DARK_MODE, false);
             manualDarkMode = sharedPreferences.getBoolean(settings.MANUAL_DARK_MODE, false);
+            darkNavigation = sharedPreferences.getBoolean(settings.DARK_NAVIGATION, false);
+
             if (overrideDarkMode) {
                 isDarkModeOn = manualDarkMode;
                 Sentry.setTag("overridden_dark_mode", "true");
@@ -35,8 +38,8 @@ public class DarkModeHandler {
                 isDarkModeOn = (context.getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK)  == Configuration.UI_MODE_NIGHT_YES;
                 Sentry.setTag("overridden_dark_mode", "false");
                 Sentry.addBreadcrumb("Turned off override for dark mode");
-
             }
+
             if (isDarkModeOn) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 Sentry.setTag("manual_dark_mode", "true");
