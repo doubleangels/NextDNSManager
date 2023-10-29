@@ -33,7 +33,7 @@
     <string name="ping_url">https://ping.nextdns.io</string>
     <string name="privacy">Privacy</string>
     <string name="privacy_policy">Privacy Policy</string>
-    <string name="privacy_policy_url">https://doubleangels.com/privacy/nextdns.html</string>
+    <string name="privacy_policy_url">https://doubleangels.github.io/privacyPolicy/nextdns.html</string>
     <string name="refresh_title">Refresh</string>
     <string name="settings">Settings</string>
     <string name="test_disabled">This action is currently unavailable.</string>
