@@ -23,7 +23,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Assemble release APK
+      - name: Create release APK
         run: ./gradlew assembleRelease
 
       - name: Sign release APK
@@ -41,7 +41,7 @@ jobs:
           name: apk
           path: app/build/outputs/apk/release/app-release.apk
 
-      - name: Bundle up release bundle
+      - name: Create release bundle
         run: ./gradlew bundleRelease
 
       - name: Retrieve version name for release
