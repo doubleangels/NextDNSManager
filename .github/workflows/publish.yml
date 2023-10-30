@@ -23,18 +23,14 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build
-        run: ./gradlew build
+      #- name: Build
+      #  run: ./gradlew build
 
       - name: Assemble release bundle
         run: ./gradlew bundleRelease
 
-      - name: Get version number and code for release
-        run: |
-          {
-            echo "VERSION_NAME=$(./gradlew -q printVersionName)"
-            echo "VERSION_CODE=$(./gradlew -q printVersionCode)"
-          } >> $GITHUB_ENV
+      - name: Get version name and code for release
+        run: echo "VERSION_NAME=$(${{ github.workspace }}/gradlew -q printVersionName)" >> $GITHUB_ENV
 
       - name: Upload APK to Github repository
         uses: actions/upload-artifact@v1
