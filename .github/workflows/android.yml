@@ -3,6 +3,7 @@ name: Android CI
 on:
   push:
     branches: ["dev"]
+  workflow_dispatch:
 
 jobs:
   build:
