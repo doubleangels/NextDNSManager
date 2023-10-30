@@ -29,12 +29,6 @@ jobs:
       - name: Get version name and code for release
         run: echo "VERSION_NAME=$(${{ github.workspace }}/gradlew -q printVersionName)" >> $GITHUB_ENV
 
-      - name: Upload APK to Github repository
-        uses: actions/upload-artifact@v1
-        with:
-          name: app-release.apk
-          path: app/release/app-release.apk
-
       - name: Create Github release
         id: create_release
         uses: actions/create-release@v1
@@ -52,7 +46,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app/release/app-release.apk
+          asset_path: app/build/outputs/apk/release/app-release.apk
           asset_name: app-release.apk
           asset_content_type: application/zip
 
