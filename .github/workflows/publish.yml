@@ -26,8 +26,17 @@ jobs:
       - name: Assemble release APK
         run: ./gradlew assembleRelease
 
-      - name: Assemble release bundle
+      - name: Bundle up release bundle
         run: ./gradlew bundleRelease
+
+      - name: Sign release APK
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       - name: Upload release APK
         uses: actions/upload-artifact@v1
