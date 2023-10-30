@@ -33,10 +33,6 @@ android {
     task printVersionName {
         println defaultConfig.versionName
     }
-
-    task printVersionCode {
-        println defaultConfig.versionCode
-    }
 }
 
 dependencies {
