@@ -30,7 +30,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: apk
-          path: app/build/outputs/apk/release/app-release.apk
+          path: app/build/outputs/bundle/release/app-release.apk
 
       - name: Retrieve version name for release
         run: |
