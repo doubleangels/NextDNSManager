@@ -30,7 +30,7 @@ android {
         includeInBundle true
     }
 
-    task printVersionInformation {
+    task printVersionName {
         println defaultConfig.versionName
     }
 
