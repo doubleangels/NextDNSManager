@@ -7,8 +7,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdk 34
-        versionCode 169
-        versionName '4.7.2'
+        versionCode 170
+        versionName '4.7.3'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles
     }
@@ -22,8 +22,8 @@ android {
     }
     namespace 'com.doubleangels.nextdnsmanagement'
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     dependenciesInfo {
         includeInApk true
