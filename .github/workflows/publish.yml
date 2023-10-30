@@ -26,6 +26,12 @@ jobs:
       - name: Assemble release bundle
         run: ./gradlew bundleRelease
 
+      - name: Upload release bundle
+        uses: actions/upload-artifact@v1
+        with:
+          name: apk
+          path: app/build/outputs/apk/release/app-release.apk
+
       - name: Retrieve version name for release
         run: |
           echo "::set-output name=VERSION_NAME::$(${{ github.workspace }}/gradlew -q printVersionCode)"
@@ -40,9 +46,14 @@ jobs:
           echo "::set-output name=VERSION_CODE::$(${{ github.workspace }}/gradlew -q printVersionCode)"
         id: android_code
 
-      - name: Set version name environment variable
+      - name: Set version code environment variable
         run: |
           echo "VERSION_CODE=${{steps.android_code.outputs.VERSION_CODE}}" >> $GITHUB_ENV
+
+      - name: Download release bundle
+        uses: actions/download-artifact@v1
+        with:
+          name: apk
 
       - name: Create Github release
         id: create_release
@@ -61,7 +72,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /app/build/outputs/apk/release/app-release.apk
+          asset_path: apk/app-release.apk
           asset_name: app-release.apk
           asset_content_type: application/zip
 
