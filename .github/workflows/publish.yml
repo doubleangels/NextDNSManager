@@ -42,13 +42,6 @@ jobs:
       - name: Get version code for release
         run: echo "VERSION_CODE=$(${{github.workspace}}/gradlew -q printVersionCode)" >> $GITHUB_ENV
 
-      - name: Create fastline changelog for release
-        uses: DamianReeves/write-file-action@master
-        with:
-          path: /fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt
-          contents: Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue.
-          write-mode: append
-
       - name: Create Github release
         id: create_release
         uses: actions/create-release@v1
@@ -90,3 +83,10 @@ jobs:
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: production
           whatsNewDirectory: whatsnew
+
+      - name: Create fastline changelog for F-Droid release
+        uses: DamianReeves/write-file-action@master
+        with:
+          path: /fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt
+          contents: Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue.
+          write-mode: append
