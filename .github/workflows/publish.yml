@@ -30,6 +30,12 @@ jobs:
         run: |
           ./gradlew bundleRelease
 
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: apk
+          path: app/build/outputs/apk/release/app-release.apk
+
       - name: Get version number for release
         run: echo "VERSION_INFORMATION=$(${{github.workspace}}/gradlew -q printVersionInformation)" >> $GITHUB_ENV
 
