@@ -30,17 +30,17 @@ jobs:
         run: |
           ./gradlew bundleRelease
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v1
-        with:
-          name: app-release.apk
-          path: app//release/app-release.apk
-
       - name: Get version number for release
         run: echo "VERSION_INFORMATION=$(${{github.workspace}}/gradlew -q printVersionInformation)" >> $GITHUB_ENV
 
       - name: Get version code for release
         run: echo "VERSION_CODE=$(${{github.workspace}}/gradlew -q printVersionCode)" >> $GITHUB_ENV
+
+      - name: Upload APK to Github repository
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: app//release/app-release.apk
 
       - name: Create Github release
         id: create_release
@@ -63,7 +63,7 @@ jobs:
           asset_name: app-release.apk
           asset_content_type: application/zip
 
-      - name: Sign release
+      - name: Sign Google Play release
         uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: app/build/outputs/bundle/release
@@ -72,10 +72,10 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Create service_account.json
+      - name: Create service_account.json for Google Play release
         run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
 
-      - name: Deploy to production
+      - name: Deploy to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJson: service_account.json
