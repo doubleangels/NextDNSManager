@@ -31,7 +31,7 @@ jobs:
           ./gradlew bundleRelease
 
       - name: Get version number for release
-        run: echo "VERSION_INFORMATION=$(${{github.workspace}}/gradlew -q printVersionInformation)" >> $GITHUB_ENV
+        run: echo "VERSION_NAME=$(${{github.workspace}}/gradlew -q printVersionName)" >> $GITHUB_ENV
 
       - name: Get version code for release
         run: echo "VERSION_CODE=$(${{github.workspace}}/gradlew -q printVersionCode)" >> $GITHUB_ENV
@@ -48,8 +48,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ env.VERSION_INFORMATION }}
-          release_name: v${{ env.VERSION_INFORMATION }}
+          tag_name: v${{ env.VERSION_NAME }}
+          release_name: v${{ env.VERSION_NAME }}
           body: Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue.
 
       - name: Upload APK for Github release
