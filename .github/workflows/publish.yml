@@ -33,7 +33,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: app-release.apk
-          path: app//release/app-release.apk
+          path: app/release/app-release.apk
 
       - name: Create Github release
         id: create_release
