@@ -29,8 +29,6 @@
 
 <div align="center">
 
-<div align="center">
-
 ## Privacy Policy/Terms and Conditions
 
 </div>
