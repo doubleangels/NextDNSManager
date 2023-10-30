@@ -27,14 +27,14 @@ jobs:
         run: ./gradlew build
 
       - name: Assemble release bundle
+        run: ./gradlew bundleRelease
+
+      - name: Get version number and code for release
         run: |
-          ./gradlew bundleRelease
-
-      - name: Get version number for release
-        run: echo "VERSION_NAME=$(./gradlew -q printVersionName)" >> $GITHUB_ENV
-
-      - name: Get version code for release
-        run: echo "VERSION_CODE=$(./gradlew -q printVersionCode)" >> $GITHUB_ENV
+          {
+            echo "VERSION_NAME=$(./gradlew -q printVersionName)"
+            echo "VERSION_CODE=$(./gradlew -q printVersionCode)"
+          } >> $GITHUB_ENV
 
       - name: Upload APK to Github repository
         uses: actions/upload-artifact@v1
