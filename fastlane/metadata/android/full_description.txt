@@ -1,0 +1,3 @@
+With this management app, you can manage and change your NextDNS settings, check your connection, test your ping, and see other connection information!
+
+This is a completely open-source project with no official ties to NextDNS.
