@@ -23,14 +23,17 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Assemble release APK
+        run: ./gradlew assembleRelease
+
       - name: Assemble release bundle
         run: ./gradlew bundleRelease
 
-      - name: Upload release bundle
+      - name: Upload release APK
         uses: actions/upload-artifact@v1
         with:
           name: apk
-          path: app/build/outputs/bundle/release/app-release.apk
+          path: app/build/outputs/apk/release/app-release.apk
 
       - name: Retrieve version name for release
         run: |
@@ -50,7 +53,7 @@ jobs:
         run: |
           echo "VERSION_CODE=${{steps.android_code.outputs.VERSION_CODE}}" >> $GITHUB_ENV
 
-      - name: Download release bundle
+      - name: Download release APK
         uses: actions/download-artifact@v1
         with:
           name: apk
@@ -88,7 +91,7 @@ jobs:
       - name: Create service_account.json for Google Play release
         run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
 
-      - name: Deploy to Google Play
+      - name: Deploy bundle to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJson: service_account.json
