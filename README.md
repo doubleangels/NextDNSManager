@@ -29,6 +29,15 @@
 
 <div align="center">
 
+<div align="center">
+
+## Privacy Policy/Terms and Conditions
+
+</div>
+
+- [Privacy Policy](https://doubleangels.github.io/privacyPolicy/nextdns.html)
+- [Terms and Conditions](https://doubleangels.github.io/privacyPolicy/nextdns_terms.html)
+
 ## Issues
 
 </div>
