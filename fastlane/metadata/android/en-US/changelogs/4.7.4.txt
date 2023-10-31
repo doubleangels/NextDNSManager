@@ -1,1 +1,0 @@
-Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue.
