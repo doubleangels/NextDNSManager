@@ -46,7 +46,7 @@ jobs:
 
       - name: Retrieve version name for release
         run: |
-          echo "::set-output name=VERSION_NAME::$(${{ github.workspace }}/gradlew -q printVersionCode)"
+          echo "::set-output name=VERSION_NAME::$(${{ github.workspace }}/gradlew -q printVersionName)"
         id: android_version
 
       - name: Set version name environment variable
@@ -64,14 +64,14 @@ jobs:
 
       - name: Create changelog for fastlane
         run: |
-          cd fastlane/metadata/android/en-US
+          cd fastlane/metadata/android/en-US/changelogs
           echo "Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue." > ${{ env.VERSION_CODE }}.txt
 
       - name: Commit changelog for fastlane
         run: |
           git config --global user.email "no-reply@github.com"
           git config --global user.name "GitHub Actions"
-          git add fastlane/metadata/android/en-US/${{ env.VERSION_CODE }}.txt
+          git add fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt
           git commit -m "Add changelog for release ${{ env.VERSION_CODE }}"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push
