@@ -1,8 +1,8 @@
-name: Development debug build
+name: Test dependabot updates
 
 on:
   push:
-    branches: ["dev"]
+    branches: ["dependabot/**"]
   workflow_dispatch:
 
 jobs:
@@ -23,5 +23,8 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build with Gradle
+      - name: Build debug build with Gradle
+        run: ./gradlew assembleDebug
+
+      - name: Build release build with Gradle
         run: ./gradlew assembleDebug
