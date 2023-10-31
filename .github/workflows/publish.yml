@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  create_changelog:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +23,36 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Create release APK
+        run: ./gradlew assembleRelease
+
+      - name: Sign release APK
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Upload release APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: apk
+          path: app/build/outputs/apk/release/app-release-unsigned-signed.apk
+
+      - name: Create release bundle
+        run: ./gradlew bundleRelease
+
+      - name: Retrieve version name for release
+        run: |
+          echo "::set-output name=VERSION_NAME::$(${{ github.workspace }}/gradlew -q printVersionCode)"
+        id: android_version
+
+      - name: Set version name environment variable
+        run: |
+          echo "VERSION_NAME=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV
+
       - name: Retrieve version code for release
         run: |
           echo "::set-output name=VERSION_CODE::$(${{ github.workspace }}/gradlew -q printVersionCode)"
@@ -37,7 +67,7 @@ jobs:
           cd fastlane/metadata/android/en-US
           echo "Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue." > ${{ env.VERSION_CODE }}.txt
 
-      - name: Commit changelog
+      - name: Commit changelog for fastlane
         run: |
           git config --global user.email "no-reply@github.com"
           git config --global user.name "GitHub Actions"
@@ -45,3 +75,50 @@ jobs:
           git commit -m "Add changelog for release ${{ env.VERSION_CODE }}"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git push
+
+      - name: Download release APK
+        uses: actions/download-artifact@v1
+        with:
+          name: apk
+
+      - name: Create Github release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ env.VERSION_NAME }}
+          release_name: v${{ env.VERSION_NAME }}
+          body: Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue.
+
+      - name: Upload APK for Github release
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: apk/app-release-unsigned-signed.apk
+          asset_name: app-release.apk
+          asset_content_type: application/zip
+
+      - name: Sign Google Play release
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Create service_account.json for Google Play release
+        run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
+
+      - name: Deploy bundle to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: service_account.json
+          packageName: com.doubleangels.nextdnsmanagement
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          track: production
+          whatsNewDirectory: whatsnew
