@@ -31,11 +31,15 @@ android {
     }
 
     task printVersionName {
-        println defaultConfig.versionName
+        doLast {
+            println defaultConfig.versionName
+        }
     }
 
     task printVersionCode {
-        println defaultConfig.versionCode
+        doLast {
+            println defaultConfig.versionCode
+        }
     }
 }
 
