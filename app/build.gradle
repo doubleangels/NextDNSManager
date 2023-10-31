@@ -30,16 +30,12 @@ android {
         includeInBundle true
     }
 
-    task printVersionName {
-        doLast {
-            println defaultConfig.versionName
-        }
+    tasks.register('printVersionName') {
+        println defaultConfig.versionName
     }
 
-    task printVersionCode {
-        doLast {
-            println defaultConfig.versionCode
-        }
+    tasks.register('printVersionCode') {
+        println defaultConfig.versionCode
     }
 }
 
