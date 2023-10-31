@@ -1,4 +1,4 @@
-name: Test development branch
+name: Test development build
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test-build-debug:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,5 +26,22 @@ jobs:
       - name: Build debug build with Gradle
         run: ./gradlew assembleDebug
 
-      - name: Build release build with Gradle
+  test-build-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: "temurin"
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build debug build with Gradle
         run: ./gradlew assembleRelease
