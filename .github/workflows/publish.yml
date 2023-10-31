@@ -26,7 +26,7 @@ jobs:
       - name: Retrieve version code for release
         id: android_code
         run: |
-          echo "::set-output name=VERSION_CODE::$(${{ github.workspace }}/gradlew -q printVersionCode)"
+          echo "::set-output name=VERSION_CODE::$(./gradlew -q printVersionCode)"
 
       - name: Set version code environment variable
         run: |
@@ -70,7 +70,7 @@ jobs:
       - name: Retrieve version name for release
         id: android_version
         run: |
-          echo "::set-output name=VERSION_NAME::$(${{ github.workspace }}/gradlew -q printVersionName)"
+          echo "::set-output name=VERSION_NAME::$(./gradlew -q printVersionName)"
 
       - name: Set version name environment variable
         run: |
