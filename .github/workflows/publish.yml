@@ -23,9 +23,9 @@ jobs:
           echo "VERSION_CODE=${{steps.android_code.outputs.VERSION_CODE}}" >> $GITHUB_ENV
 
       - name: Create changelog for fastlane
-        uses: BobAnkh/auto-generate-changelog@v1.2.5
+        uses: 1arp/create-a-file-action@0.3
         with:
-          REPO_NAME: "doubleangels/NextDNSManager"
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PATH: "fastlane/metadata/android/en_us/changelogs/${{ env.VERSION_CODE }}.txt}}"
-          COMMIT_MESSAGE: "Update release notes"
+          path: "fastlane/metadata/android/en-US/changelogs"
+          file: "${{ env.VERSION_CODE }}.txt"
+          content: |
+            Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue.
