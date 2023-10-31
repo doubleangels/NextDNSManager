@@ -23,6 +23,29 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Retrieve version code for release
+        id: android_code
+        run: |
+          echo "::set-output name=VERSION_CODE::$(${{ github.workspace }}/gradlew -q printVersionCode)"
+
+      - name: Set version code environment variable
+        run: |
+          echo "VERSION_CODE=${{ steps.android_code.outputs.VERSION_CODE }}" >> $GITHUB_ENV
+
+      - name: Create changelog for fastlane
+        run: |
+          cd fastlane/metadata/android/en-US/changelogs
+          echo "Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue." > ${{ env.VERSION_CODE }}.txt
+
+      - name: Commit changelog for fastlane
+        run: |
+          git config --global user.email "no-reply@github.com"
+          git config --global user.name "GitHub Actions"
+          git add fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt
+          git commit -m "Add changelog for release ${{ env.VERSION_CODE }}"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push
+
       - name: Create release APK
         run: ./gradlew assembleRelease
 
@@ -45,22 +68,13 @@ jobs:
         run: ./gradlew bundleRelease
 
       - name: Retrieve version name for release
-        run: |
-          echo "::set-output name=VERSION_NAME::$(${{ github.workspace }}/gradlew -q printVersionCode)"
         id: android_version
+        run: |
+          echo "::set-output name=VERSION_NAME::$(${{ github.workspace }}/gradlew -q printVersionName)"
 
       - name: Set version name environment variable
         run: |
-          echo "VERSION_NAME=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV
-
-      - name: Retrieve version code for release
-        run: |
-          echo "::set-output name=VERSION_CODE::$(${{ github.workspace }}/gradlew -q printVersionCode)"
-        id: android_code
-
-      - name: Set version code environment variable
-        run: |
-          echo "VERSION_CODE=${{steps.android_code.outputs.VERSION_CODE}}" >> $GITHUB_ENV
+          echo "VERSION_NAME=${{ steps.android_version.outputs.VERSION_NAME }}" >> $GITHUB_ENV
 
       - name: Download release APK
         uses: actions/download-artifact@v1
@@ -108,10 +122,3 @@ jobs:
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: production
           whatsNewDirectory: whatsnew
-
-      - name: Create fastline changelog for F-Droid release
-        uses: DamianReeves/write-file-action@master
-        with:
-          path: /fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt
-          contents: Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue.
-          write-mode: append
