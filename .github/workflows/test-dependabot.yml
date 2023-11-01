@@ -1,7 +1,7 @@
 name: Test dependabot updates
 
 on:
-  push:
+  pull_request:
     branches: ["dependabot/**"]
   workflow_dispatch:
 
