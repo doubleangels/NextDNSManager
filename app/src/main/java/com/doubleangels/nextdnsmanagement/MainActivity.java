@@ -227,6 +227,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (url.contains("help.nextdns.io")) {
             Sentry.addBreadcrumb("Visited help page");
             return null;
+        } else if (url.contains("bitpay.com")) {
+            Sentry.addBreadcrumb("Visited crypto payment page");
+            return null;
         } else if (url.endsWith(".css")) {
             return getCssWebResourceResponseFromAsset();
         } else if (url.contains("ens-text")) {
