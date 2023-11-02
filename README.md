@@ -26,7 +26,9 @@
 
 # About
 
-NextDNSManager is an Android application that simplifies the management of your NextDNS configuration. NextDNS is a cloud-based DNS filter and firewall that protects your home, family, and privacy online. With NextDNSManager, you can easily control your NextDNS settings and ensure a safer and more secure online experience.
+NextDNSManager is an Android application that simplifies the management of your NextDNS configuration. NextDNS is a cloud-based DNS filter and firewall that protects your home, family, and privacy online. With NextDNSManager, you can easily control your NextDNS settings, check your connection, test your ping, and see other connection information, ensuring a safer and more secure online experience.
+
+**Please note**: This is a completely open-source project with no official ties to NextDNS.
 
 ## Features
 
@@ -40,21 +42,21 @@ NextDNSManager is an Android application that simplifies the management of your 
 
 - **F-Droid and IzzySoft Repositories**: You can download NextDNSManager from F-Droid and IzzySoft repositories, providing multiple installation options.
 
-## Manual Installation
+# Manual Installation
 
 The most recent APK is available for download [here](https://github.com/doubleangels/NextDNSManager/releases).
 
-## F-Droid Installation
+# F-Droid Installation
 
 NextDNSManager is available on F-Droid [here](https://f-droid.org/en/packages/com.doubleangels.nextdnsmanagement).
 It's also available on the `https://apt.izzysoft.de/fdroid/repo` repo, maintained by [@IzzySoft](https://github.com/IzzySoft).
 
-## Privacy Policy and Terms
+# Privacy Policy and Terms
 
 - [Privacy Policy](https://doubleangels.github.io/privacyPolicy/nextdns.html)
 - [Terms and Conditions](https://doubleangels.github.io/privacyPolicy/nextdns_terms.html)
 
-## Reporting Issues
+# Reporting Issues
 
 To report an issue, please open a new issue in this repository and provide the following information:
 
@@ -63,29 +65,25 @@ To report an issue, please open a new issue in this repository and provide the f
 - Version of the app you're using
 - Detailed description of your problem
 
-## Suggestions and Feedback
+# Suggestions and Feedback
 
 To make a suggestion or report feedback, please open a new issue in this repository and include a detailed description of your suggestion or feedback.
 
-## Contributing
+# Contributing
 
 Contributions to NextDNSManager are welcome! Whether it's bug fixes, new features, or documentation improvements, your contributions help make the app better for everyone.
 
-# Contributing to [Your Project Name]
-
-Thank you for considering contributing to [Your Project Name]! Your help is greatly appreciated in making this project better.
-
-## Getting Started
+# Getting Started
 
 - Check if there are any open issues or discussions related to the topic you want to contribute to.
 - If there's an existing issue or discussion, make sure to comment and express your interest in working on it.
 - If there isn't an existing issue or discussion, you can create one to discuss and coordinate your contributions.
 
-## How Can You Contribute?
+# How Can You Contribute?
 
 You can contribute to NextDNSManager in the following ways:
 
-### Reporting Bugs
+## Reporting Bugs
 
 If you find a bug in the project, please open an issue and provide the following details:
 
@@ -93,25 +91,25 @@ If you find a bug in the project, please open an issue and provide the following
 - Steps to reproduce the bug.
 - Expected behavior and actual behavior.
 
-### Suggesting Enhancements
+## Suggesting Enhancements
 
 If you have ideas for enhancements or new features, feel free to open a discussion or issue to describe your suggestions. It's best to include as much detail as possible to help us understand your proposal.
 
-### Documentation
+## Documentation
 
 Improvements to the project's documentation are always welcome. You can suggest edits, updates, or new sections to make it more informative and user-friendly.
 
-### Code Contributions
+## Code Contributions
 
 If you're interested in making code contributions, please open a pull request!
 
-## License
+# License
 
 NextDNSManager is open-source and released under the [MIT License](LICENSE).
 
-## Security Policy
+# Security Policy
 
-### Reporting a Vulnerability
+## Reporting a Vulnerability
 
 If you discover a vulnerability, please open an issue and provide the following information:
 
@@ -119,4 +117,3 @@ If you discover a vulnerability, please open an issue and provide the following 
 - Version of Android you're using.
 - Version of the app you're using.
 - Detailed description of the vulnerability.
-</p>
