@@ -51,9 +51,10 @@ public class HelpActivity extends AppCompatActivity {
 
     private void setupWindow(boolean darkNavigation) {
         // Set up the window properties and appearance
-        Window window = this.getWindow();
+        Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 

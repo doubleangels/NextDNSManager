@@ -28,6 +28,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
@@ -216,11 +217,7 @@ public class MainActivity extends AppCompatActivity {
     // Method to handle web resource requests and apply custom CSS
     @SuppressLint("NewApi")
     private WebResourceResponse handleWebResourceRequests(String url) {
-        if (url.contains("apple.nextdns.io")) {
-            return null;
-        } else if (url.contains("help.nextdns.io")) {
-            return null;
-        } else if (url.contains("bitpay.com")) {
+        if (url.contains("apple.nextdns.io") || url.contains("help.nextdns.io") || url.contains("bitpay.com")) {
             return null;
         } else if (url.endsWith(".css")) {
             return getCssWebResourceResponseFromAsset();
@@ -243,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             InputStream fileInput = getAssets().open("nextdns.css");
             return getUtf8EncodedCssWebResourceResponse(fileInput);
-        } catch (Exception e) {
+        } catch (IOException e) {
             Sentry.captureException(e);
         }
         return null;
@@ -255,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             InputStream is = getAssets().open(assetFileName);
             return new WebResourceResponse("image/png", "UTF-8", is);
-        } catch (Exception e) {
+        } catch (IOException e) {
             Sentry.captureException(e);
         }
         return null;
@@ -289,8 +286,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Method to set up the visual indicator
     private void setupVisualIndicator() {
-        VisualIndicator visualIndicator = new VisualIndicator();
-        visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+        try {
+            VisualIndicator visualIndicator = new VisualIndicator();
+            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
     }
 
     // Method to start a new activity
