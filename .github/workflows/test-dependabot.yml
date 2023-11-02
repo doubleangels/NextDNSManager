@@ -1,8 +1,6 @@
 name: Test dependabot updates
 
 on:
-  pull_request:
-    branches: ["dependabot/**"]
   workflow_dispatch:
 
 jobs:
