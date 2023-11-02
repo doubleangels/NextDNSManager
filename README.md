@@ -1,20 +1,30 @@
-# NextDNSManager
+<p align="center">
+  <img src="https://img.shields.io/github/release/doubleangels/NextDNSManager.svg?logo=github&label=GitHub%20Build" alt="Github Build">
+  <img src="https://img.shields.io/f-droid/v/com.doubleangels.nextdnsmanagement.svg?logo=F-Droid&label=F-Droid%20Build" alt="F-Droid Build">
+  <img src="https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/deploy.yml?label=Deployment%20Pipeline" alt="Main Deployment">
+  <img src="https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/test-dev.yml?label=Development%20Testing" alt="Development Testing">
+  <img src="https://img.shields.io/librariesio/github/doubleangels/NextDNSManager" alt="Dependencies">
+  <img src="https://img.shields.io/github/issues/doubleangels/NextDNSManager?label=GitHub%20Issues" alt="GitHub Issues">
+  <img src="https://img.shields.io/github/issues-pr/doubleangels/NextDNSManager?label=GitHub%20Pull%20Requests" alt="GitHub Pull Requests">
+</p>
 
-![Github Build](https://img.shields.io/github/release/doubleangels/NextDNSManager.svg?logo=github&label=GitHub%20Build)
-![F-Droid Build](https://img.shields.io/f-droid/v/com.doubleangels.nextdnsmanagement.svg?logo=F-Droid&label=F-Droid%20Build)
-![Main Deployment](https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/deploy.yml?label=Deployment%20Pipeline)
-![Development Testing](https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/test-dev.yml?label=Development%20Testing)
-![Dependencies](https://img.shields.io/librariesio/github/doubleangels/NextDNSManager)
-![GitHub Issues](https://img.shields.io/github/issues/doubleangels/NextDNSManager?label=GitHub%20Issues)
-![GitHub Pull Requests](https://img.shields.io/github/issues-pr/doubleangels/NextDNSManager?label=GitHub%20Pull%20Requests)
+<p align="center">
+  <a href="https://play.google.com/store/apps/details?id=com.doubleangels.nextdnsmanagement">
+    <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Play">
+  </a>
+  <a href="https://f-droid.org/en/packages/com.doubleangels.nextdnsmanagement">
+    <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="F-Droid">
+  </a>
+  <a href="https://apt.izzysoft.de/packages/com.doubleangels.nextdnsmanagement/">
+    <img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="IzzySoft">
+  </a>
+</p>
 
-[![Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.doubleangels.nextdnsmanagement)
-[![F-Droid](https://fdroid.gitlab.io/artwork/badge/get-it-on.png)](https://f-droid.org/en/packages/com.doubleangels.nextdnsmanagement)
-[![IzzySoft](https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png)](https://apt.izzysoft.de/packages/com.doubleangels.nextdnsmanagement/)
+<p align="center">
+  <img src="screenshot.png" alt="Screenshot">
+</p>
 
-![Screenshot](screenshot.png)
-
-## About
+# About
 
 NextDNSManager is an Android application that simplifies the management of your NextDNS configuration. NextDNS is a cloud-based DNS filter and firewall that protects your home, family, and privacy online. With NextDNSManager, you can easily control your NextDNS settings and ensure a safer and more secure online experience.
 
@@ -109,3 +119,4 @@ If you discover a vulnerability, please open an issue and provide the following 
 - Version of Android you're using.
 - Version of the app you're using.
 - Detailed description of the vulnerability.
+</p>
