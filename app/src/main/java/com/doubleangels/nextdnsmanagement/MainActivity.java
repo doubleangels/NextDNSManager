@@ -18,6 +18,7 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             // Initialize preferences, styles, and the web view
             initializePreferencesAndStyles();
             setupVisualIndicator();
+            setClickListeners();
             provisionWebView(getString(R.string.main_url), isDarkModeOn);
         } catch (Exception e) {
             Sentry.captureException(e);
@@ -295,5 +297,14 @@ public class MainActivity extends AppCompatActivity {
     private void startIntent(Class<?> targetClass) {
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
+    }
+
+    // Method to set click listeners for views
+    private void setClickListeners() {
+        ImageView statusIcon = findViewById(R.id.connectionStatus);
+        statusIcon.setOnClickListener(v -> {
+            Intent helpIntent = new Intent(v.getContext(), HelpActivity.class);
+            startActivity(helpIntent);
+        });
     }
 }
