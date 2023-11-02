@@ -66,7 +66,7 @@ public class SettingsActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.settings, new SettingsFragment())
-                    .commit();
+                    .commitNow();
         }
     }
 
