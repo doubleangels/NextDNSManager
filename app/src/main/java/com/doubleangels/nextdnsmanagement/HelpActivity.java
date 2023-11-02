@@ -91,6 +91,6 @@ public class HelpActivity extends AppCompatActivity {
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }
-        return super.onContextItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 }
