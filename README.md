@@ -18,10 +18,11 @@
 
 <div align="center">
 
-## Alternate F-Droid Repo
+## F-Droid
 
 </div>
 
+- NextDNSManager is available on F-Droid [here](https://f-droid.org/en/packages/com.doubleangels.nextdnsmanagement).
 - NextDNSManager is also available on the `https://apt.izzysoft.de/fdroid/repo` repo, maintained by [@IzzySoft](https://github.com/IzzySoft).
 
 <div align="center">
