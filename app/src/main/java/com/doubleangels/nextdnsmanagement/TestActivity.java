@@ -53,10 +53,6 @@ public class TestActivity extends AppCompatActivity {
     private void initializeViews(SharedPreferences sharedPreferences) {
         boolean darkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
         setWindowAndToolbar(darkNavigation);
-
-        // Add Sentry tags and breadcrumbs
-        Sentry.setTag("dark_navigation", String.valueOf(darkNavigation));
-        Sentry.addBreadcrumb("Initialized views with dark navigation set to " + darkNavigation);
     }
 
     private void setWindowAndToolbar(boolean isDark) {
@@ -82,19 +78,11 @@ public class TestActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         toolbar.setBackgroundColor(toolbarColor);
-
-        // Add Sentry tags and breadcrumbs
-        Sentry.setTag("status_bar_color", String.valueOf(statusBarColor));
-        Sentry.setTag("toolbar_color", String.valueOf(toolbarColor));
-        Sentry.addBreadcrumb("Set window and toolbar colors with isDark set to " + isDark);
     }
 
     private void setVisualIndicator() {
         VisualIndicator visualIndicator = new VisualIndicator();
         visualIndicator.initiateVisualIndicator(this, getApplicationContext());
-
-        // Add Sentry breadcrumbs
-        Sentry.addBreadcrumb("Set up visual indicator.");
     }
 
     private void setClickListeners() {
@@ -102,9 +90,6 @@ public class TestActivity extends AppCompatActivity {
         statusIcon.setOnClickListener(v -> {
             Intent helpIntent = new Intent(v.getContext(), HelpActivity.class);
             startActivity(helpIntent);
-
-            // Add Sentry breadcrumb
-            Sentry.addBreadcrumb("Clicked on the status icon to open HelpActivity.");
         });
     }
 
@@ -112,9 +97,6 @@ public class TestActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         darkModeHandler.handleDarkMode(this);
-
-        // Add Sentry breadcrumb
-        Sentry.addBreadcrumb("Resumed TestActivity.");
     }
 
     @Override
@@ -153,9 +135,6 @@ public class TestActivity extends AppCompatActivity {
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.setAcceptThirdPartyCookies(webView, true);
-
-        // Add Sentry breadcrumb
-        Sentry.addBreadcrumb("Set up WebView settings.");
     }
 
     @Override
@@ -163,9 +142,6 @@ public class TestActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.back) {
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
-
-            // Add Sentry breadcrumb
-            Sentry.addBreadcrumb("Clicked on the 'Back' menu item to return to MainActivity.");
         }
         return super.onOptionsItemSelected(item);
     }

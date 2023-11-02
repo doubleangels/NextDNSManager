@@ -25,7 +25,6 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
-import io.sentry.Breadcrumb;
 
 public class PingActivity extends AppCompatActivity {
     private final DarkModeHandler darkModeHandler = new DarkModeHandler();
@@ -35,11 +34,6 @@ public class PingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction pingCreateTransaction = Sentry.startTransaction("ping_onCreate()", "PingActivity");
         try {
-            // Create a breadcrumb to track entering the 'onCreate' method.
-            Breadcrumb breadcrumb = new Breadcrumb();
-            breadcrumb.setMessage("Entering onCreate method in PingActivity");
-            Sentry.addBreadcrumb(breadcrumb);
-
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_ping);
 
@@ -50,10 +44,6 @@ public class PingActivity extends AppCompatActivity {
             setClickListeners();
             provisionWebView(getString(R.string.ping_url));
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in onCreate method in PingActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         } finally {
             pingCreateTransaction.finish();
@@ -88,7 +78,6 @@ public class PingActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         toolbar.setBackgroundColor(toolbarColor);
-        Sentry.setTag("dark_navigation", String.valueOf(isDark));
     }
 
     private void setVisualIndicator() {
@@ -127,10 +116,6 @@ public class PingActivity extends AppCompatActivity {
             }
             webView.loadUrl(url);
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in provisionWebView method in PingActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         } finally {
             provisionWebViewTransaction.finish();

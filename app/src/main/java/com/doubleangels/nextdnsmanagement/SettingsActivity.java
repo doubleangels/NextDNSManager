@@ -25,7 +25,6 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
-import io.sentry.Breadcrumb;
 
 public class SettingsActivity extends AppCompatActivity {
     public DarkModeHandler darkModeHandler = new DarkModeHandler();
@@ -39,11 +38,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction settingsCreateTransaction = Sentry.startTransaction("settings_onCreate()", "SettingsActivity");
         try {
-            // Create a breadcrumb to track entering the 'onCreate' method.
-            Breadcrumb breadcrumb = new Breadcrumb();
-            breadcrumb.setMessage("Entering onCreate method in SettingsActivity");
-            Sentry.addBreadcrumb(breadcrumb);
-
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_settings);
 
@@ -51,10 +45,6 @@ public class SettingsActivity extends AppCompatActivity {
             setActionBar();
             setVisualIndicator();
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in onCreate method in SettingsActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         } finally {
             settingsCreateTransaction.finish();
@@ -104,7 +94,6 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
         toolbar.setBackgroundColor(toolbarColor);
-        Sentry.setTag("dark_navigation", String.valueOf(isDark));
     }
 
     private void setVisualIndicator() {
@@ -145,20 +134,9 @@ public class SettingsActivity extends AppCompatActivity {
                     ClipData copiedData = ClipData.newPlainText("text", copiedText);
                     clipboardManager.setPrimaryClip(copiedData);
 
-                    // Create a breadcrumb for the copied action.
-                    Breadcrumb breadcrumb = new Breadcrumb();
-                    breadcrumb.setMessage(buttonKey + " copied to clipboard");
-                    Sentry.addBreadcrumb(breadcrumb);
-
                     Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
                     if (buttonKey.equals("privacy_policy_button") || buttonKey.equals("author_button") || buttonKey.equals("github_button")) {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
-
-                        // Create a breadcrumb for visiting a URL.
-                        Breadcrumb urlBreadcrumb = new Breadcrumb();
-                        urlBreadcrumb.setMessage("Visited " + buttonKey);
-                        Sentry.addBreadcrumb(urlBreadcrumb);
-
                         startActivity(intent);
                     }
                     return true;

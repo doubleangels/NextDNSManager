@@ -32,7 +32,6 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
-import io.sentry.Breadcrumb;
 
 public class MainActivity extends AppCompatActivity {
     private final DarkModeHandler darkModeHandler = new DarkModeHandler();
@@ -47,19 +46,10 @@ public class MainActivity extends AppCompatActivity {
         ITransaction mainActivityCreateTransaction = Sentry.startTransaction("MainActivity_onCreate()", "MainActivity");
 
         try {
-            // Create a breadcrumb to track entering the 'onCreate' method.
-            Breadcrumb breadcrumb = new Breadcrumb();
-            breadcrumb.setMessage("Entering onCreate method in MainActivity");
-            Sentry.addBreadcrumb(breadcrumb);
-
             initializePreferencesAndStyles();
             setupVisualIndicator();
             provisionWebView(getString(R.string.main_url), isDarkModeOn);
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in onCreate method in MainActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         } finally {
             mainActivityCreateTransaction.finish();
@@ -98,10 +88,6 @@ public class MainActivity extends AppCompatActivity {
             setupWebViewClient(isDarkThemeOn);
             webView.loadUrl(url);
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in replaceCSS method in MainActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         } finally {
             replaceCSSTransaction.finish();
@@ -117,10 +103,6 @@ public class MainActivity extends AppCompatActivity {
             configureCookieManager();
             replaceCSS(url, isDarkThemeOn);
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in provisionWebView method in MainActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         } finally {
             provisionWebViewTransaction.finish();
@@ -153,13 +135,11 @@ public class MainActivity extends AppCompatActivity {
         window.setStatusBarColor(darkGrayColor);
         window.setNavigationBarColor(darkGrayColor);
         setToolbarStyles(darkGrayColor);
-        Sentry.setTag("dark_navigation", "true");
     }
 
     private void setupDefaultNavigationStyles() {
         int blueColor = ContextCompat.getColor(this, R.color.blue);
         setToolbarStyles(blueColor);
-        Sentry.setTag("dark_navigation", "false");
     }
 
     private void setToolbarStyles(int backgroundColor) {
@@ -175,20 +155,16 @@ public class MainActivity extends AppCompatActivity {
 
         if (overrideDarkMode) {
             isDarkModeOn = manualDarkMode;
-            Sentry.setTag("overridden_dark_mode", "true");
         } else {
             isDarkModeOn = (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
-            Sentry.setTag("overridden_dark_mode", "false");
         }
     }
 
     private void setAppCompatDelegate() {
         if (isDarkModeOn) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            Sentry.setTag("manual_dark_mode", "true");
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            Sentry.setTag("manual_dark_mode", "false");
         }
     }
 
@@ -222,13 +198,10 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NewApi")
     private WebResourceResponse handleWebResourceRequests(String url) {
         if (url.contains("apple.nextdns.io")) {
-            Sentry.addBreadcrumb("Visited Apple mobile configuration page");
             return null;
         } else if (url.contains("help.nextdns.io")) {
-            Sentry.addBreadcrumb("Visited help page");
             return null;
         } else if (url.contains("bitpay.com")) {
-            Sentry.addBreadcrumb("Visited crypto payment page");
             return null;
         } else if (url.endsWith(".css")) {
             return getCssWebResourceResponseFromAsset();
@@ -251,10 +224,6 @@ public class MainActivity extends AppCompatActivity {
             InputStream fileInput = getAssets().open("nextdns.css");
             return getUtf8EncodedCssWebResourceResponse(fileInput);
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in getCssWebResourceResponseFromAsset method in MainActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         }
         return null;
@@ -266,10 +235,6 @@ public class MainActivity extends AppCompatActivity {
             InputStream is = getAssets().open(assetFileName);
             return new WebResourceResponse("image/png", "UTF-8", is);
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in getPngWebResourceResponse method in MainActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         }
         return null;

@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +18,6 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
-import io.sentry.Breadcrumb;
 
 public class HelpActivity extends AppCompatActivity {
     private final DarkModeHandler darkModeHandler = new DarkModeHandler();
@@ -32,11 +30,6 @@ public class HelpActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_help);
 
-            // Create a breadcrumb to track entering the 'onCreate' method.
-            Breadcrumb breadcrumb = new Breadcrumb();
-            breadcrumb.setMessage("Entering onCreate method in HelpActivity");
-            Sentry.addBreadcrumb(breadcrumb);
-
             // Access the app's shared preferences.
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             boolean darkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
@@ -47,19 +40,7 @@ public class HelpActivity extends AppCompatActivity {
             // Initialize a visual indicator for the activity.
             VisualIndicator visualIndicator = new VisualIndicator();
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
-
-            // Set up a click listener for the status icon.
-            ImageView statusIcon = findViewById(R.id.connectionStatus);
-            statusIcon.setOnClickListener(v -> {
-                // Create an intent to open the HelpActivity again when the status icon is clicked.
-                Intent helpIntent = new Intent(v.getContext(), HelpActivity.class);
-                startActivity(helpIntent);
-            });
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in onCreate method in HelpActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         } finally {
             // Finish the Sentry transaction for this method, whether there was an exception or not.
@@ -74,17 +55,15 @@ public class HelpActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+        int colorId;
         if (darkNavigation) {
-            int colorId = R.color.darkgray;
+            colorId = R.color.darkgray;
             window.setStatusBarColor(ContextCompat.getColor(this, colorId));
             window.setNavigationBarColor(ContextCompat.getColor(this, colorId));
-            toolbar.setBackgroundColor(ContextCompat.getColor(this, colorId));
-            Sentry.setTag("dark_navigation", "true");
         } else {
-            int colorId = R.color.blue;
-            toolbar.setBackgroundColor(ContextCompat.getColor(this, colorId));
-            Sentry.setTag("dark_navigation", "false");
+            colorId = R.color.blue;
         }
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, colorId));
     }
 
     @Override
