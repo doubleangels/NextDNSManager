@@ -2,16 +2,13 @@
       
 # NextDNSManager
 
-![License](https://img.shields.io/github/license/doubleangels/NextDNSManager?label=License%20Type) ![Main Deployment](https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/deploy.yml?label=Deploypment%20Pipeline) ![Development Testing](https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/test-dev.yml?label=Development%20Testing)![Dependencies](https://img.shields.io/librariesio/github/doubleangels/NextDNSManager?label=Dependencies) ![GitHub Issues](https://img.shields.io/github/issues/doubleangels/NextDNSManager?label=Github%20Issues) ![GitHub Pull Requests](https://img.shields.io/github/issues-pr/doubleangels/NextDNSManager?label=Github%20Pull%20Requests)
+![Github Build](https://img.shields.io/github/release/doubleangels/NextDNSManager.svg?logo=github&label=Github%20Build) ![F-Droid Build](https://img.shields.io/f-droid/v/com.doubleangels.nextdnsmanagement.svg?logo=F-Droid&label=F-Droid%20Build) ![Main Deployment](https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/deploy.yml?label=Deploypment%20Pipeline) ![Development Testing](https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/test-dev.yml?label=Development%20Testing)![Dependencies](https://img.shields.io/librariesio/github/doubleangels/NextDNSManager) ![GitHub Issues](https://img.shields.io/github/issues/doubleangels/NextDNSManager?label=Github%20Issues) ![GitHub Pull Requests](https://img.shields.io/github/issues-pr/doubleangels/NextDNSManager?label=Github%20Pull%20Requests)
 
 [![https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.doubleangels.nextdnsmanagement)
+[![https://f-droid.org/en/packages/com.doubleangels.nextdnsmanagement](https://fdroid.gitlab.io/artwork/badge/get-it-on.png)](https://f-droid.org/en/packages/com.doubleangels.nextdnsmanagement)
 [![https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png](https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png)](https://apt.izzysoft.de/packages/com.doubleangels.nextdnsmanagement/)
 
 ![Screenshot](screenshot.png)
-
-</div>
-
-<div align="center">
 
 ## Manual Install
 
@@ -21,11 +18,11 @@
 
 <div align="center">
 
-## F-Droid
+## Alternate F-Droid Repo
 
 </div>
 
-- NextDNSManager is available on the `https://apt.izzysoft.de/fdroid/repo` repo, maintained by [@IzzySoft](https://github.com/IzzySoft).
+- NextDNSManager is also available on the `https://apt.izzysoft.de/fdroid/repo` repo, maintained by [@IzzySoft](https://github.com/IzzySoft).
 
 <div align="center">
 
