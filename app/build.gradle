@@ -48,7 +48,7 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'io.sentry:sentry-android:6.32.0'
+    implementation 'io.sentry:sentry-android:6.33.0'
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.20'))
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
     implementation 'androidx.preference:preference:1.2.1'
