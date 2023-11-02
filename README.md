@@ -7,9 +7,9 @@
 [![https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=com.doubleangels.nextdnsmanagement)
 [![https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png](https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png)](https://apt.izzysoft.de/packages/com.doubleangels.nextdnsmanagement/)
 
-</div>
-      
 ![Screenshot](screenshot.png)
+
+</div>
 
 <div align="center">
 
@@ -17,7 +17,7 @@
 
 </div>
 
-- The most recent built APK is available [here](https://github.com/doubleangels/NextDNSManager/tree/main/app/release) for install.
+- The most recent built APK is available [here](https://github.com/doubleangels/NextDNSManager/releases) for install.
 
 <div align="center">
 
