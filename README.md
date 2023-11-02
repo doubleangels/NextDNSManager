@@ -59,7 +59,41 @@ To make a suggestion or report feedback, please open a new issue in this reposit
 
 ## Contributing
 
-Contributions to NextDNSManager are welcome! Whether it's bug fixes, new features, or documentation improvements, your contributions help make the app better for everyone. Please read our [Contribution Guidelines](CONTRIBUTING.md) for details on how to get started.
+Contributions to NextDNSManager are welcome! Whether it's bug fixes, new features, or documentation improvements, your contributions help make the app better for everyone.
+
+# Contributing to [Your Project Name]
+
+Thank you for considering contributing to [Your Project Name]! Your help is greatly appreciated in making this project better.
+
+## Getting Started
+
+- Check if there are any open issues or discussions related to the topic you want to contribute to.
+- If there's an existing issue or discussion, make sure to comment and express your interest in working on it.
+- If there isn't an existing issue or discussion, you can create one to discuss and coordinate your contributions.
+
+## How Can You Contribute?
+
+You can contribute to NextDNSManager in the following ways:
+
+### Reporting Bugs
+
+If you find a bug in the project, please open an issue and provide the following details:
+
+- A clear and concise description of the bug.
+- Steps to reproduce the bug.
+- Expected behavior and actual behavior.
+
+### Suggesting Enhancements
+
+If you have ideas for enhancements or new features, feel free to open a discussion or issue to describe your suggestions. It's best to include as much detail as possible to help us understand your proposal.
+
+### Documentation
+
+Improvements to the project's documentation are always welcome. You can suggest edits, updates, or new sections to make it more informative and user-friendly.
+
+### Code Contributions
+
+If you're interested in making code contributions, please open a pull request!
 
 ## License
 
@@ -71,7 +105,7 @@ NextDNSManager is open-source and released under the [MIT License](LICENSE).
 
 If you discover a vulnerability, please open an issue and provide the following information:
 
-- Device you're running the app on
-- Version of Android you're using
-- Version of the app you're using
-- Detailed description of the vulnerability
+- Device you're running the app on.
+- Version of Android you're using.
+- Version of the app you're using.
+- Detailed description of the vulnerability.
