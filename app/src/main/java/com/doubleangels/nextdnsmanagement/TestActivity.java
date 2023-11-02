@@ -44,7 +44,7 @@ public class TestActivity extends AppCompatActivity {
             setClickListeners();
             provisionWebView(getString(R.string.test_url));
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry.
+            Sentry.captureException(e);
         } finally {
             testCreateTransaction.finish();
         }

@@ -24,26 +24,21 @@ public class HelpActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Start a Sentry transaction to track this method's execution.
         ITransaction helpCreateTransaction = Sentry.startTransaction("help_onCreate()", "HelpActivity");
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_help);
 
-            // Access the app's shared preferences.
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             boolean darkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
 
-            // Set up the window appearance based on darkNavigation setting.
             setupWindow(darkNavigation);
 
-            // Initialize a visual indicator for the activity.
             VisualIndicator visualIndicator = new VisualIndicator();
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
             Sentry.captureException(e);
         } finally {
-            // Finish the Sentry transaction for this method, whether there was an exception or not.
             helpCreateTransaction.finish();
         }
     }
@@ -69,7 +64,6 @@ public class HelpActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // Handle the dark mode settings using the DarkModeHandler.
         darkModeHandler.handleDarkMode(this);
     }
 
@@ -82,7 +76,6 @@ public class HelpActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
-            // Create an intent to navigate to the MainActivity when the "back" item is selected.
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }

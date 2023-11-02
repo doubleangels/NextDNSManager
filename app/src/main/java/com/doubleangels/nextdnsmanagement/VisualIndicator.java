@@ -23,14 +23,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VisualIndicator {
-    // Method to update the visual indicator based on link properties.
     public void updateVisualIndicator(LinkProperties linkProperties, AppCompatActivity activity, Context context) {
         ITransaction updateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_updateVisualIndicator()", "VisualIndicator");
         try {
             ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
             String privateDnsServerName = linkProperties != null ? linkProperties.getPrivateDnsServerName() : null;
 
-            // Set an OnClickListener to open HelpActivity when the image is tapped.
             connectionStatus.setOnClickListener(v -> {
                 Intent helpIntent = new Intent(activity, HelpActivity.class);
                 activity.startActivity(helpIntent);
@@ -54,16 +52,13 @@ public class VisualIndicator {
                 connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.red));
             }
         } catch (Exception e) {
-            // Handle and log exceptions with Sentry
             Sentry.captureException(e);
         } finally {
-            // Finish the Sentry transaction
             updateVisualIndicatorTransaction.finish();
         }
         checkInheritedDNS(context, activity);
     }
 
-    // Method to initiate the visual indicator.
     public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
         ITransaction initiateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
 
@@ -80,11 +75,9 @@ public class VisualIndicator {
             }
         });
 
-        // Finish the Sentry transaction
         initiateVisualIndicatorTransaction.finish();
     }
 
-    // Method to check for inherited DNS settings.
     private void checkInheritedDNS(Context context, AppCompatActivity activity) {
         TestApi nextdnsApi = TestClient.getBaseClient(context).create(TestApi.class);
         Call<JsonObject> responseCall = nextdnsApi.getResponse();
@@ -114,7 +107,6 @@ public class VisualIndicator {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                // Handle and log exceptions with Sentry
                 Sentry.captureException(t);
             }
         });
