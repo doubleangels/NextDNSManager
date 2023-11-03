@@ -3,7 +3,7 @@
   <img src="https://img.shields.io/f-droid/v/com.doubleangels.nextdnsmanagement.svg?logo=F-Droid&label=F-Droid%20Build" alt="F-Droid Build">
   <img src="https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/deploy.yml?label=Deployment%20Pipeline" alt="Main Deployment">
   <img src="https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/test-dev.yml?label=Development%20Testing" alt="Development Testing">
-  <img src="https://img.shields.io/librariesio/github/doubleangels/NextDNSManager" alt="Dependencies">
+  <img src="https://img.shields.io/librariesio/github/doubleangels/NextDNSManager?label=Dependencies" alt="Dependencies">
   <img src="https://img.shields.io/github/issues/doubleangels/NextDNSManager?label=GitHub%20Issues" alt="GitHub Issues">
   <img src="https://img.shields.io/github/issues-pr/doubleangels/NextDNSManager?label=GitHub%20Pull%20Requests" alt="GitHub Pull Requests">
 </p>
