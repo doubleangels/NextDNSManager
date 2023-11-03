@@ -55,12 +55,16 @@ It's also available on the `https://apt.izzysoft.de/fdroid/repo` repo, maintaine
 
 The most recent APK is available for download [here](https://github.com/doubleangels/NextDNSManager/releases).
 
-## Terms & Conditions/Privacy Policy
+# Terms & Conditions/Privacy Policy
 
 - [Privacy Policy](https://doubleangels.github.io/privacyPolicy/nextdns.html)
 - [Terms and Conditions](https://doubleangels.github.io/privacyPolicy/nextdns_terms.html)
 
-## Reporting Issues
+# License
+
+NextDNSManager is open-source and released under the [MIT License](LICENSE.md).
+
+# Reporting Issues
 
 To report an issue, please open a new issue in this repository and provide the following information:
 
@@ -69,7 +73,7 @@ To report an issue, please open a new issue in this repository and provide the f
 - Version of the app you're using
 - Detailed description of your problem
 
-## Suggestions and Feedback
+# Suggestions and Feedback
 
 To make a suggestion or report feedback, please open a new issue in this repository and include a detailed description of your suggestion or feedback.
 
@@ -106,11 +110,6 @@ If you're interested in making code contributions, please open a pull request!
 - Check if there are any open issues or discussions related to the topic you want to contribute to.
 - If there's an existing issue or discussion, make sure to comment and express your interest in working on it.
 - If there isn't an existing issue or discussion, you can create one to discuss and coordinate your contributions.
-
-
-# License
-
-NextDNSManager is open-source and released under the [MIT License](LICENSE).
 
 # Security Policy
 
