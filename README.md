@@ -28,7 +28,7 @@
 
 NextDNSManager is an Android application that simplifies the management of your [NextDNS](https://nextdns.io) configuration. NextDNS is a cloud-based DNS filter and firewall that protects your home, family, and privacy online. With NextDNSManager, you can easily control your NextDNS settings and ensure a safer and more secure online experience.
 
-## Features
+# Features
 
 - **Intuitive Interface**: NextDNSManager provides a user-friendly interface that allows you to manage your NextDNS settings with ease.
 
@@ -40,14 +40,20 @@ NextDNSManager is an Android application that simplifies the management of your 
 
 - **Easy Installation**: You can download and install NextDNSManager from the Google Play Store, F-Droid, or directly from this repository, providing multiple installation options.
 
-## Manual Installation
+# Installation
 
-The most recent APK is available for download [here](https://github.com/doubleangels/NextDNSManager/releases).
+## Google Play Store
+
+NextDNS Manager is available on the Google Play Store [here](https://play.google.com/store/apps/details?id=com.doubleangels.nextdnsmanagement).
 
 ## F-Droid Installation
 
 NextDNSManager is available on F-Droid [here](https://f-droid.org/en/packages/com.doubleangels.nextdnsmanagement).
 It's also available on the `https://apt.izzysoft.de/fdroid/repo` repo, maintained by [@IzzySoft](https://github.com/IzzySoft).
+
+## Manual Installation
+
+The most recent APK is available for download [here](https://github.com/doubleangels/NextDNSManager/releases).
 
 ## Terms & Conditions/Privacy Policy
 
