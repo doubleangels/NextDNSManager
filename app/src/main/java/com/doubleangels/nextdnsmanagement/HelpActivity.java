@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,83 +18,69 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
-import io.sentry.Breadcrumb;
 
 public class HelpActivity extends AppCompatActivity {
     private final DarkModeHandler darkModeHandler = new DarkModeHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Start a Sentry transaction to track this method's execution.
+        // Start a Sentry transaction to monitor this method
         ITransaction helpCreateTransaction = Sentry.startTransaction("help_onCreate()", "HelpActivity");
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_help);
 
-            // Create a breadcrumb to track entering the 'onCreate' method.
-            Breadcrumb breadcrumb = new Breadcrumb();
-            breadcrumb.setMessage("Entering onCreate method in HelpActivity");
-            Sentry.addBreadcrumb(breadcrumb);
-
-            // Access the app's shared preferences.
+            // Get shared preferences to check if dark navigation is enabled
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             boolean darkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
 
-            // Set up the window appearance based on darkNavigation setting.
+            // Set up the window appearance, including navigation bar and status bar color
             setupWindow(darkNavigation);
 
-            // Initialize a visual indicator for the activity.
+            // Initialize a visual indicator for the help activity
             VisualIndicator visualIndicator = new VisualIndicator();
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
-
-            // Set up a click listener for the status icon.
-            ImageView statusIcon = findViewById(R.id.connectionStatus);
-            statusIcon.setOnClickListener(v -> {
-                // Create an intent to open the HelpActivity again when the status icon is clicked.
-                Intent helpIntent = new Intent(v.getContext(), HelpActivity.class);
-                startActivity(helpIntent);
-            });
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in onCreate method in HelpActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
+            // Capture and report any exceptions to Sentry for error tracking
             Sentry.captureException(e);
         } finally {
-            // Finish the Sentry transaction for this method, whether there was an exception or not.
+            // Finish the Sentry transaction
             helpCreateTransaction.finish();
         }
     }
 
     private void setupWindow(boolean darkNavigation) {
-        Window window = this.getWindow();
+        // Set up the window properties and appearance
+        Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+        int colorId;
         if (darkNavigation) {
-            int colorId = R.color.darkgray;
+            // Set colors for dark navigation mode
+            colorId = R.color.darkgray;
             window.setStatusBarColor(ContextCompat.getColor(this, colorId));
             window.setNavigationBarColor(ContextCompat.getColor(this, colorId));
-            toolbar.setBackgroundColor(ContextCompat.getColor(this, colorId));
-            Sentry.setTag("dark_navigation", "true");
         } else {
-            int colorId = R.color.blue;
-            toolbar.setBackgroundColor(ContextCompat.getColor(this, colorId));
-            Sentry.setTag("dark_navigation", "false");
+            // Set colors for the default mode
+            colorId = R.color.blue;
         }
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, colorId));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // Handle the dark mode settings using the DarkModeHandler.
+        // Handle dark mode settings when the activity is resumed
         darkModeHandler.handleDarkMode(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        // Inflate the menu for this activity
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
@@ -103,10 +88,10 @@ public class HelpActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
-            // Create an intent to navigate to the MainActivity when the "back" item is selected.
+            // Handle the "back" menu item to navigate to the main activity
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }
-        return super.onContextItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 }

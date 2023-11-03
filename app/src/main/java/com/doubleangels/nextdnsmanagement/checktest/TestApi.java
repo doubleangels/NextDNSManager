@@ -1,22 +1,19 @@
 package com.doubleangels.nextdnsmanagement.checktest;
 
 import com.google.gson.JsonObject;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
-// Definition of a Java interface named TestApi.
 public interface TestApi {
-    // Annotation to specify HTTP request headers for this API endpoint.
+
+    // Define the headers for the HTTP request
     @Headers({
-            "Accept: application/json",  // Specify that the response format should be JSON.
-            "Cache-Control: no-cache"   // Instruct the client not to cache the response.
+            "Accept: application/json",
+            "Cache-Control: no-cache"
     })
 
-    // Annotation to specify that this method represents an HTTP GET request.
+    // Define the HTTP GET request method with a base URL of "/"
     @GET("/")
-    // Method signature for making an HTTP GET request and receiving a JsonObject response.
-    Call<JsonObject> getResponse();
-
+    Call<JsonObject> getResponse(); // Specify the response type as JsonObject
 }

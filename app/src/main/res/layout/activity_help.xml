@@ -26,15 +26,6 @@
             android:contentDescription="@string/generic_content_description"
             app:srcCompat="@drawable/nextdns_logo"/>
 
-        <ImageView
-            android:id="@+id/connectionStatus"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:contentDescription="@string/generic_content_description"
-            app:srcCompat="@drawable/failure"
-            tools:ignore="ImageContrastCheck"
-            tools:layout_editor_absoluteX="66dp"
-            tools:layout_editor_absoluteY="17dp"/>
     </androidx.appcompat.widget.Toolbar>
 
     <ImageView

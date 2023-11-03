@@ -1,7 +1,6 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -9,6 +8,7 @@ import android.net.NetworkRequest;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -23,55 +23,34 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VisualIndicator {
-    // Method to update the visual indicator based on link properties.
-    public void updateVisualIndicator(LinkProperties linkProperties, AppCompatActivity activity, Context context) {
+
+    public void updateVisualIndicator(@Nullable LinkProperties linkProperties, AppCompatActivity activity, Context context) {
         ITransaction updateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_updateVisualIndicator()", "VisualIndicator");
         try {
             ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
-            String privateDnsServerName = linkProperties != null ? linkProperties.getPrivateDnsServerName() : null;
-
-            // Set an OnClickListener to open HelpActivity when the image is tapped.
-            connectionStatus.setOnClickListener(v -> {
-                Intent helpIntent = new Intent(activity, HelpActivity.class);
-                activity.startActivity(helpIntent);
-            });
 
             if (linkProperties != null && linkProperties.isPrivateDnsActive()) {
+                String privateDnsServerName = linkProperties.getPrivateDnsServerName();
                 if (privateDnsServerName != null) {
                     if (privateDnsServerName.contains("nextdns")) {
-                        connectionStatus.setImageResource(R.drawable.success);
-                        connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.green));
-                        Sentry.setTag("private_dns", "nextdns");
-                        Sentry.addBreadcrumb("Visual indicator shows NextDNS private DNS with a secure connection (DOT/DOH)");
+                        setConnectionStatus(connectionStatus, R.drawable.success, R.color.green, context);
                     } else {
-                        connectionStatus.setImageResource(R.drawable.success);
-                        connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
-                        Sentry.setTag("private_dns", "private");
-                        Sentry.addBreadcrumb("Visual indicator shows private DNS, but not NextDNS");
+                        setConnectionStatus(connectionStatus, R.drawable.success, R.color.yellow, context);
                     }
                 } else {
-                    connectionStatus.setImageResource(R.drawable.success);
-                    connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.yellow));
-                    Sentry.setTag("private_dns", "private");
-                    Sentry.addBreadcrumb("Visual indicator shows private DNS, but not NextDNS");
+                    setConnectionStatus(connectionStatus, R.drawable.success, R.color.yellow, context);
                 }
             } else {
-                connectionStatus.setImageResource(R.drawable.failure);
-                connectionStatus.setColorFilter(ContextCompat.getColor(context, R.color.red));
-                Sentry.setTag("private_dns", "insecure");
-                Sentry.addBreadcrumb("Visual indicator shows no private DNS");
+                setConnectionStatus(connectionStatus, R.drawable.failure, R.color.red, context);
             }
         } catch (Exception e) {
-            // Handle and log exceptions with Sentry
-            Sentry.captureException(e);
+            captureAndReportException(e);
         } finally {
-            // Finish the Sentry transaction
             updateVisualIndicatorTransaction.finish();
         }
         checkInheritedDNS(context, activity);
     }
 
-    // Method to initiate the visual indicator.
     public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
         ITransaction initiateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
 
@@ -84,16 +63,13 @@ public class VisualIndicator {
             @Override
             public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
                 super.onLinkPropertiesChanged(network, linkProperties);
-                Sentry.addBreadcrumb("Link properties changed");
                 updateVisualIndicator(linkProperties, activity, context);
             }
         });
 
-        // Finish the Sentry transaction
         initiateVisualIndicatorTransaction.finish();
     }
 
-    // Method to check for inherited DNS settings.
     private void checkInheritedDNS(Context context, AppCompatActivity activity) {
         TestApi nextdnsApi = TestClient.getBaseClient(context).create(TestApi.class);
         Call<JsonObject> responseCall = nextdnsApi.getResponse();
@@ -101,34 +77,41 @@ public class VisualIndicator {
         responseCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                JsonObject testResponse = response.body();
-                if (testResponse != null) {
-                    String nextdnsStatus = testResponse.get(context.getString(R.string.nextdns_status)).getAsString();
-                    if (nextdnsStatus != null && nextdnsStatus.equalsIgnoreCase(context.getString(R.string.using_nextdns_status))) {
-                        String nextdnsProtocol = testResponse.get(context.getString(R.string.nextdns_protocol)).getAsString();
-                        Sentry.setTag("inherited_protocol", nextdnsProtocol);
-                        ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
-                        String[] secureProtocols = context.getResources().getStringArray(R.array.secure_protocols);
-                        boolean isSecure = false;
-                        for (String s : secureProtocols) {
-                            if (nextdnsProtocol.equalsIgnoreCase(s)) {
-                                isSecure = true;
-                                break;
+                if (response.isSuccessful()) {
+                    JsonObject testResponse = response.body();
+                    if (testResponse != null) {
+                        String nextdnsStatus = testResponse.get(context.getString(R.string.nextdns_status)).getAsString();
+                        if (context.getString(R.string.using_nextdns_status).equalsIgnoreCase(nextdnsStatus)) {
+                            String nextdnsProtocol = testResponse.get(context.getString(R.string.nextdns_protocol)).getAsString();
+                            ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
+                            String[] secureProtocols = context.getResources().getStringArray(R.array.secure_protocols);
+                            boolean isSecure = false;
+                            for (String s : secureProtocols) {
+                                if (nextdnsProtocol.equalsIgnoreCase(s)) {
+                                    isSecure = true;
+                                    break;
+                                }
                             }
+                            setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
+                                    isSecure ? R.color.green : R.color.orange, context);
                         }
-                        connectionStatus.setImageResource(isSecure ? R.drawable.success : R.drawable.failure);
-                        connectionStatus.setColorFilter(ContextCompat.getColor(context, isSecure ? R.color.green : R.color.orange));
-                        Sentry.setTag("inherited_nextdns", isSecure ? "secure" : "insecure");
-                        Sentry.addBreadcrumb("Visual indicator shows NextDNS private DNS with " + (isSecure ? "a secure" : "an insecure") + " connection (DOT/DOH)");
                     }
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                // Handle and log exceptions with Sentry
-                Sentry.captureException(t);
+                captureAndReportException(t);
             }
         });
+    }
+
+    private void setConnectionStatus(ImageView connectionStatus, int drawableResId, int colorResId, Context context) {
+        connectionStatus.setImageResource(drawableResId);
+        connectionStatus.setColorFilter(ContextCompat.getColor(context, colorResId));
+    }
+
+    private void captureAndReportException(Throwable e) {
+        Sentry.captureException(e);
     }
 }

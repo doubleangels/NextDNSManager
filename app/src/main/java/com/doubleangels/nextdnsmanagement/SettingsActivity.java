@@ -25,7 +25,6 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
-import io.sentry.Breadcrumb;
 
 public class SettingsActivity extends AppCompatActivity {
     public DarkModeHandler darkModeHandler = new DarkModeHandler();
@@ -39,11 +38,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction settingsCreateTransaction = Sentry.startTransaction("settings_onCreate()", "SettingsActivity");
         try {
-            // Create a breadcrumb to track entering the 'onCreate' method.
-            Breadcrumb breadcrumb = new Breadcrumb();
-            breadcrumb.setMessage("Entering onCreate method in SettingsActivity");
-            Sentry.addBreadcrumb(breadcrumb);
-
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_settings);
 
@@ -51,10 +45,6 @@ public class SettingsActivity extends AppCompatActivity {
             setActionBar();
             setVisualIndicator();
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in onCreate method in SettingsActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         } finally {
             settingsCreateTransaction.finish();
@@ -66,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.settings, new SettingsFragment())
-                    .commit();
+                    .commitNow();
         }
     }
 
@@ -86,43 +76,40 @@ public class SettingsActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-        int statusBarColor;
-        int toolbarColor;
+        int statusBarColor = isDark ? R.color.darkgray : R.color.blue;
 
-        if (isDark) {
-            statusBarColor = ContextCompat.getColor(this, R.color.darkgray);
-            toolbarColor = ContextCompat.getColor(this, R.color.darkgray);
-        } else {
-            statusBarColor = ContextCompat.getColor(this, R.color.blue);
-            toolbarColor = ContextCompat.getColor(this, R.color.blue);
-        }
-
-        window.setStatusBarColor(statusBarColor);
-        window.setNavigationBarColor(statusBarColor);
+        window.setStatusBarColor(ContextCompat.getColor(this, statusBarColor));
+        window.setNavigationBarColor(ContextCompat.getColor(this, statusBarColor));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        toolbar.setBackgroundColor(toolbarColor);
-        Sentry.setTag("dark_navigation", String.valueOf(isDark));
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, statusBarColor));
     }
 
     private void setVisualIndicator() {
-        VisualIndicator visualIndicator = new VisualIndicator();
-        visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+        try {
+            VisualIndicator visualIndicator = new VisualIndicator();
+            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        darkModeHandler.handleDarkMode(this);
+        try {
+            darkModeHandler.handleDarkMode(this);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
             setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
             setupButton("privacy_policy_button", R.string.privacy_policy_url);
@@ -140,26 +127,18 @@ public class SettingsActivity extends AppCompatActivity {
             Preference button = findPreference(buttonKey);
             if (button != null) {
                 button.setOnPreferenceClickListener(preference -> {
-                    ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                    CharSequence copiedText = getString(textResource);
-                    ClipData copiedData = ClipData.newPlainText("text", copiedText);
-                    clipboardManager.setPrimaryClip(copiedData);
-
-                    // Create a breadcrumb for the copied action.
-                    Breadcrumb breadcrumb = new Breadcrumb();
-                    breadcrumb.setMessage(buttonKey + " copied to clipboard");
-                    Sentry.addBreadcrumb(breadcrumb);
-
-                    Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
-                    if (buttonKey.equals("privacy_policy_button") || buttonKey.equals("author_button") || buttonKey.equals("github_button")) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
-
-                        // Create a breadcrumb for visiting a URL.
-                        Breadcrumb urlBreadcrumb = new Breadcrumb();
-                        urlBreadcrumb.setMessage("Visited " + buttonKey);
-                        Sentry.addBreadcrumb(urlBreadcrumb);
-
-                        startActivity(intent);
+                    try {
+                        ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                        CharSequence copiedText = getString(textResource);
+                        ClipData copiedData = ClipData.newPlainText("text", copiedText);
+                        clipboardManager.setPrimaryClip(copiedData);
+                        Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
+                        if (buttonKey.equals("privacy_policy_button") || buttonKey.equals("author_button") || buttonKey.equals("github_button")) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        Sentry.captureException(e);
                     }
                     return true;
                 });

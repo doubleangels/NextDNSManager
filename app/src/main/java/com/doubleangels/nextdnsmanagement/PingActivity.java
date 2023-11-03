@@ -25,7 +25,6 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
-import io.sentry.Breadcrumb;
 
 public class PingActivity extends AppCompatActivity {
     private final DarkModeHandler darkModeHandler = new DarkModeHandler();
@@ -35,11 +34,6 @@ public class PingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         ITransaction pingCreateTransaction = Sentry.startTransaction("ping_onCreate()", "PingActivity");
         try {
-            // Create a breadcrumb to track entering the 'onCreate' method.
-            Breadcrumb breadcrumb = new Breadcrumb();
-            breadcrumb.setMessage("Entering onCreate method in PingActivity");
-            Sentry.addBreadcrumb(breadcrumb);
-
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_ping);
 
@@ -48,12 +42,9 @@ public class PingActivity extends AppCompatActivity {
             initializeViews(sharedPreferences);
             setVisualIndicator();
             setClickListeners();
+
             provisionWebView(getString(R.string.ping_url));
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in onCreate method in PingActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         } finally {
             pingCreateTransaction.finish();
@@ -70,30 +61,24 @@ public class PingActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
-        int statusBarColor;
-        int toolbarColor;
+        int statusBarColor = isDark ? R.color.darkgray : R.color.blue;
 
-        if (isDark) {
-            statusBarColor = ContextCompat.getColor(this, R.color.darkgray);
-            toolbarColor = ContextCompat.getColor(this, R.color.darkgray);
-        } else {
-            statusBarColor = ContextCompat.getColor(this, R.color.blue);
-            toolbarColor = ContextCompat.getColor(this, R.color.blue);
-        }
-
-        window.setStatusBarColor(statusBarColor);
-        window.setNavigationBarColor(statusBarColor);
+        window.setStatusBarColor(ContextCompat.getColor(this, statusBarColor));
+        window.setNavigationBarColor(ContextCompat.getColor(this, statusBarColor));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        toolbar.setBackgroundColor(toolbarColor);
-        Sentry.setTag("dark_navigation", String.valueOf(isDark));
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, statusBarColor));
     }
 
     private void setVisualIndicator() {
-        VisualIndicator visualIndicator = new VisualIndicator();
-        visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+        try {
+            VisualIndicator visualIndicator = new VisualIndicator();
+            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
     }
 
     private void setClickListeners() {
@@ -113,11 +98,14 @@ public class PingActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        darkModeHandler.handleDarkMode(this);
+        try {
+            darkModeHandler.handleDarkMode(this);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    @SuppressWarnings("unused")
     public void provisionWebView(String url) {
         ITransaction provisionWebViewTransaction = Sentry.startTransaction("ping_provisionWebView()", "PingActivity");
         try {
@@ -127,10 +115,6 @@ public class PingActivity extends AppCompatActivity {
             }
             webView.loadUrl(url);
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry with a breadcrumb.
-            Breadcrumb errorBreadcrumb = new Breadcrumb();
-            errorBreadcrumb.setMessage("An exception occurred in provisionWebView method in PingActivity");
-            Sentry.addBreadcrumb(errorBreadcrumb);
             Sentry.captureException(e);
         } finally {
             provisionWebViewTransaction.finish();
