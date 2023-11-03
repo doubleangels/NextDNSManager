@@ -24,7 +24,9 @@
   <img src="screenshot.png" alt="Screenshot">
 </p>
 
+<div align="center">
 # About
+</div>
 
 NextDNSManager is an Android application that simplifies the management of your [NextDNS](https://nextdns.io) configuration. NextDNS is a cloud-based DNS filter and firewall that protects your home, family, and privacy online. With NextDNSManager, you can easily control your NextDNS settings and ensure a safer and more secure online experience.
 
