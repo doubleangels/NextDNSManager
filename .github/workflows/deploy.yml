@@ -21,7 +21,7 @@ jobs:
           cache: gradle
 
       - name: Cache Gradle dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
@@ -67,7 +67,7 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
 
       - name: Upload release APK
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v3
         with:
           name: apk
           path: app/build/outputs/apk/release/app-release-unsigned-signed.apk
@@ -85,7 +85,7 @@ jobs:
           echo "VERSION_NAME=${{ steps.android_version.outputs.VERSION_NAME }}" >> $GITHUB_ENV
 
       - name: Download release APK
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v3
         with:
           name: apk
 
