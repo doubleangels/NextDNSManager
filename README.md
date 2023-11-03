@@ -38,7 +38,7 @@ NextDNSManager is an Android application that simplifies the management of your 
 
 - **Security and Privacy**: Enhance your online security and privacy by leveraging NextDNS' filtering capabilities.
 
-- **F-Droid and IzzySoft Repositories**: You can download NextDNSManager from F-Droid and IzzySoft repositories, providing multiple installation options.
+- **Easy Installation**: You can download and install NextDNSManager from the Google Play Store, F-Droid, or directly from this repository, providing multiple installation options.
 
 ## Manual Installation
 
