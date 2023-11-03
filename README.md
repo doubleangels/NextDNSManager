@@ -67,19 +67,9 @@ To report an issue, please open a new issue in this repository and provide the f
 
 To make a suggestion or report feedback, please open a new issue in this repository and include a detailed description of your suggestion or feedback.
 
-## Contributing
+# Contributing
 
 Contributions to NextDNSManager are welcome! Whether it's bug fixes, new features, or documentation improvements, your contributions help make the app better for everyone.
-
-# Contributing to [Your Project Name]
-
-Thank you for considering contributing to [Your Project Name]! Your help is greatly appreciated in making this project better.
-
-## Getting Started
-
-- Check if there are any open issues or discussions related to the topic you want to contribute to.
-- If there's an existing issue or discussion, make sure to comment and express your interest in working on it.
-- If there isn't an existing issue or discussion, you can create one to discuss and coordinate your contributions.
 
 ## How Can You Contribute?
 
@@ -104,6 +94,13 @@ Improvements to the project's documentation are always welcome. You can suggest 
 ### Code Contributions
 
 If you're interested in making code contributions, please open a pull request!
+
+## Getting Started
+
+- Check if there are any open issues or discussions related to the topic you want to contribute to.
+- If there's an existing issue or discussion, make sure to comment and express your interest in working on it.
+- If there isn't an existing issue or discussion, you can create one to discuss and coordinate your contributions.
+
 
 ## License
 
