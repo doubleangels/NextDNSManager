@@ -102,13 +102,13 @@ If you're interested in making code contributions, please open a pull request!
 - If there isn't an existing issue or discussion, you can create one to discuss and coordinate your contributions.
 
 
-## License
+# License
 
 NextDNSManager is open-source and released under the [MIT License](LICENSE).
 
-## Security Policy
+# Security Policy
 
-### Reporting a Vulnerability
+## Reporting a Vulnerability
 
 If you discover a vulnerability, please open an issue and provide the following information:
 
