@@ -1,11 +1,22 @@
-name: Test dependabot updates
+name: Test dependabot pull request
 
-on: workflow_dispatch
+on:
+  pull_request:
+    types:
+      - opened
+  workflow_dispatch:
 
 jobs:
+  check-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if PR is from Dependabot
+        id: dependabot-check
+        run: echo "::set-output name=is_dependabot::${{ contains(github.event.pull_request.user.login, 'dependabot') }}"
+
   build:
     runs-on: ubuntu-latest
-
+    if: ${{ needs.check-pr.outputs.is_dependabot == 'true' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
