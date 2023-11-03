@@ -62,7 +62,7 @@ The most recent APK is available for download [here](https://github.com/doublean
 
 # License
 
-NextDNSManager is open-source and released under the [MIT License](LICENSE.md).
+NextDNSManager is open-source and released under the [MIT License](LICENSE).
 
 # Reporting Issues
 
