@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);  // Initialize sharedPreferences here
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
             if (darkMode) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);  // Initialize sharedPreferences here
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
         switch (item.getItemId()) {
             case R.id.refreshNextDNS -> webView.reload();

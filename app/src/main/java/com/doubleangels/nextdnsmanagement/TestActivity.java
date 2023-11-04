@@ -37,8 +37,7 @@ public class TestActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-            // Initialize preferences, styles, and the web view
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);  // Initialize sharedPreferences here
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
             if (darkMode) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -46,22 +45,16 @@ public class TestActivity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
 
-            // Set a visual indicator for the activity
             setVisualIndicator();
-            // Set click listeners for views
             setClickListeners();
-            // Provision the WebView with a URL
             provisionWebView(getString(R.string.test_url));
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry
             Sentry.captureException(e);
         } finally {
-            // Finish the Sentry transaction
             testCreateTransaction.finish();
         }
     }
 
-    // Method to set up a visual indicator
     private void setVisualIndicator() {
         try {
             VisualIndicator visualIndicator = new VisualIndicator();
@@ -71,7 +64,6 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
-    // Method to set click listeners for views
     private void setClickListeners() {
         ImageView statusIcon = findViewById(R.id.connectionStatus);
         if (statusIcon != null) {
@@ -105,7 +97,6 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
-    // Method to set up WebView settings
     @SuppressLint("SetJavaScriptEnabled")
     private void setupWebViewSettings() {
         webView.setWebChromeClient(new WebChromeClient());
