@@ -152,9 +152,9 @@ public class MainActivity extends AppCompatActivity {
         // Define list of domains not to apply custom dark mode to
         String[] urlsToCheck = {
                 "apple.nextdns.io", "help.nextdns.io", "bitpay.com", "github.com", "oisd.nl", "adguard.com",
-                "easylist.to", "disconnect.me", "github.developerdan.com", "someonewhocares.org", "pgl.yoyo",
+                "easylist.to", "disconnect.me", "developerdan.com", "someonewhocares.org", "pgl.yoyo",
                 "gitlab.com", "fanboy.co.nz", "oO.pages.dev", "mvps.org", "sysctl.org", "unchecky.com",
-                "lanik.us", "280blocker.net", "shallalist.de", "github.io", "hblock.molinero.dev", "abpvn.com",
+                "lanik.us", "280blocker.net", "shallalist.de", "github.io", "molinero.dev", "abpvn.com",
                 "hostsfile.org", "firebog.net", "notabug.org"
         };
         boolean containsMatch = false;
