@@ -29,6 +29,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Start a Sentry transaction for the 'onCreate' method
         ITransaction settingsCreateTransaction = Sentry.startTransaction("settings_onCreate()", "SettingsActivity");
         try {
             super.onCreate(savedInstanceState);
@@ -38,6 +39,7 @@ public class SettingsActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+            // Load user's preference for dark mode and set it
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
             if (darkMode) {
@@ -46,12 +48,12 @@ public class SettingsActivity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
 
-            initializeViews(savedInstanceState);
-            setVisualIndicator();
+            initializeViews(savedInstanceState); // Initialize the views for the settings
+            setVisualIndicator(); // Set the visual connection status indicator
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
-            settingsCreateTransaction.finish();
+            settingsCreateTransaction.finish(); // Finish the transaction
         }
     }
 
@@ -69,7 +71,7 @@ public class SettingsActivity extends AppCompatActivity {
             VisualIndicator visualIndicator = new VisualIndicator();
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         }
     }
 
@@ -95,17 +97,20 @@ public class SettingsActivity extends AppCompatActivity {
             if (button != null) {
                 button.setOnPreferenceClickListener(preference -> {
                     try {
+                        // Copy the text to the clipboard
                         ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
                         CharSequence copiedText = getString(textResource);
                         ClipData copiedData = ClipData.newPlainText("text", copiedText);
                         clipboardManager.setPrimaryClip(copiedData);
                         Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
+
+                        // If it's a URL button, open the URL in a browser
                         if (buttonKey.equals("privacy_policy_button") || buttonKey.equals("author_button") || buttonKey.equals("github_button")) {
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
                             startActivity(intent);
                         }
                     } catch (Exception e) {
-                        Sentry.captureException(e);
+                        Sentry.captureException(e); // Capture and report any exceptions to Sentry
                     }
                     return true;
                 });
@@ -115,6 +120,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        // Inflate the menu for the activity
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
@@ -122,6 +128,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
+            // Handle the 'back' menu item, navigate to the MainActivity
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }

@@ -26,8 +26,10 @@ import io.sentry.Sentry;
 
 public class TestActivity extends AppCompatActivity {
     private WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Start a Sentry transaction for the 'onCreate' method
         ITransaction testCreateTransaction = Sentry.startTransaction("test_onCreate()", "TestActivity");
         try {
             super.onCreate(savedInstanceState);
@@ -37,6 +39,7 @@ public class TestActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+            // Load user's preference for dark mode and set it
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
             if (darkMode) {
@@ -45,13 +48,13 @@ public class TestActivity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
 
-            setVisualIndicator();
-            setClickListeners();
-            provisionWebView(getString(R.string.test_url));
+            setVisualIndicator(); // Set the visual connection status indicator
+            setClickListeners(); // Set click listeners for the status icon
+            provisionWebView(getString(R.string.test_url)); // Load a web page in the WebView
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
-            testCreateTransaction.finish();
+            testCreateTransaction.finish(); // Finish the transaction
         }
     }
 
@@ -68,6 +71,7 @@ public class TestActivity extends AppCompatActivity {
         ImageView statusIcon = findViewById(R.id.connectionStatus);
         if (statusIcon != null) {
             statusIcon.setOnClickListener(v -> {
+                // Handle click on the status icon, navigate to the StatusActivity
                 Intent helpIntent = new Intent(v.getContext(), StatusActivity.class);
                 startActivity(helpIntent);
             });
@@ -76,6 +80,7 @@ public class TestActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        // Inflate the menu for the activity
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
@@ -83,17 +88,18 @@ public class TestActivity extends AppCompatActivity {
     @SuppressLint("SetJavaScriptEnabled")
     @SuppressWarnings("unused")
     public void provisionWebView(String url) {
+        // Start a Sentry transaction for the 'provisionWebView' method
         ITransaction testProvisionWebViewTransaction = Sentry.startTransaction("test_provisionWebView()", "TestActivity");
         try {
             if (webView == null) {
                 webView = findViewById(R.id.mWebview);
                 setupWebViewSettings();
             }
-            webView.loadUrl(url);
+            webView.loadUrl(url); // Load the specified URL in the WebView
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
-            testProvisionWebViewTransaction.finish();
+            testProvisionWebViewTransaction.finish(); // Finish the transaction
         }
     }
 
@@ -101,12 +107,15 @@ public class TestActivity extends AppCompatActivity {
     private void setupWebViewSettings() {
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
+
+        // Configure WebView settings, such as enabling JavaScript, DOM storage, and cookies
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setDatabaseEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
+        // Configure CookieManager to accept cookies and third-party cookies
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.setAcceptThirdPartyCookies(webView, true);
@@ -115,6 +124,7 @@ public class TestActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
+            // Handle the 'back' menu item, navigate to the MainActivity
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }

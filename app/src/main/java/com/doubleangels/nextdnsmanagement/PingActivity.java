@@ -26,8 +26,10 @@ import io.sentry.Sentry;
 
 public class PingActivity extends AppCompatActivity {
     private WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Start a Sentry transaction for the 'onCreate' method
         ITransaction pingCreateTransaction = Sentry.startTransaction("ping_onCreate()", "PingActivity");
         try {
             super.onCreate(savedInstanceState);
@@ -37,6 +39,7 @@ public class PingActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+            // Load user's preference for dark mode and set it
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
             if (darkMode) {
@@ -44,14 +47,14 @@ public class PingActivity extends AppCompatActivity {
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
-            setVisualIndicator();
+            setVisualIndicator(); // Set the visual connection status indicator
 
-            setClickListeners();
-            provisionWebView(getString(R.string.ping_url));
+            setClickListeners(); // Set click listeners for the status icon
+            provisionWebView(getString(R.string.ping_url)); // Load a web page in the WebView
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
-            pingCreateTransaction.finish();
+            pingCreateTransaction.finish(); // Finish the transaction
         }
     }
 
@@ -60,7 +63,7 @@ public class PingActivity extends AppCompatActivity {
             VisualIndicator visualIndicator = new VisualIndicator();
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         }
     }
 
@@ -68,6 +71,7 @@ public class PingActivity extends AppCompatActivity {
         ImageView statusIcon = findViewById(R.id.connectionStatus);
         if (statusIcon != null) {
             statusIcon.setOnClickListener(v -> {
+                // Handle click on the status icon, navigate to the StatusActivity
                 Intent helpIntent = new Intent(v.getContext(), StatusActivity.class);
                 startActivity(helpIntent);
             });
@@ -76,23 +80,25 @@ public class PingActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        // Inflate the menu for the activity
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     public void provisionWebView(String url) {
+        // Start a Sentry transaction for the 'provisionWebView' method
         ITransaction provisionWebViewTransaction = Sentry.startTransaction("ping_provisionWebView()", "PingActivity");
         try {
             if (webView == null) {
                 webView = findViewById(R.id.mWebview);
                 setupWebViewSettings();
             }
-            webView.loadUrl(url);
+            webView.loadUrl(url); // Load the specified URL in the WebView
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
-            provisionWebViewTransaction.finish();
+            provisionWebViewTransaction.finish(); // Finish the transaction
         }
     }
 
@@ -100,12 +106,15 @@ public class PingActivity extends AppCompatActivity {
     private void setupWebViewSettings() {
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
+
+        // Configure WebView settings, such as enabling JavaScript, DOM storage, and cookies
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setDatabaseEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
+        // Configure CookieManager to accept cookies and third-party cookies
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.setAcceptThirdPartyCookies(webView, true);
@@ -114,6 +123,7 @@ public class PingActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
+            // Handle the 'back' menu item, navigate to the MainActivity
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }

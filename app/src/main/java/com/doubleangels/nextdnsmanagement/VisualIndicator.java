@@ -24,6 +24,7 @@ import retrofit2.Response;
 
 public class VisualIndicator {
 
+    // Update the visual indicator based on LinkProperties
     public void updateVisualIndicator(@Nullable LinkProperties linkProperties, AppCompatActivity activity, Context context) {
         ITransaction updateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_updateVisualIndicator()", "VisualIndicator");
         try {
@@ -45,13 +46,14 @@ public class VisualIndicator {
                 }
             }
         } catch (Exception e) {
-            captureAndReportException(e);
+            Sentry.captureException(e);
         } finally {
             updateVisualIndicatorTransaction.finish();
         }
         checkInheritedDNS(context, activity);
     }
 
+    // Initialize the visual indicator
     public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
         ITransaction initiateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
 
@@ -71,6 +73,7 @@ public class VisualIndicator {
         initiateVisualIndicatorTransaction.finish();
     }
 
+    // Check for inherited DNS settings
     private void checkInheritedDNS(Context context, AppCompatActivity activity) {
         TestApi nextdnsApi = TestClient.getBaseClient(context).create(TestApi.class);
         Call<JsonObject> responseCall = nextdnsApi.getResponse();
@@ -104,17 +107,14 @@ public class VisualIndicator {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                captureAndReportException(t);
+                Sentry.captureException(t);
             }
         });
     }
 
+    // Set the connection status in the ImageView
     private void setConnectionStatus(ImageView connectionStatus, int drawableResId, int colorResId, Context context) {
         connectionStatus.setImageResource(drawableResId);
         connectionStatus.setColorFilter(ContextCompat.getColor(context, colorResId));
-    }
-
-    private void captureAndReportException(Throwable e) {
-        Sentry.captureException(e);
     }
 }

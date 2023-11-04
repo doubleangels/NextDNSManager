@@ -20,6 +20,7 @@ import io.sentry.Sentry;
 public class StatusActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Start a Sentry transaction for the 'onCreate' method
         ITransaction helpCreateTransaction = Sentry.startTransaction("help_onCreate()", "StatusActivity");
         try {
             super.onCreate(savedInstanceState);
@@ -29,6 +30,7 @@ public class StatusActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
+            // Load user's preference for dark mode and set it
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
             boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
             if (darkMode) {
@@ -36,11 +38,11 @@ public class StatusActivity extends AppCompatActivity {
             } else {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
-            setVisualIndicator();
+            setVisualIndicator(); // Set the visual connection status indicator
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
-            helpCreateTransaction.finish();
+            helpCreateTransaction.finish(); // Finish the transaction
         }
     }
 
@@ -49,11 +51,13 @@ public class StatusActivity extends AppCompatActivity {
             VisualIndicator visualIndicator = new VisualIndicator();
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        // Inflate the menu for the activity
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
@@ -61,6 +65,7 @@ public class StatusActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
+            // Handle the 'back' menu item, navigate to the MainActivity
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }
