@@ -286,6 +286,28 @@ div.mt-3>div.mb-2.mt-1.card>div>div:nth-child(2), div.mt-3>div.mb-2.mt-1.card>di
     display: none;
 }
 
+.form-control,
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: transparent !important;
+}
+
+div.mt-3>a>span {
+    color: #ffffff !important;
+}
+
+div.mt-3>div.mb-2.mt-1.card>div>div:nth-child(1) {
+    border-bottom: none !important;
+}
+
+div.mt-3>div.mb-2.mt-1.card>div>div.px-3.py-2.d-flex {
+    display: none !important;
+}
+
+#root>div.mt-4>div>div:nth-child(5)>div>div>div.card-body>div.d-flex.align-items-center.flex-wrap>a:nth-child(1)>img.d-inline-block, #root>div.mt-4>div>div:nth-child(5)>div>div>div.card-body>div.d-flex.align-items-center.flex-wrap>a:nth-child(2)>img{
+    background-color: transparent !important;
+}
+
 /* END Custom Dark Mode CSS */
 
 /*!* Bootstrap v4.6.0 (https://getbootstrap.com/)
@@ -12218,25 +12240,3 @@ img[src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAC2CAYAAAAFt/MHAAAVr
     fill: #fff;
     color: #fff;
 }
-
-/* BEGIN Final Custom Dark Mode CSS */
-
-.form-control,
-.form-control:disabled,
-.form-control[readonly] {
-    background-color: transparent;
-}
-
-div.mt-3>a>span {
-    color: #ffffff !important;
-}
-
-div.mt-3>div.mb-2.mt-1.card>div>div:nth-child(1) {
-    border-bottom: none !important;
-}
-
-div.mt-3>div.mb-2.mt-1.card>div>div.px-3.py-2.d-flex {
-    display: none !important;
-}
-
-/* END Final Custom Dark Mode CSS */
