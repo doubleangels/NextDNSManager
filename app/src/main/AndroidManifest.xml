@@ -61,5 +61,4 @@
             android:name="io.sentry.anr.enable"
             android:value="true" />
     </application>
-
 </manifest>
