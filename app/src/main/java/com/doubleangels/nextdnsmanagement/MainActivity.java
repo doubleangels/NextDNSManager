@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Handle menu item clicks, navigate to the respective activities
         switch (item.getItemId()) {
+            case R.id.back -> webView.goBack();
             case R.id.refreshNextDNS -> webView.reload();
             case R.id.pingNextDNS -> startIntent(PingActivity.class);
             case R.id.testNextDNS -> startIntent(TestActivity.class);

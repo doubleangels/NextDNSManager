@@ -7,6 +7,12 @@
         app:showAsAction="never">
     </item>
     <item
+        android:id="@+id/back"
+        android:title="@string/back_title"
+        android:icon="@drawable/back"
+        app:showAsAction="ifRoom">
+    </item>
+    <item
         android:id="@+id/returnHome"
         android:title="@string/home_title"
         android:icon="@drawable/home"
