@@ -150,8 +150,23 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("NewApi")
     private WebResourceResponse handleWebResourceRequests(String url) {
+        // Define list of domains not to apply custom dark mode to
+        String[] urlsToCheck = {
+                "apple.nextdns.io", "help.nextdns.io", "bitpay.com", "github.com", "oisd.nl", "adguard.com",
+                "easylist.to", "disconnect.me", "github.developerdan.com", "someonewhocares.org", "pgl.yoyo",
+                "gitlab.com", "fanboy.co.nz", "oO.pages.dev", "mvps.org", "sysctl.org", "unchecky.com",
+                "lanik.us", "280blocker.net", "shallalist.de", "github.io", "hblock.molinero.dev", "abpvn.com",
+                "hostsfile.org", "firebog.net", "notabug.org"
+        };
+        boolean containsMatch = false;
+        for (String urlToCheck : urlsToCheck) {
+            if (url.contains(urlToCheck)) {
+                containsMatch = true;
+                break; // Exit the loop as soon as a match is found
+            }
+        }
         // Handle different types of web resource requests
-        if (url.contains("apple.nextdns.io") || url.contains("help.nextdns.io") || url.contains("bitpay.com")) {
+        if (containsMatch) {
             return null; // Allow certain domains, skip intercepting resources
         } else if (url.endsWith(".css")) {
             return getCssWebResourceResponseFromAsset(); // Load CSS from assets
