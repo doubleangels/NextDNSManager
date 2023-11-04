@@ -106,6 +106,7 @@ public class TestActivity extends AppCompatActivity {
     private void setupWebViewSettings() {
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 
         // Configure WebView settings, such as enabling JavaScript, DOM storage, and cookies
         WebSettings webSettings = webView.getSettings();

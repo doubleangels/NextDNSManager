@@ -126,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
     private void configureWebView(WebView webView) {
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        // Configure WebView settings, such as enabling JavaScript, DOM storage, and cookies
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
@@ -208,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void configureCookieManager() {
+        // Configure CookieManager to accept cookies and third-party cookies
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.setAcceptThirdPartyCookies(webView, true);
