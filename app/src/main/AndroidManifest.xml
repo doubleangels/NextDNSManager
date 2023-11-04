@@ -29,7 +29,7 @@
             android:name=".TestActivity"
             android:exported="false" />
         <activity
-            android:name=".HelpActivity"
+            android:name=".StatusActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

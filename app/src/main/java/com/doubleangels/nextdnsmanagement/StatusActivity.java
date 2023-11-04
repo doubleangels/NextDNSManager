@@ -17,13 +17,13 @@ import java.util.Objects;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
-public class HelpActivity extends AppCompatActivity {
+public class StatusActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ITransaction helpCreateTransaction = Sentry.startTransaction("help_onCreate()", "HelpActivity");
+        ITransaction helpCreateTransaction = Sentry.startTransaction("help_onCreate()", "StatusActivity");
         try {
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_help);
+            setContentView(R.layout.activity_status);
 
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);

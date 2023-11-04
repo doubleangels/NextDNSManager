@@ -66,10 +66,12 @@ public class PingActivity extends AppCompatActivity {
 
     private void setClickListeners() {
         ImageView statusIcon = findViewById(R.id.connectionStatus);
-        statusIcon.setOnClickListener(v -> {
-            Intent helpIntent = new Intent(v.getContext(), HelpActivity.class);
-            startActivity(helpIntent);
-        });
+        if (statusIcon != null) {
+            statusIcon.setOnClickListener(v -> {
+                Intent helpIntent = new Intent(v.getContext(), StatusActivity.class);
+                startActivity(helpIntent);
+            });
+        }
     }
 
     @Override

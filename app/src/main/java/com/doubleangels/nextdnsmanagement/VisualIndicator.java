@@ -28,20 +28,21 @@ public class VisualIndicator {
         ITransaction updateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_updateVisualIndicator()", "VisualIndicator");
         try {
             ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
-
-            if (linkProperties != null && linkProperties.isPrivateDnsActive()) {
-                String privateDnsServerName = linkProperties.getPrivateDnsServerName();
-                if (privateDnsServerName != null) {
-                    if (privateDnsServerName.contains("nextdns")) {
-                        setConnectionStatus(connectionStatus, R.drawable.success, R.color.green, context);
+            if (connectionStatus != null) {
+                if (linkProperties != null && linkProperties.isPrivateDnsActive()) {
+                    String privateDnsServerName = linkProperties.getPrivateDnsServerName();
+                    if (privateDnsServerName != null) {
+                        if (privateDnsServerName.contains("nextdns")) {
+                            setConnectionStatus(connectionStatus, R.drawable.success, R.color.green, context);
+                        } else {
+                            setConnectionStatus(connectionStatus, R.drawable.success, R.color.yellow, context);
+                        }
                     } else {
                         setConnectionStatus(connectionStatus, R.drawable.success, R.color.yellow, context);
                     }
                 } else {
-                    setConnectionStatus(connectionStatus, R.drawable.success, R.color.yellow, context);
+                    setConnectionStatus(connectionStatus, R.drawable.failure, R.color.red, context);
                 }
-            } else {
-                setConnectionStatus(connectionStatus, R.drawable.failure, R.color.red, context);
             }
         } catch (Exception e) {
             captureAndReportException(e);
@@ -92,8 +93,10 @@ public class VisualIndicator {
                                     break;
                                 }
                             }
-                            setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
-                                    isSecure ? R.color.green : R.color.orange, context);
+                            if (connectionStatus != null) {
+                                setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
+                                        isSecure ? R.color.green : R.color.orange, context);
+                            }
                         }
                     }
                 }
