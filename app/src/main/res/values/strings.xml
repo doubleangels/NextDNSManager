@@ -7,6 +7,7 @@
     <string name="dark_navigation_title">Dark Navigation Bars</string>
     <string name="dark_mode_header">Dark Mode</string>
     <string name="dark_mode_summary">Changes might require an app restart.</string>
+    <string name="dark_mode_title">Dark Mode</string>
     <string name="developer">Developer</string>
     <string name="disclaimer">This app is NOT an official NextDNS app.</string>
     <string name="disclaimer_title">Disclaimer</string>
@@ -20,12 +21,9 @@
     <string name="help_yellow">Secure DNS is being used but device is NOT connected to NextDNS.</string>
     <string name="home_title">Home</string>
     <string name="main_url">https://my.nextdns.io/login</string>
-    <string name="manual_dark_mode_summary_off">Light</string>
-    <string name="manual_dark_mode_summary_on">Dark</string>
     <string name="nextdns_protocol">protocol</string>
     <string name="nextdns_status">status</string>
     <string name="other">Other</string>
-    <string name="override_dark_mode_title">Override Dark Mode</string>
     <string name="ping_disabled">This action is currently unavailable.</string>
     <string name="ping_long">Quickly check ping times to NextDNS servers.</string>
     <string name="ping_short">Ping</string>
