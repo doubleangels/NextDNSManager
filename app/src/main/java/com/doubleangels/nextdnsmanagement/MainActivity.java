@@ -33,7 +33,6 @@ import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity {
     private WebView webView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Start a Sentry transaction for the 'onCreate' method

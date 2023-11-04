@@ -26,7 +26,6 @@ import io.sentry.Sentry;
 
 public class SettingsActivity extends AppCompatActivity {
     public static final String DARK_MODE = "dark_mode";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Start a Sentry transaction for the 'onCreate' method
