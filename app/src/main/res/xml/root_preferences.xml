@@ -15,7 +15,7 @@
 
     </PreferenceCategory>
     <PreferenceCategory
-        app:title="Sentry Error Tracking"
+        app:title="Error Tracking"
         app:key="sentry">
         <Preference
             app:summary="@string/whitelist_instructions"
