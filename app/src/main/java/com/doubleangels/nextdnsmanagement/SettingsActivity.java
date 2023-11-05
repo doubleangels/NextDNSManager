@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -19,6 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import io.sentry.ITransaction;
@@ -26,6 +28,7 @@ import io.sentry.Sentry;
 
 public class SettingsActivity extends AppCompatActivity {
     public static final String DARK_MODE = "dark_mode";
+    public static final String SELECTED_LANGUAGE = "selected_language";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Start a Sentry transaction for the 'onCreate' method
@@ -38,8 +41,18 @@ public class SettingsActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-            // Load user's preference for dark mode and set it
+            // Set up shared preferences
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+            // Set up selected language.
+            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE,"en");
+            Locale appLocale = new Locale(selectedLanguage);
+            Locale.setDefault(appLocale);
+            Configuration appConfig = new Configuration();
+            appConfig.locale = appLocale;
+            getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
+
+            // Load user's preference for dark mode and set it
             boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
             if (darkMode) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
