@@ -3,6 +3,7 @@ package com.doubleangels.nextdnsmanagement;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import io.sentry.ITransaction;
@@ -38,8 +40,18 @@ public class PingActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-            // Load user's preference for dark mode and set it
+            // Set up shared preferences
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+            // Set up selected language.
+            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE,"en");
+            Locale appLocale = new Locale(selectedLanguage);
+            Locale.setDefault(appLocale);
+            Configuration appConfig = new Configuration();
+            appConfig.locale = appLocale;
+            getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
+
+            // Load user's preference for dark mode and set it
             boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
             if (darkMode) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
