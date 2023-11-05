@@ -1,9 +1,9 @@
 package com.doubleangels.nextdnsmanagement.checktest;
 
 import android.content.Context;
-import com.doubleangels.nextdnsmanagement.R;
+import com.doubleangels.nextdnsmanagement.R; // Importing resource file
 
-import io.sentry.Sentry;
+import io.sentry.Sentry; // Importing Sentry for error monitoring
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -14,7 +14,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class TestClient {
-    private static Retrofit retrofit;
+    private static Retrofit retrofit; // Declare a static Retrofit client instance
+
     // Method to create and return a Retrofit client
     public static Retrofit getBaseClient(Context context) {
         if (retrofit == null) {
