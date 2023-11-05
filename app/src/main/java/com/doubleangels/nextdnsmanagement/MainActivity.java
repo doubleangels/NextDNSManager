@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
             setupVisualIndicator(); // Set the visual connection status indicator
             setClickListeners(); // Set click listeners for the status icon
             provisionWebView(getString(R.string.main_url), darkMode); // Load the main web page
+            configureCookieManager(); // Configure cookies
         } catch (Exception e) {
             Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
