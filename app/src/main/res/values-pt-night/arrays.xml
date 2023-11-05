@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources>      
+<resources>
   <string-array name="language_entries">
     <item>Inglês</item>
     <item>Alemão</item>
     <item>Espanhol</item>
     <item>Francês</item>
-    <item>Indonésio</item>
     <item>Italiano</item>
     <item>Japonês</item>
-    <item>Coreano</item>
     <item>Português</item>
-    <item>Tailandês</item>
     <item>Chinês</item>
   </string-array>
   <string-array name="language_values">
@@ -18,12 +15,9 @@
     <item>de</item>
     <item>es</item>
     <item>fr</item>
-    <item>id</item>
     <item>it</item>
     <item>ja</item>
-    <item>ko</item>
     <item>pt</item>
-    <item>th</item>
-    <item>zh</item>
+    <item>cn</item>
   </string-array>
 </resources>

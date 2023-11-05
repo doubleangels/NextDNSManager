@@ -1,29 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<resources>      
-  <string-array name="language_entries">
-    <item>Englisch</item>
-    <item>Deutsch</item>
-    <item>Spanisch</item>
-    <item>Französisch</item>
-    <item>Indonesisch</item>
-    <item>Italienisch</item>
-    <item>Japanisch</item>
-    <item>Koreanisch</item>
-    <item>Portugiesisch</item>
-    <item>Thailändisch</item>
-    <item>Chinesisch</item>
-  </string-array>
-  <string-array name="language_values">
-      <item>en</item>
-      <item>de</item>
-      <item>es</item>
-      <item>fr</item>
-      <item>id</item>
-      <item>it</item>
-      <item>ja</item>
-      <item>ko</item>
-      <item>pt</item>
-      <item>th</item>
-      <item>zh</item>
-  </string-array>
+<resources>
+    <string-array name="language_entries">
+        <item>Englisch</item>
+        <item>Deutsch</item>
+        <item>Spanisch</item>
+        <item>Französisch</item>
+        <item>Italienisch</item>
+        <item>Japanisch</item>
+        <item>Portugiesisch</item>
+        <item>Chinesisch</item>
+    </string-array>
+    <string-array name="language_values">
+        <item>en</item>
+        <item>de</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>it</item>
+        <item>ja</item>
+        <item>pt</item>
+        <item>cn</item>
+    </string-array>
 </resources>

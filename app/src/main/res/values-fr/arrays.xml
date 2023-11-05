@@ -5,12 +5,9 @@
     <item>Allemand</item>
     <item>Espagnol</item>
     <item>Français</item>
-    <item>Indonésien</item>
     <item>Italien</item>
     <item>Japonais</item>
-    <item>Coréen</item>
     <item>Portugais</item>
-    <item>Thaïlandais</item>
     <item>Chinois</item>
   </string-array>
   <string-array name="language_values">
@@ -18,12 +15,9 @@
       <item>de</item>
       <item>es</item>
       <item>fr</item>
-      <item>id</item>
       <item>it</item>
       <item>ja</item>
-      <item>ko</item>
       <item>pt</item>
-      <item>th</item>
-      <item>zh</item>
+      <item>cn</item>
   </string-array>
 </resources>
