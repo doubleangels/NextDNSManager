@@ -1,107 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?><resources>
-      
   <string name="app_name">下一个 DNS 管理器</string>
-      
   <string name="application_name">下一个 DNS 管理器</string>
-      
   <string name="author">作者</string>
-      
-  <string name="author_name">双天使</string>
-      
+  <string name="author_name">DoubleAngels</string>
   <string name="author_url">https://doubleangels.com</string>
-      
   <string name="back_title">后退</string>
-      
   <string name="dark_navigation_title">深色导航栏</string>
-      
   <string name="dark_mode_header">深色模式</string>
-      
   <string name="dark_mode_summary">更改可能需要重新启动应用程序。</string>
-      
   <string name="dark_mode_title">深色模式</string>
-      
   <string name="developer">开发商</string>
-      
   <string name="disclaimer">此应用程序不是官方 NextDNS 应用程序。</string>
-      
   <string name="disclaimer_title">免责声明</string>
-      
   <string name="donation">捐</string>
-      
   <string name="donation_link">https://donate.stripe.com/4gw8yhbvH0mg6SQ7ss</string>
-      
   <string name="donation_name">如果您想捐赠，可以在这里进行。</string>
-      
   <string name="generic_content_description">这是通用内容描述。</string>
-      
   <string name="github">吉图布</string>
-      
   <string name="github_url">https://github.com/doubleangels/NextDNSManager</string>
-      
   <string name="help_green">正在使用安全 DNS 并且设备已连接到 NextDNS。</string>
-      
   <string name="help_orange">未使用安全 DNS 并且设备已连接到 NextDNS。</string>
-      
   <string name="help_red">未使用安全 DNS。</string>
-      
   <string name="help_title">帮助</string>
-      
   <string name="help_yellow">正在使用安全 DNS，但设备未连接到 NextDNS。</string>
-      
   <string name="home_title">家</string>
-      
+  <string name="language">语言</string>
+  <string name="language_title">所选语言</string>
+  <string name="language_instruction">" 点击以选择您所需的语言。"</string>
   <string name="main_url">https://my.nextdns.io/</string>
-      
   <string name="nextdns_protocol">协议</string>
-      
   <string name="nextdns_status">地位</string>
-      
   <string name="other">其他</string>
-      
   <string name="ping_disabled">此操作当前不可用。</string>
-      
   <string name="ping_long">快速检查 NextDNS 服务器的 ping 时间。</string>
-      
   <string name="ping_short">平</string>
-      
   <string name="ping_title">平测试</string>
-      
   <string name="ping_url">https://ping.nextdns.io</string>
-      
   <string name="privacy">隐私</string>
-      
   <string name="privacy_policy">隐私政策</string>
-      
   <string name="privacy_policy_url">https://doubleangels.github.io/privacyPolicy/nextdns.html</string>
-      
   <string name="refresh_title">刷新</string>
-      
   <string name="settings">设置</string>
-      
   <string name="test_disabled">此操作当前不可用。</string>
-      
   <string name="test_long">快速获取有关 NextDNS 连接的重要测试信息。</string>
-      
   <string name="test_short">测试</string>
-      
   <string name="test_title">连接测试</string>
-      
   <string name="test_url">https://test.nextdns.io</string>
-      
   <string name="title_activity_settings">设置</string>
-      
   <string name="using_nextdns_status">好的</string>
-      
   <string name="version">版本</string>
-      
   <string name="whitelist">白名单</string>
-      
   <string name="whitelist_domain_1">*.o244019.sentry.io</string>
-      
   <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
-      
   <string name="whitelist_instructions">如果您希望启用匿名错误跟踪来帮助我改进此应用程序，请在您的 NextDNS 配置中将这些域列入白名单。</string>
-      
   <string name="whitelist_title">白名单</string>
-  
 </resources>

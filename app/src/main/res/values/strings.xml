@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">NextDNS Manager</string>
     <string name="author">Author</string>
-    <string name="author_name">DoubleAngels</string>
-    <string name="author_url">https://doubleangels.com</string>
+    <string name="author_name" translatable="false">DoubleAngels</string>
+    <string name="author_url" translatable="false">https://doubleangels.com</string>
     <string name="back_title">Back</string>
     <string name="dark_mode_header">Dark Mode</string>
     <string name="dark_mode_summary">Changes might require an app restart.</string>
