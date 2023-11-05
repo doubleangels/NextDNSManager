@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string name="app_name">ถัดไปตัวจัดการ DNS</string>
+      
+  <string name="application_name">ถัดไปตัวจัดการ DNS</string>
+      
+  <string name="author">ผู้เขียน</string>
+      
+  <string name="author_name">ดับเบิ้ลแองเจิลส์</string>
+      
+  <string name="author_url">https://doubleangels.com</string>
+      
+  <string name="back_title">กลับ</string>
+      
+  <string name="dark_navigation_title">แถบนำทางสีเข้ม</string>
+      
+  <string name="dark_mode_header">โหมดมืด</string>
+      
+  <string name="dark_mode_summary">การเปลี่ยนแปลงอาจต้องรีสตาร์ทแอป</string>
+      
+  <string name="dark_mode_title">โหมดมืด</string>
+      
+  <string name="developer">นักพัฒนา</string>
+      
+  <string name="disclaimer">แอปนี้ไม่ใช่แอป NextDNS อย่างเป็นทางการ</string>
+      
+  <string name="disclaimer_title">ข้อสงวนสิทธิ์</string>
+      
+  <string name="donation">บริจาค</string>
+      
+  <string name="donation_link">https://donate.stripe.com/4gw8yhbvH0mg6SQ7ss</string>
+      
+  <string name="donation_name">หากคุณต้องการบริจาค คุณสามารถทำได้ที่นี่</string>
+      
+  <string name="generic_content_description">นี่คือคำอธิบายเนื้อหาทั่วไป</string>
+      
+  <string name="github">Github</string>
+      
+  <string name="github_url">https://github.com/doubleangels/NextDNSManager</string>
+      
+  <string name="help_green">กำลังใช้ Secure DNS และอุปกรณ์เชื่อมต่อกับ NextDNS</string>
+      
+  <string name="help_orange">ไม่ได้ใช้ Secure DNS และอุปกรณ์เชื่อมต่อกับ NextDNS</string>
+      
+  <string name="help_red">ไม่ได้ใช้ DNS ที่ปลอดภัย</string>
+      
+  <string name="help_title">ช่วย</string>
+      
+  <string name="help_yellow">มีการใช้ Secure DNS แต่อุปกรณ์ไม่ได้เชื่อมต่อกับ NextDNS</string>
+      
+  <string name="home_title">บ้าน</string>
+      
+  <string name="main_url">https://my.nextdns.io/</string>
+      
+  <string name="nextdns_protocol">มาตรการ</string>
+      
+  <string name="nextdns_status">สถานะ</string>
+      
+  <string name="other">อื่น</string>
+      
+  <string name="ping_disabled">การดำเนินการนี้ไม่สามารถใช้งานได้ในขณะนี้</string>
+      
+  <string name="ping_long">ตรวจสอบเวลา ping ไปยังเซิร์ฟเวอร์ NextDNS อย่างรวดเร็ว</string>
+      
+  <string name="ping_short">ปิง</string>
+      
+  <string name="ping_title">การทดสอบปิง</string>
+      
+  <string name="ping_url">https://ping.nextdns.io</string>
+      
+  <string name="privacy">ความเป็นส่วนตัว</string>
+      
+  <string name="privacy_policy">นโยบายความเป็นส่วนตัว</string>
+      
+  <string name="privacy_policy_url">https://doubleangels.github.io/privacyPolicy/nextdns.html</string>
+      
+  <string name="refresh_title">รีเฟรช</string>
+      
+  <string name="settings">การตั้งค่า</string>
+      
+  <string name="test_disabled">การดำเนินการนี้ไม่สามารถใช้งานได้ในขณะนี้</string>
+      
+  <string name="test_long">รับข้อมูลการทดสอบที่สำคัญอย่างรวดเร็วเกี่ยวกับการเชื่อมต่อของคุณกับ NextDNS</string>
+      
+  <string name="test_short">ทดสอบ</string>
+      
+  <string name="test_title">การทดสอบการเชื่อมต่อ</string>
+      
+  <string name="test_url">https://test.nextdns.io</string>
+      
+  <string name="title_activity_settings">การตั้งค่า</string>
+      
+  <string name="using_nextdns_status">ตกลง</string>
+      
+  <string name="version">เวอร์ชัน</string>
+      
+  <string name="whitelist">ไวท์ลิสต์</string>
+      
+  <string name="whitelist_domain_1">*.o244019.sentry.io</string>
+      
+  <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
+      
+  <string name="whitelist_instructions">หากคุณต้องการเปิดใช้งานการติดตามข้อผิดพลาดที่ไม่เปิดเผยตัวตนเพื่อช่วยฉันปรับปรุงแอปนี้ให้ดีขึ้น โปรดไวท์ลิสต์โดเมนเหล่านี้ในการกำหนดค่า NextDNS ของคุณ</string>
+      
+  <string name="whitelist_title">ไวท์ลิสต์</string>
+  
+</resources>

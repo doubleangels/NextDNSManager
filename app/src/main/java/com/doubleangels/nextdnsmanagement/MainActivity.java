@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.Objects;
 
 import io.sentry.ITransaction;
@@ -40,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+
+            // Detect and apply the system language
+            Locale systemLocale = getResources().getConfiguration().locale;
+            String systemLanguage = systemLocale.getLanguage(); // This will give you the two-letter language code (e.g., "en" for English)
+            Locale appLocale = new Locale("en");
+            Locale.setDefault(appLocale);
+            Configuration appConfig = new Configuration();
+            appConfig.locale = appLocale;
+            getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
 
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);

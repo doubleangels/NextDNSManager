@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string name="app_name">다음DNS 관리자</string>
+      
+  <string name="application_name">다음DNS 관리자</string>
+      
+  <string name="author">작가</string>
+      
+  <string name="author_name">더블엔젤스</string>
+      
+  <string name="author_url">https://doubleangels.com</string>
+      
+  <string name="back_title">뒤쪽에</string>
+      
+  <string name="dark_navigation_title">어두운 탐색 모음</string>
+      
+  <string name="dark_mode_header">다크 모드</string>
+      
+  <string name="dark_mode_summary">변경사항을 적용하려면 앱을 다시 시작해야 할 수도 있습니다.</string>
+      
+  <string name="dark_mode_title">다크 모드</string>
+      
+  <string name="developer">개발자</string>
+      
+  <string name="disclaimer">이 앱은 공식 NextDNS 앱이 아닙니다.</string>
+      
+  <string name="disclaimer_title">부인 성명</string>
+      
+  <string name="donation">기부</string>
+      
+  <string name="donation_link">https://donate.stripe.com/4gw8yhbvH0mg6SQ7ss</string>
+      
+  <string name="donation_name">기부를 원하시면 여기에서 하실 수 있습니다.</string>
+      
+  <string name="generic_content_description">이는 일반적인 콘텐츠 설명입니다.</string>
+      
+  <string name="github">Github</string>
+      
+  <string name="github_url">https://github.com/doubleangels/NextDNSManager</string>
+      
+  <string name="help_green">보안 DNS가 사용되고 있으며 장치가 NextDNS에 연결되어 있습니다.</string>
+      
+  <string name="help_orange">보안 DNS가 사용되지 않고 장치가 NextDNS에 연결되어 있습니다.</string>
+      
+  <string name="help_red">보안 DNS가 사용되지 않습니다.</string>
+      
+  <string name="help_title">돕다</string>
+      
+  <string name="help_yellow">보안 DNS를 사용하고 있지만 장치가 NextDNS에 연결되어 있지 않습니다.</string>
+      
+  <string name="home_title">집</string>
+      
+  <string name="main_url">https://my.nextdns.io/</string>
+      
+  <string name="nextdns_protocol">규약</string>
+      
+  <string name="nextdns_status">상태</string>
+      
+  <string name="other">다른</string>
+      
+  <string name="ping_disabled">현재 이 작업을 사용할 수 없습니다.</string>
+      
+  <string name="ping_long">NextDNS 서버에 대한 핑 시간을 빠르게 확인하세요.</string>
+      
+  <string name="ping_short">핑</string>
+      
+  <string name="ping_title">핑 테스트</string>
+      
+  <string name="ping_url">https://ping.nextdns.io</string>
+      
+  <string name="privacy">은둔</string>
+      
+  <string name="privacy_policy">개인 정보 정책</string>
+      
+  <string name="privacy_policy_url">https://doubleangels.github.io/privacyPolicy/nextdns.html</string>
+      
+  <string name="refresh_title">새로 고치다</string>
+      
+  <string name="settings">설정</string>
+      
+  <string name="test_disabled">현재 이 작업을 사용할 수 없습니다.</string>
+      
+  <string name="test_long">NextDNS 연결에 대한 중요한 테스트 정보를 빠르게 얻으세요.</string>
+      
+  <string name="test_short">시험</string>
+      
+  <string name="test_title">연결 테스트</string>
+      
+  <string name="test_url">https://test.nextdns.io</string>
+      
+  <string name="title_activity_settings">설정</string>
+      
+  <string name="using_nextdns_status">좋아요</string>
+      
+  <string name="version">버전</string>
+      
+  <string name="whitelist">화이트리스트</string>
+      
+  <string name="whitelist_domain_1">*.o244019.sentry.io</string>
+      
+  <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
+      
+  <string name="whitelist_instructions">이 앱을 개선하는 데 도움이 되도록 익명화된 오류 추적을 활성화하려면 NextDNS 구성에서 해당 도메인을 허용 목록에 추가하세요.</string>
+      
+  <string name="whitelist_title">화이트리스트</string>
+  
+</resources>
