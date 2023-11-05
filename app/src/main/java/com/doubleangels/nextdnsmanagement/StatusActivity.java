@@ -37,16 +37,19 @@ public class StatusActivity extends AppCompatActivity {
 
             // Set up selected language.
             String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE,"en");
+            Locale appLocale;
             if (selectedLanguage.contains("pt")) {
-                selectedLanguage = "pt-BR";
+                appLocale = new Locale(selectedLanguage, "BR");
             } else if (selectedLanguage.contains("zh")) {
-                selectedLanguage = "zh-HANS";
+                appLocale = new Locale(selectedLanguage, "HANS");
+            } else {
+                appLocale = new Locale(selectedLanguage);
             }
-            Locale appLocale = new Locale(selectedLanguage);
             Locale.setDefault(appLocale);
             Configuration appConfig = new Configuration();
             appConfig.locale = appLocale;
             getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
+
             // Load user's preference for dark mode and set it
             boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
             if (darkMode) {
