@@ -31,12 +31,12 @@ public class SettingsActivity extends AppCompatActivity {
     public static final String SELECTED_LANGUAGE = "selected_language";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+
         // Start a Sentry transaction for the 'onCreate' method
         ITransaction settingsCreateTransaction = Sentry.startTransaction("settings_onCreate()", "SettingsActivity");
         try {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_settings);
-
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);

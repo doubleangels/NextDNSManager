@@ -22,12 +22,12 @@ import io.sentry.Sentry;
 public class StatusActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_status);
+
         // Start a Sentry transaction for the 'onCreate' method
         ITransaction helpCreateTransaction = Sentry.startTransaction("help_onCreate()", "StatusActivity");
         try {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_status);
-
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);

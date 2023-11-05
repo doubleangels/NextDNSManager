@@ -30,12 +30,12 @@ public class TestActivity extends AppCompatActivity {
     private WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_test);
+
         // Start a Sentry transaction for the 'onCreate' method
         ITransaction testCreateTransaction = Sentry.startTransaction("test_onCreate()", "TestActivity");
         try {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_test);
-
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);

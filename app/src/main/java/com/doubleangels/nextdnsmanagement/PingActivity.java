@@ -30,12 +30,12 @@ public class PingActivity extends AppCompatActivity {
     private WebView webView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ping);
+
         // Start a Sentry transaction for the 'onCreate' method
         ITransaction pingCreateTransaction = Sentry.startTransaction("ping_onCreate()", "PingActivity");
         try {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_ping);
-
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
