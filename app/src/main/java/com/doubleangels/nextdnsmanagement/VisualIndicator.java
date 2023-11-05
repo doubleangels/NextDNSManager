@@ -23,7 +23,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VisualIndicator {
-
     // Update the visual indicator based on LinkProperties
     public void updateVisualIndicator(@Nullable LinkProperties linkProperties, AppCompatActivity activity, Context context) {
         ITransaction updateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_updateVisualIndicator()", "VisualIndicator");
@@ -77,7 +76,6 @@ public class VisualIndicator {
     private void checkInheritedDNS(Context context, AppCompatActivity activity) {
         TestApi nextdnsApi = TestClient.getBaseClient(context).create(TestApi.class);
         Call<JsonObject> responseCall = nextdnsApi.getResponse();
-
         responseCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
