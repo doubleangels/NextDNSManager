@@ -1,4 +1,29 @@
-<resources>
-    <!-- Reply Preference -->
-
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>   
+  <string-array name="language_entries">
+    <item>ภาษาอังกฤษ</item>
+    <item>เยอรมัน</item>
+    <item>สเปน</item>
+    <item>ภาษาฝรั่งเศส</item>
+    <item>ชาวอินโดนีเซีย</item>
+    <item>ภาษาอิตาลี</item>
+    <item>ญี่ปุ่น</item>
+    <item>เกาหลี</item>
+    <item>โปรตุเกส</item>
+    <item>แบบไทย</item>
+    <item>ชาวจีน</item>
+  </string-array>
+  <string-array name="language_values">
+    <item>en</item>
+    <item>de</item>
+    <item>es</item>
+    <item>fr</item>
+    <item>id</item>
+    <item>it</item>
+    <item>ja</item>
+    <item>ko</item>
+    <item>pt</item>
+    <item>th</item>
+    <item>zh</item>
+  </string-array>
 </resources>
