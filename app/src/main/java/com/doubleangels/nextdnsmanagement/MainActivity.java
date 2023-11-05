@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -26,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 import java.util.Objects;
 
 import io.sentry.ITransaction;
@@ -40,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+
+            // Detect and apply the system language
+            Locale systemLocale = getResources().getConfiguration().locale;
+            String systemLanguage = systemLocale.getLanguage();
+            Locale appLocale = new Locale(systemLanguage);
+            Locale.setDefault(appLocale);
+            Configuration appConfig = new Configuration();
+            appConfig.locale = appLocale;
+            getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
 
             Toolbar toolbar = findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -56,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
             setupVisualIndicator(); // Set the visual connection status indicator
             setClickListeners(); // Set click listeners for the status icon
             provisionWebView(getString(R.string.main_url), darkMode); // Load the main web page
+            configureCookieManager(); // Configure cookies
         } catch (Exception e) {
             Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
@@ -134,6 +146,12 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setDomStorageEnabled(true);
         webSettings.setDatabaseEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        // Enable safer WebView settings
+        webSettings.setAllowFileAccess(false);
+        webSettings.setAllowContentAccess(false);
+        webSettings.setAllowFileAccessFromFileURLs(false);
+        webSettings.setAllowUniversalAccessFromFileURLs(false);
     }
 
     private void setupWebViewClient(boolean isDarkThemeOn) {

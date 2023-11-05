@@ -97,15 +97,15 @@ public class SettingsActivity extends AppCompatActivity {
             if (button != null) {
                 button.setOnPreferenceClickListener(preference -> {
                     try {
-                        // Copy the text to the clipboard
-                        ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                        CharSequence copiedText = getString(textResource);
-                        ClipData copiedData = ClipData.newPlainText("text", copiedText);
-                        clipboardManager.setPrimaryClip(copiedData);
-                        Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
-
-                        // If it's a URL button, open the URL in a browser
-                        if (buttonKey.equals("privacy_policy_button") || buttonKey.equals("author_button") || buttonKey.equals("github_button") || buttonKey.equals("donation_button")) {
+                        if (buttonKey.equals("whitelist_domain_1_button") || buttonKey.equals("whitelist_domain_2_button")) {
+                            // Copy the text to the clipboard
+                            ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                            CharSequence copiedText = getString(textResource);
+                            ClipData copiedData = ClipData.newPlainText("text", copiedText);
+                            clipboardManager.setPrimaryClip(copiedData);
+                            Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Open the link
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
                             startActivity(intent);
                         }
