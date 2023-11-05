@@ -12,6 +12,9 @@
     <string name="developer">Developer</string>
     <string name="disclaimer">This app is NOT an official NextDNS app.</string>
     <string name="disclaimer_title">Disclaimer</string>
+    <string name="donation">Donate</string>
+    <string name="donation_link">https://donate.stripe.com/4gw8yhbvH0mg6SQ7ss</string>
+    <string name="donation_name">If you wish to donate, you can do so here.</string>
     <string name="generic_content_description">This is a generic content description.</string>
     <string name="github">Github</string>
     <string name="github_url">https://github.com/doubleangels/NextDNSManager</string>

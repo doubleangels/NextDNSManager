@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 "easylist.to", "disconnect.me", "developerdan.com", "someonewhocares.org", "pgl.yoyo",
                 "gitlab.com", "fanboy.co.nz", "oO.pages.dev", "mvps.org", "sysctl.org", "unchecky.com",
                 "lanik.us", "280blocker.net", "shallalist.de", "github.io", "molinero.dev", "abpvn.com",
-                "hostsfile.org", "firebog.net", "notabug.org"
+                "hostsfile.org", "firebog.net", "notabug.org", "donate.stripe.com"
         };
         boolean containsMatch = false;
         for (String urlToCheck : urlsToCheck) {

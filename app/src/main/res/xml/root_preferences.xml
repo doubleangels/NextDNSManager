@@ -46,6 +46,10 @@
             app:title="@string/github"
             app:summary="@string/github_url"
             app:key="github_button"/>
+        <Preference
+            app:title="@string/donation"
+            app:summary="@string/donation_name"
+            app:key="donation_button"/>
     </PreferenceCategory>
     <PreferenceCategory
         app:title="@string/other"

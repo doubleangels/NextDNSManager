@@ -83,6 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
             setupButton("privacy_policy_button", R.string.privacy_policy_url);
             setupButton("author_button", R.string.author_url);
             setupButton("github_button", R.string.github_url);
+            setupButton("donation_button", R.string.donation_link);
 
             String versionName = BuildConfig.VERSION_NAME;
             Preference versionPreference = findPreference("version");
@@ -104,7 +105,7 @@ public class SettingsActivity extends AppCompatActivity {
                         Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
 
                         // If it's a URL button, open the URL in a browser
-                        if (buttonKey.equals("privacy_policy_button") || buttonKey.equals("author_button") || buttonKey.equals("github_button")) {
+                        if (buttonKey.equals("privacy_policy_button") || buttonKey.equals("author_button") || buttonKey.equals("github_button") || buttonKey.equals("donation_button")) {
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
                             startActivity(intent);
                         }
