@@ -37,6 +37,7 @@ public class StatusActivity extends AppCompatActivity {
 
             // Set up selected language.
             String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE,"en");
+            Sentry.setTag("locale", selectedLanguage);
             Locale appLocale;
             if (selectedLanguage.contains("pt")) {
                 appLocale = new Locale(selectedLanguage, "BR");
