@@ -15,6 +15,16 @@
 
     </PreferenceCategory>
     <PreferenceCategory
+        android:title="Language">
+
+    <ListPreference
+        android:key="language"
+        android:title="Selected Language"
+        android:summary="Select your preferred language"
+        android:entries="@array/theme_entries"
+        android:entryValues="@array/theme_values" />
+    </PreferenceCategory>
+    <PreferenceCategory
         app:title="Error Tracking"
         app:key="sentry">
         <Preference

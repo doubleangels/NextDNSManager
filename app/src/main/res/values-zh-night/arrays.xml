@@ -1,4 +1,55 @@
-<resources>
-    <!-- Reply Preference -->
-
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string-array name="language_entries">
+            
+    <item>英语</item>
+            
+    <item>德语</item>
+            
+    <item>西班牙语</item>
+            
+    <item>法语</item>
+            
+    <item>印度尼西亚</item>
+            
+    <item>意大利语</item>
+            
+    <item>日本人</item>
+            
+    <item>韩国人</item>
+            
+    <item>葡萄牙语</item>
+            
+    <item>泰国</item>
+            
+    <item>中国人</item>
+        
+  </string-array>
+      
+  <string-array name="language_values">
+            
+    <item>zh</item>
+            
+    <item>德</item>
+            
+    <item>英语</item>
+            
+    <item>FR</item>
+            
+    <item>ID</item>
+            
+    <item>它</item>
+            
+    <item>贾</item>
+            
+    <item>科</item>
+            
+    <item>点</item>
+            
+    <item>th</item>
+            
+    <item>zh</item>
+        
+  </string-array>
+  
 </resources>

@@ -1,4 +1,55 @@
-<resources>
-    <!-- Reply Preference -->
-
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string-array name="language_entries">
+            
+    <item>Anglais</item>
+            
+    <item>Allemand</item>
+            
+    <item>Espagnol</item>
+            
+    <item>Français</item>
+            
+    <item>indonésien</item>
+            
+    <item>italien</item>
+            
+    <item>Japonais</item>
+            
+    <item>coréen</item>
+            
+    <item>Portugais</item>
+            
+    <item>thaïlandais</item>
+            
+    <item>Chinois</item>
+        
+  </string-array>
+      
+  <string-array name="language_values">
+            
+    <item>fr</item>
+            
+    <item>de</item>
+            
+    <item>es</item>
+            
+    <item>fr</item>
+            
+    <item>identifiant</item>
+            
+    <item>il</item>
+            
+    <item>oui</item>
+            
+    <item>ko</item>
+            
+    <item>pt</item>
+            
+    <item>ème</item>
+            
+    <item>zh</item>
+        
+  </string-array>
+  
 </resources>

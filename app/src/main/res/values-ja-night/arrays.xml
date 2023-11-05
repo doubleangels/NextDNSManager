@@ -1,4 +1,55 @@
-<resources>
-    <!-- Reply Preference -->
-
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string-array name="language_entries">
+            
+    <item>英語</item>
+            
+    <item>ドイツ人</item>
+            
+    <item>スペイン語</item>
+            
+    <item>フランス語</item>
+            
+    <item>インドネシア語</item>
+            
+    <item>イタリアの</item>
+            
+    <item>日本語</item>
+            
+    <item>韓国語</item>
+            
+    <item>ポルトガル語</item>
+            
+    <item>タイ語</item>
+            
+    <item>中国語</item>
+        
+  </string-array>
+      
+  <string-array name="language_values">
+            
+    <item>jp</item>
+            
+    <item>デ</item>
+            
+    <item>エス</item>
+            
+    <item>フランス</item>
+            
+    <item>ID</item>
+            
+    <item>それ</item>
+            
+    <item>じゃ</item>
+            
+    <item>こ</item>
+            
+    <item>ポイント</item>
+            
+    <item>番目</item>
+            
+    <item>zh</item>
+        
+  </string-array>
+  
 </resources>

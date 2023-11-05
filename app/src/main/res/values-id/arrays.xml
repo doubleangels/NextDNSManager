@@ -1,4 +1,55 @@
-<resources>
-    <!-- Reply Preference -->
-
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string-array name="language_entries">
+            
+    <item>Bahasa inggris</item>
+            
+    <item>Jerman</item>
+            
+    <item>Orang Spanyol</item>
+            
+    <item>Perancis</item>
+            
+    <item>bahasa Indonesia</item>
+            
+    <item>Italia</item>
+            
+    <item>Jepang</item>
+            
+    <item>Korea</item>
+            
+    <item>Portugis</item>
+            
+    <item>Thai</item>
+            
+    <item>Cina</item>
+        
+  </string-array>
+      
+  <string-array name="language_values">
+            
+    <item>en</item>
+            
+    <item>de</item>
+            
+    <item>yaitu</item>
+            
+    <item>NS</item>
+            
+    <item>pengenal</item>
+            
+    <item>dia</item>
+            
+    <item>ya</item>
+            
+    <item>ko</item>
+            
+    <item>pt</item>
+            
+    <item>th</item>
+            
+    <item>zh</item>
+        
+  </string-array>
+  
 </resources>

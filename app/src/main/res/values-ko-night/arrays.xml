@@ -1,4 +1,55 @@
-<resources>
-    <!-- Reply Preference -->
-
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string-array name="language_entries">
+            
+    <item>영어</item>
+            
+    <item>독일 사람</item>
+            
+    <item>스페인의</item>
+            
+    <item>프랑스 국민</item>
+            
+    <item>인도네시아 인</item>
+            
+    <item>이탈리아 사람</item>
+            
+    <item>일본어</item>
+            
+    <item>한국인</item>
+            
+    <item>포르투갈 인</item>
+            
+    <item>태국어</item>
+            
+    <item>중국인</item>
+        
+  </string-array>
+      
+  <string-array name="language_values">
+            
+    <item>ko</item>
+            
+    <item>드</item>
+            
+    <item>예</item>
+            
+    <item>정말로</item>
+            
+    <item>ID</item>
+            
+    <item>그것</item>
+            
+    <item>자</item>
+            
+    <item>코</item>
+            
+    <item>태평양 표준시</item>
+            
+    <item>일</item>
+            
+    <item>zh</item>
+        
+  </string-array>
+  
 </resources>

@@ -1,4 +1,55 @@
-<resources>
-    <!-- Reply Preference -->
-
+<?xml version="1.0" encoding="UTF-8"?><resources>
+      
+  <string-array name="language_entries">
+            
+    <item>ภาษาอังกฤษ</item>
+            
+    <item>เยอรมัน</item>
+            
+    <item>สเปน</item>
+            
+    <item>ภาษาฝรั่งเศส</item>
+            
+    <item>ชาวอินโดนีเซีย</item>
+            
+    <item>ภาษาอิตาลี</item>
+            
+    <item>ญี่ปุ่น</item>
+            
+    <item>เกาหลี</item>
+            
+    <item>โปรตุเกส</item>
+            
+    <item>แบบไทย</item>
+            
+    <item>ชาวจีน</item>
+        
+  </string-array>
+      
+  <string-array name="language_values">
+            
+    <item>ห้องน้ำในตัว</item>
+            
+    <item>เดอ</item>
+            
+    <item>เช่น</item>
+            
+    <item>ศ</item>
+            
+    <item>รหัส</item>
+            
+    <item>มัน</item>
+            
+    <item>ใช่แล้ว</item>
+            
+    <item>เกาะ</item>
+            
+    <item>จุด</item>
+            
+    <item>ไทย</item>
+            
+    <item>จ</item>
+        
+  </string-array>
+  
 </resources>
