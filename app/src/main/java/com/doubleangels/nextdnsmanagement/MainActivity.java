@@ -134,6 +134,12 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setDomStorageEnabled(true);
         webSettings.setDatabaseEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        // Enable safer WebView settings
+        webSettings.setAllowFileAccess(false);
+        webSettings.setAllowContentAccess(false);
+        webSettings.setAllowFileAccessFromFileURLs(false);
+        webSettings.setAllowUniversalAccessFromFileURLs(false);
     }
 
     private void setupWebViewClient(boolean isDarkThemeOn) {
