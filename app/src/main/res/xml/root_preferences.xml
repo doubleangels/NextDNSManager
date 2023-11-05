@@ -15,14 +15,15 @@
 
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="Language">
-
-    <ListPreference
-        android:key="language"
-        android:title="Selected Language"
-        android:summary="Select your preferred language"
-        android:entries="@array/theme_entries"
-        android:entryValues="@array/theme_values" />
+        app:title="@string/language"
+        app:selectable="false">
+        <ListPreference
+            app:key="selected_language"
+            app:title="@string/language_title"
+            app:summary="@string/language_instruction"
+            app:defaultValue="en"
+            app:entries="@array/language_entries"
+            app:entryValues="@array/language_values" />
     </PreferenceCategory>
     <PreferenceCategory
         app:title="Error Tracking"
