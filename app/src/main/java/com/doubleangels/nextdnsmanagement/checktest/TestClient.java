@@ -15,7 +15,6 @@ import java.io.IOException;
 
 public class TestClient {
     private static Retrofit retrofit;
-
     // Method to create and return a Retrofit client
     public static Retrofit getBaseClient(Context context) {
         if (retrofit == null) {

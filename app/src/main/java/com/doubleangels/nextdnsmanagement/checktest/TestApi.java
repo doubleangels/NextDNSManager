@@ -6,7 +6,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 
 public interface TestApi {
-
     // Define the headers for the HTTP request
     @Headers({
             "Accept: application/json",

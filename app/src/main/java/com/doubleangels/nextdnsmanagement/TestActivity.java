@@ -4,10 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -17,9 +16,8 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
 
 import java.util.Objects;
 
@@ -27,60 +25,38 @@ import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class TestActivity extends AppCompatActivity {
-    private final DarkModeHandler darkModeHandler = new DarkModeHandler();
     private WebView webView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Start a Sentry transaction for the 'onCreate' method
         ITransaction testCreateTransaction = Sentry.startTransaction("test_onCreate()", "TestActivity");
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_test);
 
-            // Get shared preferences for settings
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-            // Initialize views and set up the action bar
-            initializeViews(sharedPreferences);
-            // Set a visual indicator for the activity
-            setVisualIndicator();
-            // Set click listeners for views
-            setClickListeners();
-            // Provision the WebView with a URL
-            provisionWebView(getString(R.string.test_url));
+            // Load user's preference for dark mode and set it
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
+            if (darkMode) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+
+            setVisualIndicator(); // Set the visual connection status indicator
+            setClickListeners(); // Set click listeners for the status icon
+            provisionWebView(getString(R.string.test_url)); // Load a web page in the WebView
         } catch (Exception e) {
-            // Capture and report any exceptions to Sentry
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
-            // Finish the Sentry transaction
-            testCreateTransaction.finish();
+            testCreateTransaction.finish(); // Finish the transaction
         }
     }
 
-    // Method to initialize views, typically used for fragments
-    private void initializeViews(SharedPreferences sharedPreferences) {
-        boolean darkNavigation = sharedPreferences.getBoolean(SettingsActivity.DARK_NAVIGATION, false);
-        setWindowAndToolbar(darkNavigation);
-    }
-
-    // Method to set window and toolbar styles based on dark mode settings
-    private void setWindowAndToolbar(boolean isDark) {
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        int statusBarColor = isDark ? R.color.darkgray : R.color.blue;
-
-        window.setStatusBarColor(ContextCompat.getColor(this, statusBarColor));
-        window.setNavigationBarColor(ContextCompat.getColor(this, statusBarColor));
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, statusBarColor));
-    }
-
-    // Method to set up a visual indicator
     private void setVisualIndicator() {
         try {
             VisualIndicator visualIndicator = new VisualIndicator();
@@ -90,27 +66,20 @@ public class TestActivity extends AppCompatActivity {
         }
     }
 
-    // Method to set click listeners for views
     private void setClickListeners() {
         ImageView statusIcon = findViewById(R.id.connectionStatus);
-        statusIcon.setOnClickListener(v -> {
-            Intent helpIntent = new Intent(v.getContext(), HelpActivity.class);
-            startActivity(helpIntent);
-        });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        try {
-            darkModeHandler.handleDarkMode(this);
-        } catch (Exception e) {
-            Sentry.captureException(e);
+        if (statusIcon != null) {
+            statusIcon.setOnClickListener(v -> {
+                // Handle click on the status icon, navigate to the StatusActivity
+                Intent helpIntent = new Intent(v.getContext(), StatusActivity.class);
+                startActivity(helpIntent);
+            });
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        // Inflate the menu for the activity
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
@@ -118,31 +87,34 @@ public class TestActivity extends AppCompatActivity {
     @SuppressLint("SetJavaScriptEnabled")
     @SuppressWarnings("unused")
     public void provisionWebView(String url) {
+        // Start a Sentry transaction for the 'provisionWebView' method
         ITransaction testProvisionWebViewTransaction = Sentry.startTransaction("test_provisionWebView()", "TestActivity");
         try {
             if (webView == null) {
                 webView = findViewById(R.id.mWebview);
                 setupWebViewSettings();
             }
-            webView.loadUrl(url);
+            webView.loadUrl(url); // Load the specified URL in the WebView
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
-            testProvisionWebViewTransaction.finish();
+            testProvisionWebViewTransaction.finish(); // Finish the transaction
         }
     }
 
-    // Method to set up WebView settings
     @SuppressLint("SetJavaScriptEnabled")
     private void setupWebViewSettings() {
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
+
+        // Configure WebView settings, such as enabling JavaScript, DOM storage, and cookies
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setDatabaseEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
+        // Configure CookieManager to accept cookies and third-party cookies
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
         cookieManager.setAcceptThirdPartyCookies(webView, true);
@@ -151,6 +123,7 @@ public class TestActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
+            // Handle the 'back' menu item, navigate to the MainActivity
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }

@@ -24,33 +24,36 @@ import retrofit2.Response;
 
 public class VisualIndicator {
 
+    // Update the visual indicator based on LinkProperties
     public void updateVisualIndicator(@Nullable LinkProperties linkProperties, AppCompatActivity activity, Context context) {
         ITransaction updateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_updateVisualIndicator()", "VisualIndicator");
         try {
             ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
-
-            if (linkProperties != null && linkProperties.isPrivateDnsActive()) {
-                String privateDnsServerName = linkProperties.getPrivateDnsServerName();
-                if (privateDnsServerName != null) {
-                    if (privateDnsServerName.contains("nextdns")) {
-                        setConnectionStatus(connectionStatus, R.drawable.success, R.color.green, context);
+            if (connectionStatus != null) {
+                if (linkProperties != null && linkProperties.isPrivateDnsActive()) {
+                    String privateDnsServerName = linkProperties.getPrivateDnsServerName();
+                    if (privateDnsServerName != null) {
+                        if (privateDnsServerName.contains("nextdns")) {
+                            setConnectionStatus(connectionStatus, R.drawable.success, R.color.green, context);
+                        } else {
+                            setConnectionStatus(connectionStatus, R.drawable.success, R.color.yellow, context);
+                        }
                     } else {
                         setConnectionStatus(connectionStatus, R.drawable.success, R.color.yellow, context);
                     }
                 } else {
-                    setConnectionStatus(connectionStatus, R.drawable.success, R.color.yellow, context);
+                    setConnectionStatus(connectionStatus, R.drawable.failure, R.color.red, context);
                 }
-            } else {
-                setConnectionStatus(connectionStatus, R.drawable.failure, R.color.red, context);
             }
         } catch (Exception e) {
-            captureAndReportException(e);
+            Sentry.captureException(e);
         } finally {
             updateVisualIndicatorTransaction.finish();
         }
         checkInheritedDNS(context, activity);
     }
 
+    // Initialize the visual indicator
     public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
         ITransaction initiateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
 
@@ -70,6 +73,7 @@ public class VisualIndicator {
         initiateVisualIndicatorTransaction.finish();
     }
 
+    // Check for inherited DNS settings
     private void checkInheritedDNS(Context context, AppCompatActivity activity) {
         TestApi nextdnsApi = TestClient.getBaseClient(context).create(TestApi.class);
         Call<JsonObject> responseCall = nextdnsApi.getResponse();
@@ -92,8 +96,10 @@ public class VisualIndicator {
                                     break;
                                 }
                             }
-                            setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
-                                    isSecure ? R.color.green : R.color.orange, context);
+                            if (connectionStatus != null) {
+                                setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
+                                        isSecure ? R.color.green : R.color.orange, context);
+                            }
                         }
                     }
                 }
@@ -101,17 +107,14 @@ public class VisualIndicator {
 
             @Override
             public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                captureAndReportException(t);
+                Sentry.captureException(t);
             }
         });
     }
 
+    // Set the connection status in the ImageView
     private void setConnectionStatus(ImageView connectionStatus, int drawableResId, int colorResId, Context context) {
         connectionStatus.setImageResource(drawableResId);
         connectionStatus.setColorFilter(ContextCompat.getColor(context, colorResId));
-    }
-
-    private void captureAndReportException(Throwable e) {
-        Sentry.captureException(e);
     }
 }

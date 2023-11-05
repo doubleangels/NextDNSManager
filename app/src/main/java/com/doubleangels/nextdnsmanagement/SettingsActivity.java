@@ -7,19 +7,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 
 import java.util.Objects;
 
@@ -27,27 +25,34 @@ import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class SettingsActivity extends AppCompatActivity {
-    public DarkModeHandler darkModeHandler = new DarkModeHandler();
-    public Boolean darkNavigation;
-
-    public static final String DARK_NAVIGATION = "dark_navigation";
-    public static final String OVERRIDE_DARK_MODE = "override_dark_mode";
-    public static final String MANUAL_DARK_MODE = "manual_dark_mode";
-
+    public static final String DARK_MODE = "dark_mode";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Start a Sentry transaction for the 'onCreate' method
         ITransaction settingsCreateTransaction = Sentry.startTransaction("settings_onCreate()", "SettingsActivity");
         try {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_settings);
 
-            initializeViews(savedInstanceState);
-            setActionBar();
-            setVisualIndicator();
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+            // Load user's preference for dark mode and set it
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
+            if (darkMode) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+
+            initializeViews(savedInstanceState); // Initialize the views for the settings
+            setVisualIndicator(); // Set the visual connection status indicator
         } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
-            settingsCreateTransaction.finish();
+            settingsCreateTransaction.finish(); // Finish the transaction
         }
     }
 
@@ -60,49 +65,12 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void setActionBar() {
-        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        darkNavigation = sharedPreferences.getBoolean(DARK_NAVIGATION, false);
-        setWindowAndToolbar(darkNavigation);
-    }
-
-    private void setWindowAndToolbar(boolean isDark) {
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-
-        int statusBarColor = isDark ? R.color.darkgray : R.color.blue;
-
-        window.setStatusBarColor(ContextCompat.getColor(this, statusBarColor));
-        window.setNavigationBarColor(ContextCompat.getColor(this, statusBarColor));
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-        toolbar.setBackgroundColor(ContextCompat.getColor(this, statusBarColor));
-    }
-
     private void setVisualIndicator() {
         try {
             VisualIndicator visualIndicator = new VisualIndicator();
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            Sentry.captureException(e);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        try {
-            darkModeHandler.handleDarkMode(this);
-        } catch (Exception e) {
-            Sentry.captureException(e);
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
         }
     }
 
@@ -115,6 +83,7 @@ public class SettingsActivity extends AppCompatActivity {
             setupButton("privacy_policy_button", R.string.privacy_policy_url);
             setupButton("author_button", R.string.author_url);
             setupButton("github_button", R.string.github_url);
+            setupButton("donation_button", R.string.donation_link);
 
             String versionName = BuildConfig.VERSION_NAME;
             Preference versionPreference = findPreference("version");
@@ -128,17 +97,20 @@ public class SettingsActivity extends AppCompatActivity {
             if (button != null) {
                 button.setOnPreferenceClickListener(preference -> {
                     try {
+                        // Copy the text to the clipboard
                         ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
                         CharSequence copiedText = getString(textResource);
                         ClipData copiedData = ClipData.newPlainText("text", copiedText);
                         clipboardManager.setPrimaryClip(copiedData);
                         Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
-                        if (buttonKey.equals("privacy_policy_button") || buttonKey.equals("author_button") || buttonKey.equals("github_button")) {
+
+                        // If it's a URL button, open the URL in a browser
+                        if (buttonKey.equals("privacy_policy_button") || buttonKey.equals("author_button") || buttonKey.equals("github_button") || buttonKey.equals("donation_button")) {
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
                             startActivity(intent);
                         }
                     } catch (Exception e) {
-                        Sentry.captureException(e);
+                        Sentry.captureException(e); // Capture and report any exceptions to Sentry
                     }
                     return true;
                 });
@@ -148,6 +120,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        // Inflate the menu for the activity
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
@@ -155,6 +128,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
+            // Handle the 'back' menu item, navigate to the MainActivity
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }

@@ -26,13 +26,13 @@
 
 # About
 
-NextDNSManager is an Android application that simplifies the management of your [NextDNS](https://nextdns.io) configuration. NextDNS is a cloud-based DNS filter and firewall that protects your home, family, and privacy online. With NextDNSManager, you can easily control your NextDNS settings and ensure a safer and more secure online experience.
+NextDNS Manager is an Android application that simplifies the management of your [NextDNS](https://nextdns.io) configuration. NextDNS is a cloud-based DNS filter and firewall that protects your home, family, and privacy online. With NextDNS Manager, you can easily control your NextDNS settings and ensure a safer and more secure online experience.
 
-**Note**: NextDNSManager is a completely open-source project with no official ties to NextDNS.
+**Note**: NextDNS Manager is a completely open-source project with no official ties to NextDNS.
 
 # Features:
 
-- **Intuitive Interface**: NextDNSManager provides a user-friendly interface that allows you to manage your NextDNS settings with ease.
+- **Intuitive Interface**: NextDNS Manager provides a user-friendly interface that allows you to manage your NextDNS settings with ease.
 
 - **Configuration Management**: You can configure your NextDNS settings, including filtering modes, blocklists, and whitelists.
 
@@ -40,7 +40,7 @@ NextDNSManager is an Android application that simplifies the management of your 
 
 - **Security and Privacy**: Enhance your online security and privacy by leveraging NextDNS' filtering capabilities.
 
-- **Easy Installation**: You can download and install NextDNSManager from the Google Play Store, F-Droid, or directly from the Github, providing multiple installation options.
+- **Easy Installation**: You can download and install NextDNS Manager from the Google Play Store, F-Droid, or directly from the Github, providing multiple installation options.
 
 # Installation
 
@@ -50,7 +50,7 @@ NextDNS Manager is available on the Google Play Store [here](https://play.google
 
 ## F-Droid Installation
 
-NextDNSManager is available on F-Droid [here](https://f-droid.org/en/packages/com.doubleangels.nextdnsmanagement).
+NextDNS Manager is available on F-Droid [here](https://f-droid.org/en/packages/com.doubleangels.nextdnsmanagement).
 It's also available on the `https://apt.izzysoft.de/fdroid/repo` repo, maintained by [@IzzySoft](https://github.com/IzzySoft).
 
 ## Manual Installation
@@ -62,18 +62,23 @@ The most recent APK is available for download [here](https://github.com/doublean
 - [Privacy Policy](https://doubleangels.github.io/privacyPolicy/nextdns.html)
 - [Terms and Conditions](https://doubleangels.github.io/privacyPolicy/nextdns_terms.html)
 
+# Donations
+
+- Donations are always optional.
+- [Donate Here](https://donate.stripe.com/4gw8yhbvH0mg6SQ7ss)
+
 # License
 
-NextDNSManager is open-source and released under the [MIT License](LICENSE).
+NextDNS Manager is open-source and released under the [MIT License](LICENSE).
 
 # Reporting Issues
 
 To report an issue, please open a new issue in this repository and provide the following information:
 
-- Device you're running the app on
-- Version of Android you're using
-- Version of the app you're using
-- Detailed description of your problem
+- Device you're running the app on.
+- Version of Android you're using.
+- Version of the app you're using.
+- Detailed description of your problem.
 
 # Suggestions and Feedback
 
@@ -81,11 +86,11 @@ To make a suggestion or report feedback, please open a new issue in this reposit
 
 # Contributing
 
-Contributions to NextDNSManager are welcome! Whether it's bug fixes, new features, or documentation improvements, your contributions help make the app better for everyone.
+Contributions to NextDNS Manager are welcome! Whether it's bug fixes, new features, or documentation improvements, your contributions help make the app better for everyone.
 
 ## How Can You Contribute?
 
-You can contribute to NextDNSManager in the following ways:
+You can contribute to NextDNS Manager in the following ways:
 
 ### Reporting Bugs
 
