@@ -103,5 +103,8 @@
   <string name="whitelist_instructions">Se desideri abilitare il monitoraggio degli errori anonimo per aiutarmi a migliorare questa app, inserisci nella whitelist questi domini nella configurazione NextDNS.</string>
       
   <string name="whitelist_title">Lista bianca</string>
-  
+    <string name="language">Lingua</string>
+    <string name="language_title">Lingua selezionata</string>
+    <string name="language_instruction">Tocca per selezionare la lingua desiderata.</string>
+
 </resources>

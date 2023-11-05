@@ -103,5 +103,8 @@
   <string name="whitelist_instructions">このアプリを改善するために匿名化されたエラー追跡を有効にしたい場合は、NextDNS 構成でこれらのドメインをホワイトリストに登録してください。</string>
       
   <string name="whitelist_title">ホワイトリスト</string>
-  
+    <string name="language">言語</string>
+    <string name="language_title">選択した言語</string>
+    <string name="language_instruction">タップして希望の言語を選択します。</string>
+
 </resources>

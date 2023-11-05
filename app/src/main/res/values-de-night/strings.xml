@@ -103,5 +103,8 @@
   <string name="whitelist_instructions">Wenn Sie die anonymisierte Fehlerverfolgung aktivieren möchten, um diese App zu verbessern, setzen Sie diese Domänen bitte in Ihrer NextDNS-Konfiguration auf die Whitelist.</string>
       
   <string name="whitelist_title">Whitelist</string>
-  
+    <string name="language">Sprache</string>
+    <string name="language_title">Ausgewählte Sprache</string>
+    <string name="language_instruction">Tippen Sie, um die gewünschte Sprache auszuwählen.</string>
+
 </resources>

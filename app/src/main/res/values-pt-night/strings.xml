@@ -103,5 +103,8 @@
   <string name="whitelist_instructions">Se você deseja ativar o rastreamento de erros anônimo para me ajudar a melhorar este aplicativo, coloque esses domínios na lista de permissões em sua configuração NextDNS.</string>
       
   <string name="whitelist_title">Lista de permissões</string>
-  
+    <string name="language">Linguagem</string>
+    <string name="language_title">Idioma selecionado</string>
+  <string name="language_instruction">Toque para selecionar o idioma desejado.</string>
+
 </resources>

@@ -103,5 +103,8 @@
   <string name="whitelist_instructions">이 앱을 개선하는 데 도움이 되도록 익명화된 오류 추적을 활성화하려면 NextDNS 구성에서 해당 도메인을 허용 목록에 추가하세요.</string>
       
   <string name="whitelist_title">화이트리스트</string>
-  
+  <string name="language">언어</string>
+  <string name="language_title">선택한 언어</string>
+  <string name="language_instruction">탭하여 원하는 언어를 선택하세요.</string>
+
 </resources>

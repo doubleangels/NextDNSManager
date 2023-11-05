@@ -103,5 +103,8 @@
   <string name="whitelist_instructions">Jika Anda ingin mengaktifkan pelacakan kesalahan anonim untuk membantu saya membuat aplikasi ini lebih baik, harap masukkan domain ini ke dalam konfigurasi NextDNS Anda.</string>
       
   <string name="whitelist_title">Daftar putih</string>
-  
+    <string name="language">Bahasa</string>
+    <string name="language_title">Bahasa yang Dipilih</string>
+    <string name="language_instruction">Ketuk untuk memilih bahasa yang Anda inginkan.</string>
+
 </resources>
