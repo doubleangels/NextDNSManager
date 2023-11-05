@@ -27,8 +27,13 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
@@ -177,37 +182,41 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("NewApi")
     private WebResourceResponse handleWebResourceRequests(String url) {
-        // Define list of domains not to apply custom dark mode to
-        String[] urlsToCheck = {
+        // Use a HashSet for faster URL matching
+        Set<String> allowedDomains = new HashSet<>(Arrays.asList(
                 "apple.nextdns.io", "help.nextdns.io", "bitpay.com", "github.com", "oisd.nl", "adguard.com",
                 "easylist.to", "disconnect.me", "developerdan.com", "someonewhocares.org", "pgl.yoyo",
                 "gitlab.com", "fanboy.co.nz", "oO.pages.dev", "mvps.org", "sysctl.org", "unchecky.com",
                 "lanik.us", "280blocker.net", "shallalist.de", "github.io", "molinero.dev", "abpvn.com",
                 "hostsfile.org", "firebog.net", "notabug.org", "donate.stripe.com"
-        };
-        boolean containsMatch = false;
-        for (String urlToCheck : urlsToCheck) {
-            if (url.contains(urlToCheck)) {
-                containsMatch = true;
-                break; // Exit the loop as soon as a match is found
+        ));
+
+        // Check if the URL matches any allowed domains
+        for (String domain : allowedDomains) {
+            if (url.contains(domain)) {
+                return null; // Allow certain domains, skip intercepting resources
             }
         }
-        // Handle different types of web resource requests
-        if (containsMatch) {
-            return null; // Allow certain domains, skip intercepting resources
-        } else if (url.endsWith(".css")) {
-            return getCssWebResourceResponseFromAsset(); // Load CSS from assets
-        } else if (url.contains("ens-text")) {
-            return getPngWebResourceResponse("ens-text.png"); // Load PNG resource
-        } else if (url.contains("unstoppabledomains")) {
-            return getPngWebResourceResponse("unstoppabledomains.png"); // Load PNG resource
-        } else if (url.contains("handshake")) {
-            return getPngWebResourceResponse("handshake.png"); // Load PNG resource
-        } else if (url.contains("ipfs")) {
-            return getPngWebResourceResponse("ipfs.png"); // Load PNG resource
-        } else {
-            return null; // Allow other requests, skip intercepting resources
+
+        // Create a map to store URL patterns and their corresponding resources
+        Map<String, String> resourceMap = new HashMap<>();
+        resourceMap.put(".css", "styles.css");
+        resourceMap.put("ens-text", "ens-text.png");
+        resourceMap.put("unstoppabledomains", "unstoppabledomains.png");
+        resourceMap.put("handshake", "handshake.png");
+        resourceMap.put("ipfs", "ipfs.png");
+
+        // Check for specific URL patterns and load corresponding resources
+        for (Map.Entry<String, String> entry : resourceMap.entrySet()) {
+            if (url.contains(entry.getKey())) {
+                if (entry.toString().contains(".css")) {
+                    return getCssWebResourceResponseFromAsset();
+                }
+                return getPngWebResourceResponse(entry.getValue());
+            }
         }
+
+        return null; // Allow other requests, skip intercepting resources
     }
 
     @SuppressLint("NewApi")
