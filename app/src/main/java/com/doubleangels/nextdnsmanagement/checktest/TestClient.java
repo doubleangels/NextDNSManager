@@ -1,24 +1,41 @@
 package com.doubleangels.nextdnsmanagement.checktest;
 
 import android.content.Context;
-import com.doubleangels.nextdnsmanagement.R; // Importing resource file
+import com.doubleangels.nextdnsmanagement.R;
 
-import io.sentry.Sentry; // Importing Sentry for error monitoring
+import io.sentry.Sentry;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
 import java.io.File;
 import java.io.IOException;
 
 public class TestClient {
-    private static Retrofit retrofit; // Declare a static Retrofit client instance
+    private static volatile Retrofit retrofit;
+    private static OkHttpClient okHttpClient;
 
-    // Method to create and return a Retrofit client
+    private TestClient() {
+        // Private constructor to prevent instantiation
+    }
+
     public static Retrofit getBaseClient(Context context) {
         if (retrofit == null) {
+            synchronized (TestClient.class) {
+                if (retrofit == null) {
+                    // If the Retrofit instance is not initialized, create one
+                    retrofit = createRetrofit(context);
+                }
+            }
+        }
+        return retrofit;
+    }
+
+    private static OkHttpClient getOkHttpClient(Context context) {
+        if (okHttpClient == null) {
             // Define a cache directory for OkHttpClient
             File cacheDir = new File(context.getCacheDir(), "http-cache");
             Cache cache = new Cache(cacheDir, 10 * 1024 * 1024); // 10MB cache size
@@ -37,14 +54,19 @@ public class TestClient {
                         }
                     });
 
-            // Create a Retrofit instance with base URL, converters, call adapters, and the OkHttpClient
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(context.getString(R.string.test_url)) // Base URL from resources
-                    .addConverterFactory(GsonConverterFactory.create()) // Use Gson for JSON conversion
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // Use RxJava2 for async calls
-                    .client(clientBuilder.build()) // Set the OkHttpClient
-                    .build();
+            okHttpClient = clientBuilder.build();
         }
-        return retrofit; // Return the Retrofit client
+        return okHttpClient;
+    }
+
+    private static Retrofit createRetrofit(Context context) {
+        OkHttpClient client = getOkHttpClient(context);
+
+        return new Retrofit.Builder()
+                .baseUrl(context.getString(R.string.test_url)) // Base URL from resources
+                .addConverterFactory(GsonConverterFactory.create()) // Use Gson for JSON conversion
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // Use RxJava2 for async calls
+                .client(client) // Set the OkHttpClient
+                .build();
     }
 }
