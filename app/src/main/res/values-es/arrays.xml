@@ -1,55 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?><resources>
-      
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>      
   <string-array name="language_entries">
-            
     <item>Inglés</item>
-            
     <item>Alemán</item>
-            
     <item>Español</item>
-            
     <item>Francés</item>
-            
-    <item>indonesio</item>
-            
-    <item>italiano</item>
-            
-    <item>japonés</item>
-            
-    <item>coreano</item>
-            
-    <item>portugués</item>
-            
-    <item>tailandés</item>
-            
+    <item>Indonesio</item>
+    <item>Italiano</item>
+    <item>Japonés</item>
+    <item>Coreano</item>
+    <item>Portugués</item>
+    <item>Tailandés</item>
     <item>Chino</item>
-        
   </string-array>
-      
   <string-array name="language_values">
-            
-    <item>es</item>
-            
-    <item>Delaware</item>
-            
-    <item>es</item>
-            
-    <item>fr</item>
-            
-    <item>identificación</item>
-            
-    <item>él</item>
-            
-    <item>ja</item>
-            
-    <item>ko</item>
-            
-    <item>pt</item>
-            
-    <item>th</item>
-            
-    <item>Z h</item>
-        
+      <item>en</item>
+      <item>de</item>
+      <item>es</item>
+      <item>fr</item>
+      <item>id</item>
+      <item>it</item>
+      <item>ja</item>
+      <item>ko</item>
+      <item>pt</item>
+      <item>th</item>
+      <item>zh</item>
   </string-array>
-  
 </resources>

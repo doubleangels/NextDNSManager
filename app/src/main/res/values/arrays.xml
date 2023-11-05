@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources>  
     <string-array name="language_entries">
         <item>English</item>
         <item>German</item>

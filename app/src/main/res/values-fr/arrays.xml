@@ -1,55 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?><resources>
-      
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>      
   <string-array name="language_entries">
-            
     <item>Anglais</item>
-            
     <item>Allemand</item>
-            
     <item>Espagnol</item>
-            
     <item>Français</item>
-            
-    <item>indonésien</item>
-            
-    <item>italien</item>
-            
+    <item>Indonésien</item>
+    <item>Italien</item>
     <item>Japonais</item>
-            
-    <item>coréen</item>
-            
+    <item>Coréen</item>
     <item>Portugais</item>
-            
-    <item>thaïlandais</item>
-            
+    <item>Thaïlandais</item>
     <item>Chinois</item>
-        
   </string-array>
-      
   <string-array name="language_values">
-            
-    <item>fr</item>
-            
-    <item>de</item>
-            
-    <item>es</item>
-            
-    <item>fr</item>
-            
-    <item>identifiant</item>
-            
-    <item>il</item>
-            
-    <item>oui</item>
-            
-    <item>ko</item>
-            
-    <item>pt</item>
-            
-    <item>ème</item>
-            
-    <item>zh</item>
-        
+      <item>en</item>
+      <item>de</item>
+      <item>es</item>
+      <item>fr</item>
+      <item>id</item>
+      <item>it</item>
+      <item>ja</item>
+      <item>ko</item>
+      <item>pt</item>
+      <item>th</item>
+      <item>zh</item>
   </string-array>
-  
 </resources>
