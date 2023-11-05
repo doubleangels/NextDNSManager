@@ -46,4 +46,9 @@
     <string name="whitelist_domain_1">*.o244019.sentry.io</string>
     <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
     <string name="whitelist_instructions">If you wish to enable anonymized error tracking to help me make this app better, please whitelist these domains in your NextDNS configuration.</string>
+    <string name="dark_navigation_title">Dark Mode</string>
+    <string name="application_name">NextDNS Manager</string>
+    <string name="help_title">Help</string>
+    <string name="whitelist">Whitelist</string>
+    <string name="whitelist_title">Whitelist</string>
 </resources>
