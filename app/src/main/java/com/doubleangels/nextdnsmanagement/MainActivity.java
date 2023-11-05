@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
             // Detect and apply the system language
             Locale systemLocale = getResources().getConfiguration().locale;
-            String systemLanguage = systemLocale.getLanguage(); // This will give you the two-letter language code (e.g., "en" for English)
-            Locale appLocale = new Locale("de");
+            String systemLanguage = systemLocale.getLanguage();
+            Locale appLocale = new Locale(systemLanguage);
             Locale.setDefault(appLocale);
             Configuration appConfig = new Configuration();
             appConfig.locale = appLocale;
