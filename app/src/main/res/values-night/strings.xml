@@ -41,7 +41,7 @@
     <string name="test_title">Connection Test</string>
     <string name="test_url">https://test.nextdns.io</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="using_nextdns_status">OK</string>
+    <string name="using_nextdns_status" translatable="false">OK</string>
     <string name="version">Version</string>
     <string name="whitelist_domain_1">*.o244019.sentry.io</string>
     <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>

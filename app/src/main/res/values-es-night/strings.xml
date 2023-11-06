@@ -82,9 +82,7 @@
 
   <string name="title_activity_settings">Ajustes</string>
 
-  <string name="using_nextdns_status">DE ACUERDO</string>
-
-  <string name="version">Versión</string>
+    <string name="version">Versión</string>
 
   <string name="whitelist_domain_1">*.o244019.sentry.io</string>
 
