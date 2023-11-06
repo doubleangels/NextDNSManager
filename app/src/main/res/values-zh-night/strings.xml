@@ -80,7 +80,7 @@
 
   <string name="test_url">https://test.nextdns.io</string>
 
-  <string name="title_activity_settings">设置</string>
+  <string name="settings_activity_title">设置</string>
 
     <string name="version">版本</string>
 

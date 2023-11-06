@@ -88,7 +88,7 @@
 
   <string name="test_url">https://test.nextdns.io</string>
 
-  <string name="title_activity_settings">Paramètres</string>
+  <string name="settings_activity_title">Paramètres</string>
 
   <string name="using_nextdns_status">D\'ACCORD</string>
 
