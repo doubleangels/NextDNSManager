@@ -4,10 +4,6 @@
 
   <string name="author">著者</string>
 
-  <string name="author_name" translatable="false">DoubleAngels</string>
-
-  <string name="author_url" translatable="false">https://doubleangels.com</string>
-
   <string name="back_title">戻る</string>
 
   <string name="dark_mode_header">ダークモード</string>
