@@ -4,10 +4,6 @@
 
   <string name="author">Auteur</string>
 
-  <string name="author_name" translatable="false">DoubleAngels</string>
-
-  <string name="author_url" translatable="false">https://doubleangels.com</string>
-
   <string name="back_title">Dos</string>
 
   <string name="dark_mode_header">Mode sombre</string>
