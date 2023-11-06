@@ -58,9 +58,9 @@
 
   <string name="main_url">https://my.nextdns.io/</string>
 
-  <string name="nextdns_protocol">protocollo</string>
+  <string name="nextdns_protocol">protocol</string>
 
-  <string name="nextdns_status">stato</string>
+  <string name="nextdns_status">status</string>
 
   <string name="other">Altro</string>
 
