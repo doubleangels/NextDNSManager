@@ -17,7 +17,6 @@ import java.io.IOException;
 public class TestClient {
     private static volatile Retrofit retrofit;
     private static OkHttpClient okHttpClient;
-
     private TestClient() {
         // Private constructor to prevent instantiation
     }
