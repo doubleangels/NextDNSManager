@@ -2,7 +2,6 @@
 
     <PreferenceCategory
         app:title="@string/dark_mode_header"
-        app:key="dark_mode"
         app:allowDividerBelow="true">
         <Preference
             app:summary="@string/dark_mode_summary"
