@@ -56,8 +56,6 @@ jobs:
 
       - name: Create release APK
         run: ./gradlew assembleRelease
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Sign release APK
         uses: r0adkll/sign-android-release@v1
