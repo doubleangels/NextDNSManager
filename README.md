@@ -108,6 +108,10 @@ If you have ideas for enhancements or new features, feel free to open a discussi
 
 Improvements to the project's documentation are always welcome. You can suggest edits, updates, or new sections to make it more informative and user-friendly.
 
+### Translations
+
+See a translation that's not quite right? I only speak one language so please open an issue and tell me what's wrong. :)
+
 ### Code Contributions
 
 If you're interested in making code contributions, please open a pull request!
