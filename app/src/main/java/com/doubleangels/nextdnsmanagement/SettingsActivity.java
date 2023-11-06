@@ -63,8 +63,10 @@ public class SettingsActivity extends AppCompatActivity {
             // Load user's preference for dark mode and set it
             boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
             if (darkMode) {
+                Sentry.setTag("dark_mode", "yes");
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             } else {
+                Sentry.setTag("dark_mode", "no");
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
 
