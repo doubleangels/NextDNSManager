@@ -48,10 +48,6 @@
 
   <string name="main_url">https://my.nextdns.io/</string>
 
-  <string name="nextdns_protocol">Protokoll</string>
-
-  <string name="nextdns_status">Status</string>
-
   <string name="other">Andere</string>
 
   <string name="ping_disabled">Diese Aktion ist derzeit nicht verfügbar.</string>

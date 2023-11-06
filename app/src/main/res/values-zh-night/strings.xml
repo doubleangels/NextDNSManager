@@ -48,10 +48,6 @@
 
   <string name="main_url">https://my.nextdns.io/</string>
 
-  <string name="nextdns_protocol">协议</string>
-
-  <string name="nextdns_status">地位</string>
-
   <string name="other">其他</string>
 
   <string name="ping_disabled">此操作当前不可用。</string>

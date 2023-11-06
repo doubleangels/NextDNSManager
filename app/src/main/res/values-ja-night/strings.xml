@@ -48,10 +48,6 @@
 
   <string name="main_url">https://my.nextdns.io/</string>
 
-  <string name="nextdns_protocol">プロトコル</string>
-
-  <string name="nextdns_status">状態</string>
-
   <string name="other">他の</string>
 
   <string name="ping_disabled">このアクションは現在利用できません。</string>
