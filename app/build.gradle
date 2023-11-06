@@ -56,3 +56,14 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
 }
+
+sentry {
+    authToken = System.getenv("SENTRY_AUTH_TOKEN")
+    includeProguardMapping = true
+    autoUploadProguardMapping = true
+    experimentalGuardsquareSupport = true
+    uploadNativeSymbols = true
+    autoUploadNativeSymbols = true
+    includeNativeSources = true
+    includeSourceContext = true
+}
