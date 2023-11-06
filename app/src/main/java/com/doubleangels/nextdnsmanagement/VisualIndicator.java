@@ -79,25 +79,23 @@ public class VisualIndicator {
         responseCall.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                if (response.isSuccessful()) {
+                if (response.isSuccessful() && response.body() != null) {
                     JsonObject testResponse = response.body();
-                    if (testResponse != null) {
-                        String nextdnsStatus = testResponse.get(context.getString(R.string.nextdns_status)).getAsString();
-                        if (context.getString(R.string.using_nextdns_status).equalsIgnoreCase(nextdnsStatus)) {
-                            String nextdnsProtocol = testResponse.get(context.getString(R.string.nextdns_protocol)).getAsString();
-                            ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
-                            String[] secureProtocols = context.getResources().getStringArray(R.array.secure_protocols);
-                            boolean isSecure = false;
-                            for (String s : secureProtocols) {
-                                if (nextdnsProtocol.equalsIgnoreCase(s)) {
-                                    isSecure = true;
-                                    break;
-                                }
+                    String nextdnsStatus = testResponse.get(context.getString(R.string.nextdns_status)).getAsString();
+                    if (context.getString(R.string.using_nextdns_status).equalsIgnoreCase(nextdnsStatus)) {
+                        String nextdnsProtocol = testResponse.get(context.getString(R.string.nextdns_protocol)).getAsString();
+                        ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
+                        String[] secureProtocols = context.getResources().getStringArray(R.array.secure_protocols);
+                        boolean isSecure = false;
+                        for (String s : secureProtocols) {
+                            if (nextdnsProtocol.equalsIgnoreCase(s)) {
+                                isSecure = true;
+                                break;
                             }
-                            if (connectionStatus != null) {
-                                setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
-                                        isSecure ? R.color.green : R.color.orange, context);
-                            }
+                        }
+                        if (connectionStatus != null) {
+                            setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
+                                    isSecure ? R.color.green : R.color.orange, context);
                         }
                     }
                 }
