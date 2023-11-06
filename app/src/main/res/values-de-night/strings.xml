@@ -82,9 +82,7 @@
 
   <string name="title_activity_settings">Einstellungen</string>
 
-  <string name="using_nextdns_status">OK</string>
-
-  <string name="version">Ausführung</string>
+    <string name="version">Ausführung</string>
 
   <string name="whitelist_domain_1">*.o244019.sentry.io</string>
 
