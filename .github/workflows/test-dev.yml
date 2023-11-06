@@ -31,9 +31,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Upload ProGuard to Sentry
-        run: ./gradlew sentryProguardUpload
-
       - name: Build debug build with Gradle
         run: ./gradlew assembleDebug
 
