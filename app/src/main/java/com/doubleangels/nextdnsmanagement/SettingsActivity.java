@@ -20,7 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import com.doubleangels.nextdnsmanagement.checktest.VisualIndicator;
+import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
 
 import java.util.Locale;
 import java.util.Objects;

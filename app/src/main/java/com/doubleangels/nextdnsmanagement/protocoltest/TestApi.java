@@ -1,4 +1,4 @@
-package com.doubleangels.nextdnsmanagement.checktest;
+package com.doubleangels.nextdnsmanagement.protocoltest;
 
 import com.google.gson.JsonObject;
 import retrofit2.Call;
