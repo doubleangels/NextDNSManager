@@ -1,4 +1,4 @@
-package com.doubleangels.nextdnsmanagement;
+package com.doubleangels.nextdnsmanagement.checktest;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -12,8 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.doubleangels.nextdnsmanagement.checktest.TestApi;
-import com.doubleangels.nextdnsmanagement.checktest.TestClient;
+import com.doubleangels.nextdnsmanagement.R;
 import com.google.gson.JsonObject;
 
 import io.sentry.ITransaction;
@@ -23,6 +22,32 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class VisualIndicator {
+    // Initialize the visual indicator
+    public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
+        // Start a Sentry transaction for monitoring
+        ITransaction initiateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
+
+        // Get connectivity information
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        Network network = connectivityManager.getActiveNetwork();
+        LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
+
+        // Update the visual indicator
+        updateVisualIndicator(linkProperties, activity, context);
+
+        // Register a network callback for changes
+        connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
+            @Override
+            public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
+                super.onLinkPropertiesChanged(network, linkProperties);
+                updateVisualIndicator(linkProperties, activity, context);
+            }
+        });
+
+        // Finish the Sentry transaction
+        initiateVisualIndicatorTransaction.finish();
+    }
+
     // Update the visual indicator based on LinkProperties
     public void updateVisualIndicator(@Nullable LinkProperties linkProperties, AppCompatActivity activity, Context context) {
         // Start a Sentry transaction for monitoring
@@ -54,32 +79,6 @@ public class VisualIndicator {
         }
         // Check for inherited DNS settings
         checkInheritedDNS(context, activity);
-    }
-
-    // Initialize the visual indicator
-    public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
-        // Start a Sentry transaction for monitoring
-        ITransaction initiateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
-
-        // Get connectivity information
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        Network network = connectivityManager.getActiveNetwork();
-        LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
-
-        // Update the visual indicator
-        updateVisualIndicator(linkProperties, activity, context);
-
-        // Register a network callback for changes
-        connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), new ConnectivityManager.NetworkCallback() {
-            @Override
-            public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
-                super.onLinkPropertiesChanged(network, linkProperties);
-                updateVisualIndicator(linkProperties, activity, context);
-            }
-        });
-
-        // Finish the Sentry transaction
-        initiateVisualIndicatorTransaction.finish();
     }
 
     // Check for inherited DNS settings

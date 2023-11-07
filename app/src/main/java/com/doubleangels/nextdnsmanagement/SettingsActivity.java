@@ -20,6 +20,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.doubleangels.nextdnsmanagement.checktest.VisualIndicator;
+
 import java.util.Locale;
 import java.util.Objects;
 
@@ -29,6 +31,7 @@ import io.sentry.Sentry;
 public class SettingsActivity extends AppCompatActivity {
     public static final String DARK_MODE = "dark_mode";
     public static final String SELECTED_LANGUAGE = "selected_language";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,41 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
         // Start a Sentry transaction for the 'onCreate' method
         ITransaction settingsCreateTransaction = Sentry.startTransaction("settings_onCreate()", "SettingsActivity");
         try {
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-
-            // Set up shared preferences
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-            // Set up selected language.
-            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE,"en");
-            Sentry.setTag("locale", selectedLanguage);
-            Locale appLocale;
-            if (selectedLanguage.contains("pt")) {
-                appLocale = new Locale(selectedLanguage, "BR");
-            } else if (selectedLanguage.contains("zh")) {
-                appLocale = new Locale(selectedLanguage, "HANS");
-            } else {
-                appLocale = new Locale(selectedLanguage);
-            }
-            Locale.setDefault(appLocale);
-            Configuration appConfig = new Configuration();
-            appConfig.locale = appLocale;
-            getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
-
-            // Load user's preference for dark mode and set it
-            boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
-            if (darkMode) {
-                Sentry.setTag("dark_mode", "yes");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                Sentry.setTag("dark_mode", "no");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-
-            initializeViews(savedInstanceState); // Initialize the views for the settings
-            setVisualIndicator(); // Set the visual connection status indicator
+            setupUI();
         } catch (Exception e) {
             Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
@@ -79,13 +48,55 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void initializeViews(Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.settings, new SettingsFragment())
-                    .commitNow();
+    private void setupUI() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
+        // Set up shared preferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // Set up selected language.
+        setupSelectedLanguage(sharedPreferences);
+
+        // Load user's preference for dark mode and set it
+        setupDarkMode(sharedPreferences);
+
+        initializeViews(); // Initialize the views for the settings
+        setVisualIndicator(); // Set the visual connection status indicator
+    }
+
+    private void setupSelectedLanguage(SharedPreferences sharedPreferences) {
+        String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE, "en");
+        Sentry.setTag("locale", selectedLanguage);
+        Locale appLocale = determineLocale(selectedLanguage);
+        Locale.setDefault(appLocale);
+        Configuration appConfig = new Configuration();
+        appConfig.locale = appLocale;
+        getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
+    }
+
+    private Locale determineLocale(String selectedLanguage) {
+        if (selectedLanguage.contains("pt")) {
+            return new Locale(selectedLanguage, "BR");
+        } else if (selectedLanguage.contains("zh")) {
+            return new Locale(selectedLanguage, "HANS");
+        } else {
+            return new Locale(selectedLanguage);
         }
+    }
+
+    private void setupDarkMode(SharedPreferences sharedPreferences) {
+        boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
+        Sentry.setTag("dark_mode", darkMode ? "yes" : "no");
+        AppCompatDelegate.setDefaultNightMode(darkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
+    }
+
+    private void initializeViews() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.settings, new SettingsFragment())
+                .commitNow();
     }
 
     private void setVisualIndicator() {
@@ -98,9 +109,23 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
+        private final Preference.OnPreferenceChangeListener languageChangeListener = (preference, newValue) -> {
+            // Handle language change, e.g., restarting the activity
+            ((SettingsActivity) requireActivity()).restartActivity();
+            return true;
+        };
+
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+
+            // Set up the language preference change listener
+            Preference languagePreference = findPreference(SELECTED_LANGUAGE);
+            if (languagePreference != null) {
+                languagePreference.setOnPreferenceChangeListener(languageChangeListener);
+            }
+
+            // Set up buttons
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
             setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
             setupButton("privacy_policy_button", R.string.privacy_policy_url);
@@ -120,7 +145,7 @@ public class SettingsActivity extends AppCompatActivity {
             if (button != null) {
                 button.setOnPreferenceClickListener(preference -> {
                     try {
-                        if (buttonKey.equals("whitelist_domain_1_button") || buttonKey.equals("whitelist_domain_2_button")) {
+                        if ("whitelist_domain_1_button".equals(buttonKey) || "whitelist_domain_2_button".equals(buttonKey)) {
                             // Copy the text to the clipboard
                             ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
                             CharSequence copiedText = getString(textResource);
@@ -139,6 +164,13 @@ public class SettingsActivity extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    private void restartActivity() {
+        Intent intent = getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        finish(); // Finish the current activity
+        startActivity(intent); // Start a new instance of the activity with updated language settings
     }
 
     @Override
