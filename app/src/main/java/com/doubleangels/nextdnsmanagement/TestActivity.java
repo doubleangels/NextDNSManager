@@ -30,6 +30,7 @@ import io.sentry.Sentry;
 
 public class TestActivity extends AppCompatActivity {
     private WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,7 @@ public class TestActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
             // Set up selected language.
-            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE,"en");
+            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE, "en");
             Sentry.setTag("locale", selectedLanguage);
             Locale appLocale;
             if (selectedLanguage.contains("pt")) {
