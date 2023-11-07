@@ -1,11 +1,15 @@
 package com.doubleangels.nextdnsmanagement.protocoltest;
 
 import android.content.Context;
+
 import com.doubleangels.nextdnsmanagement.R;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+
+import io.sentry.ITransaction;
 import io.sentry.Sentry;
 import okhttp3.Cache;
 import okhttp3.Interceptor;
@@ -49,6 +53,9 @@ public class TestClient {
 
     private static Interceptor createSentryInterceptor() {
         return chain -> {
+            // Start a Sentry transaction for monitoring
+            ITransaction createSentryInterceptorTransaction = Sentry.startTransaction("TestClient_createSentryInterceptor()", "TestClient");
+
             try {
                 // Intercept the request and capture exceptions using Sentry
                 Request request = chain.request();
@@ -61,6 +68,8 @@ public class TestClient {
                     Sentry.captureException(e); // Capture and report the exception to Sentry
                 }
                 throw e;
+            } finally {
+                createSentryInterceptorTransaction.finish();
             }
         };
     }
