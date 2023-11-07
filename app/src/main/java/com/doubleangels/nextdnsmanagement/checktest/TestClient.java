@@ -1,7 +1,13 @@
 package com.doubleangels.nextdnsmanagement.checktest;
 
 import android.content.Context;
+
 import com.doubleangels.nextdnsmanagement.R;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import io.sentry.Sentry;
 import okhttp3.Cache;
@@ -10,9 +16,6 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import java.io.File;
-import java.io.IOException;
 
 public class TestClient {
     private static volatile Retrofit retrofit;
@@ -48,7 +51,12 @@ public class TestClient {
                             Request request = chain.request();
                             return chain.proceed(request);
                         } catch (IOException e) {
-                            Sentry.captureException(e); // Capture and report the exception to Sentry
+                            if (e instanceof UnknownHostException || e instanceof SocketTimeoutException) {
+                                // If the exception is one of these types, add it as a breadcrumb so it is handled gracefully
+                                Sentry.addBreadcrumb("Unable to query NextDNS encryption protocol:" + e);
+                            } else {
+                                Sentry.captureException(e); // Capture and report the exception to Sentry
+                            }
                             throw e;
                         }
                     });
