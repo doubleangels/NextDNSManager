@@ -26,7 +26,7 @@ jobs:
       - name: Create changelog for fastlane
         run: |
           cd fastlane/metadata/android/en-US/changelogs
-          echo "$MY_ENV_VAR" > test.txt
+          echo "$TEST_CHANGELOG" > test.txt
 
       - name: Commit changelog for fastlane
         run: |
