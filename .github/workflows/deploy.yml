@@ -73,8 +73,6 @@ jobs:
 
       - name: Create release bundle
         run: ./gradlew bundleRelease
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Retrieve version name for release
         id: android_version
