@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+
 import java.util.Locale;
 import java.util.Objects;
 
@@ -28,6 +30,7 @@ import io.sentry.Sentry;
 
 public class PingActivity extends AppCompatActivity {
     private WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,7 @@ public class PingActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
             // Set up selected language.
-            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE,"en");
+            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE, "en");
             Sentry.setTag("locale", selectedLanguage);
             Locale appLocale;
             if (selectedLanguage.contains("pt")) {

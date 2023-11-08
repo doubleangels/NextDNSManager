@@ -25,6 +25,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -40,6 +42,7 @@ import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity {
     private WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
             // Set up selected language.
-            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE,"en");
+            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE, "en");
             Sentry.setTag("locale", selectedLanguage);
             Locale appLocale;
             if (selectedLanguage.contains("pt")) {
@@ -251,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupDownloadManager() {
         // Configure the WebView to handle downloads
         webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
-            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url.trim()));
             request.allowScanningByMediaScanner();
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 

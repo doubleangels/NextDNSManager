@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+
 import java.util.Locale;
 import java.util.Objects;
 
