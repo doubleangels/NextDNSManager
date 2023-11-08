@@ -39,10 +39,20 @@ jobs:
         run: |
           echo "VERSION_CODE=${{ steps.android_code.outputs.VERSION_CODE }}" >> $GITHUB_ENV
 
+      - name: Get changelog content from fastlane
+        id: read_file
+        run: |
+          file_content=$(cat whatsnew/whatsnew-en-US)
+          echo "::set-output name=file_content::$file_content"
+        shell: bash
+
+      - name: Set changelog environment variable
+        run: echo "CHANGELOG=${{ steps.read_file.outputs.file_content }}" >> $GITHUB_ENV
+
       - name: Create changelog for fastlane
         run: |
           cd fastlane/metadata/android/en-US/changelogs
-          echo "👋 Thank you for using my app! I've just updated it with bug fixes 🐞 and performance improvements 🚀. Your feedback is important, so please leave a review! 😊" > ${{ env.VERSION_CODE }}.txt
+          echo "$CHANGELOG" > ${{ env.VERSION_CODE }}.txt
 
       - name: Commit changelog for fastlane
         run: |
