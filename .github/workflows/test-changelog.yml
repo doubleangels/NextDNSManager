@@ -1,0 +1,26 @@
+name: Test changelog
+
+on:
+  push:
+    branches: ["dev"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get changelog content from fastlane
+        id: read_file
+        run: |
+          file_content=$(cat whatsnew/whatsnew-en-US)
+          echo "::set-output name=file_content::$file_content"
+        shell: bash
+
+      - name: Create changelog for fastlane
+        run: |
+          cd fastlane/metadata/android/en-US/changelogs
+          echo {{ steps.read_file.outputs.file_content }} > ${{ env.VERSION_CODE }}.txt
