@@ -1,0 +1,1 @@
+{{ steps.read_file.outputs.file_content }}
