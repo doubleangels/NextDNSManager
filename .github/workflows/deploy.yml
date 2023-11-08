@@ -43,7 +43,7 @@ jobs:
       - name: Create changelog for fastlane
         run: |
           cd fastlane/metadata/android/en-US/changelogs
-          echo "Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue." > ${{ env.VERSION_CODE }}.txt
+          echo "👋 Thank you for using my app! I've just updated it with bug fixes 🐞 and performance improvements 🚀. Your feedback is important, so please leave a review! 😊" > ${{ env.VERSION_CODE }}.txt
 
       - name: Commit changelog for fastlane
         run: |
