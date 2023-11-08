@@ -20,10 +20,13 @@ jobs:
           echo "::set-output name=file_content::$file_content"
         shell: bash
 
+      - name: Set GitHub Environment Variable
+        run: echo "TEST_CHANGELOG=${{ steps.read_file.outputs.file_content }}" >> $GITHUB_ENV
+
       - name: Create changelog for fastlane
         run: |
           cd fastlane/metadata/android/en-US/changelogs
-          echo {{ steps.read_file.outputs.file_content }} > test.txt
+          echo ${{ env.TEST_CHANGELOG }} > test.txt
 
       - name: Commit changelog for fastlane
         run: |
