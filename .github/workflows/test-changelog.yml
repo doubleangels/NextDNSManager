@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  test-changelog:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,4 +23,4 @@ jobs:
       - name: Create changelog for fastlane
         run: |
           cd fastlane/metadata/android/en-US/changelogs
-          echo {{ steps.read_file.outputs.file_content }}
+          echo {{ steps.read_file.outputs.file_content }} > test.txt
