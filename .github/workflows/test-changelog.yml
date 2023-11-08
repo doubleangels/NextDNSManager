@@ -24,3 +24,12 @@ jobs:
         run: |
           cd fastlane/metadata/android/en-US/changelogs
           echo {{ steps.read_file.outputs.file_content }} > test.txt
+
+      - name: Commit changelog for fastlane
+        run: |
+          git config --global user.email "no-reply@github.com"
+          git config --global user.name "GitHub Actions"
+          git add fastlane/metadata/android/en-US/changelogs/test.txt
+          git commit -m "Add changelog test"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push
