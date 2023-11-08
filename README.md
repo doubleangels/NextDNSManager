@@ -45,6 +45,21 @@ NextDNS Manager is an Android application that simplifies the management of your
 
 # Installation
 
+## Which installation method should I use?
+
+It depends on your privacy preferences and how often you wish to recieve updates.
+
+- If you are able to use Google Play, use it.
+- If you're not able to use Google Play, sideloading an APK from this repository or installing from the IzzyOnDroid repo are your next best options.
+
+For each build ("version") of the app, there are timelines for when the build will be available, so methods with longer timelines will result in longer wait times for updates.
+
+|                  | Google Play   | Sideloaded APK | IzzyOnDroid | F-Droid       |
+| ---------------- | ------------- | -------------- | ----------- | ------------- |
+| **Availability** | A few minutes | A few minutes  | About a day | Up to 14 days |
+
+F-Droid takes much longer than any of the other methods because they have a human involved in the process, each app is signed by a human on a computer that is airgapped (not connected to the internet).
+
 ## Google Play Store
 
 NextDNS Manager is available on the Google Play Store [here](https://play.google.com/store/apps/details?id=com.doubleangels.nextdnsmanagement).
