@@ -23,12 +23,14 @@ jobs:
         uses: actions/cache@v2
         with:
           path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
+            ~/.gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build release build with Gradle
+      - name: Build release APK with Gradle
         run: ./gradlew assembleRelease
+
+      - name: Build release bundle with Gradle
+        run: ./gradlew bundleRelease
