@@ -5,9 +5,11 @@ import android.content.Context;
 import com.doubleangels.nextdnsmanagement.R;
 
 import java.io.File;
-import java.io.IOException;
+import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLHandshakeException;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
@@ -60,8 +62,8 @@ public class TestClient {
                 // Intercept the request and capture exceptions using Sentry
                 Request request = chain.request();
                 return chain.proceed(request);
-            } catch (IOException e) {
-                if (e instanceof UnknownHostException || e instanceof SocketTimeoutException) {
+            } catch (Exception e) {
+                if (e instanceof UnknownHostException || e instanceof SocketTimeoutException || e instanceof SSLHandshakeException || e instanceof SocketException) {
                     // If the exception is one of these types, add it as a breadcrumb
                     Sentry.addBreadcrumb("Unable to query NextDNS encryption protocol: " + e);
                 } else {
