@@ -6,10 +6,6 @@
 
   <string name="author">Autore</string>
 
-  <string name="author_name" translatable="false">DoubleAngels</string>
-
-  <string name="author_url" translatable="false">https://doubleangels.com</string>
-
   <string name="back_title">Indietro</string>
 
   <string name="dark_mode_header">Modalità scura</string>
@@ -58,10 +54,6 @@
 
   <string name="main_url">https://my.nextdns.io/</string>
 
-  <string name="nextdns_protocol">protocol</string>
-
-  <string name="nextdns_status">status</string>
-
   <string name="other">Altro</string>
 
   <string name="ping_disabled">Questa azione non è al momento disponibile.</string>
@@ -96,9 +88,7 @@
 
   <string name="test_url">https://test.nextdns.io</string>
 
-  <string name="using_nextdns_status">OK</string>
-
-  <string name="version">Versione</string>
+    <string name="version">Versione</string>
 
   <string name="whitelist">Lista bianca</string>
 
