@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-dev:
+  build-debug:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,10 +30,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build release APK with Gradle
+      - name: Build debug APK with Gradle
         run: ./gradlew assembleDebug
 
-      - name: Build release bundle with Gradle
+      - name: Build debug bundle with Gradle
         run: ./gradlew bundleDebug
 
   build-release:
