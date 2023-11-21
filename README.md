@@ -1,7 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/github/release/doubleangels/NextDNSManager.svg?logo=github&label=GitHub%20Build&style=for-the-badge" alt="Github Build">
   <img src="https://img.shields.io/f-droid/v/com.doubleangels.nextdnsmanagement.svg?logo=F-Droid&label=F-Droid%20Build&style=for-the-badge" alt="F-Droid Build">
-  <img src="https://img.shields.io/endpoint?url=https://apt.izzysoft.de/fdroid/api/v1/shield/com.doubleangels.nextdnsmanagement&style=for-the-badge" alt="Izzy on Droid">
   <img src="https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/deploy.yml?label=Deployment%20Pipeline&style=for-the-badge" alt="Main Deployment">
   <img src="https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/test-dev.yml?label=Development%20Testing&style=for-the-badge" alt="Development Testing">
   <img src="https://img.shields.io/librariesio/github/doubleangels/NextDNSManager?label=Dependencies&style=for-the-badge" alt="Dependencies">
@@ -15,9 +14,6 @@
   </a>
   <a href="https://f-droid.org/en/packages/com.doubleangels.nextdnsmanagement">
     <img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="F-Droid">
-  </a>
-  <a href="https://apt.izzysoft.de/packages/com.doubleangels.nextdnsmanagement/">
-    <img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png" alt="IzzySoft">
   </a>
 </p>
 
@@ -50,13 +46,13 @@ NextDNS Manager is an Android application that simplifies the management of your
 It depends on your privacy preferences and how often you wish to recieve updates.
 
 - If you are able to use Google Play, use it.
-- If you're not able to use Google Play, sideloading an APK from this repository or installing from the IzzyOnDroid repo are your next best options.
+- If you're not able to use Google Play, sideloading an APK from this repository is your next best option.
 
 For each build ("version") of the app, there are timelines for when the build will be available, so methods with longer timelines will result in longer wait times for updates.
 
-|                  | Google Play   | Sideloaded APK | IzzyOnDroid | F-Droid       |
-| ---------------- | ------------- | -------------- | ----------- | ------------- |
-| **Availability** | A few minutes | A few minutes  | About a day | Up to 14 days |
+|                  | Google Play   | Sideloaded APK | F-Droid       |
+| ---------------- | ------------- | -------------- | ------------- |
+| **Availability** | A few minutes | A few minutes  | Up to 14 days |
 
 F-Droid takes much longer than any of the other methods because they have a human involved in the process, each app is signed by a human on a computer that is airgapped (not connected to the internet).
 
@@ -67,7 +63,6 @@ NextDNS Manager is available on the Google Play Store [here](https://play.google
 ## F-Droid Installation
 
 NextDNS Manager is available on F-Droid [here](https://f-droid.org/en/packages/com.doubleangels.nextdnsmanagement).
-It's also available on the `https://apt.izzysoft.de/fdroid/repo` repo, maintained by [@IzzySoft](https://github.com/IzzySoft).
 
 ## Manual Installation
 
