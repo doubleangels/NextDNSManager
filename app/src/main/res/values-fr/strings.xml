@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><resources>
 
-  <string name="app_name">SuivantGestionnaire DNS</string>
+  <string name="app_name">NextDNS Manager</string>
 
-  <string name="application_name">SuivantGestionnaire DNS</string>
+  <string name="application_name">NextDNS Manager</string>
 
   <string name="author">Auteur</string>
 
@@ -44,7 +44,7 @@
 
   <string name="help_yellow">Un DNS sécurisé est utilisé mais l\'appareil n\'est PAS connecté à NextDNS.</string>
 
-  <string name="home_title">Maison</string>
+  <string name="home_title">Accueil</string>
 
   <string name="language">Langue</string>
 
