@@ -9,8 +9,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdk 34
-        versionCode 190
-        versionName '4.8.2'
+        versionCode 191
+        versionName '4.8.3'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
@@ -61,7 +61,6 @@ sentry {
     authToken = System.getenv("SENTRY_AUTH_TOKEN")
     includeProguardMapping = true
     autoUploadProguardMapping = true
-    experimentalGuardsquareSupport = true
     uploadNativeSymbols = true
     autoUploadNativeSymbols = true
     includeNativeSources = true
