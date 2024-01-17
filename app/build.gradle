@@ -52,7 +52,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'io.sentry:sentry-android:7.2.0'
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.22'))
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
 }
