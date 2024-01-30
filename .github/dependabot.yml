@@ -13,7 +13,7 @@ updates:
   commit-message:
     prefix: "[Gradle]"
   reviewers:
-    - 'doubleangels"
+    - "doubleangels"
 
 - package-ecosystem: github-actions
   directory: "/"
