@@ -10,3 +10,16 @@ updates:
   schedule:
     interval: daily
   target-branch: "dev"
+  commit-message:
+    prefix: "[Gradle]"
+  reviewers:
+    - "doubleangels"
+
+- package-ecosystem: github-actions
+  directory: "/"
+  schedule:
+    interval: weekly
+  commit-message:
+    prefix: "[Github Actions]"
+  reviewers:
+    - "doubleangels"
