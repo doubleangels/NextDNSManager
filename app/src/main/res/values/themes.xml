@@ -7,6 +7,7 @@
         <item name="android:statusBarColor">@color/accent1</item>
         <item name="android:navigationBarColor">@color/accent1</item>
         <item name="android:textColorSecondary">@color/black</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name= "windowNoTitle">true</item>
         <item name="popupTheme">@style/AppTheme.PopupOverlay</item>
     </style>
