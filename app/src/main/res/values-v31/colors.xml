@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="accent1">@android:color/system_accent1_300</color>
+    <color name="accent1_dark">@android:color/system_accent1_600</color>
+    <color name="accent2">@android:color/system_accent2_300</color>
+    <color name="accent2_dark">@android:color/system_accent2_600</color>
+    <color name="accent3">@android:color/system_accent3_300</color>
+    <color name="accent3_dark">@android:color/system_accent3_600</color>
+</resources>

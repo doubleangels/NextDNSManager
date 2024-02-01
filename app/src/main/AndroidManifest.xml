@@ -21,7 +21,8 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:label="@string/settings_activity_title" />
+            android:label="@string/settings_activity_title"
+            android:theme="@style/PreferenceTheme"/>
         <activity
             android:name=".PingActivity"
             android:exported="false" />
