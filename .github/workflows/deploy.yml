@@ -97,7 +97,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: apk
-          path: app/build/outputs/apk/release/app-release-unsigned-signed.apk
+          path: apk/
 
       - name: Create Github release
         id: create_release
