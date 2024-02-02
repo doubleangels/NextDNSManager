@@ -21,6 +21,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -110,8 +111,14 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
         private final Preference.OnPreferenceChangeListener languageChangeListener = (preference, newValue) -> {
-            // Handle language change, e.g., restarting the activity
+            // Handle preference change
             ((SettingsActivity) requireActivity()).restartActivity();
+            return true;
+        };
+
+        private final Preference.OnPreferenceChangeListener darkModeChangeListener = (preference, newValue) -> {
+            // Handle preference change
+            ((SettingsActivity) requireActivity()).restartApp();
             return true;
         };
 
@@ -119,11 +126,9 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-            // Set up the language preference change listener
-            Preference languagePreference = findPreference(SELECTED_LANGUAGE);
-            if (languagePreference != null) {
-                languagePreference.setOnPreferenceChangeListener(languageChangeListener);
-            }
+            // Set up the preference change listener
+            setUpPreferenceChangeListener(SELECTED_LANGUAGE, languageChangeListener);
+            setUpPreferenceChangeListener(DARK_MODE, darkModeChangeListener);
 
             // Set up buttons
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
@@ -137,6 +142,13 @@ public class SettingsActivity extends AppCompatActivity {
             Preference versionPreference = findPreference("version");
             if (versionPreference != null) {
                 versionPreference.setSummary(versionName);
+            }
+        }
+
+        private void setUpPreferenceChangeListener(String key, Preference.OnPreferenceChangeListener listener) {
+            Preference preference = findPreference(key);
+            if (preference != null) {
+                preference.setOnPreferenceChangeListener(listener);
             }
         }
 
@@ -171,6 +183,10 @@ public class SettingsActivity extends AppCompatActivity {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         finish(); // Finish the current activity
         startActivity(intent); // Start a new instance of the activity with updated language settings
+    }
+
+    private void restartApp() {
+        ProcessPhoenix.triggerRebirth(this);
     }
 
     @Override
