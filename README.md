@@ -19,7 +19,7 @@
 </p>
 
 <p align="center"> 
-  <img src="screenshot.jpeg" alt="Screenshot">
+  <img src="fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" alt="Screenshot">
 </p>
 
 # About
