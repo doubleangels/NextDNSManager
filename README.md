@@ -32,7 +32,7 @@ NextDNS Manager can be installed on any Android phone or tablet running Android 
 
 # Features:
 
-- **Intuitive Interface**: NextDNS Manager provides a user-friendly interface that allows you to manage your NextDNS settings with ease.
+- **Intuitive Interface**: NextDNS Manager provides a user-friendly interface that allows you to manage your NextDNS settings with ease. The interface also includes Material You styling, as well as a dynamic/themed icon.
 
 - **Configuration Management**: You can configure your NextDNS settings, including filtering modes, blocklists, and whitelists.
 
