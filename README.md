@@ -9,6 +9,7 @@
 </p>
 
 <p align="center">
+  <img src="icons/web/icon-192.png" alt="Icon">
   <a href="https://play.google.com/store/apps/details?id=com.doubleangels.nextdnsmanagement">
     <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Google Play">
   </a>
@@ -17,7 +18,7 @@
   </a>
 </p>
 
-<p align="center">
+<p align="center"> 
   <img src="screenshot.jpeg" alt="Screenshot">
 </p>
 
