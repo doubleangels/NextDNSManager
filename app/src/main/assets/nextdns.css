@@ -308,6 +308,10 @@ div.mt-3>div.mb-2.mt-1.card>div>div.px-3.py-2.d-flex {
     background-color: transparent !important;
 }
 
+#root > div > div > div > div.card, #root > div.mt-4.Setup > div > div:nth-child(1) > div > div, #root > div.mt-4 > div > div:nth-child(1) > div > div, #root > div.mt-4 > div > div:nth-child(2) > div > div, #root > div.mt-4 > div > div:nth-child(3) > div > div, #root > div.mt-4 > div > div:nth-child(4) > div > div, #root > div.mt-4 > div > div:nth-child(5) > div > div, #root > div.mt-4 > div > div:nth-child(6) > div > div, #root > div.mt-4 > div > div:nth-child(7) > div > div, #root > div.mt-4 > div > div:nth-child(8) > div > div, #root > div.mt-4 > div > div:nth-child(9) > div > div, #root > div.mt-4 > div > div:nth-child(10) > div > div, #root > div.mt-4 > div > div:nth-child(11) > div > div, #root > div.mt-4 > div > div:nth-child(12) > div > div, #root > div.mt-4 > div > div:nth-child(13) > div > div {
+	background: #2d2d2d;
+}
+
 /* END Custom Dark Mode CSS */
 
 /*!* Bootstrap v4.6.0 (https://getbootstrap.com/)
@@ -11833,7 +11837,7 @@ body {
 }
 
 .list-group-flush>.list-group-item:last-child {
-    background: #1D1D20 !important;
+    background: #2d2d2d !important;
 }
 
 a {
@@ -11850,20 +11854,20 @@ a:hover {
 }
 
 .Header {
-    background: #1d1d20;
+    background: #2d2d2d;
     border-bottom: 1px solid #262626;
 }
 
 .nav-tabs {
     background: #1f1f22 !important;
-    border-bottom: 1px solid #1D1D20;
+    border-bottom: 1px solid #2d2d2d;
 }
 
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
     color: #fff;
     background-color: #3d3d3f;
-    border-color: #1d1d20 #1d1d20 #1d1d20;
+    border-color: #2d2d2d #2d2d2d #2d2d2d;
 }
 
 .nav-tabs .nav-link:focus,
@@ -11895,7 +11899,7 @@ a:hover {
 .btn-light:not(:disabled):not(.disabled):active,
 .show>.btn-light.dropdown-toggle {
     color: #fff;
-    background-color: #1D1D20;
+    background-color: #2d2d2d;
     border-color: #3d3d3f;
 }
 
@@ -11903,14 +11907,14 @@ a:hover {
 .btn-light:focus,
 .btn-light:hover {
     color: #fff;
-    background-color: #1D1D20;
+    background-color: #2d2d2d;
     border-color: #3d3d3f;
 }
 
 .btn-light.disabled,
 .btn-light:disabled {
     color: #8e8e8f;
-    background-color: #1d1d20;
+    background-color: #2d2d2d;
     border-color: #161616;
 }
 
@@ -12060,7 +12064,7 @@ a.text-primary:hover {
 
 .close {
     color: #fff;
-    text-shadow: 0 1px 0 #1D1D20;
+    text-shadow: 0 1px 0 #2d2d2d;
 }
 
 .close:hover {
@@ -12087,7 +12091,7 @@ a.text-primary:hover {
 }
 
 .modal-header {
-    background: #1D1D20;
+    background: #2d2d2d;
     border-bottom: 1px solid #29292d;
 }
 
@@ -12107,7 +12111,7 @@ small {
 
 .form-control:focus {
     color: #fff;
-    background-color: #1D1D20;
+    background-color: #2d2d2d;
     border-color: #161616;
     outline: 0;
     box-shadow: 0 0 0 .1rem rgb(37 37 40);
@@ -12119,17 +12123,17 @@ small {
 }
 
 .planCard {
-    background: #1D1D20;
+    background: #2d2d2d;
     border: 2px solid #1d1d1d;
 }
 
 .planCard:not(.selected):hover {
-    background: #1D1D20bf;
-    border-color: #1D1D20;
+    background: #2d2d2dbf;
+    border-color: #2d2d2d;
 }
 
 .custom-select {
-    background-color: #1D1D20;
+    background-color: #2d2d2d;
     color: #fff;
     border: 1px solid #2f2f33;
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc0JyBoZWlnaHQ9JzUnPjxwYXRoIGZpbGw9JyNmZmZmZmYnIGQ9J00yIDBMMCAyaDR6bTAgNUwwIDNoNHonLz48L3N2Zz4=);
@@ -12142,7 +12146,7 @@ small {
 }
 
 .modal-footer {
-    background: #1D1D20;
+    background: #2d2d2d;
     border: none;
 }
 
@@ -12152,7 +12156,7 @@ small {
 
 .card>.list-group list-group-flush>.px-3,
 .list-group-item {
-    background: #1d1d20 !important;
+    background: #2d2d2d !important;
 }
 
 img.mr-2[src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAABoUlEQVR42q2VzUvDQBDFf2lAQmsPYr0ZyKVQEfxAiGlosbgnD/WiLATBQ8Cih4Ta/f/BQzdtstkkRd25NX1vZt58ge31CBBIUjIyUiSCgB4HvQGCDGWxDMGgHewSk1vBheXEuM2+k90fv5GETPDxueC5QpLY4xix2oUa4ZW+eHwacawY1b0X8CV949vYksqqGoWrg98wxTFUOePJqkZS1iLWP04N37esWwSN9+HnOviq9+vWeijyIg2hpTNzf+8gUIht123bJjLg/U64IqMHga67ZxAcH0CgCIoEZK0vhgcRCJAoFGFrix81EkhIUSgmHSP20UCQoiX0OwjuatBXLaN1dNd88caC0x2Bg+C7NGoz/IIgbZFow6LUXCdcMeeBG4bApEhBdugcNyQVFiKKDoJ1rUO2TxZlDDprfWmBe1qRYN/KzTazEET7Vu5O4rEG72unojrOTTY34A7L6jjvF0rZmt+0Xh+3tI/bCRymbOorrbxU2wj6OvjaUq2udTuBR7Srl2Wtm4dF8cI9Y87xmRAiS5OQNB+4P562fziuvzjvP16N8c4rUVRTAAAAAElFTkSuQmCC'] {
@@ -12211,7 +12215,7 @@ span.d-inline-block>.btn-outline-primary {
 }
 
 .progress {
-    background-color: #1D1D20 !important;
+    background-color: #2d2d2d !important;
 }
 
 .progress-bar {
@@ -12239,4 +12243,8 @@ img[src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAC2CAYAAAAFt/MHAAAVr
 .injected-svg {
     fill: #fff;
     color: #fff;
+}
+
+div.mt-2.mb-4.text-center img {
+    background: #ffffff;
 }
