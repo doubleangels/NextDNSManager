@@ -23,6 +23,7 @@ import androidx.preference.PreferenceFragmentCompat;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
+import java.io.File;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -185,7 +186,34 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent); // Start a new instance of the activity with updated language settings
     }
 
+    public static void deleteCache(Context context) {
+        try {
+            File directory = context.getCacheDir();
+            deleteDir(directory);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
+    }
+    public static boolean deleteDir(File directory) {
+        if (directory != null && directory.isDirectory()) {
+            String[] children = directory.list();
+            assert children != null;
+            for (String child : children) {
+                boolean success = deleteDir(new File(directory, child));
+                if (!success) {
+                    return false;
+                }
+            }
+            return directory.delete();
+        } else if(directory!= null && directory.isFile()) {
+            return directory.delete();
+        } else {
+            return false;
+        }
+    }
+
     private void restartApp() {
+        deleteCache(this);
         ProcessPhoenix.triggerRebirth(this);
     }
 
