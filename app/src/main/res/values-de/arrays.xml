@@ -1,23 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<resources>      
-  <string-array name="language_entries">
-    <item>Englisch</item>
-    <item>Deutsch</item>
-    <item>Spanisch</item>
-    <item>Französisch</item>
-    <item>Italienisch</item>
-    <item>Japanisch</item>
-    <item>Portugiesisch</item>
-    <item>Chinesisch</item>
-  </string-array>
-  <string-array name="language_values">
-      <item>en</item>
-      <item>de</item>
-      <item>es</item>
-      <item>fr</item>
-      <item>it</item>
-      <item>ja</item>
-      <item>pt</item>
-      <item>zh</item>
-  </string-array>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="language_entries">
+        <item>Chinesisch (vereinfacht)</item>
+        <item>Holländisch</item>
+        <item>Englisch</item>
+        <item>finnisch</item>
+        <item>Französisch</item>
+        <item>Deutsch</item>
+        <item>Indonesisch</item>
+        <item>Italienisch</item>
+        <item>japanisch</item>
+        <item>polnisch</item>
+        <item>portugiesisch</item>
+        <item>Spanisch</item>
+        <item>schwedisch</item>
+        <item>türkisch</item>
+    </string-array>
 </resources>

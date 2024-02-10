@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="author_name">DoubleAngels</string>
+    <string name="author_url">https://doubleangels.com</string>
+    <string name="donation_link">https://donate.stripe.com/4gw8yhbvH0mg6SQ7ss</string>
+    <string name="github_url">https://github.com/doubleangels/NextDNSManager</string>
+    <string name="main_url">https://my.nextdns.io/</string>
+    <string name="nextdns_protocol">protokol</string>
+    <string name="nextdns_status">status</string>
+    <string name="ping_url">https://ping.nextdns.io</string>
+    <string name="privacy_policy_url">https://doubleangels.github.io/privacyPolicy/nextdns.html</string>
+    <string name="test_url">https://test.nextdns.io</string>
+    <string name="using_nextdns_status">BAIK</string>
+    <string name="whitelist_domain_1">*.o244019.sentry.io</string>
+    <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
+    <string-array name="language_values">
+        <item>dari</item>
+        <item>en</item>
+        <item>es</item>
+        <item>fi</item>
+        <item>fr</item>
+        <item>id</item>
+        <item>ia</item>
+        <item>ja</item>
+        <item>nl</item>
+        <item>pl</item>
+        <item>pt</item>
+        <item>sv</item>
+        <item>tr</item>
+        <item>zh</item>
+    </string-array>
+</resources>

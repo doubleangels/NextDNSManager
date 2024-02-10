@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="secure_protocols">
+        <item>DOH</item>
+        <item>PUNTINO</item>
+        <item>DOQ</item>
+    </string-array>
+</resources>

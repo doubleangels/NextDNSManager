@@ -30,7 +30,6 @@ import io.sentry.Sentry;
 
 public class PingActivity extends AppCompatActivity {
     private WebView webView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,30 +48,16 @@ public class PingActivity extends AppCompatActivity {
             // Set up selected language.
             String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE, "en");
             Sentry.setTag("locale", selectedLanguage);
-            Locale appLocale;
-            if (selectedLanguage.contains("pt")) {
-                appLocale = new Locale(selectedLanguage, "BR");
-            } else if (selectedLanguage.contains("zh")) {
-                appLocale = new Locale(selectedLanguage, "HANS");
-            } else {
-                appLocale = new Locale(selectedLanguage);
-            }
+            Locale appLocale = determineLocale(selectedLanguage);
             Locale.setDefault(appLocale);
             Configuration appConfig = new Configuration();
             appConfig.locale = appLocale;
             getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
 
             // Load user's preference for dark mode and set it
-            boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
-            if (darkMode) {
-                Sentry.setTag("dark_mode", "yes");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                Sentry.setTag("dark_mode", "no");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-            setVisualIndicator(); // Set the visual connection status indicator
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 
+            setupVisualIndicator(); // Set the visual connection status indicator
             setClickListeners(); // Set click listeners for the status icon
             provisionWebView(getString(R.string.ping_url)); // Load a web page in the WebView
         } catch (Exception e) {
@@ -82,7 +67,21 @@ public class PingActivity extends AppCompatActivity {
         }
     }
 
-    private void setVisualIndicator() {
+    private Locale determineLocale(String selectedLanguage) {
+        if (selectedLanguage.contains("es")) {
+            return new Locale(selectedLanguage, "ES");
+        } else if (selectedLanguage.contains("zh")) {
+            return new Locale(selectedLanguage, "HANS");
+        } else if (selectedLanguage.contains("pt")) {
+            return new Locale(selectedLanguage, "BR");
+        }else if (selectedLanguage.contains("sv")) {
+            return new Locale(selectedLanguage, "SE");
+        } else {
+            return new Locale(selectedLanguage);
+        }
+    }
+
+    private void setupVisualIndicator() {
         try {
             VisualIndicator visualIndicator = new VisualIndicator();
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());

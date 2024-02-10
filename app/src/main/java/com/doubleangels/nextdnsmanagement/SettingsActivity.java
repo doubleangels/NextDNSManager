@@ -21,9 +21,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
-import com.jakewharton.processphoenix.ProcessPhoenix;
 
-import java.io.File;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -31,7 +29,6 @@ import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class SettingsActivity extends AppCompatActivity {
-    public static final String DARK_MODE = "dark_mode";
     public static final String SELECTED_LANGUAGE = "selected_language";
 
     @Override
@@ -58,11 +55,11 @@ public class SettingsActivity extends AppCompatActivity {
         // Set up shared preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        // Apply dark mode.
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+
         // Set up selected language.
         setupSelectedLanguage(sharedPreferences);
-
-        // Load user's preference for dark mode and set it
-        setupDarkMode(sharedPreferences);
 
         initializeViews(); // Initialize the views for the settings
         setVisualIndicator(); // Set the visual connection status indicator
@@ -79,19 +76,17 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private Locale determineLocale(String selectedLanguage) {
-        if (selectedLanguage.contains("pt")) {
-            return new Locale(selectedLanguage, "BR");
+        if (selectedLanguage.contains("es")) {
+            return new Locale(selectedLanguage, "ES");
         } else if (selectedLanguage.contains("zh")) {
             return new Locale(selectedLanguage, "HANS");
+        } else if (selectedLanguage.contains("pt")) {
+            return new Locale(selectedLanguage, "BR");
+        }else if (selectedLanguage.contains("sv")) {
+            return new Locale(selectedLanguage, "SE");
         } else {
             return new Locale(selectedLanguage);
         }
-    }
-
-    private void setupDarkMode(SharedPreferences sharedPreferences) {
-        boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
-        Sentry.setTag("dark_mode", darkMode ? "yes" : "no");
-        AppCompatDelegate.setDefaultNightMode(darkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     private void initializeViews() {
@@ -110,6 +105,13 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    private void restartActivity() {
+        Intent intent = getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        finish(); // Finish the current activity
+        startActivity(intent); // Start a new instance of the activity with updated language settings
+    }
+
     public static class SettingsFragment extends PreferenceFragmentCompat {
         private final Preference.OnPreferenceChangeListener languageChangeListener = (preference, newValue) -> {
             // Handle preference change
@@ -117,41 +119,6 @@ public class SettingsActivity extends AppCompatActivity {
             return true;
         };
 
-        private final Preference.OnPreferenceChangeListener darkModeChangeListener = (preference, newValue) -> {
-            // Handle preference change
-            ((SettingsActivity) requireActivity()).restartApp();
-            return true;
-        };
-
-        @Override
-        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
-            // Set up the preference change listener
-            setUpPreferenceChangeListener(SELECTED_LANGUAGE, languageChangeListener);
-            setUpPreferenceChangeListener(DARK_MODE, darkModeChangeListener);
-
-            // Set up buttons
-            setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
-            setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
-            setupButton("privacy_policy_button", R.string.privacy_policy_url);
-            setupButton("author_button", R.string.author_url);
-            setupButton("github_button", R.string.github_url);
-            setupButton("donation_button", R.string.donation_link);
-
-            String versionName = BuildConfig.VERSION_NAME;
-            Preference versionPreference = findPreference("version");
-            if (versionPreference != null) {
-                versionPreference.setSummary(versionName);
-            }
-        }
-
-        private void setUpPreferenceChangeListener(String key, Preference.OnPreferenceChangeListener listener) {
-            Preference preference = findPreference(key);
-            if (preference != null) {
-                preference.setOnPreferenceChangeListener(listener);
-            }
-        }
 
         private void setupButton(String buttonKey, int textResource) {
             Preference button = findPreference(buttonKey);
@@ -177,46 +144,36 @@ public class SettingsActivity extends AppCompatActivity {
                 });
             }
         }
-    }
 
-    private void restartActivity() {
-        Intent intent = getIntent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        finish(); // Finish the current activity
-        startActivity(intent); // Start a new instance of the activity with updated language settings
-    }
+        @Override
+        public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            setPreferencesFromResource(R.xml.root_preferences, rootKey);
 
-    public static void deleteCache(Context context) {
-        try {
-            File directory = context.getCacheDir();
-            deleteDir(directory);
-        } catch (Exception e) {
-            Sentry.captureException(e);
-        }
-    }
-    public static boolean deleteDir(File directory) {
-        if (directory != null && directory.isDirectory()) {
-            String[] children = directory.list();
-            assert children != null;
-            for (String child : children) {
-                boolean success = deleteDir(new File(directory, child));
-                if (!success) {
-                    return false;
-                }
+            // Set up the preference change listener
+            setUpPreferenceChangeListener(languageChangeListener);
+
+            // Set up buttons
+            setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
+            setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
+            setupButton("privacy_policy_button", R.string.privacy_policy_url);
+            setupButton("author_button", R.string.author_url);
+            setupButton("github_button", R.string.github_url);
+            setupButton("donation_button", R.string.donation_link);
+
+            String versionName = BuildConfig.VERSION_NAME;
+            Preference versionPreference = findPreference("version");
+            if (versionPreference != null) {
+                versionPreference.setSummary(versionName);
             }
-            return directory.delete();
-        } else if(directory!= null && directory.isFile()) {
-            return directory.delete();
-        } else {
-            return false;
         }
-    }
+        private void setUpPreferenceChangeListener(Preference.OnPreferenceChangeListener listener) {
+            Preference preference = findPreference(SettingsActivity.SELECTED_LANGUAGE);
+            if (preference != null) {
+                preference.setOnPreferenceChangeListener(listener);
+            }
+        }
 
-    private void restartApp() {
-        deleteCache(this);
-        ProcessPhoenix.triggerRebirth(this);
     }
-
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         // Inflate the menu for the activity

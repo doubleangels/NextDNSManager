@@ -38,35 +38,37 @@ public class StatusActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
             // Set up selected language.
-            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE,"en");
+            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE, "en");
             Sentry.setTag("locale", selectedLanguage);
-            Locale appLocale;
-            if (selectedLanguage.contains("pt")) {
-                appLocale = new Locale(selectedLanguage, "BR");
-            } else if (selectedLanguage.contains("zh")) {
-                appLocale = new Locale(selectedLanguage, "HANS");
-            } else {
-                appLocale = new Locale(selectedLanguage);
-            }
+            Locale appLocale = determineLocale(selectedLanguage);
             Locale.setDefault(appLocale);
             Configuration appConfig = new Configuration();
             appConfig.locale = appLocale;
             getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
 
             // Load user's preference for dark mode and set it
-            boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
-            if (darkMode) {
-                Sentry.setTag("dark_mode", "yes");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                Sentry.setTag("dark_mode", "no");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+            int systemDarkMode = AppCompatDelegate.getDefaultNightMode();
+            Sentry.setTag("dark_mode", systemDarkMode == AppCompatDelegate.MODE_NIGHT_YES ? "yes" : "no");
+            AppCompatDelegate.setDefaultNightMode(systemDarkMode);
             setVisualIndicator(); // Set the visual connection status indicator
         } catch (Exception e) {
             Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
             helpCreateTransaction.finish(); // Finish the transaction
+        }
+    }
+
+    private Locale determineLocale(String selectedLanguage) {
+        if (selectedLanguage.contains("es")) {
+            return new Locale(selectedLanguage, "ES");
+        } else if (selectedLanguage.contains("zh")) {
+            return new Locale(selectedLanguage, "HANS");
+        } else if (selectedLanguage.contains("pt")) {
+            return new Locale(selectedLanguage, "BR");
+        }else if (selectedLanguage.contains("sv")) {
+            return new Locale(selectedLanguage, "SE");
+        } else {
+            return new Locale(selectedLanguage);
         }
     }
 
