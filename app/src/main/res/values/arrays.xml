@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="language_entries">
-        <item>Chinese (Simplified)</item>
-        <item>Dutch</item>
-        <item>English</item>
-        <item>Finnish</item>
-        <item>French</item>
-        <item>German</item>
-        <item>Indonesian</item>
-        <item>Italian</item>
-        <item>Japanese</item>
-        <item>Polish</item>
-        <item>Portuguese</item>
-        <item>Spanish</item>
-        <item>Swedish</item>
-        <item>Turkish</item>
-    </string-array>
+  <string-array name="language_entries">
+    <item>Chinese (Simplified)</item>
+    <item>Dutch</item>
+    <item>English</item>
+    <item>Finnish</item>
+    <item>French</item>
+    <item>German</item>
+    <item>Indonesian</item>
+    <item>Italian</item>
+    <item>Japanese</item>
+    <item>Polish</item>
+    <item>Portuguese</item>
+    <item>Spanish</item>
+    <item>Swedish</item>
+    <item>Turkish</item>
+  </string-array>
 </resources>

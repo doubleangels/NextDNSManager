@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="language_entries">
-        <item>Çince (Basitleştirilmiş)</item>
-        <item>Hollandalı</item>
-        <item>İngilizce</item>
-        <item>Fin</item>
-        <item>Fransızca</item>
-        <item>Alman</item>
-        <item>Endonezyalı</item>
-        <item>İtalyan</item>
-        <item>Japon</item>
-        <item>Lehçe</item>
-        <item>Portekiz\'li</item>
-        <item>İspanyol</item>
-        <item>İsveçli</item>
-        <item>Türk</item>
-    </string-array>
+  <string-array name="language_entries">
+    <item>Çince (Basitleştirilmiş)</item>
+    <item>Hollandalı</item>
+    <item>İngilizce</item>
+    <item>Fin</item>
+    <item>Fransızca</item>
+    <item>Alman</item>
+    <item>Endonezyalı</item>
+    <item>İtalyan</item>
+    <item>Japon</item>
+    <item>Lehçe</item>
+    <item>Portekiz\'li</item>
+    <item>İspanyol</item>
+    <item>İsveçli</item>
+    <item>Türk</item>
+  </string-array>
 </resources>

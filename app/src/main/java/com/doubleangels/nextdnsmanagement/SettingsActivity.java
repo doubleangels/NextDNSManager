@@ -158,7 +158,8 @@ public class SettingsActivity extends AppCompatActivity {
             setupButton("privacy_policy_button", R.string.privacy_policy_url);
             setupButton("author_button", R.string.author_url);
             setupButton("github_button", R.string.github_url);
-            setupButton("donation_button", R.string.donation_link);
+            setupButton("donation_button", R.string.donation_url);
+            setupButton("translate_button", R.string.translate_url);
 
             String versionName = BuildConfig.VERSION_NAME;
             Preference versionPreference = findPreference("version");

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="language_entries">
-        <item>Kinesiska (förenklad)</item>
-        <item>holländska</item>
-        <item>Engelska</item>
-        <item>finsk</item>
-        <item>Fransk</item>
-        <item>tysk</item>
-        <item>Indonesiska</item>
-        <item>italienska</item>
-        <item>Japanska</item>
-        <item>Polska</item>
-        <item>portugisiska</item>
-        <item>spansk</item>
-        <item>svenska</item>
-        <item>turkiska</item>
-    </string-array>
+  <string-array name="language_entries">
+    <item>Kinesiska (Förenklad)</item>
+    <item>Holländska</item>
+    <item>Engelska</item>
+    <item>Finsk</item>
+    <item>Fransk</item>
+    <item>Tysk</item>
+    <item>Indonesiska</item>
+    <item>Italienska</item>
+    <item>Japanska</item>
+    <item>Polska</item>
+    <item>Portugisiska</item>
+    <item>Spansk</item>
+    <item>Svenska</item>
+    <item>Turkiska</item>
+  </string-array>
 </resources>

@@ -49,6 +49,14 @@
     </PreferenceCategory>
     <PreferenceCategory
         app:selectable="false"
+        app:title="@string/translate">
+        <Preference
+            app:key="translate_button"
+            app:summary="@string/translate_summary"
+            app:title="@string/translate_title" />/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:selectable="false"
         app:title="@string/other">
         <Preference
             app:selectable="false"

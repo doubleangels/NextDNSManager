@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="language_entries">
-        <item>Mandarin (Sederhana)</item>
-        <item>Belanda</item>
-        <item>Inggris</item>
-        <item>orang Finlandia</item>
-        <item>Prancis</item>
-        <item>orang Jerman</item>
-        <item>orang Indonesia</item>
-        <item>Italia</item>
-        <item>Orang Jepang</item>
-        <item>bahasa Polandia</item>
-        <item>Portugis</item>
-        <item>orang Spanyol</item>
-        <item>Orang Swedia</item>
-        <item>Turki</item>
-    </string-array>
+  <string-array name="language_entries">
+    <item>Mandarin (Sederhana)</item>
+    <item>Belanda</item>
+    <item>Inggris</item>
+    <item>Orang Finlandia</item>
+    <item>Prancis</item>
+    <item>Orang Jerman</item>
+    <item>Orang Indonesia</item>
+    <item>Italia</item>
+    <item>Orang Jepang</item>
+    <item>Bahasa Polandia</item>
+    <item>Portugis</item>
+    <item>Orang Spanyol</item>
+    <item>Orang Swedia</item>
+    <item>Turki</item>
+  </string-array>
 </resources>
