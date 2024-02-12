@@ -12,7 +12,7 @@ buildscript {
 }
 
 plugins {
-    id "io.sentry.android.gradle" version "4.2.0"
+    id "io.sentry.android.gradle" version "4.3.0"
 }
 
 allprojects {
