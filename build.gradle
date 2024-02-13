@@ -6,13 +6,13 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:8.2.2'
-        classpath 'com.google.gms:google-services:4.4.0'
-        classpath 'io.sentry:sentry-android-gradle-plugin:4.2.0'
+        classpath 'com.google.gms:google-services:4.4.1'
+        classpath 'io.sentry:sentry-android-gradle-plugin:4.3.0'
     }
 }
 
 plugins {
-    id "io.sentry.android.gradle" version "4.2.0"
+    id "io.sentry.android.gradle" version "4.3.0"
 }
 
 allprojects {

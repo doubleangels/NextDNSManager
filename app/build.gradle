@@ -1,6 +1,6 @@
 plugins {
     id "com.android.application"
-    id "io.sentry.android.gradle" version "4.2.0"
+    id "io.sentry.android.gradle" version "4.3.0"
 }
 
 android {
@@ -9,8 +9,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 31
         targetSdk 34
-        versionCode 194
-        versionName '4.9.2'
+        versionCode 196
+        versionName '4.10'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }

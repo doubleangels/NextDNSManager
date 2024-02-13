@@ -1,103 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?><resources>
-
-  <string name="app_name">次へ DNS マネージャー</string>
-
-  <string name="application_name">次へ DNS マネージャー</string>
-
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">ネクストDNSマネージャー</string>
+  <string name="application_name">ネクストDNSマネージャー</string>
   <string name="author">著者</string>
-
   <string name="back_title">戻る</string>
-
   <string name="dark_mode_header">ダークモード</string>
-
-  <string name="dark_mode_summary">変更にはアプリの再起動が必要になる場合があります。</string>
-
+  <string name="dark_mode_summary">変更にはアプリの再起動が必要な場合があります。</string>
   <string name="dark_mode_title">ダークモード</string>
-
   <string name="dark_navigation_title">ダークモード</string>
-
   <string name="developer">開発者</string>
-
-  <string name="disclaimer">このアプリは公式の NextDNS アプリではありません。</string>
-
+  <string name="disclaimer">このアプリは公式のNextDNSアプリではありません。</string>
   <string name="disclaimer_title">免責事項</string>
-
-  <string name="donation">寄付する</string>
-
-  <string name="donation_link">https://donate.Stripe.com/4gw8yhbvH0mg6SQ7ss</string>
-
-  <string name="donation_name">寄付したい場合は、ここから行うことができます。</string>
-
-  <string name="generic_content_description">これは一般的なコンテンツの説明です。</string>
-
-  <string name="github">ギットハブ</string>
-
-  <string name="github_url">https://github.com/doubleangels/NextDNSManager</string>
-
+  <string name="donation">寄付</string>
+  <string name="donation_name">寄付をご希望の場合は、こちらから寄付できます。</string>
+  <string name="generic_content_description">これは一般的な内容説明です。</string>
+  <string name="github">Github</string>
   <string name="help_green">セキュア DNS が使用されており、デバイスが NextDNS に接続されています。</string>
-
   <string name="help_orange">セキュア DNS が使用されておらず、デバイスが NextDNS に接続されています。</string>
-
   <string name="help_red">セキュア DNS は使用されていません。</string>
-
   <string name="help_title">ヘルプ</string>
-
-  <string name="help_yellow">セキュア DNS が使用されていますが、デバイスは NextDNS に接続されていません。</string>
-
-  <string name="home_title">家</string>
-
+  <string name="help_yellow">セキュア DNS が使用されていますが、デバイスが NextDNS に接続されていません。</string>
+  <string name="home_title">ホーム</string>
   <string name="language">言語</string>
-
-  <string name="language_instruction">タップして希望の言語を選択します。</string>
-
+  <string name="language_instruction">希望する言語をタップして選択します。</string>
   <string name="language_title">選択した言語</string>
-
-  <string name="main_url">https://my.nextdns.io/</string>
-
-  <string name="other">他の</string>
-
-  <string name="ping_disabled">このアクションは現在利用できません。</string>
-
-  <string name="ping_long">NextDNS サーバーへの ping 時間をすばやく確認します。</string>
-
-  <string name="ping_short">ピン</string>
-
-  <string name="ping_title">Ping テスト</string>
-
-  <string name="ping_url">https://ping.nextdns.io</string>
-
+  <string name="other">その他</string>
+  <string name="ping_disabled">このアクションは現在使用できません。</string>
+  <string name="ping_long">NextDNSサーバーへのPING時間をすばやく確認できます。</string>
+  <string name="ping_short">ping</string>
+  <string name="ping_title">ピングテスト</string>
   <string name="privacy">プライバシー</string>
-
   <string name="privacy_policy">プライバシーポリシー</string>
-
-  <string name="privacy_policy_url">https://doubleangels.github.io/privacyPolicy/nextdns.html</string>
-
   <string name="refresh_title">リフレッシュ</string>
-
-  <string name="settings">設定</string>
-
-  <string name="settings_activity_title">設定</string>
-
-  <string name="test_disabled">このアクションは現在利用できません。</string>
-
-  <string name="test_long">NextDNS への接続に関する重要なテスト情報をすばやく取得します。</string>
-
+  <string name="settings">[設定]</string>
+  <string name="settings_activity_title">[設定]</string>
+  <string name="test_disabled">このアクションは現在使用できません。</string>
+  <string name="test_long">NextDNS への接続に関する重要なテスト情報をすばやく取得できます。</string>
   <string name="test_short">テスト</string>
-
   <string name="test_title">接続テスト</string>
-
-  <string name="test_url">https://test.nextdns.io</string>
-
-  <string name="version">バージョン</string>
-
+  <string name="translate">[翻訳]</string>
+  <string name="translate_title">翻訳を助ける</string>
+  <string name="translate_summary">このアプリの翻訳を手伝って、誰もが利用しやすくしてください！</string>
+  <string name="version">[バージョン]</string>
   <string name="whitelist">ホワイトリスト</string>
-
-  <string name="whitelist_domain_1">*.o244019.sentry.io</string>
-
-  <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
-
-  <string name="whitelist_instructions">このアプリを改善するために匿名化されたエラー追跡を有効にしたい場合は、NextDNS 構成でこれらのドメインをホワイトリストに登録してください。</string>
-
+  <string name="whitelist_instructions">匿名エラートラッキングを有効にしてこのアプリの改善に役立てたい場合は、NextDNS設定でこれらのドメインをホワイトリストに登録してください。</string>
   <string name="whitelist_title">ホワイトリスト</string>
-
 </resources>

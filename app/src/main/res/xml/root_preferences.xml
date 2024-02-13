@@ -1,77 +1,71 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <PreferenceCategory
-        app:title="@string/dark_mode_header"
-        app:allowDividerBelow="true">
-        <Preference
-            app:summary="@string/dark_mode_summary"
-            app:selectable="false"/>
-
-        <SwitchPreferenceCompat
-            app:key="dark_mode"
-            app:summary="@string/dark_mode_title"
-            app:defaultValue="false" />
-
-    </PreferenceCategory>
-    <PreferenceCategory
-        app:title="@string/language"
-        app:selectable="false">
+        app:selectable="false"
+        app:title="@string/language">
         <ListPreference
-            app:key="selected_language"
-            app:title="@string/language_title"
-            app:summary="@string/language_instruction"
             app:defaultValue="en"
             app:entries="@array/language_entries"
-            app:entryValues="@array/language_values" />
+            app:entryValues="@array/language_values"
+            app:key="selected_language"
+            app:summary="@string/language_instruction"
+            app:title="@string/language_title" />
     </PreferenceCategory>
     <PreferenceCategory
-        app:title="Error Tracking"
-        app:key="sentry">
+        app:key="sentry"
+        app:title="Error Tracking">
         <Preference
-            app:summary="@string/whitelist_instructions"
-            app:selectable="false"/>
+            app:selectable="false"
+            app:summary="@string/whitelist_instructions" />
         <Preference
-            app:summary="@string/whitelist_domain_1"
-            app:key="whitelist_domain_1_button"/>
+            app:key="whitelist_domain_1_button"
+            app:summary="@string/whitelist_domain_1" />
         <Preference
-            app:summary="@string/whitelist_domain_2"
-            app:key="whitelist_domain_2_button"/>
+            app:key="whitelist_domain_2_button"
+            app:summary="@string/whitelist_domain_2" />
     </PreferenceCategory>
     <PreferenceCategory
-        app:title="@string/privacy"
         app:key="privacy"
-        app:selectable="false">
+        app:selectable="false"
+        app:title="@string/privacy">
         <Preference
             app:key="privacy_policy_button"
-            app:summary="@string/privacy_policy"/>
+            app:summary="@string/privacy_policy" />
     </PreferenceCategory>
     <PreferenceCategory
-        app:title="@string/developer"
-        app:selectable="false">
+        app:selectable="false"
+        app:title="@string/developer">
         <Preference
-            app:title="@string/author"
+            app:key="author_button"
             app:summary="@string/author_name"
-            app:key="author_button"/>
+            app:title="@string/author" />
         <Preference
-            app:title="@string/github"
+            app:key="github_button"
             app:summary="@string/github_url"
-            app:key="github_button"/>
+            app:title="@string/github" />
         <Preference
-            app:title="@string/donation"
+            app:key="donation_button"
             app:summary="@string/donation_name"
-            app:key="donation_button"/>
+            app:title="@string/donation" />
     </PreferenceCategory>
     <PreferenceCategory
-        app:title="@string/other"
-        app:selectable="false">
+        app:selectable="false"
+        app:title="@string/translate">
         <Preference
-            app:title="@string/disclaimer_title"
+            app:key="translate_button"
+            app:summary="@string/translate_summary"
+            app:title="@string/translate_title" />/>
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:selectable="false"
+        app:title="@string/other">
+        <Preference
+            app:selectable="false"
             app:summary="@string/disclaimer"
-            app:selectable="false"/>
+            app:title="@string/disclaimer_title" />
         <Preference
-            app:title="@string/version"
-            app:summary="0.0"
             app:key="version"
-            app:selectable="false"/>
+            app:selectable="false"
+            app:summary="0.0"
+            app:title="@string/version" />
     </PreferenceCategory>
 </PreferenceScreen>

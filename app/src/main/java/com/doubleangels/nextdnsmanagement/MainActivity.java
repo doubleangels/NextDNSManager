@@ -42,6 +42,7 @@ import io.sentry.Sentry;
 
 public class MainActivity extends AppCompatActivity {
     private WebView webView;
+    private Boolean darkMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,28 +62,16 @@ public class MainActivity extends AppCompatActivity {
             // Set up selected language.
             String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE, "en");
             Sentry.setTag("locale", selectedLanguage);
-            Locale appLocale;
-            if (selectedLanguage.contains("pt")) {
-                appLocale = new Locale(selectedLanguage, "BR");
-            } else if (selectedLanguage.contains("zh")) {
-                appLocale = new Locale(selectedLanguage, "HANS");
-            } else {
-                appLocale = new Locale(selectedLanguage);
-            }
+            Locale appLocale = determineLocale(selectedLanguage);
             Locale.setDefault(appLocale);
             Configuration appConfig = new Configuration();
             appConfig.locale = appLocale;
             getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
 
             // Load user's preference for dark mode and set it
-            boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
-            if (darkMode) {
-                Sentry.setTag("dark_mode", "yes");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                Sentry.setTag("dark_mode", "no");
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
             setupVisualIndicator(); // Set the visual connection status indicator
             setClickListeners(); // Set click listeners for the status icon
             provisionWebView(getString(R.string.main_url), darkMode); // Load the main web page
@@ -91,6 +80,20 @@ public class MainActivity extends AppCompatActivity {
             Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
             mainActivityCreateTransaction.finish(); // Finish the transaction
+        }
+    }
+
+    private Locale determineLocale(String selectedLanguage) {
+        if (selectedLanguage.contains("es")) {
+            return new Locale(selectedLanguage, "ES");
+        } else if (selectedLanguage.contains("zh")) {
+            return new Locale(selectedLanguage, "HANS");
+        } else if (selectedLanguage.contains("pt")) {
+            return new Locale(selectedLanguage, "BR");
+        }else if (selectedLanguage.contains("sv")) {
+            return new Locale(selectedLanguage, "SE");
+        } else {
+            return new Locale(selectedLanguage);
         }
     }
 
@@ -104,8 +107,6 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        boolean darkMode = sharedPreferences.getBoolean(SettingsActivity.DARK_MODE, false);
 
         // Handle menu item clicks, navigate to the respective activities
         switch (item.getItemId()) {
