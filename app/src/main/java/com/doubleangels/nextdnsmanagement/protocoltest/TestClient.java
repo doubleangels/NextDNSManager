@@ -5,6 +5,7 @@ import android.content.Context;
 import com.doubleangels.nextdnsmanagement.R;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -22,63 +23,70 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TestClient {
-    private static volatile Retrofit retrofit;
+    private static Retrofit retrofit;
 
     private TestClient() {
         // Private constructor to prevent instantiation
     }
 
     public static Retrofit getBaseClient(Context context) {
+        // If retrofit is not initialized, create it
         if (retrofit == null) {
-            synchronized (TestClient.class) {
-                if (retrofit == null) {
-                    // If the Retrofit instance is not initialized, create one
-                    retrofit = createRetrofit(context);
-                }
-            }
+            retrofit = createRetrofit(context);
         }
         return retrofit;
     }
 
     private static OkHttpClient createOkHttpClient(Context context) {
-        // Define a cache directory for OkHttpClient
+        // Define cache directory
         File cacheDir = new File(context.getCacheDir(), "http-cache");
+        // Set cache size
         Cache cache = new Cache(cacheDir, 10 * 1024 * 1024); // 10MB cache size
 
-        // Create an OkHttpClient with a cache and an interceptor
-        OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder()
+        // Build OkHttpClient with cache and interceptor
+        return new OkHttpClient.Builder()
                 .cache(cache)
-                .addInterceptor(createSentryInterceptor());
-
-        return clientBuilder.build();
+                .addInterceptor(createSentryInterceptor())
+                .build();
     }
 
     private static Interceptor createSentryInterceptor() {
         return chain -> {
-            // Start a Sentry transaction for monitoring
+            // Start a Sentry transaction
             ITransaction createSentryInterceptorTransaction = Sentry.startTransaction("TestClient_createSentryInterceptor()", "TestClient");
-
             try {
-                // Intercept the request and capture exceptions using Sentry
+                // Intercept the request
                 Request request = chain.request();
+                // Proceed with the request
                 return chain.proceed(request);
-            } catch (Exception e) {
-                if (e instanceof UnknownHostException || e instanceof SocketTimeoutException || e instanceof SSLHandshakeException || e instanceof SocketException) {
-                    // If the exception is one of these types, add it as a breadcrumb
+            } catch (IOException e) {
+                // Check if error is recoverable
+                if (isRecoverableError(e)) {
+                    // Add breadcrumb for recoverable error
                     Sentry.addBreadcrumb("Unable to query NextDNS encryption protocol: " + e);
                 } else {
-                    Sentry.captureException(e); // Capture and report the exception to Sentry
+                    // Capture exception in Sentry
+                    Sentry.captureException(e);
                 }
+                // Rethrow the exception
                 throw e;
             } finally {
+                // Finish Sentry transaction
                 createSentryInterceptorTransaction.finish();
             }
         };
     }
 
+    private static boolean isRecoverableError(IOException e) {
+        // Check if the IOException is a recoverable error
+        return e instanceof UnknownHostException || e instanceof SocketTimeoutException || e instanceof SSLHandshakeException || e instanceof SocketException;
+    }
+
     private static Retrofit createRetrofit(Context context) {
+        // Create OkHttpClient
         OkHttpClient client = createOkHttpClient(context);
 
+        // Build Retrofit instance
         return new Retrofit.Builder()
                 .baseUrl(context.getString(R.string.test_url)) // Base URL from resources
                 .addConverterFactory(GsonConverterFactory.create()) // Use Gson for JSON conversion
