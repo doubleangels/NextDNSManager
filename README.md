@@ -125,7 +125,7 @@ Improvements to the project's documentation are always welcome. You can suggest 
 ### Translations
 
 See a translation that's not quite right? I only speak one language so please open an issue and tell me what's wrong. :)
-If you have programming experience, you can open a pull request for the necessary locale strings and I'll merge them.
+Please contributte to the translations and locales [here](https://crowdin.com/project/nextdns-manager).
 
 ### Code Contributions
 
