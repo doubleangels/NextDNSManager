@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string-array name="language_entries">
+    <item>Kiina (Yksinkertaistettu)</item>
+    <item>Hollantilainen</item>
+    <item>Englanti</item>
+    <item>Suomalainen</item>
+    <item>Ranskalaista</item>
+    <item>Saksan kieli</item>
+    <item>Indonesialainen</item>
+    <item>italialainen</item>
+    <item>Japanilainen</item>
+    <item>Puolalainen</item>
+    <item>Portugalin kieli</item>
+    <item>Espanja</item>
+    <item>Ruotsalainen</item>
+    <item>Turkkilainen</item>
+  </string-array>
+</resources>
