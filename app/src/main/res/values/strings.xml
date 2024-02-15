@@ -24,13 +24,15 @@
   <string name="language">Language</string>
   <string name="language_instruction">Tap to select your desired language.</string>
   <string name="language_title">Selected Language</string>
+  <string name="nextdns_privacy_policy">NextDNS Privacy Policy</string>
+  <string name="nextdns_user_agreement">NextDNS User Agreement</string>
   <string name="other">Other</string>
   <string name="ping_disabled">This action is currently unavailable.</string>
   <string name="ping_long">Quickly check ping times to NextDNS servers.</string>
   <string name="ping_short">Ping</string>
   <string name="ping_title">Ping Test</string>
   <string name="privacy">Privacy</string>
-  <string name="privacy_policy">Privacy Policy</string>
+  <string name="privacy_policy">NextDNS Manager Privacy Policy</string>
   <string name="refresh_title">Refresh</string>
   <string name="settings">Settings</string>
   <string name="settings_activity_title">Settings</string>
@@ -41,6 +43,7 @@
   <string name="translate">Translate</string>
   <string name="translate_title">Help Translate</string>
   <string name="translate_summary">Please help translate this app and make it more accessible for everyone!</string>
+  <string name="user_agreement">User Agreement</string>
   <string name="version">Version</string>
   <string name="whitelist">Whitelist</string>
   <string name="whitelist_instructions">If you wish to enable anonymized error tracking to help me make this app better, please whitelist these domains in your NextDNS configuration.</string>

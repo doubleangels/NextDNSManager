@@ -137,6 +137,8 @@ public class SettingsActivity extends AppCompatActivity {
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
             setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
             setupButton("privacy_policy_button", R.string.privacy_policy_url);
+            setupButton("nextdns_privacy_policy_button", R.string.nextdns_privacy_policy_url);
+            setupButton("nextdns_user_agreement_button", R.string.nextdns_user_agreement_url);
             setupButton("author_button", R.string.author_url);
             setupButton("github_button", R.string.github_url);
             setupButton("donation_button", R.string.donation_url);

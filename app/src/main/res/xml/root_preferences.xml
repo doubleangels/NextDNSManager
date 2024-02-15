@@ -19,6 +19,17 @@
         <Preference
             app:key="privacy_policy_button"
             app:summary="@string/privacy_policy" />
+        <Preference
+            app:key="nextdns_privacy_policy_button"
+            app:summary="@string/nextdns_privacy_policy" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:key="user_agreement"
+        app:selectable="false"
+        app:title="@string/user_agreement">
+        <Preference
+            app:key="nextdns_user_agreement_button"
+            app:summary="@string/nextdns_user_agreement" />
     </PreferenceCategory>
     <PreferenceCategory
         app:selectable="false"
