@@ -24,13 +24,15 @@
   <string name="language">Språk</string>
   <string name="language_instruction">Tryck på för att välja önskat språk.</string>
   <string name="language_title">Valt språk</string>
+  <string name="nextdns_privacy_policy">NextDNS Sekretesspolicy</string>
+  <string name="nextdns_user_agreement">NextDNS Användaravtal</string>
   <string name="other">Övrigt</string>
   <string name="ping_disabled">Den här åtgärden är för närvarande inte tillgänglig.</string>
   <string name="ping_long">Kontrollera snabbt pingtider till NextDNS-servrar.</string>
   <string name="ping_short">Ping</string>
   <string name="ping_title">Ping-test</string>
   <string name="privacy">Integritet</string>
-  <string name="privacy_policy">Sekretesspolicy</string>
+  <string name="privacy_policy">Sekretesspolicy för NextDNS Manager</string>
   <string name="refresh_title">Uppdatera</string>
   <string name="settings">Inställningar</string>
   <string name="settings_activity_title">Inställningar</string>
@@ -41,6 +43,7 @@
   <string name="translate">Översätt</string>
   <string name="translate_title">Hjälp med att översätta</string>
   <string name="translate_summary">Snälla hjälp med att översätta den här appen och göra den mer tillgänglig för alla!</string>
+  <string name="user_agreement">Användaravtal</string>
   <string name="version">Versionen</string>
   <string name="whitelist">Vitlista</string>
   <string name="whitelist_instructions">Om du vill aktivera anonymiserad felspårning för att hjälpa mig att göra den här appen bättre, vänligen vitlista dessa domäner i din NextDNS-konfiguration.</string>
