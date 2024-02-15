@@ -13,6 +13,7 @@
   <string name="disclaimer_title">Disclaimer</string>
   <string name="donation">Donate</string>
   <string name="donation_name">If you wish to donate, you can do so here.</string>
+  <string name="error_tracking">Error Tracking</string>
   <string name="generic_content_description">This is a generic content description.</string>
   <string name="github">Github</string>
   <string name="github_issues">Report an Issue</string>

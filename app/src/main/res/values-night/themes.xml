@@ -1,0 +1,27 @@
+<resources>
+        <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+                <item name="colorPrimary">@color/accent1</item>
+                <item name="colorSecondary">@color/accent1</item>
+                <item name="colorTertiary">?android:attr/textColorPrimary</item>
+                <item name="android:statusBarColor">@color/accent1_dark</item>
+                <item name="android:navigationBarColor">@color/darkgray</item>
+                <item name="android:textColorSecondary">@color/white</item>
+                <item name="android:windowLightStatusBar">false</item>
+                <item name="windowNoTitle">true</item>
+                <item name="popupTheme">@style/PopupTheme</item>
+        </style>
+        <style name="PopupTheme" parent="ThemeOverlay.AppCompat">
+                <item name="android:background">@color/accent1_dark</item>
+                <item name="android:textColorPrimary">@color/white</item>
+        </style>
+        <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+                <item name="android:background">@color/accent1_dark</item>
+                <item name="android:textColorSecondary">@color/white</item>
+        </style>
+        <style name="PreferenceTheme" parent="@style/AppTheme">
+                <item name="android:colorAccent">@color/accent1</item>
+                <item name="android:navigationBarColor">@color/darkgray</item>
+                <item name="android:textColorSecondary">@color/white</item>
+                <item name="android:windowBackground">@color/darkgray</item>
+        </style>
+</resources>
