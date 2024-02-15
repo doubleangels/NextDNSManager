@@ -24,13 +24,15 @@
   <string name="language">Idioma</string>
   <string name="language_instruction">Presiona para seleccionar el idioma deseado.</string>
   <string name="language_title">Idioma seleccionado</string>
+  <string name="nextdns_privacy_policy">Política de privacidad de NextDNS</string>
+  <string name="nextdns_user_agreement">Acuerdo de usuario de NextDNS</string>
   <string name="other">Otros</string>
   <string name="ping_disabled">Esta acción no está disponible en este momento.</string>
   <string name="ping_long">Comprueba rápidamente los tiempos de ping en los servidores de NextDNS.</string>
   <string name="ping_short">Ping</string>
   <string name="ping_title">Prueba de ping</string>
   <string name="privacy">Privacidad</string>
-  <string name="privacy_policy">Política de privacidad</string>
+  <string name="privacy_policy">Política de privacidad de NextDNS Manager</string>
   <string name="refresh_title">Refrescar</string>
   <string name="settings">Ajustes</string>
   <string name="settings_activity_title">Ajustes</string>
@@ -41,6 +43,7 @@
   <string name="translate">Traducir</string>
   <string name="translate_title">Ayuda a traducir</string>
   <string name="translate_summary">¡Ayude a traducir esta aplicación y hacerla más accesible para todos!</string>
+  <string name="user_agreement">Acuerdo de usuario</string>
   <string name="version">Versión</string>
   <string name="whitelist">Lista blanca</string>
   <string name="whitelist_instructions">Si deseas habilitar el seguimiento anónimo de errores para ayudarme a mejorar esta aplicación, incluye estos dominios en la lista blanca en tu configuración de NextDNS.</string>

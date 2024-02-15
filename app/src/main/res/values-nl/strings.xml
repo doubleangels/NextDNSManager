@@ -24,13 +24,15 @@
   <string name="language">taal</string>
   <string name="language_instruction">Tik om de gewenste taal te selecteren.</string>
   <string name="language_title">Geselecteerde taal</string>
+  <string name="nextdns_privacy_policy">Privacybeleid van NextDNS</string>
+  <string name="nextdns_user_agreement">NextDNS-gebruikersovereenkomst</string>
   <string name="other">Andere</string>
   <string name="ping_disabled">Deze actie is momenteel niet beschikbaar.</string>
   <string name="ping_long">Controleer snel de ping-tijden naar NextDNS-servers.</string>
   <string name="ping_short">Ping</string>
   <string name="ping_title">Ping-test</string>
   <string name="privacy">Privacy</string>
-  <string name="privacy_policy">Privacybeleid</string>
+  <string name="privacy_policy">Privacybeleid van NextDNS Manager</string>
   <string name="refresh_title">Vernieuwen</string>
   <string name="settings">Instellingen</string>
   <string name="settings_activity_title">Instellingen</string>
@@ -41,6 +43,7 @@
   <string name="translate">Vertaal</string>
   <string name="translate_title">Help bij het vertalen</string>
   <string name="translate_summary">Help mee om deze app te vertalen en deze voor iedereen toegankelijker te maken!</string>
+  <string name="user_agreement">Gebruikersovereenkomst</string>
   <string name="version">Versie</string>
   <string name="whitelist">Witte lijst</string>
   <string name="whitelist_instructions">Als je geanonimiseerde foutopsporing wilt inschakelen om me te helpen deze app te verbeteren, zet deze domeinen dan op de witte lijst in je NextDNS-configuratie.</string>

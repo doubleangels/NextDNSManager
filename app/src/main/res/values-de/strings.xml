@@ -24,13 +24,15 @@
   <string name="language">Sprache</string>
   <string name="language_instruction">Tippen Sie, um die gewünschte Sprache auszuwählen.</string>
   <string name="language_title">Ausgewählte Sprache</string>
+  <string name="nextdns_privacy_policy">NextDNS-Datenschutzrichtlinie</string>
+  <string name="nextdns_user_agreement">NextDNS Benutzervereinbarung</string>
   <string name="other">Andere</string>
   <string name="ping_disabled">Diese Aktion ist derzeit nicht verfügbar.</string>
   <string name="ping_long">Überprüfen Sie schnell die Ping-Zeiten für NextDNS-Server.</string>
   <string name="ping_short">Ping</string>
   <string name="ping_title">Ping-Test</string>
   <string name="privacy">Datenschutz</string>
-  <string name="privacy_policy">Datenschutzrichtlinie</string>
+  <string name="privacy_policy">NextDNS Manager-Datenschutzrichtlinie</string>
   <string name="refresh_title">Auffrischen</string>
   <string name="settings">Einstellungen</string>
   <string name="settings_activity_title">Einstellungen</string>
@@ -41,6 +43,7 @@
   <string name="translate">Übersetzen</string>
   <string name="translate_title">Hilf beim Übersetzen</string>
   <string name="translate_summary">Bitte hilf mit, diese App zu übersetzen und sie für alle zugänglicher zu machen!</string>
+  <string name="user_agreement">Nutzervereinbarung</string>
   <string name="version">Version</string>
   <string name="whitelist">Weiße Liste</string>
   <string name="whitelist_instructions">Wenn Sie die anonymisierte Fehlerverfolgung aktivieren möchten, um mir zu helfen, diese App zu verbessern, setzen Sie diese Domains bitte in Ihrer NextDNS-Konfiguration auf die Whitelist.</string>

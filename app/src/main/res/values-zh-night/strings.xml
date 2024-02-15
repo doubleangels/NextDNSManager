@@ -24,13 +24,15 @@
   <string name="language">语言</string>
   <string name="language_instruction">点按选择所需的语言。</string>
   <string name="language_title">所选语言</string>
+  <string name="nextdns_privacy_policy">nextDNS 隐私政策</string>
+  <string name="nextdns_user_agreement">NextDNS 用户协议</string>
   <string name="other">其他</string>
   <string name="ping_disabled">此操作当前不可用。</string>
   <string name="ping_long">快速查看 nextDNS 服务器的 ping 时间。</string>
   <string name="ping_short">平</string>
   <string name="ping_title">Ping 测试</string>
   <string name="privacy">隐私</string>
-  <string name="privacy_policy">隐私政策</string>
+  <string name="privacy_policy">NextDNS 管理器隐私政策</string>
   <string name="refresh_title">刷新</string>
   <string name="settings">设置</string>
   <string name="settings_activity_title">设置</string>
@@ -41,6 +43,7 @@
   <string name="translate">翻译</string>
   <string name="translate_title">帮忙翻译</string>
   <string name="translate_summary">请帮助翻译此应用程序，使其更易于所有人使用！</string>
+  <string name="user_agreement">用户协议</string>
   <string name="version">版本</string>
   <string name="whitelist">白名单</string>
   <string name="whitelist_instructions">如果你想启用匿名错误跟踪来帮助我改进这个应用程序，请在你的NextDNS配置中将这些域名列入白名单。</string>

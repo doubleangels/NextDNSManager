@@ -24,13 +24,15 @@
   <string name="language">Dil</string>
   <string name="language_instruction">İstediğiniz dili seçmek için dokunun.</string>
   <string name="language_title">Seçilen Dil</string>
+  <string name="nextdns_privacy_policy">NextDNS Gizlilik Politikası</string>
+  <string name="nextdns_user_agreement">NextDNS Kullanıcı Sözleşmesi</string>
   <string name="other">Diğer</string>
   <string name="ping_disabled">Bu eylem şu anda kullanılamıyor.</string>
   <string name="ping_long">NextDNS sunucularına ping sürelerini hızla kontrol edin.</string>
   <string name="ping_short">Ping</string>
   <string name="ping_title">Ping Testi</string>
   <string name="privacy">Gizlilik</string>
-  <string name="privacy_policy">Gizlilik Politikası</string>
+  <string name="privacy_policy">NextDNS Yöneticisi Gizlilik Politikası</string>
   <string name="refresh_title">Yenile</string>
   <string name="settings">Ayarlar</string>
   <string name="settings_activity_title">Ayarlar</string>
@@ -41,6 +43,7 @@
   <string name="translate">Çevirmek</string>
   <string name="translate_title">Çeviri Yardım Edin</string>
   <string name="translate_summary">Lütfen bu uygulamayı çevirmeye yardımcı olun ve herkes için daha erişilebilir hale getirin!</string>
+  <string name="user_agreement">Kullanıcı Sözleşmesi</string>
   <string name="version">Versiyon</string>
   <string name="whitelist">Beyaz liste</string>
   <string name="whitelist_instructions">Bu uygulamayı daha iyi hale getirmemize yardımcı olmak için anonimleştirilmiş hata izlemeyi etkinleştirmek istiyorsanız, lütfen bu alan adlarını NextDNS yapılandırmanızda beyaz listeye ekleyin.</string>

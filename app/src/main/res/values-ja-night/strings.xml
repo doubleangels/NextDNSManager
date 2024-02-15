@@ -24,13 +24,15 @@
   <string name="language">言語</string>
   <string name="language_instruction">希望する言語をタップして選択します。</string>
   <string name="language_title">選択した言語</string>
+  <string name="nextdns_privacy_policy">ネクストDNSプライバシーポリシー</string>
+  <string name="nextdns_user_agreement">ネクストDNSユーザー契約</string>
   <string name="other">その他</string>
   <string name="ping_disabled">このアクションは現在使用できません。</string>
   <string name="ping_long">NextDNSサーバーへのPING時間をすばやく確認できます。</string>
   <string name="ping_short">ping</string>
   <string name="ping_title">ピングテスト</string>
   <string name="privacy">プライバシー</string>
-  <string name="privacy_policy">プライバシーポリシー</string>
+  <string name="privacy_policy">NextDNSマネージャープライバシーポリシー</string>
   <string name="refresh_title">リフレッシュ</string>
   <string name="settings">[設定]</string>
   <string name="settings_activity_title">[設定]</string>
@@ -41,6 +43,7 @@
   <string name="translate">[翻訳]</string>
   <string name="translate_title">翻訳を助ける</string>
   <string name="translate_summary">このアプリの翻訳を手伝って、誰もが利用しやすくしてください！</string>
+  <string name="user_agreement">ユーザー契約</string>
   <string name="version">[バージョン]</string>
   <string name="whitelist">ホワイトリスト</string>
   <string name="whitelist_instructions">匿名エラートラッキングを有効にしてこのアプリの改善に役立てたい場合は、NextDNS設定でこれらのドメインをホワイトリストに登録してください。</string>
