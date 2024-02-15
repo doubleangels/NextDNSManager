@@ -41,12 +41,8 @@ public class TestActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-            // Set up shared preferences
-
             // Set up selected language.
-            String selectedLanguage = Locale.getDefault().getLanguage();
-            Sentry.setTag("locale", selectedLanguage);
-            Locale appLocale = new Locale(selectedLanguage);
+            Locale appLocale = getResources().getConfiguration().getLocales().get(0);
             Locale.setDefault(appLocale);
             Configuration appConfig = new Configuration();
             appConfig.locale = appLocale;
