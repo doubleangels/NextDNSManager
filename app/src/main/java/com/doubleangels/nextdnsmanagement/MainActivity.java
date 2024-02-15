@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             // Set up selected language.
             String selectedLanguage = Locale.getDefault().getLanguage();
             Sentry.setTag("locale", selectedLanguage);
-            Locale appLocale = determineLocale(selectedLanguage);
+            Locale appLocale = new Locale(selectedLanguage);
             Locale.setDefault(appLocale);
             Configuration appConfig = new Configuration();
             appConfig.locale = appLocale;
@@ -75,20 +75,6 @@ public class MainActivity extends AppCompatActivity {
             Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
             mainActivityCreateTransaction.finish(); // Finish the transaction
-        }
-    }
-
-    private Locale determineLocale(String selectedLanguage) {
-        if (selectedLanguage.contains("es")) {
-            return new Locale(selectedLanguage, "ES");
-        } else if (selectedLanguage.contains("zh")) {
-            return new Locale(selectedLanguage, "HANS");
-        } else if (selectedLanguage.contains("pt")) {
-            return new Locale(selectedLanguage, "BR");
-        }else if (selectedLanguage.contains("sv")) {
-            return new Locale(selectedLanguage, "SE");
-        } else {
-            return new Locale(selectedLanguage);
         }
     }
 
