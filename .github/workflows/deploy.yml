@@ -37,30 +37,6 @@ jobs:
         run: |
           echo "VERSION_CODE=${{ steps.android_code.outputs.VERSION_CODE }}" >> $GITHUB_ENV
 
-      - name: Get changelog content from fastlane
-        id: read_file
-        run: |
-          file_content=$(cat whatsnew/whatsnew-en-US)
-          echo "::set-output name=file_content::$file_content"
-        shell: bash
-
-      - name: Set changelog environment variable
-        run: echo "CHANGELOG=${{ steps.read_file.outputs.file_content }}" >> $GITHUB_ENV
-
-      - name: Create changelog for fastlane
-        run: |
-          cd fastlane/metadata/android/en-US/changelogs
-          echo "$CHANGELOG" > ${{ env.VERSION_CODE }}.txt
-
-      - name: Commit changelog for fastlane
-        run: |
-          git config --global user.email "no-reply@github.com"
-          git config --global user.name "GitHub Actions"
-          git add fastlane/metadata/android/en-US/changelogs/${{ env.VERSION_CODE }}.txt
-          git commit -m "Add changelog for release ${{ env.VERSION_CODE }}"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git push
-
       - name: Create release APK
         run: ./gradlew assembleRelease
 
@@ -96,7 +72,7 @@ jobs:
           name: apk
           path: apk/
 
-      - name: Create Github release
+      - name: Create Github release using release-drafter
         id: create_release
         uses: release-drafter/release-drafter@v5
         env:
@@ -105,7 +81,7 @@ jobs:
           tag: v${{ env.VERSION_NAME }}
           name: v${{ env.VERSION_NAME }}
 
-      - name: Upload APK for Github release
+      - name: Upload APK to Github release
         id: upload_release_asset
         uses: actions/upload-release-asset@v1
         env:
@@ -116,7 +92,8 @@ jobs:
           asset_name: app-release.apk
           asset_content_type: application/zip
 
-      - uses: eregon/publish-release@v1
+      - name: Publish Github release
+        uses: eregon/publish-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
