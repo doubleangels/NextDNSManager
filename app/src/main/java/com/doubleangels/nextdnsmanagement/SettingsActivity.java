@@ -4,11 +4,9 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -52,21 +50,18 @@ public class SettingsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-        // Set up shared preferences
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
         // Apply dark mode.
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 
         // Set up selected language.
-        setupSelectedLanguage(sharedPreferences);
+        setupSelectedLanguage();
 
         initializeViews(); // Initialize the views for the settings
         setVisualIndicator(); // Set the visual connection status indicator
     }
 
-    private void setupSelectedLanguage(SharedPreferences sharedPreferences) {
-        String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE, "en");
+    private void setupSelectedLanguage() {
+        String selectedLanguage = Locale.getDefault().getLanguage();
         Sentry.setTag("locale", selectedLanguage);
         Locale appLocale = determineLocale(selectedLanguage);
         Locale.setDefault(appLocale);

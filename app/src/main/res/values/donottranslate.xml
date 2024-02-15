@@ -14,20 +14,4 @@
     <string name="using_nextdns_status">OK</string>
     <string name="whitelist_domain_1">*.o244019.sentry.io</string>
     <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
-    <string-array name="language_values">
-        <item>zh</item> <!-- Chinese (Simplified) -->
-        <item>nl</item> <!-- Dutch -->
-        <item>en</item> <!-- English -->
-        <item>fi</item> <!-- Finnish -->
-        <item>fr</item> <!-- French -->
-        <item>de</item> <!-- German -->
-        <item>id</item> <!-- Indonesian -->
-        <item>it</item> <!-- Italian -->
-        <item>ja</item> <!-- Japanese -->
-        <item>pl</item> <!-- Polish -->
-        <item>pt</item> <!-- Portuguese -->
-        <item>es</item> <!-- Spanish -->
-        <item>sv</item> <!-- Swedish -->
-        <item>tr</item> <!-- Turkish -->
-    </string-array>
 </resources>

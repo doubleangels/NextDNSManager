@@ -1,10 +1,8 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -34,11 +32,8 @@ public class StatusActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
-            // Set up shared preferences
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
             // Set up selected language.
-            String selectedLanguage = sharedPreferences.getString(SettingsActivity.SELECTED_LANGUAGE, "en");
+            String selectedLanguage = Locale.getDefault().getLanguage();
             Sentry.setTag("locale", selectedLanguage);
             Locale appLocale = determineLocale(selectedLanguage);
             Locale.setDefault(appLocale);
