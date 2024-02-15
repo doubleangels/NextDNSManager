@@ -15,6 +15,7 @@
   <string name="donation_name">寄付をご希望の場合は、こちらから寄付できます。</string>
   <string name="generic_content_description">これは一般的な内容説明です。</string>
   <string name="github">Github</string>
+  <string name="github_issues">問題を報告する</string>
   <string name="help_green">セキュア DNS が使用されており、デバイスが NextDNS に接続されています。</string>
   <string name="help_orange">セキュア DNS が使用されておらず、デバイスが NextDNS に接続されています。</string>
   <string name="help_red">セキュア DNS は使用されていません。</string>

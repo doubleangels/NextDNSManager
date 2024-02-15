@@ -15,6 +15,7 @@
   <string name="donation_name">Bağış yapmak isterseniz, bunu buradan yapabilirsiniz.</string>
   <string name="generic_content_description">Bu genel bir içerik açıklamasıdır.</string>
   <string name="github">Github</string>
+  <string name="github_issues">Bir Sorunu Bildir</string>
   <string name="help_green">Güvenli DNS kullanılıyor VE cihaz NextDNS\'ye bağlı.</string>
   <string name="help_orange">Güvenli DNS KULLANILMIYOR VE cihaz NextDNS\'ye bağlı.</string>
   <string name="help_red">Güvenli DNS kullanılmıyor.</string>

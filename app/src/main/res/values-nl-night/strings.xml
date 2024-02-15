@@ -15,6 +15,7 @@
   <string name="donation_name">Als u wilt doneren, kunt u dat hier doen.</string>
   <string name="generic_content_description">Dit is een algemene inhoudsbeschrijving.</string>
   <string name="github">Github</string>
+  <string name="github_issues">Een probleem melden</string>
   <string name="help_green">Secure DNS wordt gebruikt EN het apparaat is verbonden met NextDNS.</string>
   <string name="help_orange">Secure DNS wordt NIET gebruikt EN het apparaat is verbonden met NextDNS.</string>
   <string name="help_red">Secure DNS wordt NIET gebruikt.</string>

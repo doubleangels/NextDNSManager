@@ -13,6 +13,34 @@
             app:summary="@string/whitelist_domain_2" />
     </PreferenceCategory>
     <PreferenceCategory
+        app:selectable="false"
+        app:title="@string/developer">
+        <Preference
+            app:key="author_button"
+            app:summary="@string/author_name"
+            app:title="@string/author" />
+        <Preference
+            app:key="github_button"
+            app:summary="@string/github_url"
+            app:title="@string/github" />
+        <Preference
+            app:key="github_issue_button"
+            app:summary="@string/github_issues_url"
+            app:title="@string/github_issues" />
+        <Preference
+            app:key="donation_button"
+            app:summary="@string/donation_name"
+            app:title="@string/donation" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:selectable="false"
+        app:title="@string/translate">
+        <Preference
+            app:key="translate_button"
+            app:summary="@string/translate_summary"
+            app:title="@string/translate_title" />
+    </PreferenceCategory>
+    <PreferenceCategory
         app:key="privacy"
         app:selectable="false"
         app:title="@string/privacy">
@@ -30,30 +58,6 @@
         <Preference
             app:key="nextdns_user_agreement_button"
             app:summary="@string/nextdns_user_agreement" />
-    </PreferenceCategory>
-    <PreferenceCategory
-        app:selectable="false"
-        app:title="@string/developer">
-        <Preference
-            app:key="author_button"
-            app:summary="@string/author_name"
-            app:title="@string/author" />
-        <Preference
-            app:key="github_button"
-            app:summary="@string/github_url"
-            app:title="@string/github" />
-        <Preference
-            app:key="donation_button"
-            app:summary="@string/donation_name"
-            app:title="@string/donation" />
-    </PreferenceCategory>
-    <PreferenceCategory
-        app:selectable="false"
-        app:title="@string/translate">
-        <Preference
-            app:key="translate_button"
-            app:summary="@string/translate_summary"
-            app:title="@string/translate_title" />/>
     </PreferenceCategory>
     <PreferenceCategory
         app:selectable="false"

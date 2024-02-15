@@ -15,6 +15,7 @@
   <string name="donation_name">Se desideri donare, puoi farlo qui.</string>
   <string name="generic_content_description">Questa è una descrizione generica del contenuto.</string>
   <string name="github">Github</string>
+  <string name="github_issues">Segnalare un problema</string>
   <string name="help_green">Viene utilizzato Secure DNS E il dispositivo è connesso a NextDNS.</string>
   <string name="help_orange">Il DNS sicuro NON viene utilizzato E il dispositivo è connesso a NextDNS.</string>
   <string name="help_red">Il DNS sicuro NON viene utilizzato.</string>
