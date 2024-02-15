@@ -24,13 +24,15 @@
   <string name="language">Bahasa</string>
   <string name="language_instruction">Ketuk untuk memilih bahasa yang Anda inginkan.</string>
   <string name="language_title">Bahasa yang Dipilih</string>
+  <string name="nextdns_privacy_policy">Kebijakan Privasi NextDNS</string>
+  <string name="nextdns_user_agreement">Perjanjian Pengguna NextDNS</string>
   <string name="other">Lainnya</string>
   <string name="ping_disabled">Tindakan ini saat ini tidak tersedia.</string>
   <string name="ping_long">Cepat periksa waktu ping ke server NextDNS.</string>
   <string name="ping_short">Ping</string>
   <string name="ping_title">Tes Ping</string>
   <string name="privacy">Privasi</string>
-  <string name="privacy_policy">Kebijakan Privasi</string>
+  <string name="privacy_policy">Kebijakan Privasi Manajer NextDNS</string>
   <string name="refresh_title">Menyegarkan</string>
   <string name="settings">Pengaturan</string>
   <string name="settings_activity_title">Pengaturan</string>
@@ -41,6 +43,7 @@
   <string name="translate">Terjemahkan</string>
   <string name="translate_title">Bantu Terjemahkan</string>
   <string name="translate_summary">Tolong bantu menerjemahkan aplikasi ini dan membuatnya lebih mudah diakses oleh semua orang!</string>
+  <string name="user_agreement">Perjanjian Pengguna</string>
   <string name="version">Versi</string>
   <string name="whitelist">Daftar putih</string>
   <string name="whitelist_instructions">Jika Anda ingin mengaktifkan pelacakan kesalahan anonim untuk membantu saya membuat aplikasi ini lebih baik, silakan masukkan domain ini ke daftar putih dalam konfigurasi NextDNS Anda.</string>
