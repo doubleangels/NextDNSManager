@@ -13,6 +13,7 @@
   <string name="disclaimer_title">免责声明</string>
   <string name="donation">捐款</string>
   <string name="donation_name">如果你想捐款，你可以在这里捐款。</string>
+  <string name="error_tracking">错误跟踪</string>
   <string name="generic_content_description">这是一个通用的内容描述。</string>
   <string name="github">Gith</string>
   <string name="github_issues">报告问题</string>

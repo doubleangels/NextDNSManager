@@ -1,7 +1,7 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
         app:key="sentry"
-        app:title="Error Tracking">
+        app:title="@string/error_tracking">
         <Preference
             app:selectable="false"
             app:summary="@string/whitelist_instructions" />
