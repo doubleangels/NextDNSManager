@@ -96,16 +96,6 @@ jobs:
           name: apk
           path: apk/
 
-      - name: Create Github release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ env.VERSION_NAME }}
-          release_name: v${{ env.VERSION_NAME }}
-          body: Thank you for using my app! I regularly update it to improve performance and add new features. This update includes bug fixes and performance improvements to make the app run smoother. Please let me know if you have any issues by opening a Github issue.
-
       - name: Upload APK for Github release
         id: upload_release_asset
         uses: actions/upload-release-asset@v1
@@ -116,6 +106,12 @@ jobs:
           asset_path: apk/app-release-unsigned-signed.apk
           asset_name: app-release.apk
           asset_content_type: application/zip
+
+      - uses: eregon/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create_release.outputs.id }}
 
   deploy-to-google-play:
     runs-on: ubuntu-latest
