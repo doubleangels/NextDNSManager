@@ -41,7 +41,6 @@ NextDNS Manager can be installed on any Android phone or tablet running Android 
 - **Security and Privacy**: Enhance your online security and privacy by leveraging NextDNS' filtering capabilities.
 
 - **Easy Installation**: You can download and install NextDNS Manager from the Google Play Store, F-Droid, or directly from GitHub, providing multiple installation options.
-
 # Installation
 
 ## Which installation method should I use?
@@ -139,6 +138,7 @@ To get started with contributing:
 - Check for any open issues related to the area you want to contribute to.
 - If there's an existing issue, comment to express your interest in working on it.
 - If no relevant issue exists, feel free to create one to discuss and coordinate your contributions.
+
 
 ## Security Policy
 
