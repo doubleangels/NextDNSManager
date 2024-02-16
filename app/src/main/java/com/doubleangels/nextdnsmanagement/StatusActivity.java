@@ -5,6 +5,7 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +34,9 @@ public class StatusActivity extends AppCompatActivity {
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
             // Set up selected language.
-            Locale appLocale = getResources().getConfiguration().getLocales().get(0);
+            String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
+            String appLocaleStringResult = appLocaleString.split("_")[0];
+            Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
             Locale.setDefault(appLocale);
             Configuration appConfig = new Configuration();
             appConfig.locale = appLocale;
