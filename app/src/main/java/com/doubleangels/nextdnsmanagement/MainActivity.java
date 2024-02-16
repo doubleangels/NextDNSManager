@@ -55,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
             Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
 
             // Set up selected language.
-            Locale appLocale = getResources().getConfiguration().getLocales().get(0);
+            String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
+            String appLocaleStringResult = appLocaleString.split("_")[0];
+            Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
             Locale.setDefault(appLocale);
             Configuration appConfig = new Configuration();
             appConfig.locale = appLocale;
