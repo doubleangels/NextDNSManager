@@ -31,7 +31,7 @@
   <string name="other">Muu</string>
   <string name="ping_disabled">Tämä toiminto ei ole tällä hetkellä käytettävissä.</string>
   <string name="ping_long">Tarkista nopeasti ping-ajat NextDNS-palvelimille.</string>
-  <string name="ping_short">ping</string>
+  <string name="ping_short">Ping</string>
   <string name="ping_title">Ping-testi</string>
   <string name="privacy">Yksityisyys</string>
   <string name="privacy_policy">NextDNS Managerin tietosuojakäytäntö</string>

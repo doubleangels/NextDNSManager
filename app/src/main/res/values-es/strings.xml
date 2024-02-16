@@ -2,7 +2,7 @@
 <resources>
   <string name="app_name">Gestor de NextDNS</string>
   <string name="application_name">Gestor de NextDNS</string>
-  <string name="author">autor</string>
+  <string name="author">Autor</string>
   <string name="back_title">Atrás</string>
   <string name="dark_mode_header">Modo oscuro</string>
   <string name="dark_mode_summary">Los cambios pueden requerir el reinicio de la aplicación.</string>

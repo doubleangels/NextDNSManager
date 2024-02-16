@@ -10,7 +10,7 @@
   <string name="dark_navigation_title">Donkere modus</string>
   <string name="developer">Ontwikkelaar</string>
   <string name="disclaimer">Deze app is GEEN officiële NextDNS-app.</string>
-  <string name="disclaimer_title">vrijwaring</string>
+  <string name="disclaimer_title">Vrijwaring</string>
   <string name="donation">Doneer</string>
   <string name="donation_name">Als u wilt doneren, kunt u dat hier doen.</string>
   <string name="error_tracking">Foutopsporing</string>
@@ -23,7 +23,7 @@
   <string name="help_title">Hulp</string>
   <string name="help_yellow">Secure DNS wordt gebruikt, maar het apparaat is NIET verbonden met NextDNS.</string>
   <string name="home_title">Home</string>
-  <string name="language">taal</string>
+  <string name="language">Taal</string>
   <string name="language_instruction">Tik om de gewenste taal te selecteren.</string>
   <string name="language_title">Geselecteerde taal</string>
   <string name="nextdns_privacy_policy">Privacybeleid van NextDNS</string>
