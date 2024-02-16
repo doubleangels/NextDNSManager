@@ -18,7 +18,7 @@ jobs:
           distribution: "temurin"
           cache: gradle
 
-      - name: Cache Gradle dependencies
+      - name: Cache gradle dependencies
         uses: actions/cache@v4
         with:
           path: |
@@ -28,7 +28,7 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Retrieve version code for release
+      - name: Retrieve version code for Github release
         id: android_code
         run: |
           echo "::set-output name=VERSION_CODE::$(./gradlew -q printVersionCode)"
@@ -37,10 +37,13 @@ jobs:
         run: |
           echo "VERSION_CODE=${{ steps.android_code.outputs.VERSION_CODE }}" >> $GITHUB_ENV
 
-      - name: Create release APK
+      - name: Setup Gradle sanity checking
+        uses: gradle/gradle-build-action@v3
+
+      - name: Build APK for Github release
         run: ./gradlew assembleRelease
 
-      - name: Sign release APK
+      - name: Sign APK for Github release
         uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: app/build/outputs/apk/release
@@ -51,13 +54,13 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: "34.0.0"
 
-      - name: Upload release APK
+      - name: Upload APK to Github release artifacts
         uses: actions/upload-artifact@v4
         with:
           name: apk
           path: app/build/outputs/apk/release/app-release-unsigned-signed.apk
 
-      - name: Retrieve version name for release
+      - name: Retrieve version name for Github release
         id: android_version
         run: |
           echo "::set-output name=VERSION_NAME::$(./gradlew -q printVersionName)"
@@ -66,7 +69,7 @@ jobs:
         run: |
           echo "VERSION_NAME=${{ steps.android_version.outputs.VERSION_NAME }}" >> $GITHUB_ENV
 
-      - name: Download release APK
+      - name: Download APK from Github release artifacts
         uses: actions/download-artifact@v4
         with:
           name: apk
@@ -100,6 +103,7 @@ jobs:
           release_id: ${{ steps.create_release.outputs.id }}
 
   deploy-to-google-play:
+    needs: deploy-to-github
     runs-on: ubuntu-latest
 
     steps:
@@ -123,10 +127,13 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Create release bundle
+      - name: Setup Gradle sanity checking
+        uses: gradle/gradle-build-action@v3
+
+      - name: Build bundle for Google Play release
         run: ./gradlew bundleRelease
 
-      - name: Sign Google Play release
+      - name: Sign bundle for Google Play release
         uses: r0adkll/sign-android-release@v1
         with:
           releaseDirectory: app/build/outputs/bundle/release
@@ -138,7 +145,7 @@ jobs:
       - name: Create service_account.json for Google Play release
         run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
 
-      - name: Deploy bundle to Google Play
+      - name: Publish bundle to Google Play
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJson: service_account.json
