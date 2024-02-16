@@ -39,6 +39,9 @@ android {
             enableSplit = false
         }
     }
+    buildFeatures {
+        buildConfig true
+    }
 
     tasks.register('printVersionName') {
         println defaultConfig.versionName
