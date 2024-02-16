@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.shields.io/github/release/doubleangels/NextDNSManager.svg?logo=github&label=GitHub%20Build&style=for-the-badge" alt="Github Build">
+  <img src="https://img.shields.io/github/release/doubleangels/NextDNSManager.svg?logo=github&label=GitHub%20Build&style=for-the-badge" alt="GitHub Build">
   <img src="https://img.shields.io/f-droid/v/com.doubleangels.nextdnsmanagement.svg?logo=F-Droid&label=F-Droid%20Build&style=for-the-badge" alt="F-Droid Build">
   <img src="https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/deploy.yml?label=Deployment%20Pipeline&style=for-the-badge" alt="Main Deployment">
   <img src="https://img.shields.io/github/actions/workflow/status/doubleangels/NextDNSManager/.github/workflows/test-dev.yml?label=Development%20Testing&style=for-the-badge" alt="Development Testing">
@@ -32,7 +32,7 @@ NextDNS Manager can be installed on any Android phone or tablet running Android 
 
 # Features:
 
-- **Intuitive Interface**: NextDNS Manager provides a user-friendly interface that allows you to manage your NextDNS settings with ease. The interface also includes Material You styling, as well as a dynamic/themed icon.
+- **Intuitive Interface**: NextDNS Manager provides a user-friendly interface that allows you to manage your NextDNS settings with ease. The interface also includes Material You styling, automatic dark mode, as well as a dynamic/themed icon. The application also supports 14 languages!
 
 - **Configuration Management**: You can configure your NextDNS settings, including filtering modes, blocklists, and whitelists.
 
@@ -40,13 +40,13 @@ NextDNS Manager can be installed on any Android phone or tablet running Android 
 
 - **Security and Privacy**: Enhance your online security and privacy by leveraging NextDNS' filtering capabilities.
 
-- **Easy Installation**: You can download and install NextDNS Manager from the Google Play Store, F-Droid, or directly from the Github, providing multiple installation options.
+- **Easy Installation**: You can download and install NextDNS Manager from the Google Play Store, F-Droid, or directly from GitHub, providing multiple installation options.
 
 # Installation
 
 ## Which installation method should I use?
 
-It depends on your privacy preferences and how often you wish to recieve updates.
+It depends on your privacy preferences and how often you wish to receive updates.
 
 - If you are able to use Google Play, use it.
 - If you're not able to use Google Play, sideloading an APK from this repository is your next best option.
@@ -57,7 +57,7 @@ For each build ("version") of the app, there are timelines for when the build wi
 | ---------------- | ------------- | -------------- | ------------- |
 | **Availability** | A few minutes | A few minutes  | Up to 14 days |
 
-F-Droid takes much longer than any of the other methods because they have a human involved in the process, each app is signed by a human on a computer that is airgapped (not connected to the internet).
+F-Droid takes much longer than any of the other methods because they have a human involved in the process, each app is signed by a human on a computer that is air-gapped (not connected to the internet).
 
 ## Google Play Store
 
@@ -83,40 +83,42 @@ The most recent APK is available for download [here](https://github.com/doublean
 
 # License
 
-NextDNS Manager is open-source and released under the [MIT License](LICENSE).
+NextDNS Manager is open-source and released under the [GPLv3](LICENSE).
 
 # Reporting Issues
 
-To report an issue, please open a new issue in this repository and provide the following information:
+If you encounter any issues while using NextDNS Manager, I encourage you to report them to me. To ensure a smooth resolution process, please follow these guidelines:
 
-- Device you're running the app on.
-- Version of Android you're using.
-- Version of the app you're using.
-- Detailed description of your problem.
+- **Device Information**: Provide details about the device you're running the app on.
+- **Android Version**: Specify the version of Android you're using.
+- **App Version**: Include the version of the NextDNS Manager app you're using.
+- **Detailed Description**: Clearly describe the problem you're experiencing, including any relevant error messages or behaviors.
+
+Please open a new issue in this repository to report the problem.
 
 # Suggestions and Feedback
 
-To make a suggestion or report feedback, please open a new issue in this repository and include a detailed description of your suggestion or feedback.
+Your suggestions and feedback are valuable to me as they help me improve NextDNS Manager. If you have any ideas for enhancements or feedback to share, please do so by opening a new issue in this repository. Be sure to provide a detailed description of your suggestion or feedback.
 
 # Contributing
 
-Contributions to NextDNS Manager are welcome! Whether it's bug fixes, new features, or documentation improvements, your contributions help make the app better for everyone.
+I welcome contributions to NextDNS Manager from the community. Whether it's bug fixes, new features, or improvements to documentation, your contributions make a significant difference.
 
 ## How Can You Contribute?
 
-You can contribute to NextDNS Manager in the following ways:
+You can contribute to NextDNS Manager in various ways:
 
 ### Reporting Bugs
 
-If you find a bug in the project, please open an issue and provide the following details:
+If you encounter a bug in the project, please open an issue and include the following details:
 
 - A clear and concise description of the bug.
 - Steps to reproduce the bug.
-- Expected behavior and actual behavior.
+- Expected behavior versus actual behavior.
 
 ### Suggesting Enhancements
 
-If you have ideas for enhancements or new features, feel free to open a discussion or issue to describe your suggestions. It's best to include as much detail as possible to help us understand your proposal.
+If you have ideas for enhancing NextDNS Manager, feel free to open an issue to describe your suggestions. Provide as much detail as possible to help me understand your proposal better.
 
 ### Documentation
 
@@ -124,27 +126,30 @@ Improvements to the project's documentation are always welcome. You can suggest 
 
 ### Translations
 
-See a translation that's not quite right? I only speak one language so please open an issue and tell me what's wrong. :)
-Please contributte to the translations and locales [here](https://crowdin.com/project/nextdns-manager).
+If you notice inaccuracies in translations, please open an issue to report them. You can also contribute to translations and locales [here](https://crowdin.com/project/nextdns-manager).
 
 ### Code Contributions
 
-If you're interested in making code contributions, please open a pull request!
+For those interested in making code contributions, please open a pull request with your proposed changes. Automated tests must pass for your pull request to be merged.
 
 ## Getting Started
 
-- Check if there are any open issues or discussions related to the topic you want to contribute to.
-- If there's an existing issue or discussion, make sure to comment and express your interest in working on it.
-- If there isn't an existing issue or discussion, you can create one to discuss and coordinate your contributions.
+To get started with contributing:
 
-# Security Policy
+- Check for any open issues related to the area you want to contribute to.
+- If there's an existing issue, comment to express your interest in working on it.
+- If no relevant issue exists, feel free to create one to discuss and coordinate your contributions.
 
-## Reporting a Vulnerability
+## Security Policy
 
-If you discover a vulnerability, please open an issue and provide the following information:
+### Reporting a Vulnerability
 
-- Device you're running the app on.
-- Version of Android you're using.
-- Version of the app you're using.
-- Detailed description of the vulnerability.
-</p>
+I take security seriously. If you discover a vulnerability, I appreciate your help in disclosing it to me in a responsible manner. Please follow these guidelines when reporting security vulnerabilities:
+
+1. **Privately Disclose**: Please avoid publicly disclosing the vulnerability until I have had a chance to address it. Instead, report it to me privately.
+
+2. **Provide Details**: When reporting a vulnerability, please provide me with sufficient details to understand and reproduce the issue. Include information such as the device you're running the app on, the version of Android you're using, the version of the app you're using, and a detailed description of the vulnerability.
+
+3. **Responsible Disclosure**: Allow me a reasonable amount of time to address the vulnerability before disclosing it publicly.
+
+We appreciate your efforts in helping me maintain the security of NextDNS Manager. Thank you for your cooperation.
