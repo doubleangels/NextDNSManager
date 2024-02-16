@@ -11,11 +11,11 @@
         <item name="popupTheme">@style/PopupTheme</item>
     </style>
     <style name="PopupTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:background">@color/accent1</item>
+        <item name="background">@color/accent1</item>
         <item name="android:textColorPrimary">@color/black</item>
     </style>
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:background">@color/accent1</item>
+        <item name="background">@color/accent1</item>
         <item name="android:textColorSecondary">@color/black</item>
     </style>
     <style name="PreferenceTheme" parent="@style/AppTheme">
