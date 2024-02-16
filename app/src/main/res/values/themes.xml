@@ -1,24 +1,27 @@
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/accent1</item>
-        <item name="colorSecondary">@color/accent1</item>
+        <item name="colorPrimary">@color/main</item>
+        <item name="colorSecondary">@color/main</item>
         <item name="colorTertiary">?android:attr/textColorPrimary</item>
-        <item name="android:statusBarColor">@color/accent1</item>
-        <item name="android:navigationBarColor">@color/accent1</item>
+        <item name="android:statusBarColor">@color/main</item>
+        <item name="android:navigationBarColor">@color/main</item>
         <item name="android:textColorSecondary">@color/black</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="windowNoTitle">true</item>
         <item name="popupTheme">@style/PopupTheme</item>
     </style>
     <style name="PopupTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="background">@color/accent1</item>
+        <item name="android:background">@color/main</item>
         <item name="android:textColorPrimary">@color/black</item>
     </style>
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="background">@color/accent1</item>
+        <item name="android:background">@color/main</item>
         <item name="android:textColorSecondary">@color/black</item>
     </style>
     <style name="PreferenceTheme" parent="@style/AppTheme">
-        <item name="colorAccent">@color/accent1_dark</item>
+        <item name="colorAccent">@color/main_dark</item>
+    </style>
+    <style name="StatusTheme" parent="@style/AppTheme">
+        <item name="android:background">@color/white</item>
     </style>
 </resources>
