@@ -9,7 +9,6 @@ on:
 jobs:
   build-debug:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,6 +29,9 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Setup Gradle sanity checking
+        uses: gradle/gradle-build-action@v3
+
       - name: Build debug APK with Gradle
         run: ./gradlew assembleDebug
 
@@ -37,8 +39,8 @@ jobs:
         run: ./gradlew bundleDebug
 
   build-release:
+    needs: build-debug
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -64,3 +66,4 @@ jobs:
 
       - name: Build release bundle with Gradle
         run: ./gradlew bundleRelease
+
