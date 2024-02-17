@@ -88,10 +88,10 @@ NextDNS Manager is open-source and released under the [GPLv3](LICENSE).
 
 If you encounter any issues while using NextDNS Manager, I encourage you to report them to me. To ensure a smooth resolution process, please follow these guidelines:
 
+- **Detailed Description**: Clearly describe the problem you're experiencing, including any relevant error messages or behaviors.
 - **Device Information**: Provide details about the device you're running the app on.
 - **Android Version**: Specify the version of Android you're using.
 - **App Version**: Include the version of the NextDNS Manager app you're using.
-- **Detailed Description**: Clearly describe the problem you're experiencing, including any relevant error messages or behaviors.
 
 Please open a new issue in this repository to report the problem.
 
