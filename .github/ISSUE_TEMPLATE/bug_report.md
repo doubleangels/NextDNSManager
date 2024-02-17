@@ -30,3 +30,6 @@ Steps to reproduce the behavior:
  - OS: [e.g. iOS8.1]
  - Browser [e.g. stock browser, safari]
  - Version [e.g. 22]
+
+**Additional context**
+[Add any other context or screenshots about the feature request here.]
