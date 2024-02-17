@@ -70,20 +70,6 @@ NextDNS Manager is available on F-Droid [here](https://f-droid.org/en/packages/c
 
 The most recent APK is available for download [here](https://github.com/doubleangels/NextDNSManager/releases).
 
-# Terms & Conditions/Privacy Policy
-
-- [Privacy Policy](https://doubleangels.github.io/privacyPolicy/nextdns.html)
-- [Terms and Conditions](https://doubleangels.github.io/privacyPolicy/nextdns_terms.html)
-
-# Donations
-
-- Donations are always optional.
-- [Donate Here](https://donate.stripe.com/4gw8yhbvH0mg6SQ7ss)
-
-# License
-
-NextDNS Manager is open-source and released under the [GPLv3](LICENSE).
-
 # Reporting Issues
 
 If you encounter any issues while using NextDNS Manager, I encourage you to report them to me. To ensure a smooth resolution process, please follow these guidelines:
@@ -106,3 +92,17 @@ Please learn how to contribute to this project [here](CONTRIBUTING.md).
 # Security Policy
 
 Learn about this application's security policy [here](SECURITY.md).
+
+# Terms & Conditions/Privacy Policy
+
+- [Privacy Policy](https://doubleangels.github.io/privacyPolicy/nextdns.html)
+- [Terms and Conditions](https://doubleangels.github.io/privacyPolicy/nextdns_terms.html)
+
+# Donations
+
+- Donations are always optional.
+- [Donate Here](https://donate.stripe.com/4gw8yhbvH0mg6SQ7ss)
+
+# License
+
+NextDNS Manager is open-source and released under the [GPLv3](LICENSE).
