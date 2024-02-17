@@ -98,3 +98,11 @@ Please open a new issue in this repository to report the problem.
 # Suggestions and Feedback
 
 Your suggestions and feedback are valuable to me as they help me improve NextDNS Manager. If you have any ideas for enhancements or feedback to share, please do so by opening a new issue in this repository. Be sure to provide a detailed description of your suggestion or feedback.
+
+# Contributing
+
+Please learn how to contribute to this project [here](CONTRIBUTING.md).
+
+# Security Policy
+
+Learn about this application's security policy [here](SECURITY.md).
