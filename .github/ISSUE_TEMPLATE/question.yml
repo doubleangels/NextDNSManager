@@ -1,14 +1,14 @@
 ---
-name: Question
-about: Ask a question or seek clarification
-label: 'type: question'
+name: Bug report
+about: Create a report to help us improve
+title: ''
+labels: 'type: question'
+assignees: '@doubleangels'
 
 ---
 
-### Question
+**Question**
+[ Replace with your question.]
 
-[Replace this text with your question]
-
-### Additional Context
-
-[Provide any additional context or details that may help answer the question]
+**Additional context**
+[Add any other context or screenshots about the feature request here.]
