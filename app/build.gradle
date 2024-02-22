@@ -61,7 +61,7 @@ dependencies {
     implementation 'com.jakewharton:process-phoenix:2.1.2'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'io.sentry:sentry-android:7.3.0'
+    implementation 'io.sentry:sentry-android:7.4.0'
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.22'))
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
     implementation 'androidx.preference:preference:1.2.1'
