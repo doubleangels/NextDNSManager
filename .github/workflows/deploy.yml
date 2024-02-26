@@ -1,4 +1,4 @@
-name: Deploy to release pipeline
+name: Deploy release
 
 on:
   workflow_dispatch:
