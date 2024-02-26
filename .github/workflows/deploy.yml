@@ -48,23 +48,10 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Retrieve version code for Github release
-        id: android_code
-        run: |
-          echo "::set-output name=VERSION_CODE::$(./gradlew -q printVersionCode)"
-
-      - name: Set version code environment variable
-        run: |
-          echo "VERSION_CODE=${{ steps.android_code.outputs.VERSION_CODE }}" >> $GITHUB_ENV
-
       - name: Retrieve version name for Github release
         id: android_version
         run: |
           echo "::set-output name=VERSION_NAME::$(./gradlew -q printVersionName)"
-
-      - name: Set version name environment variable
-        run: |
-          echo "VERSION_NAME=${{ steps.android_version.outputs.VERSION_NAME }}" >> $GITHUB_ENV
 
       - name: Setup Gradle sanity checking
         uses: gradle/gradle-build-action@v3
@@ -159,8 +146,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: v${{ env.VERSION_NAME }}
-          name: v${{ env.VERSION_NAME }}
+          tag: v${{ needs.build-for-github.outputs.android_version }}
+          name: v${{ needs.build-for-github.outputs.android_version }}
 
       - name: Upload APK to Github release
         id: upload_release_asset
