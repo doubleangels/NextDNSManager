@@ -23,6 +23,7 @@ import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
 import java.util.Locale;
 import java.util.Objects;
 
+import io.sentry.BuildConfig;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
