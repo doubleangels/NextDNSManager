@@ -23,7 +23,6 @@ import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
 import java.util.Locale;
 import java.util.Objects;
 
-import io.sentry.BuildConfig;
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
@@ -145,9 +144,10 @@ public class SettingsActivity extends AppCompatActivity {
             setupButton("privacy_policy_button", R.string.privacy_policy_url);
             setupButton("nextdns_privacy_policy_button", R.string.nextdns_privacy_policy_url);
             setupButton("nextdns_user_agreement_button", R.string.nextdns_user_agreement_url);
+            setupButton("version_button", R.string.versions_url);
 
             String versionName = BuildConfig.VERSION_NAME;
-            Preference versionPreference = findPreference("version");
+            Preference versionPreference = findPreference("version_button");
             if (versionPreference != null) {
                 versionPreference.setSummary(versionName);
             }
