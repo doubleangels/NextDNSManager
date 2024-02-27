@@ -48,11 +48,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Retrieve version name for Github release
-        id: android_version
-        run: |
-          echo "::set-output name=VERSION_NAME::$(./gradlew -q printVersionName)"
-
       - name: Setup Gradle sanity checking
         uses: gradle/gradle-build-action@v3
 
@@ -69,6 +64,9 @@ jobs:
           keyPassword: ${{ secrets.KEY_PASSWORD }}
         env:
           BUILD_TOOLS_VERSION: "34.0.0"
+
+      - name: Rename Github APK file
+        run: mv app/build/outputs/apk/release/app-release-unsigned-signed.apk app/build/outputs/apk/release/app-release.apk
 
       - name: Upload APK to Github release artifacts
         uses: actions/upload-artifact@v4
@@ -132,13 +130,17 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: github-release-apk
-          path: apk/
 
       - name: Download Google Play bundle from Github release artifacts
         uses: actions/download-artifact@v2
         with:
           name: google-play-bundle
-          path: app/build/outputs/bundle/release/
+
+      - name: Read Apk Info
+        id: android_version
+        uses: QueallyTech/read-apk-info-action@v1
+        with:
+          apkPath: app-release.apk
 
       - name: Create Github release using release-drafter
         id: create_release
@@ -146,8 +148,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: v${{ needs.build-for-github.outputs.android_version }}
-          name: v${{ needs.build-for-github.outputs.android_version }}
+          tag: v${{ steps.android_version.outputs.versionCode }}
+          name: v${{ steps.android_version.outputs.versionCode }}
 
       - name: Upload APK to Github release
         id: upload_release_asset

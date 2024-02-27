@@ -41,14 +41,6 @@ android {
     buildFeatures {
         buildConfig true
     }
-
-    tasks.register('printVersionName') {
-        println defaultConfig.versionName
-    }
-
-    tasks.register('printVersionCode') {
-        println defaultConfig.versionCode
-    }
 }
 
 dependencies {
