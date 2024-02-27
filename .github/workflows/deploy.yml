@@ -130,11 +130,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: github-release-apk
+          path: .
 
       - name: Download Google Play bundle from Github release artifacts
         uses: actions/download-artifact@v2
         with:
           name: google-play-bundle
+          path: .
 
       - name: Read Apk Info
         id: android_version
@@ -192,6 +194,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: github-release-apk
+          path: .
 
       - uses: guardsquare/appsweep-action@main
         with:
