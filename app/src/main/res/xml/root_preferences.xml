@@ -67,8 +67,7 @@
             app:summary="@string/disclaimer"
             app:title="@string/disclaimer_title" />
         <Preference
-            app:key="version"
-            app:selectable="false"
+            app:key="version_button"
             app:summary="0.0"
             app:title="@string/version" />
     </PreferenceCategory>

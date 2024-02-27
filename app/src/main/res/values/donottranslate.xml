@@ -15,6 +15,7 @@
     <string name="test_url">https://test.nextdns.io</string>
     <string name="translate_url">https://crowdin.com/project/nextdns-manager</string>
     <string name="using_nextdns_status">OK</string>
+    <string name="versions_url">https://github.com/doubleangels/NextDNSManager/releases</string>
     <string name="whitelist_domain_1">*.o244019.sentry.io</string>
     <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
 </resources>
