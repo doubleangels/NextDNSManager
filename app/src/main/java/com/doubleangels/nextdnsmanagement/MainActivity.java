@@ -50,27 +50,13 @@ public class MainActivity extends AppCompatActivity {
         // Start a Sentry transaction for the 'onCreate' method
         ITransaction mainActivityCreateTransaction = Sentry.startTransaction("MainActivity_onCreate()", "MainActivity");
         try {
-            Toolbar toolbar = findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-
-            // Set up selected language.
-            String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
-            String appLocaleStringResult = appLocaleString.split("_")[0];
-            Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
-            Locale.setDefault(appLocale);
-            Configuration appConfig = new Configuration();
-            appConfig.locale = appLocale;
-            getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
-
-            // Load user's preference for dark mode and set it
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
-            setupVisualIndicator(); // Set the visual connection status indicator
-            setClickListeners(); // Set click listeners for the status icon
-            provisionWebView(getString(R.string.main_url), darkMode); // Load the main web page
-            configureCookieManager(); // Configure cookies
+            setupToolbar();
+            setupLanguage();
+            setupDarkMode();
+            setupVisualIndicator();
+            setClickListeners();
+            provisionWebView(getString(R.string.main_url), darkMode);
+            configureCookieManager();
         } catch (Exception e) {
             Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
@@ -99,6 +85,28 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings -> startIntent(SettingsActivity.class);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+    }
+
+    private void setupLanguage() {
+        String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
+        String appLocaleStringResult = appLocaleString.split("_")[0];
+        Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
+        Locale.setDefault(appLocale);
+        Configuration appConfig = new Configuration();
+        appConfig.locale = appLocale;
+        getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
+    }
+
+    private void setupDarkMode() {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
     @SuppressLint("SetJavaScriptEnabled")
