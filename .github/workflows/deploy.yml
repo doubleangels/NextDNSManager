@@ -140,9 +140,9 @@ jobs:
 
       - name: Read APK info to get version code
         id: android_version
-        uses: QueallyTech/read-apk-info-action@v1
+        uses: hkusu/apk-info-action@v1
         with:
-          apkPath: app-release.apk
+          apk-path: app-release.apk
 
       - name: Create Github release using release-drafter
         id: create_release
@@ -150,8 +150,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: v${{ steps.android_version.outputs.versionCode }}
-          name: v${{ steps.android_version.outputs.versionCode }}
+          tag: v${{ steps.android_version.outputs.version-name }}
+          name: v${{ steps.android_version.outputs.version-name }}
 
       - name: Upload APK to Github release
         id: upload_release_asset
@@ -179,7 +179,7 @@ jobs:
         with:
           serviceAccountJson: service_account.json
           packageName: com.doubleangels.nextdnsmanagement
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: app-release.aab
           track: production
           whatsNewDirectory: whatsnew
 
