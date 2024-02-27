@@ -72,7 +72,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: github-release-apk
-          path: app/build/outputs/apk/release/app-release-unsigned-signed.apk
+          path: app/build/outputs/apk/release/app-release.apk
 
   build-for-google-play:
     needs: lint
