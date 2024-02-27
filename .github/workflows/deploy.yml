@@ -179,7 +179,7 @@ jobs:
         with:
           serviceAccountJson: service_account.json
           packageName: com.doubleangels.nextdnsmanagement
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          releaseFiles: app-release.aab
           track: production
           whatsNewDirectory: whatsnew
 
