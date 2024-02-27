@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             setupVisualIndicator();
             setClickListeners();
             provisionWebView(getString(R.string.main_url), darkMode);
-            configureCookieManager();
+            setupCookieManager();
         } catch (Exception e) {
             Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
@@ -109,6 +109,39 @@ public class MainActivity extends AppCompatActivity {
         darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
+    private void setupVisualIndicator() {
+        try {
+            VisualIndicator visualIndicator = new VisualIndicator();
+            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+        } catch (Exception e) {
+            Sentry.captureException(e); // Capture and report any exceptions to Sentry
+        }
+    }
+
+    private void setupWebViewClient(boolean isDarkThemeOn) {
+        if (isDarkThemeOn) {
+            // Configure the WebView client for handling web resources, including CSS
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
+                    return handleWebResourceRequests(url);
+                }
+            });
+        }
+    }
+
+    private void setupWebView() {
+        webView = findViewById(R.id.mWebview);
+        configureWebView(webView);
+    }
+
+    private void setupCookieManager() {
+        // Configure CookieManager to accept cookies and third-party cookies
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.setAcceptThirdPartyCookies(webView, true);
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     public void replaceCSS(String url, boolean isDarkThemeOn) {
         // Start a Sentry transaction for the 'replaceCSS' method
@@ -130,18 +163,13 @@ public class MainActivity extends AppCompatActivity {
         try {
             setupWebView();
             setupDownloadManager();
-            configureCookieManager();
+            setupCookieManager();
             replaceCSS(url, darkMode);
         } catch (Exception e) {
             Sentry.captureException(e); // Capture and report any exceptions to Sentry
         } finally {
             provisionWebViewTransaction.finish(); // Finish the transaction
         }
-    }
-
-    private void setupWebView() {
-        webView = findViewById(R.id.mWebview);
-        configureWebView(webView);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -162,18 +190,6 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setAllowContentAccess(false);
         webSettings.setAllowFileAccessFromFileURLs(false);
         webSettings.setAllowUniversalAccessFromFileURLs(false);
-    }
-
-    private void setupWebViewClient(boolean isDarkThemeOn) {
-        if (isDarkThemeOn) {
-            // Configure the WebView client for handling web resources, including CSS
-            webView.setWebViewClient(new WebViewClient() {
-                @Override
-                public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
-                    return handleWebResourceRequests(url);
-                }
-            });
-        }
     }
 
     @SuppressLint("NewApi")
@@ -253,22 +269,6 @@ public class MainActivity extends AppCompatActivity {
             downloadManager.enqueue(request);
             Toast.makeText(getApplicationContext(), "Downloading file!", Toast.LENGTH_LONG).show();
         });
-    }
-
-    private void configureCookieManager() {
-        // Configure CookieManager to accept cookies and third-party cookies
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        cookieManager.setAcceptThirdPartyCookies(webView, true);
-    }
-
-    private void setupVisualIndicator() {
-        try {
-            VisualIndicator visualIndicator = new VisualIndicator();
-            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
-        } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry
-        }
     }
 
     private void startIntent(Class<?> targetClass) {
