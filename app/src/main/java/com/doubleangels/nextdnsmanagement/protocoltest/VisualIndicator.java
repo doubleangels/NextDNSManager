@@ -13,15 +13,30 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.doubleangels.nextdnsmanagement.R;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonSyntaxException;
+
+import java.io.IOException;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class VisualIndicator {
+
+    private final OkHttpClient httpClient;
+
+    public VisualIndicator() {
+        this.httpClient = new OkHttpClient();
+    }
+
+
     public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
         ITransaction initiateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -66,37 +81,54 @@ public class VisualIndicator {
         checkInheritedDNS(context, activity);
     }
 
-    private void checkInheritedDNS(Context context, AppCompatActivity activity) {
-        TestApi nextdnsApi = TestClient.getBaseClient(context).create(TestApi.class);
-        Call<JsonObject> responseCall = nextdnsApi.getResponse();
-        responseCall.enqueue(new Callback<>() {
+    public void checkInheritedDNS(Context context, AppCompatActivity activity) {
+        Request request = new Request.Builder()
+                .url("https://test.nextdns.io")
+                .header("Accept", "application/json")
+                .header("Cache-Control", "no-cache")
+                .build();
+
+        httpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onResponse(@NonNull Call<JsonObject> call, @NonNull Response<JsonObject> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    JsonObject testResponse = response.body();
-                    String nextdnsStatus = testResponse.get(context.getString(R.string.nextdns_status)).getAsString();
-                    if (context.getString(R.string.using_nextdns_status).equalsIgnoreCase(nextdnsStatus)) {
-                        String nextdnsProtocol = testResponse.get(context.getString(R.string.nextdns_protocol)).getAsString();
-                        ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
-                        String[] secureProtocols = context.getResources().getStringArray(R.array.secure_protocols);
-                        boolean isSecure = false;
-                        for (String s : secureProtocols) {
-                            if (nextdnsProtocol.equalsIgnoreCase(s)) {
-                                isSecure = true;
-                                break;
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    try {
+                        assert response.body() != null;
+                        String jsonResponse = response.body().string().trim();
+                        Gson gson = new Gson();
+                        JsonElement jsonElement = gson.fromJson(jsonResponse, JsonElement.class);
+                        if (jsonElement.isJsonObject()) {
+                            JsonObject testResponse = jsonElement.getAsJsonObject();
+                            String nextDNSStatus = testResponse.get(context.getString(R.string.nextdns_status)).getAsString();
+                            if (context.getString(R.string.using_nextdns_status).equalsIgnoreCase(nextDNSStatus)) {
+                                String nextdnsProtocol = testResponse.get(context.getString(R.string.nextdns_protocol)).getAsString();
+                                ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
+                                String[] secureProtocols = context.getResources().getStringArray(R.array.secure_protocols);
+                                boolean isSecure = false;
+                                for (String s : secureProtocols) {
+                                    if (nextdnsProtocol.equalsIgnoreCase(s)) {
+                                        isSecure = true;
+                                        break;
+                                    }
+                                }
+                                if (connectionStatus != null) {
+                                    setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
+                                            isSecure ? R.color.green : R.color.orange, context);
+                                }
                             }
+                        } else {
+                            Sentry.captureMessage("Non-JSON response received");
                         }
-                        if (connectionStatus != null) {
-                            setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
-                                    isSecure ? R.color.green : R.color.orange, context);
-                        }
+                    } catch (JsonSyntaxException e) {
+                        Sentry.captureException(e);
                     }
                 }
+                response.close();
             }
 
             @Override
-            public void onFailure(@NonNull Call<JsonObject> call, @NonNull Throwable t) {
-                Sentry.captureException(t);
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Sentry.captureException(e);
             }
         });
     }
