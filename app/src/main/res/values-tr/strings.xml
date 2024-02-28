@@ -16,7 +16,9 @@
   <string name="error_tracking">Hata Takibi</string>
   <string name="generic_content_description">Bu genel bir içerik açıklamasıdır.</string>
   <string name="github">Github</string>
+  <string name="github_summary">Bu uygulamanın Github deposunu görüntülemek için dokunun.</string>
   <string name="github_issues">Bir Sorunu Bildir</string>
+  <string name="github_issues_summary">Bir sorunu bildirmek veya şu anda bildirilen sorunları görüntülemek için dokunun.</string>
   <string name="help_green">Güvenli DNS kullanılıyor VE cihaz NextDNS\'ye bağlı.</string>
   <string name="help_orange">Güvenli DNS KULLANILMIYOR VE cihaz NextDNS\'ye bağlı.</string>
   <string name="help_red">Güvenli DNS kullanılmıyor.</string>

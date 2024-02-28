@@ -16,7 +16,9 @@
   <string name="error_tracking">Virheiden seuranta</string>
   <string name="generic_content_description">Tämä on yleinen sisällönkuvaus.</string>
   <string name="github">Github</string>
+  <string name="github_summary">Napauta nähdäksesi tämän sovelluksen Github repository.</string>
   <string name="github_issues">Ilmoita ongelmasta</string>
+  <string name="github_issues_summary">Napauta raportoidaksesi ongelmasta tai katsoaksesi tällä hetkellä raportoituja ongelmia.</string>
   <string name="help_green">Suojattua DNS: ää käytetään JA laite on kytketty NextDNS: ään.</string>
   <string name="help_orange">Suojattua DNS:ää EI käytetä JA laite on kytketty NextDNS: ään.</string>
   <string name="help_red">Suojattua DNS:ää ei käytetä.</string>

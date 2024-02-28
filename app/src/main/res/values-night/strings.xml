@@ -16,7 +16,9 @@
   <string name="error_tracking">Error Tracking</string>
   <string name="generic_content_description">This is a generic content description.</string>
   <string name="github">Github</string>
+  <string name="github_summary">Tap to view this app\'s Github repository.</string>
   <string name="github_issues">Report an Issue</string>
+  <string name="github_issues_summary">Tap to report an issue or view currently reported ones.</string>
   <string name="help_green">Secure DNS is being used AND device is connected to NextDNS.</string>
   <string name="help_orange">Secure DNS is NOT being used AND device is connected to NextDNS.</string>
   <string name="help_red">Secure DNS is NOT being used.</string>

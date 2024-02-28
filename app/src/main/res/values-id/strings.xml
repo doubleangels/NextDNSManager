@@ -16,7 +16,9 @@
   <string name="error_tracking">Pelacakan Kesalahan</string>
   <string name="generic_content_description">Ini adalah deskripsi konten generik.</string>
   <string name="github">Github</string>
+  <string name="github_summary">Ketuk untuk melihat repositori Github aplikasi ini.</string>
   <string name="github_issues">Laporkan Masalah</string>
+  <string name="github_issues_summary">Ketuk untuk melaporkan masalah atau melihat masalah yang dilaporkan saat ini.</string>
   <string name="help_green">DNS aman sedang digunakan DAN perangkat terhubung ke NextDNS.</string>
   <string name="help_orange">DNS aman TIDAK digunakan DAN perangkat terhubung ke NextDNS.</string>
   <string name="help_red">DNS aman tidak digunakan.</string>

@@ -21,11 +21,11 @@
             app:title="@string/author" />
         <Preference
             app:key="github_button"
-            app:summary="@string/github_url"
+            app:summary="@string/github_summary"
             app:title="@string/github" />
         <Preference
             app:key="github_issue_button"
-            app:summary="@string/github_issues_url"
+            app:summary="@string/github_issues_summary"
             app:title="@string/github_issues" />
         <Preference
             app:key="donation_button"

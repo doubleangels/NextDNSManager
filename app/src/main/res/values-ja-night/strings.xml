@@ -16,7 +16,9 @@
   <string name="error_tracking">エラートラッキング</string>
   <string name="generic_content_description">これは一般的な内容説明です。</string>
   <string name="github">Github</string>
+  <string name="github_summary">このアプリの Github リポジトリを表示するにはタップします。</string>
   <string name="github_issues">問題を報告する</string>
+  <string name="github_issues_summary">タップして課題を報告するか、現在報告されている課題を表示します。</string>
   <string name="help_green">セキュア DNS が使用されており、デバイスが NextDNS に接続されています。</string>
   <string name="help_orange">セキュア DNS が使用されておらず、デバイスが NextDNS に接続されています。</string>
   <string name="help_red">セキュア DNS は使用されていません。</string>
