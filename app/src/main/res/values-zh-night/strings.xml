@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">nextDNS 管理器</string>
-  <string name="application_name">nextDNS 管理器</string>
+  <string name="app_name">NextDNS Manager</string>
+  <string name="application_name">NextDNS Manager</string>
   <string name="author">作者</string>
   <string name="back_title">返回</string>
   <string name="dark_mode_header">黑暗模式</string>
@@ -9,7 +9,7 @@
   <string name="dark_mode_title">黑暗模式</string>
   <string name="dark_navigation_title">黑暗模式</string>
   <string name="developer">开发者</string>
-  <string name="disclaimer">这个应用程序不是官方的 nextDNS 应用程序。</string>
+  <string name="disclaimer">这个应用程序不是官方的 NextDNS 应用程序。</string>
   <string name="disclaimer_title">免责声明</string>
   <string name="donation">捐款</string>
   <string name="donation_name">如果你想捐款，你可以在这里捐款。</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">SeuraavaDNS-hallinta</string>
-  <string name="application_name">SeuraavaDNS-hallinta</string>
+  <string name="app_name">NextDNS Manager</string>
+  <string name="application_name">NextDNS Manager</string>
   <string name="author">Kirjoittaja</string>
   <string name="back_title">Takaisin</string>
   <string name="dark_mode_header">Tumma tila</string>
