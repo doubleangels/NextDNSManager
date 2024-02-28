@@ -46,45 +46,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Start a Sentry transaction for the 'onCreate' method
         ITransaction mainActivityCreateTransaction = Sentry.startTransaction("MainActivity_onCreate()", "MainActivity");
         try {
             setupToolbar();
             setupLanguage();
             setupDarkMode();
             setupVisualIndicator();
-            setClickListeners();
+            setupClickListeners();
             provisionWebView(getString(R.string.main_url), darkMode);
             setupCookieManager();
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry
+            Sentry.captureException(e);
         } finally {
-            mainActivityCreateTransaction.finish(); // Finish the transaction
+            mainActivityCreateTransaction.finish();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        // Inflate the main menu
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        // Handle menu item clicks, navigate to the respective activities
-        switch (item.getItemId()) {
-            case R.id.back -> webView.goBack();
-            case R.id.refreshNextDNS -> webView.reload();
-            case R.id.pingNextDNS -> startIntent(PingActivity.class);
-            case R.id.testNextDNS -> startIntent(TestActivity.class);
-            case R.id.returnHome -> provisionWebView(getString(R.string.main_url), darkMode);
-            case R.id.settings -> startIntent(SettingsActivity.class);
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void setupToolbar() {
@@ -114,19 +89,29 @@ public class MainActivity extends AppCompatActivity {
             VisualIndicator visualIndicator = new VisualIndicator();
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry
+            Sentry.captureException(e);
         }
     }
 
-    private void setupWebViewClient(boolean isDarkThemeOn) {
-        if (isDarkThemeOn) {
-            // Configure the WebView client for handling web resources, including CSS
-            webView.setWebViewClient(new WebViewClient() {
-                @Override
-                public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
-                    return handleWebResourceRequests(url);
-                }
+    private void setupClickListeners() {
+        ImageView statusIcon = findViewById(R.id.connectionStatus);
+        if (statusIcon != null) {
+            statusIcon.setOnClickListener(v -> {
+                Intent helpIntent = new Intent(v.getContext(), StatusActivity.class);
+                startActivity(helpIntent);
             });
+        }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    public void provisionWebView(String url, Boolean darkMode) {
+        try {
+            setupWebView();
+            setupDownloadManager();
+            setupCookieManager();
+            replaceCSS(url, darkMode);
+        } catch (Exception e) {
+            Sentry.captureException(e);
         }
     }
 
@@ -135,131 +120,29 @@ public class MainActivity extends AppCompatActivity {
         configureWebView(webView);
     }
 
-    private void setupCookieManager() {
-        // Configure CookieManager to accept cookies and third-party cookies
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        cookieManager.setAcceptThirdPartyCookies(webView, true);
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    public void replaceCSS(String url, boolean isDarkThemeOn) {
-        // Start a Sentry transaction for the 'replaceCSS' method
-        ITransaction replaceCSSTransaction = Sentry.startTransaction("MainActivity_replaceCSS()", "MainActivity");
-        try {
-            setupWebViewClient(isDarkThemeOn);
-            webView.loadUrl(url);
-        } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry
-        } finally {
-            replaceCSSTransaction.finish(); // Finish the transaction
-        }
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    public void provisionWebView(String url, Boolean darkMode) {
-        // Start a Sentry transaction for the 'provisionWebView' method
-        ITransaction provisionWebViewTransaction = Sentry.startTransaction("MainActivity_provisionWebView()", "MainActivity");
-        try {
-            setupWebView();
-            setupDownloadManager();
-            setupCookieManager();
-            replaceCSS(url, darkMode);
-        } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry
-        } finally {
-            provisionWebViewTransaction.finish(); // Finish the transaction
-        }
-    }
-
     @SuppressLint("SetJavaScriptEnabled")
     private void configureWebView(WebView webView) {
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
-
-        // Configure WebView settings, such as enabling JavaScript, DOM storage, and cookies
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setDatabaseEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-
-        // Enable safer WebView settings
         webSettings.setAllowFileAccess(false);
         webSettings.setAllowContentAccess(false);
         webSettings.setAllowFileAccessFromFileURLs(false);
         webSettings.setAllowUniversalAccessFromFileURLs(false);
     }
 
-    @SuppressLint("NewApi")
-    private WebResourceResponse handleWebResourceRequests(String url) {
-        // Use a HashSet for faster URL matching
-        Set<String> allowedDomains = new HashSet<>(Arrays.asList(
-                "apple.nextdns.io", "help.nextdns.io", "bitpay.com", "github.com", "oisd.nl", "adguard.com",
-                "easylist.to", "disconnect.me", "developerdan.com", "someonewhocares.org", "pgl.yoyo",
-                "gitlab.com", "fanboy.co.nz", "oO.pages.dev", "mvps.org", "sysctl.org", "unchecky.com",
-                "lanik.us", "280blocker.net", "shallalist.de", "github.io", "molinero.dev", "abpvn.com",
-                "hostsfile.org", "firebog.net", "notabug.org", "donate.stripe.com"
-        ));
-
-        // Check if the URL matches any allowed domains
-        for (String domain : allowedDomains) {
-            if (url.contains(domain)) {
-                return null; // Allow certain domains, skip intercepting resources
-            }
-        }
-
-        // Create a map to store URL patterns and their corresponding resources
-        Map<String, String> resourceMap = new HashMap<>();
-        resourceMap.put(".css", "styles.css");
-        resourceMap.put("ens-text", "ens-text.png");
-        resourceMap.put("unstoppabledomains", "unstoppabledomains.png");
-        resourceMap.put("handshake", "handshake.png");
-        resourceMap.put("ipfs", "ipfs.png");
-
-        // Check for specific URL patterns and load corresponding resources
-        for (Map.Entry<String, String> entry : resourceMap.entrySet()) {
-            if (url.contains(entry.getKey())) {
-                if (entry.toString().contains(".css")) {
-                    return getCssWebResourceResponseFromAsset();
-                }
-                return getPngWebResourceResponse(entry.getValue());
-            }
-        }
-
-        return null; // Allow other requests, skip intercepting resources
-    }
-
-    @SuppressLint("NewApi")
-    private WebResourceResponse getCssWebResourceResponseFromAsset() {
-        try {
-            InputStream fileInput = getAssets().open("nextdns.css");
-            return getUtf8EncodedCssWebResourceResponse(fileInput); // Load and encode CSS from assets
-        } catch (IOException e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry
-        }
-        return null;
-    }
-
-    @SuppressLint("NewApi")
-    private WebResourceResponse getPngWebResourceResponse(String assetFileName) {
-        try {
-            InputStream is = getAssets().open(assetFileName);
-            return new WebResourceResponse("image/png", "UTF-8", is); // Load PNG resource
-        } catch (IOException e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry
-        }
-        return null;
-    }
-
-    @SuppressLint("NewApi")
-    private WebResourceResponse getUtf8EncodedCssWebResourceResponse(InputStream fileStream) {
-        return new WebResourceResponse("text/css", "UTF-8", fileStream); // Encode CSS
+    private void setupCookieManager() {
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.setAcceptThirdPartyCookies(webView, true);
     }
 
     private void setupDownloadManager() {
-        // Configure the WebView to handle downloads
         webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url.trim()));
             request.allowScanningByMediaScanner();
@@ -271,20 +154,108 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void setupWebViewClient(boolean isDarkThemeOn) {
+        if (isDarkThemeOn) {
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public WebResourceResponse shouldInterceptRequest(final WebView view, String url) {
+                    return handleWebResourceRequests(url);
+                }
+            });
+        }
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    public void replaceCSS(String url, boolean isDarkThemeOn) {
+        try {
+            setupWebViewClient(isDarkThemeOn);
+            webView.loadUrl(url);
+        } catch (Exception e) {
+            Sentry.captureException(e);
+        }
+    }
+
     private void startIntent(Class<?> targetClass) {
-        // Start a new activity based on the provided class
         Intent intent = new Intent(this, targetClass);
         startActivity(intent);
     }
 
-    private void setClickListeners() {
-        // Set a click listener for the status icon
-        ImageView statusIcon = findViewById(R.id.connectionStatus);
-        if (statusIcon != null) {
-            statusIcon.setOnClickListener(v -> {
-                Intent helpIntent = new Intent(v.getContext(), StatusActivity.class);
-                startActivity(helpIntent);
-            });
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.back -> webView.goBack();
+            case R.id.refreshNextDNS -> webView.reload();
+            case R.id.pingNextDNS -> startIntent(PingActivity.class);
+            case R.id.testNextDNS -> startIntent(TestActivity.class);
+            case R.id.returnHome -> provisionWebView(getString(R.string.main_url), darkMode);
+            case R.id.settings -> startIntent(SettingsActivity.class);
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressLint("NewApi")
+    private WebResourceResponse handleWebResourceRequests(String url) {
+        Set<String> allowedDomains = new HashSet<>(Arrays.asList(
+                "apple.nextdns.io", "help.nextdns.io", "bitpay.com", "github.com", "oisd.nl", "adguard.com",
+                "easylist.to", "disconnect.me", "developerdan.com", "someonewhocares.org", "pgl.yoyo",
+                "gitlab.com", "fanboy.co.nz", "oO.pages.dev", "mvps.org", "sysctl.org", "unchecky.com",
+                "lanik.us", "280blocker.net", "shallalist.de", "github.io", "molinero.dev", "abpvn.com",
+                "hostsfile.org", "firebog.net", "notabug.org", "donate.stripe.com"
+        ));
+        for (String domain : allowedDomains) {
+            if (url.contains(domain)) {
+                return null;
+            }
+        }
+        Map<String, String> resourceMap = new HashMap<>();
+        resourceMap.put(".css", "styles.css");
+        resourceMap.put("ens-text", "ens-text.png");
+        resourceMap.put("unstoppabledomains", "unstoppabledomains.png");
+        resourceMap.put("handshake", "handshake.png");
+        resourceMap.put("ipfs", "ipfs.png");
+        for (Map.Entry<String, String> entry : resourceMap.entrySet()) {
+            if (url.contains(entry.getKey())) {
+                if (entry.toString().contains(".css")) {
+                    return getCssWebResourceResponseFromAsset();
+                }
+                return getPngWebResourceResponse(entry.getValue());
+            }
+        }
+
+        return null;
+    }
+
+    @SuppressLint("NewApi")
+    private WebResourceResponse getCssWebResourceResponseFromAsset() {
+        try {
+            InputStream fileInput = getAssets().open("nextdns.css");
+            return getUtf8EncodedCssWebResourceResponse(fileInput);
+        } catch (IOException e) {
+            Sentry.captureException(e);
+        }
+        return null;
+    }
+
+    @SuppressLint("NewApi")
+    private WebResourceResponse getPngWebResourceResponse(String assetFileName) {
+        try {
+            InputStream is = getAssets().open(assetFileName);
+            return new WebResourceResponse("image/png", "UTF-8", is);
+        } catch (IOException e) {
+            Sentry.captureException(e);
+        }
+        return null;
+    }
+
+    @SuppressLint("NewApi")
+    private WebResourceResponse getUtf8EncodedCssWebResourceResponse(InputStream fileStream) {
+        return new WebResourceResponse("text/css", "UTF-8", fileStream);
     }
 }

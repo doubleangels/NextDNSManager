@@ -21,20 +21,16 @@ public class TestClient {
     }
 
     private static OkHttpClient createOkHttpClient(Context context) {
-        // Build OkHttpClient without interceptor
         return new OkHttpClient.Builder().build();
     }
 
     private static Retrofit createRetrofit(Context context) {
-        // Create OkHttpClient
         OkHttpClient client = createOkHttpClient(context);
-
-        // Build Retrofit instance
         return new Retrofit.Builder()
-                .baseUrl(context.getString(R.string.test_url)) // Base URL from resources
-                .addConverterFactory(GsonConverterFactory.create()) // Use Gson for JSON conversion
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create()) // Use RxJava2 for async calls
-                .client(client) // Set the OkHttpClient
+                .baseUrl(context.getString(R.string.test_url))
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .client(client)
                 .build();
     }
 }

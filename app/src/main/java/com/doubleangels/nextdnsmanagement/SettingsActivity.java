@@ -33,34 +33,27 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
-        // Start a Sentry transaction for the 'onCreate' method
-        ITransaction settingsCreateTransaction = Sentry.startTransaction("settings_onCreate()", "SettingsActivity");
+        ITransaction settingsCreateTransaction = Sentry.startTransaction("SettingsActivity_onCreate()", "SettingsActivity");
         try {
-            setupUI();
+            setupToolbar();
+            setupLanguage();
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            initializeViews();
+            setupVisualIndicator();
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry
+            Sentry.captureException(e);
         } finally {
-            settingsCreateTransaction.finish(); // Finish the transaction
+            settingsCreateTransaction.finish();
         }
     }
 
-    private void setupUI() {
+    private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-
-        // Apply dark mode.
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-
-        // Set up selected language.
-        setupSelectedLanguage();
-
-        initializeViews(); // Initialize the views for the settings
-        setVisualIndicator(); // Set the visual connection status indicator
     }
 
-    private void setupSelectedLanguage() {
+    private void setupLanguage() {
         String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
         String appLocaleStringResult = appLocaleString.split("_")[0];
         Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
@@ -77,63 +70,33 @@ public class SettingsActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    private void setVisualIndicator() {
+    private void setupVisualIndicator() {
         try {
             VisualIndicator visualIndicator = new VisualIndicator();
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            Sentry.captureException(e); // Capture and report any exceptions to Sentry
+            Sentry.captureException(e);
         }
     }
 
     private void restartActivity() {
         Intent intent = getIntent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        finish(); // Finish the current activity
-        startActivity(intent); // Start a new instance of the activity with updated language settings
+        finish();
+        startActivity(intent);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
+
         private final Preference.OnPreferenceChangeListener languageChangeListener = (preference, newValue) -> {
-            // Handle preference change
             ((SettingsActivity) requireActivity()).restartActivity();
             return true;
         };
 
-
-        private void setupButton(String buttonKey, int textResource) {
-            Preference button = findPreference(buttonKey);
-            if (button != null) {
-                button.setOnPreferenceClickListener(preference -> {
-                    try {
-                        if ("whitelist_domain_1_button".equals(buttonKey) || "whitelist_domain_2_button".equals(buttonKey)) {
-                            // Copy the text to the clipboard
-                            ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                            CharSequence copiedText = getString(textResource);
-                            ClipData copiedData = ClipData.newPlainText("text", copiedText);
-                            clipboardManager.setPrimaryClip(copiedData);
-                            Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Open the link
-                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
-                            startActivity(intent);
-                        }
-                    } catch (Exception e) {
-                        Sentry.captureException(e); // Capture and report any exceptions to Sentry
-                    }
-                    return true;
-                });
-            }
-        }
-
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
-            // Set up the preference change listener
-            setUpPreferenceChangeListener(languageChangeListener);
-
-            // Set up buttons
+            setupPreferenceChangeListener(languageChangeListener);
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
             setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
             setupButton("author_button", R.string.author_url);
@@ -145,24 +108,45 @@ public class SettingsActivity extends AppCompatActivity {
             setupButton("nextdns_privacy_policy_button", R.string.nextdns_privacy_policy_url);
             setupButton("nextdns_user_agreement_button", R.string.nextdns_user_agreement_url);
             setupButton("version_button", R.string.versions_url);
-
             String versionName = BuildConfig.VERSION_NAME;
             Preference versionPreference = findPreference("version_button");
             if (versionPreference != null) {
                 versionPreference.setSummary(versionName);
             }
         }
-        private void setUpPreferenceChangeListener(Preference.OnPreferenceChangeListener listener) {
+
+        private void setupButton(String buttonKey, int textResource) {
+            Preference button = findPreference(buttonKey);
+            if (button != null) {
+                button.setOnPreferenceClickListener(preference -> {
+                    try {
+                        if ("whitelist_domain_1_button".equals(buttonKey) || "whitelist_domain_2_button".equals(buttonKey)) {
+                            ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                            CharSequence copiedText = getString(textResource);
+                            ClipData copiedData = ClipData.newPlainText("text", copiedText);
+                            clipboardManager.setPrimaryClip(copiedData);
+                            Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        Sentry.captureException(e);
+                    }
+                    return true;
+                });
+            }
+        }
+
+        private void setupPreferenceChangeListener(Preference.OnPreferenceChangeListener listener) {
             Preference preference = findPreference(SettingsActivity.SELECTED_LANGUAGE);
             if (preference != null) {
                 preference.setOnPreferenceChangeListener(listener);
             }
         }
-
     }
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        // Inflate the menu for the activity
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
@@ -170,7 +154,6 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
-            // Handle the 'back' menu item, navigate to the MainActivity
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }
