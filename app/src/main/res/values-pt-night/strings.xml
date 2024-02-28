@@ -16,7 +16,9 @@
   <string name="error_tracking">Monitoramento de erros</string>
   <string name="generic_content_description">Essa é uma descrição genérica do conteúdo.</string>
   <string name="github">Github</string>
+  <string name="github_summary">Toque para ver o repositório Github deste aplicativo.</string>
   <string name="github_issues">Relatar um problema</string>
+  <string name="github_issues_summary">Toque para relatar um problema ou ver relatados atualmente.</string>
   <string name="help_green">O DNS seguro está sendo usado E o dispositivo está conectado ao NextDNS.</string>
   <string name="help_orange">O DNS seguro NÃO está sendo usado E o dispositivo está conectado ao NextDNS.</string>
   <string name="help_red">O DNS seguro NÃO está sendo usado.</string>

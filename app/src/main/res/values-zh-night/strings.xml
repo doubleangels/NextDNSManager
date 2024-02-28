@@ -16,7 +16,9 @@
   <string name="error_tracking">错误跟踪</string>
   <string name="generic_content_description">这是一个通用的内容描述。</string>
   <string name="github">Gith</string>
+  <string name="github_summary">点击查看此应用的 Github 仓库.</string>
   <string name="github_issues">报告问题</string>
+  <string name="github_issues_summary">点击报告一个问题或查看当前已报告的问题。</string>
   <string name="help_green">正在使用安全 DNS 并且设备已连接到 NextDNS。</string>
   <string name="help_orange">未使用安全 DNS 且设备已连接到 NextDNS。</string>
   <string name="help_red">未使用安全 DNS。</string>
