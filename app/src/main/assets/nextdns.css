@@ -316,6 +316,14 @@ div.mt-3>div.mb-2.mt-1.card>div>div.px-3.py-2.d-flex {
     background-color: #818181;
 }
 
+#root > div.mt-4.Analytics > div > div:nth-child(1) > div > div:nth-child(1), #root > div.mt-4.Analytics > div > div:nth-child(1) > div > div:nth-child(3), #root > div.mt-4.Logs.mb-5 > div > div:nth-child(1) > div > div:nth-child(1), #root > div.mt-4.Logs.mb-5 > div > div:nth-child(1) > div > div.flex-grow-1.ml-3 {
+	border-radius: 0.25rem;
+}
+
+#root > div.mt-4.Analytics > div > div:nth-child(1) > div > div.flex-grow-1.ml-3 {
+	background: #161616;
+}
+
 /* END Custom Dark Mode CSS */
 
 /*!* Bootstrap v4.6.0 (https://getbootstrap.com/)
