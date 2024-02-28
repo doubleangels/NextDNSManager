@@ -324,6 +324,10 @@ div.mt-3>div.mb-2.mt-1.card>div>div.px-3.py-2.d-flex {
 	background: #161616;
 }
 
+#root > div > div > div > div.card > div > form > div:nth-child(1) > input, #root > div > div > div > div.card > div > form > div:nth-child(2) > input, #root > div > div > div > div.card > div > form > div:nth-child(3) > input {
+	background: #2d2d2d;
+}
+
 /* END Custom Dark Mode CSS */
 
 /*!* Bootstrap v4.6.0 (https://getbootstrap.com/)
