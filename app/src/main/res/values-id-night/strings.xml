@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">Manajer NextDNS</string>
-  <string name="application_name">Manajer NextDNS</string>
+  <string name="app_name">NextDNS Manager</string>
+  <string name="application_name">NextDNS Manager</string>
   <string name="author">Penulis</string>
   <string name="back_title">Kembali</string>
   <string name="dark_mode_header">Mode Gelap</string>

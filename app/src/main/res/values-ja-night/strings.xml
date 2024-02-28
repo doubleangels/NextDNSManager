@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">ネクストDNSマネージャー</string>
-  <string name="application_name">ネクストDNSマネージャー</string>
+  <string name="app_name">NextDNS Manager</string>
+  <string name="application_name">NextDNS Manager</string>
   <string name="author">著者</string>
   <string name="back_title">戻る</string>
   <string name="dark_mode_header">ダークモード</string>
@@ -20,10 +20,10 @@
   <string name="github_issues">問題を報告する</string>
   <string name="github_issues_summary">タップして課題を報告するか、現在報告されている課題を表示します。</string>
   <string name="help_green">セキュア DNS が使用されており、デバイスが NextDNS に接続されています。</string>
-  <string name="help_orange">セキュア DNS が使用されておらず、デバイスが NextDNS に接続されています。</string>
+  <string name="help_orange">安全なDNSは使用されておらず、デバイスはNextDNSに接続されています。</string>
   <string name="help_red">セキュア DNS は使用されていません。</string>
   <string name="help_title">ヘルプ</string>
-  <string name="help_yellow">セキュア DNS が使用されていますが、デバイスが NextDNS に接続されていません。</string>
+  <string name="help_yellow">セキュアDNSは使用されていますが、デバイスはNextDNSに接続されていません。</string>
   <string name="home_title">ホーム</string>
   <string name="language">言語</string>
   <string name="language_instruction">希望する言語をタップして選択します。</string>

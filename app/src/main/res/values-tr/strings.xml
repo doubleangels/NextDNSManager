@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="app_name">NextDNS Yöneticisi</string>
-  <string name="application_name">NextDNS Yöneticisi</string>
+  <string name="app_name">NextDNS Manager</string>
+  <string name="application_name">NextDNS Manager</string>
   <string name="author">Yazar</string>
   <string name="back_title">Geri</string>
   <string name="dark_mode_header">Karanlık Mod</string>
