@@ -5,7 +5,6 @@ import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
 import android.net.NetworkRequest;
-import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -94,6 +93,7 @@ public class VisualIndicator {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     try {
+                        assert response.body() != null;
                         String jsonResponse = response.body().string().trim();
                         Gson gson = new Gson();
                         JsonElement jsonElement = gson.fromJson(jsonResponse, JsonElement.class);
