@@ -58,7 +58,6 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
 
     implementation 'com.jakewharton:process-phoenix:2.2.0'
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'io.sentry:sentry-android:7.4.0'
 
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.22'))
