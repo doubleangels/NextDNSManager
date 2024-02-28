@@ -16,7 +16,6 @@ import com.doubleangels.nextdnsmanagement.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 
@@ -90,7 +89,7 @@ public class VisualIndicator {
 
         httpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
                     try {
                         assert response.body() != null;
@@ -119,7 +118,7 @@ public class VisualIndicator {
                         } else {
                             Sentry.captureMessage("Non-JSON response received");
                         }
-                    } catch (JsonSyntaxException e) {
+                    } catch (Exception e) {
                         Sentry.captureException(e);
                     }
                 }
