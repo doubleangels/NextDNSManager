@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -54,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
             setupVisualIndicator();
             setupClickListeners();
             provisionWebView(getString(R.string.main_url), darkMode);
-            setupCookieManager();
         } catch (Exception e) {
             Sentry.captureException(e);
         } finally {
@@ -108,38 +106,27 @@ public class MainActivity extends AppCompatActivity {
         try {
             setupWebView();
             setupDownloadManager();
-            setupCookieManager();
             replaceCSS(url, darkMode);
         } catch (Exception e) {
             Sentry.captureException(e);
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView() {
         webView = findViewById(R.id.mWebview);
-        configureWebView(webView);
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    private void configureWebView(WebView webView) {
-        webView.setWebChromeClient(new WebChromeClient());
-        webView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setDatabaseEnabled(true);
         webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setAllowFileAccess(false);
-        webSettings.setAllowContentAccess(false);
-        webSettings.setAllowFileAccessFromFileURLs(false);
-        webSettings.setAllowUniversalAccessFromFileURLs(false);
-    }
-
-    private void setupCookieManager() {
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);
-        cookieManager.setAcceptThirdPartyCookies(webView, true);
+        webSettings.setAllowFileAccess(true);
+        webSettings.setAllowContentAccess(true);
+        webSettings.setAllowUniversalAccessFromFileURLs(true);
+        webSettings.setSaveFormData(true);
+        webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebViewClient(new WebViewClient());
     }
 
     private void setupDownloadManager() {
