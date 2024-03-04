@@ -133,7 +133,7 @@ jobs:
           path: .
 
       - name: Download Google Play bundle from Github release artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: google-play-bundle
           path: .
