@@ -115,8 +115,6 @@ public class VisualIndicator {
                                             isSecure ? R.color.green : R.color.orange, context);
                                 }
                             }
-                        } else {
-                            Sentry.captureMessage("Non-JSON response received");
                         }
                     } catch (Exception e) {
                         Sentry.captureException(e);
