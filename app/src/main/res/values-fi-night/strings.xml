@@ -4,16 +4,13 @@
   <string name="application_name">NextDNS Manager</string>
   <string name="author">Kirjoittaja</string>
   <string name="back_title">Takaisin</string>
-  <string name="dark_mode_header">Tumma tila</string>
-  <string name="dark_mode_summary">Muutokset saattavat vaatia sovelluksen uudelleenkäynnistystä.</string>
-  <string name="dark_mode_title">Tumma tila</string>
-  <string name="dark_navigation_title">Tumma tila</string>
+  <string name="crowdin">Crowdiini</string>
   <string name="developer">Kehittäjä</string>
   <string name="disclaimer">Tämä sovellus EI ole virallinen NextDNS-sovellus.</string>
   <string name="disclaimer_title">Vastuuvapauslauseke</string>
   <string name="donation">Lahjoita</string>
-  <string name="donation_name">Jos haluat lahjoittaa, voit tehdä sen täällä.</string>
-  <string name="error_tracking">Virheiden seuranta</string>
+  <string name="donation_name">Jos pidät tästä sovelluksesta ja haluat lahjoittaa, voit tehdä sen tässä. Huomaa, että tämä on täysin valinnainen. Kiitos tuestasi!</string>
+  <string name="sentry">Paikka</string>
   <string name="generic_content_description">Tämä on yleinen sisällönkuvaus.</string>
   <string name="github">Github</string>
   <string name="github_summary">Napauta nähdäksesi tämän sovelluksen Github repository.</string>
@@ -45,11 +42,10 @@
   <string name="test_short">Testi</string>
   <string name="test_title">Yhteystesti</string>
   <string name="translate">Kääntää</string>
-  <string name="translate_title">Apua kääntämiseen</string>
-  <string name="translate_summary">Auta kääntämään tämä sovellus ja tee siitä helpommin kaikkien saatavilla!</string>
+  <string name="translate_summary">Jos näet virheellisiä käännöksiä, auta minua korjaamaan ne täällä!</string>
   <string name="user_agreement">Käyttäjäsopimus</string>
   <string name="version">Versio</string>
   <string name="whitelist">Valkoinen luettelo</string>
-  <string name="whitelist_instructions">Jos haluat ottaa käyttöön anonymisoidun virheiden seurannan auttaaksesi minua parantamaan tätä sovellusta, lisää nämä verkkotunnukset sallittuun luetteloon NextDNS-kokoonpanossasi.</string>
+  <string name="whitelist_instructions">Jos nautit sovelluksesta ja haluat auttaa sen parantamisessa, ota käyttöön anonymisoitu virheseuranta auttaaksesi minua ymmärtämään virheitä ja vapauttamaan korjauksia niille. Jos teet tämän, henkilökohtaisia tietoja ei kerätä. Jos haluat valita, salli nämä verkkotunnukset NextDNS asetuksissa. Jos et halua osallistua, yksinkertaisesti mustalla listalla nämä verkkotunnukset NextDNS asetukset.</string>
   <string name="whitelist_title">Valkoinen luettelo</string>
 </resources>

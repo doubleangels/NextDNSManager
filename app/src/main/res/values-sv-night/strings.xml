@@ -4,16 +4,13 @@
   <string name="application_name">NextDNS Manager</string>
   <string name="author">Författaren</string>
   <string name="back_title">Tillbaka</string>
-  <string name="dark_mode_header">Mörkt läge</string>
-  <string name="dark_mode_summary">Ändringar kan kräva en omstart av appen.</string>
-  <string name="dark_mode_title">Mörkt läge</string>
-  <string name="dark_navigation_title">Mörkt läge</string>
+  <string name="crowdin">Crowdin</string>
   <string name="developer">Utvecklare</string>
   <string name="disclaimer">Denna app är INTE en officiell NextDNS-app.</string>
   <string name="disclaimer_title">friskrivningsklausul</string>
   <string name="donation">Donera</string>
-  <string name="donation_name">Om du vill donera kan du göra det här.</string>
-  <string name="error_tracking">Felspårning</string>
+  <string name="donation_name">Om du gillar denna app och vill donera, kan du göra det här. Observera att detta är helt frivilligt. Tack för ditt stöd!</string>
+  <string name="sentry">Sentry</string>
   <string name="generic_content_description">Detta är en generisk innehållsbeskrivning.</string>
   <string name="github">Github</string>
   <string name="github_summary">Tryck för att visa appens Github förråd.</string>
@@ -45,11 +42,10 @@
   <string name="test_short">Prova</string>
   <string name="test_title">Anslutningstest</string>
   <string name="translate">Översätt</string>
-  <string name="translate_title">Hjälp med att översätta</string>
-  <string name="translate_summary">Snälla hjälp med att översätta den här appen och göra den mer tillgänglig för alla!</string>
+  <string name="translate_summary">Om du ser några felaktiga översättningar, var snäll och hjälp mig att fixa dem här!</string>
   <string name="user_agreement">Användaravtal</string>
   <string name="version">Versionen</string>
   <string name="whitelist">Vitlista</string>
-  <string name="whitelist_instructions">Om du vill aktivera anonymiserad felspårning för att hjälpa mig att göra den här appen bättre, vänligen vitlista dessa domäner i din NextDNS-konfiguration.</string>
+  <string name="whitelist_instructions">Om du gillar appen och vill hjälpa till att göra den bättre, vänligen aktivera anonymiserad felspårning för att hjälpa mig att förstå buggar och släppfixar för dem. Ingen personlig information samlas in om du gör detta. För att välja in, vitlista dessa domäner i din NextDNS-konfiguration. Om du inte vill delta, svartlista dessa domäner i din NextDNS-konfiguration.</string>
   <string name="whitelist_title">Vitlista</string>
 </resources>
