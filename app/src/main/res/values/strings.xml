@@ -46,6 +46,6 @@
   <string name="user_agreement">User Agreement</string>
   <string name="version">Version</string>
   <string name="whitelist">Whitelist</string>
-  <string name="whitelist_instructions">If you enjoy the app and want to help make it better, please enable anonymized error tracking to help me understand bugs and release fixes for them. No personal information is collected if you do this. To opt in, whitelist these domains in your NextDNS configuration. If you don\\'t want to participate, simply blacklist these domains in your NextDNS configuration.</string>
+  <string name="whitelist_instructions">If you enjoy the app and want to help make it better, please enable anonymized error tracking to help me understand bugs and release fixes for them. No personal information is collected if you do this. To opt in, whitelist these domains in your NextDNS configuration. If you don\'t want to participate, simply blacklist these domains in your NextDNS configuration.</string>
   <string name="whitelist_title">Whitelist</string>
 </resources>
