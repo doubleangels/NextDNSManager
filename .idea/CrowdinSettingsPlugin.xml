@@ -4,5 +4,6 @@
     <option name="projectId" value="647298" />
     <option name="baseUrl" value="" />
     <option name="fileExtensions" value="" />
+    <option name="useGitBranch" value="true" />
   </component>
 </project>
