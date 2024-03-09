@@ -1,6 +1,6 @@
 plugins {
     id "com.android.application"
-    id "io.sentry.android.gradle" version "4.3.0"
+    id "io.sentry.android.gradle" version "4.3.1"
 }
 
 android {
@@ -58,9 +58,9 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
 
     implementation 'com.jakewharton:process-phoenix:2.2.0'
-    implementation 'io.sentry:sentry-android:7.4.0'
+    implementation 'io.sentry:sentry-android:7.5.0'
 
-    implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.22'))
+    implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.23'))
 }
 
 sentry {
