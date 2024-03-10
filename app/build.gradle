@@ -10,7 +10,7 @@ android {
         minSdkVersion 28
         targetSdk 34
         versionCode 209
-        versionName '4.12.0'
+        versionName '5.0.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "id", "it", "ja", "pl", "pt", "es", "sv", "tr"]
