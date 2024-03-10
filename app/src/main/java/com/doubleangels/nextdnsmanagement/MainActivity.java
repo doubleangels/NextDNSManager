@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
             GeckoView geckoView = findViewById(R.id.geckoView);
             geckoSession = new GeckoSession();
             geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {});
+            geckoSession.getSettings().setUseTrackingProtection(true);
             if (runtime == null) {
                 runtime = GeckoRuntime.create(this);
                 GeckoRuntimeSingleton.setInstance(runtime);
