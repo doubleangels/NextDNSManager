@@ -1,23 +1,23 @@
 package com.doubleangels.nextdnsmanagement;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import com.doubleangels.nextdnsmanagement.geckoruntime.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+
+import org.mozilla.geckoview.GeckoRuntime;
+import org.mozilla.geckoview.GeckoRuntimeSettings;
+import org.mozilla.geckoview.GeckoSession;
+import org.mozilla.geckoview.GeckoView;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -26,7 +26,7 @@ import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class PingActivity extends AppCompatActivity {
-    private WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +38,15 @@ public class PingActivity extends AppCompatActivity {
             setupLanguage();
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             setupVisualIndicator();
-            setupClickListeners();
-            setupWebView(getString(R.string.ping_url));
+            GeckoView view = findViewById(R.id.geckoView);
+            GeckoSession session = new GeckoSession();
+            GeckoRuntime runtime = GeckoRuntimeSingleton.getInstance();
+            session.setContentDelegate(new GeckoSession.ContentDelegate() {});
+            runtime.getSettings().setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY);
+            runtime.getSettings().setAutomaticFontSizeAdjustment(true);
+            session.open(runtime);
+            view.setSession(session);
+            session.loadUri(getString(R.string.ping_url));
         } catch (Exception e) {
             Sentry.captureException(e);
         } finally {
@@ -70,46 +77,6 @@ public class PingActivity extends AppCompatActivity {
         } catch (Exception e) {
             Sentry.captureException(e);
         }
-    }
-
-    private void setupClickListeners() {
-        ImageView statusIcon = findViewById(R.id.connectionStatus);
-        if (statusIcon != null) {
-            statusIcon.setOnClickListener(v -> {
-                Intent helpIntent = new Intent(v.getContext(), StatusActivity.class);
-                startActivity(helpIntent);
-            });
-        }
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    public void setupWebView(String url) {
-        try {
-            if (webView == null) {
-                webView = findViewById(R.id.mWebview);
-                setupWebViewSettings();
-            }
-            webView.loadUrl(url);
-        } catch (Exception e) {
-            Sentry.captureException(e);
-        }
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    private void setupWebViewSettings() {
-        webView = findViewById(R.id.mWebview);
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setDatabaseEnabled(true);
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setAllowFileAccess(false);
-        webSettings.setAllowContentAccess(false);
-        webSettings.setAllowUniversalAccessFromFileURLs(false);
-        webSettings.setSaveFormData(true);
-        webView.setWebChromeClient(new WebChromeClient());
-        webView.setWebViewClient(new WebViewClient());
     }
 
     @Override

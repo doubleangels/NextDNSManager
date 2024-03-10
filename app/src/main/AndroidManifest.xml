@@ -36,9 +36,6 @@
             android:name=".PingActivity"
             android:exported="false" />
         <activity
-            android:name=".TestActivity"
-            android:exported="false" />
-        <activity
             android:name=".StatusActivity"
             android:exported="false" />
         <activity

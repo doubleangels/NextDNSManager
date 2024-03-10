@@ -25,11 +25,6 @@
         android:fontFamily="sans-serif-thin">
     </item>
     <item
-        android:id="@+id/testNextDNS"
-        android:title="@string/test_title"
-        app:showAsAction="never">
-    </item>
-    <item
         android:id="@+id/settings"
         android:title="@string/settings"
         app:showAsAction="never">

@@ -36,8 +36,8 @@
             tools:layout_editor_absoluteY="17dp"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <WebView
-        android:id="@+id/mWebview"
+    <org.mozilla.geckoview.GeckoView
+        android:id="@+id/geckoView"
         android:layout_width="match_parent"
         android:layout_height="@+id/toolbar"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
