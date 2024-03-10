@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "name": "darkmode",
+  "version": "1.0",
+  "description": "Automatically injects dark mode CSS for NextDNS.",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://my.nextdns.io/*"
+      ],
+      "css": [
+        "nextdns.css"
+      ]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "nextdns@doubleangels.com"
+    }
+  }
+}

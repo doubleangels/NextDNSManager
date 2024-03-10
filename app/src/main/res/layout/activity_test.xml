@@ -35,8 +35,8 @@
             android:contentDescription="@string/generic_content_description"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <WebView
-        android:id="@+id/mWebview"
+    <org.mozilla.geckoview.GeckoView
+        android:id="@+id/geckoView"
         android:layout_width="match_parent"
         android:layout_height="@+id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
