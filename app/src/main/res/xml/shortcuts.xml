@@ -12,18 +12,5 @@
             android:targetClass="com.doubleangels.nextdnsmanagement.PingActivity" />
         <categories android:name="android.shortcut.conversation" />
     </shortcut>
-    <shortcut
-        android:shortcutId="test"
-        android:enabled="true"
-        android:icon="@drawable/test"
-        android:shortcutShortLabel="@string/test_short"
-        android:shortcutLongLabel="@string/test_long"
-        android:shortcutDisabledMessage="@string/test_disabled">
-        <intent
-            android:action="android.intent.action.VIEW"
-            android:targetPackage="com.doubleangels.nextdnsmanagement"
-            android:targetClass="com.doubleangels.nextdnsmanagement.TestActivity" />
-        <categories android:name="android.shortcut.conversation" />
-    </shortcut>
 
 </shortcuts>

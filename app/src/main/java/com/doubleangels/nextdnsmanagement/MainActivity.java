@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import com.doubleangels.nextdnsmanagement.geckoruntime.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
 
 import org.mozilla.geckoview.GeckoRuntime;
@@ -49,11 +50,14 @@ public class MainActivity extends AppCompatActivity {
             geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {});
             if (runtime == null) {
                 runtime = GeckoRuntime.create(this);
+                GeckoRuntimeSingleton.setInstance(runtime);
             }
             runtime.getSettings().setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY);
             runtime.getSettings().setAutomaticFontSizeAdjustment(true);
             geckoSession.open(runtime);
             geckoView.setSession(geckoSession);
+
+            //TODO: Fix locale in GeckoView
 
             if (darkMode) {
                 runtime.getWebExtensionController()
@@ -120,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
-
     private void setupVisualIndicator() {
         try {
             VisualIndicator visualIndicator = new VisualIndicator();
@@ -148,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.back -> geckoSession.goBack();
             case R.id.refreshNextDNS -> geckoSession.reload();
             case R.id.pingNextDNS -> startIntent(PingActivity.class);
-            case R.id.testNextDNS -> startIntent(TestActivity.class);
             case R.id.returnHome -> geckoSession.loadUri(getString(R.string.main_url));
             case R.id.settings -> startIntent(SettingsActivity.class);
         }

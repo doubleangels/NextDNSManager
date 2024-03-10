@@ -11,9 +11,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
+import com.doubleangels.nextdnsmanagement.geckoruntime.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
 
 import org.mozilla.geckoview.GeckoRuntime;
+import org.mozilla.geckoview.GeckoRuntimeSettings;
 import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoView;
 
@@ -24,8 +26,6 @@ import io.sentry.ITransaction;
 import io.sentry.Sentry;
 
 public class PingActivity extends AppCompatActivity {
-
-    private static GeckoRuntime runtime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +40,13 @@ public class PingActivity extends AppCompatActivity {
             setupVisualIndicator();
             GeckoView view = findViewById(R.id.geckoView);
             GeckoSession session = new GeckoSession();
+            GeckoRuntime runtime = GeckoRuntimeSingleton.getInstance();
             session.setContentDelegate(new GeckoSession.ContentDelegate() {});
-
-            if (runtime == null) {
-                // GeckoRuntime can only be initialized once per process
-                runtime = GeckoRuntime.create(this);
-            }
-
+            runtime.getSettings().setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY);
+            runtime.getSettings().setAutomaticFontSizeAdjustment(true);
             session.open(runtime);
             view.setSession(session);
-            session.loadUri("about:buildconfig");
-            //TODO: Fix broken ping activity
+            session.loadUri(getString(R.string.ping_url));
         } catch (Exception e) {
             Sentry.captureException(e);
         } finally {
