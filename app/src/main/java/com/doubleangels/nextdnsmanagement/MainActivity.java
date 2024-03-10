@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 runtime.getWebExtensionController()
                         .ensureBuiltIn("resource://android/assets/darkmode/", "nextdns@doubleangels.com")
                         .accept(
-                                extension -> Log.i("NextDNSManager", "WebExtension installed successfully."),
-                                e -> Log.e("NextDNSManager", "Error installing WebExtension:", e)
+                                extension -> Sentry.addBreadcrumb("WebExtension installed successfully!"),
+                                e -> Sentry.addBreadcrumb("Error installing WebExtension: " + e)
                         );
             } else {
                 String extensionId = "nextdns@doubleangels.com";
@@ -75,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
                             found = true;
                             runtime.getWebExtensionController().uninstall(extension)
                                     .then(result -> {
-                                        Log.i("NextDNSManager", "WebExtension installed successfully.");
+                                        Sentry.addBreadcrumb("WebExtension uninstalled successfully!");
                                         return null;
                                     })
                                     .exceptionally(throwable -> {
-                                        Log.e("NextDNSManager", "Error uninstalling WebExtension:", throwable);
+                                        Sentry.addBreadcrumb("Error uninstalling WebExtension: " + throwable);
                                         return null;
                                     });
                             break;
