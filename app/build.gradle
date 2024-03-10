@@ -44,11 +44,6 @@ android {
     }
 }
 
-ext {
-    geckoviewChannel = "nightly"
-    geckoviewVersion = "125.0.20240309210803"
-}
-
 repositories {
     maven {
         url "https://maven.mozilla.org/maven2/"
@@ -63,16 +58,11 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
     implementation 'androidx.preference:preference:1.2.1'
 
-    implementation 'com.jakewharton:process-phoenix:2.2.0'
-
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
 
-    implementation 'io.sentry:sentry-android:7.5.0'
+    implementation 'io.sentry:sentry-android:7.6.0'
 
-    implementation "org.mozilla.geckoview:geckoview-${geckoviewChannel}:${geckoviewVersion}"
+    implementation "org.mozilla.geckoview:geckoview:123.0.20240304104836"
 
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.23'))
 }
