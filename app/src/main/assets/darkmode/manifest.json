@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "darkmode",
   "version": "1.0",
-  "description": "Automatically injects dark mode CSS for NextDNS.",
+  "description": "Automatically injects dark mode content and assets for NextDNS.",
   "content_scripts": [
     {
       "matches": [
