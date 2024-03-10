@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         ITransaction mainActivityCreateTransaction = Sentry.startTransaction("MainActivity_onCreate()", "MainActivity");
         try {
             setupToolbar();
-            setupLanguage();
+            String appLocale = setupLanguage();
             setupDarkMode();
             setupVisualIndicator();
             GeckoView geckoView = findViewById(R.id.geckoView);
@@ -54,10 +54,9 @@ public class MainActivity extends AppCompatActivity {
             }
             runtime.getSettings().setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY);
             runtime.getSettings().setAutomaticFontSizeAdjustment(true);
+            runtime.getSettings().setLocales(new String[] {appLocale});
             geckoSession.open(runtime);
             geckoView.setSession(geckoSession);
-
-            //TODO: Fix locale in GeckoView
 
             if (darkMode) {
                 runtime.getWebExtensionController()
@@ -108,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
-    private void setupLanguage() {
+    private String setupLanguage() {
         String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
         String appLocaleStringResult = appLocaleString.split("_")[0];
         Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
@@ -116,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         Configuration appConfig = new Configuration();
         appConfig.locale = appLocale;
         getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
+        return appLocaleStringResult;
     }
 
     private void setupDarkMode() {
