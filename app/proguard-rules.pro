@@ -9,24 +9,13 @@
 -keepattributes Signature, *Annotation*, EnclosingMethod
 -keep class com.google.gson.stream.** { *; }
 
-# Retrofit 2.X
--dontwarn retrofit2.**
--keep class retrofit2.** { *; }
--keepattributes Signature, Exceptions
-
-# Keep Retrofit annotations and their methods
--keepclasseswithmembers class * {
-    @retrofit2.http.* <methods>;
-}
-
-# Keep Retrofit interface annotations
--keep,allowobfuscation interface retrofit2.Callback
-
-# Keep Retrofit method parameters (e.g., @Path, @Query, @Body)
--keepclassmembers,allowobfuscation class * {
-    @retrofit2.http.* <methods>;
-}
-
 # Keep Lifecycle ViewModel classes
 -keep class androidx.lifecycle.** { *; }
 -keep interface androidx.lifecycle.** { *; }
+
+# GeckoView rules
+-dontwarn java.beans.BeanInfo
+-dontwarn java.beans.FeatureDescriptor
+-dontwarn java.beans.IntrospectionException
+-dontwarn java.beans.Introspector
+-dontwarn java.beans.PropertyDescriptor
