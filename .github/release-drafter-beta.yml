@@ -1,0 +1,6 @@
+prerelease: true
+prerelease-identifier: beta
+template: |
+  ## Changelog
+
+  $CHANGES
