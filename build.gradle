@@ -10,10 +10,6 @@ buildscript {
     }
 }
 
-plugins {
-    id "io.sentry.android.gradle" version "4.3.1"
-}
-
 allprojects {
     repositories {
         google()
