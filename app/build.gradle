@@ -56,13 +56,9 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
     implementation 'androidx.preference:preference:1.2.1'
-
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
     implementation 'io.sentry:sentry-android:7.6.0'
-
     implementation("org.mozilla.geckoview:geckoview:123.0.20240304104836")
-
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.23'))
 }
 

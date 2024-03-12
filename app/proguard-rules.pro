@@ -25,7 +25,6 @@
     @androidx.lifecycle.ViewModelProvider$NewInstanceFactory <init>(...);
 }
 
-
 # Keep Kotlin metadata for Kotlin reflection
 -keep class kotlin.Metadata { *; }
 -dontwarn kotlin.**
