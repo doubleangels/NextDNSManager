@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -32,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static GeckoRuntime runtime;
     private GeckoSession geckoSession;
-    private Boolean darkMode;
 
     @SuppressLint("WrongThread")
     @Override
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             setupToolbar();
             String appLocale = setupLanguage();
-            setupDarkMode();
+            Boolean darkMode = setupDarkMode();
             setupVisualIndicator();
             GeckoView geckoView = findViewById(R.id.geckoView);
             geckoSession = new GeckoSession();
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
             runtime.getSettings().setLocales(new String[] {appLocale});
             geckoSession.open(runtime);
             geckoView.setSession(geckoSession);
-
             if (darkMode) {
                 runtime.getWebExtensionController()
                         .ensureBuiltIn("resource://android/assets/darkmode/", "nextdns@doubleangels.com")
@@ -87,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                     if (!found) {
-                        Log.i("NextDNSManager", "WebExtension not found.");
+                        Sentry.addBreadcrumb("WebExtension not found!");
                     }
                     return null;
                 });
@@ -119,10 +116,10 @@ public class MainActivity extends AppCompatActivity {
         return appLocaleStringResult;
     }
 
-    private void setupDarkMode() {
+    private Boolean setupDarkMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
+        return currentNightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
     private void setupVisualIndicator() {
