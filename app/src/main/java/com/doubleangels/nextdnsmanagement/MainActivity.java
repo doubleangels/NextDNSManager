@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static GeckoRuntime runtime;
     private GeckoSession geckoSession;
+    private Boolean darkMode;
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("WrongThread")
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             }
             setupToolbar();
             String appLocale = setupLanguage();
-            Boolean darkMode = setupDarkMode();
+            setupDarkMode();
             setupVisualIndicator();
             GeckoView geckoView = findViewById(R.id.geckoView);
             geckoSession = new GeckoSession();
@@ -127,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
         return appLocaleStringResult;
     }
 
-    private Boolean setupDarkMode() {
+    private void setupDarkMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        return currentNightMode == Configuration.UI_MODE_NIGHT_YES;
+        darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
     }
 
     private void setupVisualIndicator() {
