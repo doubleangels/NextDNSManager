@@ -18,6 +18,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLException;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
@@ -26,6 +31,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.internal.http2.ConnectionShutdownException;
 
 public class VisualIndicator {
 
@@ -125,7 +131,15 @@ public class VisualIndicator {
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Sentry.captureException(e);
+                if (e instanceof UnknownHostException ||
+                        e instanceof SocketTimeoutException ||
+                        e instanceof SocketException ||
+                        e instanceof SSLException ||
+                        e instanceof ConnectionShutdownException) {
+                    Sentry.addBreadcrumb("Network exception captured: " + e);
+                } else {
+                    Sentry.captureException(e);
+                }
             }
         });
     }
