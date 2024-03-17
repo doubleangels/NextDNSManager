@@ -3,14 +3,12 @@
   "name": "darkmode",
   "version": "1.0",
   "description": "Automatically injects dark mode content and assets for NextDNS.",
+  "permissions": ["activeTab", "<all_urls>"],
   "content_scripts": [
     {
-      "matches": [
-        "*://my.nextdns.io/*"
-      ],
-      "css": [
-        "nextdns.css"
-      ]
+      "matches": ["https://my.nextdns.io/*"],
+      "js": ["darkmode.js"],
+      "run_at": "document_start"
     }
   ],
   "browser_specific_settings": {

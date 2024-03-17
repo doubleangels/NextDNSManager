@@ -62,42 +62,27 @@ public class MainActivity extends AppCompatActivity {
             if (runtime == null) {
                 runtime = GeckoRuntime.create(this);
                 GeckoRuntimeSingleton.setInstance(runtime);
+                runtime.getSettings().setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY);
+                runtime.getSettings().setAutomaticFontSizeAdjustment(true);
             }
-            runtime.getSettings().setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY);
-            runtime.getSettings().setAutomaticFontSizeAdjustment(true);
             runtime.getSettings().setLocales(new String[] {appLocale});
             geckoSession.open(runtime);
             geckoView.setSession(geckoSession);
             if (darkMode) {
                 runtime.getWebExtensionController()
-                        .ensureBuiltIn("resource://android/assets/darkmode/", "nextdns@doubleangels.com")
-                        .accept(
-                                extension -> Sentry.addBreadcrumb("WebExtension installed successfully!"),
-                                e -> Sentry.addBreadcrumb("Error installing WebExtension: " + e)
-                        );
+                        .ensureBuiltIn("resource://android/assets/darkmode/", "nextdns@doubleangels.com");
             } else {
                 String extensionId = "nextdns@doubleangels.com";
                 runtime.getWebExtensionController().list().then(extensions -> {
-                    boolean found = false;
-                    assert extensions != null;
-                    for (WebExtension extension : extensions) {
-                        if (extension.id.equals(extensionId)) {
-                            found = true;
-                            runtime.getWebExtensionController().uninstall(extension)
-                                    .then(result -> {
-                                        Sentry.addBreadcrumb("WebExtension uninstalled successfully!");
-                                        return null;
-                                    })
-                                    .exceptionally(throwable -> {
-                                        Sentry.addBreadcrumb("Error uninstalling WebExtension: " + throwable);
-                                        return null;
-                                    });
-                            break;
+                    if (extensions != null) {
+                        for (WebExtension extension : extensions) {
+                            if (extension.id.equals(extensionId)) {
+                                runtime.getWebExtensionController().uninstall(extension);
+                                return null;
+                            }
                         }
                     }
-                    if (!found) {
-                        Sentry.addBreadcrumb("WebExtension not found!");
-                    }
+                    Sentry.addBreadcrumb("WebExtension not found!");
                     return null;
                 });
             }
