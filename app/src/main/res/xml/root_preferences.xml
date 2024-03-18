@@ -1,5 +1,16 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
+        app:key="darkmode"
+        app:title="@string/darkmode">
+        <ListPreference
+            app:key="darkmode_override"
+            app:title="@string/darkmode_instructions"
+            app:summary="%s"
+            app:entries="@array/darkmode_entries"
+            app:entryValues="@array/darkmode_entries_values"
+            app:defaultValue="match" />
+    </PreferenceCategory>
+    <PreferenceCategory
         app:key="sentry"
         app:title="@string/sentry">
         <Preference

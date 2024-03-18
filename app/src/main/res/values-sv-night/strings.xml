@@ -5,6 +5,8 @@
   <string name="author">Författaren</string>
   <string name="back_title">Tillbaka</string>
   <string name="crowdin">Crowdin</string>
+  <string name="darkmode">Mörkt läge</string>
+  <string name="darkmode_instructions">Mörkt läge inställning</string>
   <string name="developer">Utvecklare</string>
   <string name="disclaimer">Denna app är INTE en officiell NextDNS-app.</string>
   <string name="disclaimer_title">friskrivningsklausul</string>

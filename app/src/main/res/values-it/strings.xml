@@ -5,6 +5,8 @@
   <string name="author">Autore</string>
   <string name="back_title">Indietro</string>
   <string name="crowdin">Crowdin</string>
+  <string name="darkmode">Modalità Oscura</string>
+  <string name="darkmode_instructions">Impostazioni Modalità Scura</string>
   <string name="developer">Sviluppatore</string>
   <string name="disclaimer">Questa app NON è un\'app NextDNS ufficiale.</string>
   <string name="disclaimer_title">Esclusione di responsabilità</string>

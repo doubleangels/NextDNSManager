@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -34,10 +36,11 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         ITransaction settingsCreateTransaction = Sentry.startTransaction("SettingsActivity_onCreate()", "SettingsActivity");
+        SharedPreferences sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
         try {
             setupToolbar();
             setupLanguage();
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            setupDarkMode(sharedPreferences);
             initializeViews();
             setupVisualIndicator();
         } catch (Exception e) {
@@ -70,6 +73,18 @@ public class SettingsActivity extends AppCompatActivity {
                 .commitNow();
     }
 
+    private void setupDarkMode(SharedPreferences sharedPreferences) {
+        String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
+        Sentry.addBreadcrumb("Got string " + darkModeOverride + "from sharedPreferences.");
+        if (darkModeOverride.contains("match")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        } else if (darkModeOverride.contains("on")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
     private void setupVisualIndicator() {
         try {
             VisualIndicator visualIndicator = new VisualIndicator();
@@ -96,6 +111,10 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+            ListPreference darkModePreference = findPreference("darkmode_override");
+            assert darkModePreference != null;
+            setupDarkModeChangeListener(darkModePreference, sharedPreferences);
             setupPreferenceChangeListener(languageChangeListener);
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
             setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
@@ -125,9 +144,11 @@ public class SettingsActivity extends AppCompatActivity {
                             CharSequence copiedText = getString(textResource);
                             ClipData copiedData = ClipData.newPlainText("text", copiedText);
                             clipboardManager.setPrimaryClip(copiedData);
+                            Sentry.addBreadcrumb("Copied whitelist domain to clipboard.");
                             Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
                         } else {
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
+                            Sentry.addBreadcrumb("Visiting " + getString(textResource) + ".");
                             startActivity(intent);
                         }
                     } catch (Exception e) {
@@ -138,10 +159,21 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
 
-        private void setupPreferenceChangeListener(Preference.OnPreferenceChangeListener listener) {
+        private void setupDarkModeChangeListener(ListPreference setting, SharedPreferences sharedPreferences) {
+            setting.setOnPreferenceChangeListener((preference, newValue) -> {
+                SharedPreferences.Editor preferenceEdit = sharedPreferences.edit();
+                preferenceEdit.putString("darkmode_override", newValue.toString());
+                preferenceEdit.apply();
+                Sentry.addBreadcrumb("Wrote string " + newValue + "to sharedPreferences.");
+                return true;
+            });
+        }
+
+        private void setupPreferenceChangeListener(Preference.OnPreferenceChangeListener setting) {
             Preference preference = findPreference(SettingsActivity.SELECTED_LANGUAGE);
             if (preference != null) {
-                preference.setOnPreferenceChangeListener(listener);
+                Sentry.addBreadcrumb("Set language to " + setting.toString() + ".");
+                preference.setOnPreferenceChangeListener(setting);
             }
         }
     }

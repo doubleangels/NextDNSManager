@@ -5,6 +5,8 @@
   <string name="author">Yazar</string>
   <string name="back_title">Geri</string>
   <string name="crowdin">Crowdin</string>
+  <string name="darkmode">Karanlık Mod</string>
+  <string name="darkmode_instructions">Karanlık Mod Ayarı</string>
   <string name="developer">Geliştirici</string>
   <string name="disclaimer">Bu uygulama resmi bir NextDNS uygulaması DEĞİLDİR.</string>
   <string name="disclaimer_title">Yasal Uyarı</string>

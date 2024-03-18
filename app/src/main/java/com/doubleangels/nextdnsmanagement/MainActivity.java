@@ -4,6 +4,7 @@ import static android.Manifest.permission.POST_NOTIFICATIONS;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -51,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
             if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
             }
+            SharedPreferences sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
             setupToolbar();
             String appLocale = setupLanguage();
-            setupDarkMode();
+            setupDarkMode(sharedPreferences);
             setupVisualIndicator();
             GeckoView geckoView = findViewById(R.id.geckoView);
             geckoSession = new GeckoSession();
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
             geckoSession.getSettings().setAllowJavascript(true);
             geckoSession.getSettings().setUseTrackingProtection(true);
+            geckoSession.getSettings().setSuspendMediaWhenInactive(true);
             geckoSession.loadUri(getString(R.string.main_url));
         } catch (Exception e) {
             Sentry.captureException(e);
@@ -113,10 +116,20 @@ public class MainActivity extends AppCompatActivity {
         return appLocaleStringResult;
     }
 
-    private void setupDarkMode() {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
+    private void setupDarkMode(SharedPreferences sharedPreferences) {
+        String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
+        Sentry.addBreadcrumb("Got string " + darkModeOverride + "from sharedPreferences.");
+        if (darkModeOverride.contains("match")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
+        } else if (darkModeOverride.contains("on")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            darkMode = true;
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            darkMode = false;
+        }
     }
 
     private void setupVisualIndicator() {

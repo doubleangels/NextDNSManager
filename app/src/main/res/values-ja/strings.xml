@@ -5,6 +5,8 @@
   <string name="author">著者</string>
   <string name="back_title">戻る</string>
   <string name="crowdin">Crowdin</string>
+  <string name="darkmode">ダークモード</string>
+  <string name="darkmode_instructions">ダークモードの設定</string>
   <string name="developer">開発者</string>
   <string name="disclaimer">このアプリは公式のNextDNSアプリではありません。</string>
   <string name="disclaimer_title">免責事項</string>

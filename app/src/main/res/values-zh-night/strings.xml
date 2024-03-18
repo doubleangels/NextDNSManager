@@ -5,6 +5,8 @@
   <string name="author">作者</string>
   <string name="back_title">返回</string>
   <string name="crowdin">Crowdin</string>
+  <string name="darkmode">黑暗模式</string>
+  <string name="darkmode_instructions">暗色模式设置</string>
   <string name="developer">开发者</string>
   <string name="disclaimer">这个应用程序不是官方的 NextDNS 应用程序。</string>
   <string name="disclaimer_title">免责声明</string>

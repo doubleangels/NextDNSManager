@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="darkmode_entries">
+        <item>Match</item>
+        <item>On</item>
+        <item>Off</item>
+    </string-array>
+    <string-array name="darkmode_entries_values">
+        <item>match</item>
+        <item>on</item>
+        <item>off</item>
+    </string-array>
+</resources>

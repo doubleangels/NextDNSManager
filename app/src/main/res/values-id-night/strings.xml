@@ -5,6 +5,8 @@
   <string name="author">Penulis</string>
   <string name="back_title">Kembali</string>
   <string name="crowdin">Crowdin</string>
+  <string name="darkmode">Mode Gelap</string>
+  <string name="darkmode_instructions">Pengaturan Mode Gelap</string>
   <string name="developer">Pengembang</string>
   <string name="disclaimer">Aplikasi ini BUKAN aplikasi NextDNS resmi.</string>
   <string name="disclaimer_title">Penafian</string>
