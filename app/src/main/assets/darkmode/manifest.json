@@ -7,8 +7,7 @@
   "content_scripts": [
     {
       "matches": ["https://my.nextdns.io/*"],
-      "js": ["darkmode.js"],
-      "run_at": "document_start"
+      "css": ["darkmode.css"]
     }
   ],
   "browser_specific_settings": {
