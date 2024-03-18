@@ -7,7 +7,7 @@
   "content_scripts": [
     {
       "matches": ["https://my.nextdns.io/*"],
-      "css": ["darkmode.css"]
+      "css": ["minimized.css"]
     }
   ],
   "browser_specific_settings": {
