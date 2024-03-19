@@ -174,7 +174,7 @@ public class SettingsActivity extends AppCompatActivity {
         private void setupPreferenceChangeListener(Preference.OnPreferenceChangeListener setting) {
             Preference preference = findPreference(SettingsActivity.SELECTED_LANGUAGE);
             if (preference != null) {
-                Sentry.addBreadcrumb("Set language to " + setting.toString() + ".");
+                Sentry.addBreadcrumb("Selected language is " + setting.toString() + ".");
                 preference.setOnPreferenceChangeListener(setting);
             }
         }

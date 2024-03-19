@@ -49,6 +49,7 @@ public class StatusActivity extends AppCompatActivity {
     private void setupLanguage() {
         String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
         String appLocaleStringResult = appLocaleString.split("_")[0];
+        Sentry.addBreadcrumb("Selected language is " + appLocaleStringResult + ".");
         Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
         Locale.setDefault(appLocale);
         Configuration appConfig = new Configuration();
@@ -58,7 +59,7 @@ public class StatusActivity extends AppCompatActivity {
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {
         String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
-        Sentry.addBreadcrumb("Got string " + darkModeOverride + "from sharedPreferences.");
+        Sentry.addBreadcrumb("Got string " + darkModeOverride + " from sharedPreferences.");
         if (darkModeOverride.contains("match")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         } else if (darkModeOverride.contains("on")) {

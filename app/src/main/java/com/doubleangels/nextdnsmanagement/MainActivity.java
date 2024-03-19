@@ -102,11 +102,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+
     }
 
     private String setupLanguage() {
         String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
         String appLocaleStringResult = appLocaleString.split("_")[0];
+        Sentry.addBreadcrumb("Selected language is " + appLocaleStringResult + ".");
         Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
         Locale.setDefault(appLocale);
         Configuration appConfig = new Configuration();
