@@ -11,6 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -102,7 +103,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-
+        ImageView imageView = findViewById(R.id.connectionStatus);
+        imageView.setOnClickListener(v -> {
+            Intent intent = new Intent(this, StatusActivity.class);
+            startActivity(intent);
+        });
     }
 
     private String setupLanguage() {
