@@ -245,4 +245,9 @@ td {
     background-color: var(--medium) !important;
 }
 
+html body div#root div.mt-4.Analytics div.container div.row div.col div.text-center.p-2.mb-4.card div.card-body div div.d-inline-block div {
+    background: var(--medium) !important;
+    opacity: 1 !important;
+}
+
 /* END CUSTOM DARK MODE STYLES */
