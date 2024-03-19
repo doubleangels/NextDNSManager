@@ -166,7 +166,7 @@ public class SettingsActivity extends AppCompatActivity {
                 preferenceEdit.putString("darkmode_override", newValue.toString());
                 preferenceEdit.apply();
                 Sentry.addBreadcrumb("Wrote string " + newValue + " to sharedPreferences.");
-                ProcessPhoenix.triggerRebirth(getContext());
+                ProcessPhoenix.triggerRebirth(requireContext());
                 return true;
             });
         }
