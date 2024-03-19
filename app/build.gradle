@@ -9,8 +9,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdk 34
-        versionCode 215
-        versionName '5.0.0-beta5'
+        versionCode 216
+        versionName '5.0.0-beta6'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "id", "it", "ja", "pl", "pt", "es", "sv", "tr"]
@@ -60,6 +60,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.google.android.material:material:1.11.0'
+    implementation 'com.jakewharton:process-phoenix:2.2.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'io.sentry:sentry-android:7.6.0'
     implementation("org.mozilla.geckoview:geckoview:123.0.20240304104836")

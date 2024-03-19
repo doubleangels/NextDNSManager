@@ -21,6 +21,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -164,7 +165,8 @@ public class SettingsActivity extends AppCompatActivity {
                 SharedPreferences.Editor preferenceEdit = sharedPreferences.edit();
                 preferenceEdit.putString("darkmode_override", newValue.toString());
                 preferenceEdit.apply();
-                Sentry.addBreadcrumb("Wrote string " + newValue + "to sharedPreferences.");
+                Sentry.addBreadcrumb("Wrote string " + newValue + " to sharedPreferences.");
+                ProcessPhoenix.triggerRebirth(getContext());
                 return true;
             });
         }

@@ -71,9 +71,11 @@ public class MainActivity extends AppCompatActivity {
             geckoSession.open(runtime);
             geckoView.setSession(geckoSession);
             if (darkMode) {
+                geckoView.coverUntilFirstPaint(getColor(R.color.darkgray));
                 runtime.getWebExtensionController()
                         .ensureBuiltIn("resource://android/assets/darkmode/", "nextdns@doubleangels.com");
             } else {
+                geckoView.coverUntilFirstPaint(getColor(R.color.white));
                 String extensionId = "nextdns@doubleangels.com";
                 runtime.getWebExtensionController().list().then(extensions -> {
                     if (extensions != null) {
@@ -88,9 +90,6 @@ public class MainActivity extends AppCompatActivity {
                     return null;
                 });
             }
-            geckoSession.getSettings().setAllowJavascript(true);
-            geckoSession.getSettings().setUseTrackingProtection(true);
-            geckoSession.getSettings().setSuspendMediaWhenInactive(true);
             geckoSession.loadUri(getString(R.string.main_url));
         } catch (Exception e) {
             Sentry.captureException(e);
