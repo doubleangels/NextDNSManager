@@ -29,8 +29,6 @@ import com.jakewharton.processphoenix.ProcessPhoenix;
 import java.util.Locale;
 import java.util.Objects;
 
-import io.sentry.ITransaction;
-import io.sentry.Sentry;
 import io.sentry.android.core.SentryAndroid;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -41,7 +39,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        ITransaction settingsCreateTransaction = Sentry.startTransaction("SettingsActivity_onCreate()", "SettingsActivity");
         SentryManager sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         try {
@@ -63,8 +60,6 @@ public class SettingsActivity extends AppCompatActivity {
             setupVisualIndicator(sentryManager);
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
-        } finally {
-            settingsCreateTransaction.finish();
         }
     }
 

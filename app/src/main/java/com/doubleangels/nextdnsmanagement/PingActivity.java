@@ -24,8 +24,6 @@ import org.mozilla.geckoview.GeckoView;
 import java.util.Locale;
 import java.util.Objects;
 
-import io.sentry.ITransaction;
-import io.sentry.Sentry;
 import io.sentry.android.core.SentryAndroid;
 
 public class PingActivity extends AppCompatActivity {
@@ -34,8 +32,6 @@ public class PingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping);
-
-        ITransaction pingCreateTransaction = Sentry.startTransaction("PingActivity_onCreate()", "PingActivity");
         SentryManager sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
         try {
@@ -65,8 +61,6 @@ public class PingActivity extends AppCompatActivity {
             session.loadUri(getString(R.string.ping_url));
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
-        } finally {
-            pingCreateTransaction.finish();
         }
     }
 

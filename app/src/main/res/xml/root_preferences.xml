@@ -25,12 +25,10 @@
             app:summary="@string/whitelist_domains" />
         <Preference
             app:key="whitelist_domain_1_button"
-            app:summary="@string/whitelist_domain_1"
-            app:isPreferenceVisible="false"/>
+            app:summary="@string/whitelist_domain_1" />
         <Preference
             app:key="whitelist_domain_2_button"
-            app:summary="@string/whitelist_domain_2"
-            app:isPreferenceVisible="false"/>
+            app:summary="@string/whitelist_domain_2" />
         <Preference
             app:key="sentry_info_button"
             app:title="@string/sentry_info"

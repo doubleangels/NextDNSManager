@@ -35,8 +35,6 @@ import org.mozilla.geckoview.WebExtension;
 import java.util.Locale;
 import java.util.Objects;
 
-import io.sentry.ITransaction;
-import io.sentry.Sentry;
 import io.sentry.android.core.SentryAndroid;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ITransaction mainActivityCreateTransaction = Sentry.startTransaction("MainActivity_onCreate()", "MainActivity");
         SentryManager sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         try {
@@ -108,8 +105,6 @@ public class MainActivity extends AppCompatActivity {
             geckoSession.loadUri(getString(R.string.main_url));
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
-        } finally {
-            mainActivityCreateTransaction.finish();
         }
     }
 
@@ -159,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startIntent(Class<?> targetClass) {
-        Intent intent = new Intent(this, targetClass);
+    private void startIntent() {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
@@ -170,15 +165,20 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void testMethod() {
+        // Throw a built-in exception for testing
+        throw new RuntimeException("This is a test exception");
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.back -> geckoSession.goBack();
             case R.id.refreshNextDNS -> geckoSession.reload();
-            case R.id.pingNextDNS -> startIntent(PingActivity.class);
+            case R.id.pingNextDNS -> testMethod();
             case R.id.returnHome -> geckoSession.loadUri(getString(R.string.main_url));
-            case R.id.settings -> startIntent(SettingsActivity.class);
+            case R.id.settings -> startIntent();
         }
         return super.onOptionsItemSelected(item);
     }

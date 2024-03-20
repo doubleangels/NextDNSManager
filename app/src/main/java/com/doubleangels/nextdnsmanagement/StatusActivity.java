@@ -19,8 +19,6 @@ import com.doubleangels.nextdnsmanagement.sentrymanager.SentryManager;
 import java.util.Locale;
 import java.util.Objects;
 
-import io.sentry.ITransaction;
-import io.sentry.Sentry;
 import io.sentry.android.core.SentryAndroid;
 
 public class StatusActivity extends AppCompatActivity {
@@ -29,7 +27,6 @@ public class StatusActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
-        ITransaction statusCreateTransaction = Sentry.startTransaction("StatusActivity_onCreate()", "StatusActivity");
         SentryManager sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         try {
@@ -50,8 +47,6 @@ public class StatusActivity extends AppCompatActivity {
             setVisualIndicator(sentryManager);
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
-        } finally {
-            statusCreateTransaction.finish();
         }
     }
 
