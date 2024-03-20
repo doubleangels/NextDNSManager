@@ -62,9 +62,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Setup Gradle sanity checking
-        uses: gradle/gradle-build-action@v3
-
       - name: Build APK for Github release
         run: ./gradlew assembleRelease
 
@@ -113,9 +110,6 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
-      - name: Setup Gradle sanity checking
-        uses: gradle/gradle-build-action@v3
 
       - name: Build bundle for Google Play release
         run: ./gradlew bundleRelease
