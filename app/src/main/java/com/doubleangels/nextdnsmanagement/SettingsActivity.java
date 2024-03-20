@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -23,13 +22,12 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+import com.doubleangels.nextdnsmanagement.sentrymanager.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentrymanager.SentryManager;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.Locale;
 import java.util.Objects;
-
-import io.sentry.android.core.SentryAndroid;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -43,15 +41,8 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         try {
             if (sentryManager.isSentryEnabled()) {
-                SentryAndroid.init(this, options -> {
-                    options.setDsn("https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.us.sentry.io/6270764");
-                    options.setEnableTracing(true);
-                    options.setAttachScreenshot(true);
-                    options.setAttachViewHierarchy(true);
-                    options.setTracesSampleRate(1.0);
-                    options.setEnableAppStartProfiling(true);
-                    options.setAnrEnabled(true);
-                });
+                SentryInitializer sentryInitializer = new SentryInitializer();
+                sentryInitializer.execute(this);
             }
             setupToolbar();
             setupLanguage();
@@ -64,19 +55,16 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(findViewById(R.id.toolbar));
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
     private void setupLanguage() {
-        String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
-        String appLocaleStringResult = appLocaleString.split("_")[0];
-        Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
-        Locale.setDefault(appLocale);
-        Configuration appConfig = new Configuration();
-        appConfig.locale = appLocale;
-        getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
+        Locale defaultLocale = getResources().getConfiguration().getLocales().get(0);
+        Locale.setDefault(defaultLocale);
+        Configuration config = new Configuration();
+        config.setLocale(defaultLocale);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 
     private void initializeViews() {
@@ -170,9 +158,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         private void setupDarkModeChangeListener(ListPreference setting, SharedPreferences sharedPreferences) {
             setting.setOnPreferenceChangeListener((preference, newValue) -> {
-                SharedPreferences.Editor preferenceEdit = sharedPreferences.edit();
-                preferenceEdit.putString("darkmode_override", newValue.toString());
-                preferenceEdit.apply();
+                sharedPreferences.edit().putString("darkmode_override", newValue.toString()).apply();
                 ProcessPhoenix.triggerRebirth(requireContext());
                 return true;
             });
@@ -183,29 +169,20 @@ public class SettingsActivity extends AppCompatActivity {
                 switchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                     boolean isChecked = (boolean) newValue;
                     SharedPreferences.Editor preferenceEdit = sharedPreferences.edit();
-                    Preference whitelistDomains = findPreference("whitelist_domains");
-                    Preference whitelistDomain1 = findPreference("whitelist_domain_1_button");
-                    Preference whitelistDomain2 = findPreference("whitelist_domain_2_button");
-                    if (isChecked) {
-                        preferenceEdit.putString("sentry_enable", "true");
-                        assert whitelistDomains != null;
-                        whitelistDomains.setVisible(true);
-                        assert whitelistDomain1 != null;
-                        whitelistDomain1.setVisible(true);
-                        assert whitelistDomain2 != null;
-                        whitelistDomain2.setVisible(true);
-                    } else {
-                        preferenceEdit.putString("sentry_enable", "false");
-                        assert whitelistDomains != null;
-                        whitelistDomains.setVisible(false);
-                        assert whitelistDomain1 != null;
-                        whitelistDomain1.setVisible(false);
-                        assert whitelistDomain2 != null;
-                        whitelistDomain2.setVisible(false);
-                    }
+                    preferenceEdit.putString("sentry_enable", String.valueOf(isChecked));
+                    setPreferenceVisibility("whitelist_domains", isChecked);
+                    setPreferenceVisibility("whitelist_domain_1_button", isChecked);
+                    setPreferenceVisibility("whitelist_domain_2_button", isChecked);
                     preferenceEdit.apply();
                     return true;
                 });
+            }
+        }
+
+        private void setPreferenceVisibility(String key, boolean visible) {
+            Preference preference = findPreference(key);
+            if (preference != null) {
+                preference.setVisible(visible);
             }
         }
 

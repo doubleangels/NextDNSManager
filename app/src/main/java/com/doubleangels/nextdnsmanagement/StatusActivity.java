@@ -14,12 +14,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+import com.doubleangels.nextdnsmanagement.sentrymanager.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentrymanager.SentryManager;
 
 import java.util.Locale;
 import java.util.Objects;
-
-import io.sentry.android.core.SentryAndroid;
 
 public class StatusActivity extends AppCompatActivity {
 
@@ -31,15 +30,8 @@ public class StatusActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         try {
             if (sentryManager.isSentryEnabled()) {
-                SentryAndroid.init(this, options -> {
-                    options.setDsn("https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.us.sentry.io/6270764");
-                    options.setEnableTracing(true);
-                    options.setAttachScreenshot(true);
-                    options.setAttachViewHierarchy(true);
-                    options.setTracesSampleRate(1.0);
-                    options.setEnableAppStartProfiling(true);
-                    options.setAnrEnabled(true);
-                });
+                SentryInitializer sentryInitializer = new SentryInitializer();
+                sentryInitializer.execute(this);
             }
             setupToolbar();
             setupLanguage();

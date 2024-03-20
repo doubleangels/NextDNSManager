@@ -10,10 +10,10 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
 
 import com.doubleangels.nextdnsmanagement.geckoruntime.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+import com.doubleangels.nextdnsmanagement.sentrymanager.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentrymanager.SentryManager;
 
 import org.mozilla.geckoview.GeckoRuntime;
@@ -23,8 +23,6 @@ import org.mozilla.geckoview.GeckoView;
 
 import java.util.Locale;
 import java.util.Objects;
-
-import io.sentry.android.core.SentryAndroid;
 
 public class PingActivity extends AppCompatActivity {
 
@@ -36,15 +34,8 @@ public class PingActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
         try {
             if (sentryManager.isSentryEnabled()) {
-                SentryAndroid.init(this, options -> {
-                    options.setDsn("https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.us.sentry.io/6270764");
-                    options.setEnableTracing(true);
-                    options.setAttachScreenshot(true);
-                    options.setAttachViewHierarchy(true);
-                    options.setTracesSampleRate(1.0);
-                    options.setEnableAppStartProfiling(true);
-                    options.setAnrEnabled(true);
-                });
+                SentryInitializer sentryInitializer = new SentryInitializer();
+                sentryInitializer.execute(this);
             }
             setupToolbar();
             setupLanguage();
@@ -53,31 +44,28 @@ public class PingActivity extends AppCompatActivity {
             GeckoView view = findViewById(R.id.geckoView);
             GeckoSession session = new GeckoSession();
             GeckoRuntime runtime = GeckoRuntimeSingleton.getInstance();
-            session.setContentDelegate(new GeckoSession.ContentDelegate() {});
             runtime.getSettings().setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY);
             runtime.getSettings().setAutomaticFontSizeAdjustment(true);
+            session.setContentDelegate(new GeckoSession.ContentDelegate() {});
             session.open(runtime);
             view.setSession(session);
-            session.loadUri(getString(R.string.ping_url));
+            new Thread(() -> session.loadUri(getString(R.string.ping_url))).start();
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }
     }
 
     private void setupToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(findViewById(R.id.toolbar));
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
     private void setupLanguage() {
-        String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
-        String appLocaleStringResult = appLocaleString.split("_")[0];
-        Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
-        Locale.setDefault(appLocale);
-        Configuration appConfig = new Configuration();
-        appConfig.locale = appLocale;
-        getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
+        Locale defaultLocale = getResources().getConfiguration().getLocales().get(0);
+        Locale.setDefault(defaultLocale);
+        Configuration config = new Configuration();
+        config.setLocale(defaultLocale);
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {

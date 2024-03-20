@@ -15,6 +15,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -24,6 +25,7 @@ import androidx.preference.PreferenceManager;
 
 import com.doubleangels.nextdnsmanagement.geckoruntime.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+import com.doubleangels.nextdnsmanagement.sentrymanager.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentrymanager.SentryManager;
 
 import org.mozilla.geckoview.GeckoRuntime;
@@ -33,9 +35,6 @@ import org.mozilla.geckoview.GeckoView;
 import org.mozilla.geckoview.WebExtension;
 
 import java.util.Locale;
-import java.util.Objects;
-
-import io.sentry.android.core.SentryAndroid;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,31 +55,26 @@ public class MainActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
             }
             if (sentryManager.isSentryEnabled()) {
-                SentryAndroid.init(this, options -> {
-                    options.setDsn("https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.us.sentry.io/6270764");
-                    options.setEnableTracing(true);
-                    options.setAttachScreenshot(true);
-                    options.setAttachViewHierarchy(true);
-                    options.setTracesSampleRate(1.0);
-                    options.setEnableAppStartProfiling(true);
-                    options.setAnrEnabled(true);
-                });
+                SentryInitializer sentryInitializer = new SentryInitializer();
+                sentryInitializer.execute(this);
             }
             setupToolbar();
             String appLocale = setupLanguage();
             setupDarkMode(sharedPreferences);
             setupVisualIndicator(sentryManager);
             GeckoView geckoView = findViewById(R.id.geckoView);
-            geckoSession = new GeckoSession();
-            geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {});
-            geckoSession.getSettings().setUseTrackingProtection(true);
+            if (geckoSession == null) {
+                geckoSession = new GeckoSession();
+                geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {});
+                geckoSession.getSettings().setUseTrackingProtection(true);
+            }
             if (runtime == null) {
                 runtime = GeckoRuntime.create(this);
                 GeckoRuntimeSingleton.setInstance(runtime);
                 runtime.getSettings().setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY);
                 runtime.getSettings().setAutomaticFontSizeAdjustment(true);
+                runtime.getSettings().setLocales(new String[] {appLocale});
             }
-            runtime.getSettings().setLocales(new String[] {appLocale});
             geckoSession.open(runtime);
             geckoView.setSession(geckoSession);
             if (darkMode) {
@@ -95,14 +89,14 @@ public class MainActivity extends AppCompatActivity {
                         for (WebExtension extension : extensions) {
                             if (extension.id.equals(extensionId)) {
                                 runtime.getWebExtensionController().uninstall(extension);
-                                return null;
+                                break;
                             }
                         }
                     }
                     return null;
                 });
             }
-            geckoSession.loadUri(getString(R.string.main_url));
+            new Thread(() -> geckoSession.loadUri(getString(R.string.main_url))).start();
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }
@@ -111,23 +105,22 @@ public class MainActivity extends AppCompatActivity {
     private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
         ImageView imageView = findViewById(R.id.connectionStatus);
-        imageView.setOnClickListener(v -> {
-            Intent intent = new Intent(this, StatusActivity.class);
-            startActivity(intent);
-        });
+        imageView.setOnClickListener(v -> startActivity(new Intent(this, StatusActivity.class)));
     }
 
     private String setupLanguage() {
-        String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
-        String appLocaleStringResult = appLocaleString.split("_")[0];
-        Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
+        Configuration config = getResources().getConfiguration();
+        String appLocaleString = config.getLocales().get(0).getLanguage();
+        Locale appLocale = new Locale(appLocaleString);
         Locale.setDefault(appLocale);
-        Configuration appConfig = new Configuration();
-        appConfig.locale = appLocale;
-        getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
-        return appLocaleStringResult;
+        config.locale = appLocale;
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        return appLocaleString;
     }
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {
@@ -154,8 +147,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void startIntent() {
-        Intent intent = new Intent(this, SettingsActivity.class);
+    private void startIntent(Class<?> targetClass) {
+        Intent intent = new Intent(this, targetClass);
         startActivity(intent);
     }
 
@@ -165,20 +158,15 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void testMethod() {
-        // Throw a built-in exception for testing
-        throw new RuntimeException("This is a test exception");
-    }
-
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.back -> geckoSession.goBack();
             case R.id.refreshNextDNS -> geckoSession.reload();
-            case R.id.pingNextDNS -> testMethod();
+            case R.id.pingNextDNS -> startIntent(PingActivity.class);
             case R.id.returnHome -> geckoSession.loadUri(getString(R.string.main_url));
-            case R.id.settings -> startIntent();
+            case R.id.settings -> startIntent(SettingsActivity.class);
         }
         return super.onOptionsItemSelected(item);
     }
