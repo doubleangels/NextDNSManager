@@ -63,18 +63,16 @@ public class MainActivity extends AppCompatActivity {
             setupDarkMode(sharedPreferences);
             setupVisualIndicator(sentryManager);
             GeckoView geckoView = findViewById(R.id.geckoView);
-            if (geckoSession == null) {
-                geckoSession = new GeckoSession();
-                geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {});
-                geckoSession.getSettings().setUseTrackingProtection(true);
-            }
+            geckoSession = new GeckoSession();
+            geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {});
+            geckoSession.getSettings().setUseTrackingProtection(true);
             if (runtime == null) {
                 runtime = GeckoRuntime.create(this);
                 GeckoRuntimeSingleton.setInstance(runtime);
                 runtime.getSettings().setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY);
                 runtime.getSettings().setAutomaticFontSizeAdjustment(true);
-                runtime.getSettings().setLocales(new String[] {appLocale});
             }
+            runtime.getSettings().setLocales(new String[] {appLocale});
             geckoSession.open(runtime);
             geckoView.setSession(geckoSession);
             if (darkMode) {
@@ -89,14 +87,14 @@ public class MainActivity extends AppCompatActivity {
                         for (WebExtension extension : extensions) {
                             if (extension.id.equals(extensionId)) {
                                 runtime.getWebExtensionController().uninstall(extension);
-                                break;
+                                return null;
                             }
                         }
                     }
                     return null;
                 });
             }
-            new Thread(() -> geckoSession.loadUri(getString(R.string.main_url))).start();
+            geckoSession.loadUri(getString(R.string.main_url));
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }
