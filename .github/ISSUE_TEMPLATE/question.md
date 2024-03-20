@@ -1,6 +1,6 @@
 ---
 name: Question
-about: Ask a question about the app
+about: Ask a question about the app.
 title: "[Replace with a descriptive title]"
 labels: "type: question"
 assignees: "doubleangels"
