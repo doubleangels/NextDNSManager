@@ -24,6 +24,18 @@ jobs:
         run: ./gradlew lint
         continue-on-error: false
 
+      - name: Save lint results
+        if: always()
+        run: |
+          mkdir -p lint-results
+          cp -r app/build/reports/lint-results lint-results/
+
+      - name: Upload lint results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-results
+          path: lint-results
+
   build-for-github:
     needs: lint
     runs-on: ubuntu-latest
@@ -44,6 +56,8 @@ jobs:
           path: |
             ~/.gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -88,12 +102,14 @@ jobs:
           distribution: "temurin"
           cache: gradle
 
-      - name: Cache Gradle dependencies
+      - name: Cache gradle dependencies
         uses: actions/cache@v4
         with:
           path: |
             ~/.gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew

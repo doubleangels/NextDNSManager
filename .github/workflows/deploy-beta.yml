@@ -19,12 +19,33 @@ jobs:
           distribution: "temurin"
           cache: gradle
 
+      - name: Cache gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Run Lint
         run: ./gradlew lint
         continue-on-error: false
+
+      - name: Save lint results
+        if: always()
+        run: |
+          mkdir -p lint-results
+          cp -r app/build/reports/lint-results lint-results/
+
+      - name: Upload lint results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-results
+          path: lint-results
 
   build-for-github:
     needs: lint
@@ -48,12 +69,11 @@ jobs:
           path: |
             ~/.gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
-      - name: Setup Gradle sanity checking
-        uses: gradle/gradle-build-action@v3
 
       - name: Build APK for Github release
         run: ./gradlew assembleRelease
@@ -100,12 +120,11 @@ jobs:
           path: |
             ~/.gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
-      - name: Setup Gradle sanity checking
-        uses: gradle/gradle-build-action@v3
 
       - name: Build bundle for Google Play release
         run: ./gradlew bundleRelease
