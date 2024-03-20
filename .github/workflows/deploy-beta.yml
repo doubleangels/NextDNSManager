@@ -39,7 +39,7 @@ jobs:
         if: always()
         run: |
           mkdir -p lint-results
-          cp -r app/build/reports/lint-results lint-results/
+          cp -r /home/runner/work/NextDNSManager/NextDNSManager/app/build/reports/lint-results-debug.html lint-results/
 
       - name: Upload lint results as artifact
         uses: actions/upload-artifact@v4
