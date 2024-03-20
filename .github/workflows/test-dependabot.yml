@@ -5,7 +5,7 @@ on:
     types:
       - opened
     branches:
-      - 'dependabot/**'
+      - "dependabot/**"
   workflow_dispatch:
 
 jobs:
@@ -18,8 +18,8 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          java-version: "17"
+          distribution: "temurin"
           cache: gradle
 
       - name: Grant execute permission for gradlew
@@ -28,6 +28,18 @@ jobs:
       - name: Run Lint
         run: ./gradlew lint
         continue-on-error: false
+
+      - name: Save lint results
+        if: always()
+        run: |
+          mkdir -p lint-results
+          cp -r app/build/reports/lint-results lint-results/
+
+      - name: Upload lint results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-results
+          path: lint-results
 
   build-debug:
     needs: lint
@@ -42,12 +54,14 @@ jobs:
           java-version: 17
           distribution: "temurin"
 
-      - name: Cache Gradle dependencies
+      - name: Cache gradle dependencies
         uses: actions/cache@v4
         with:
           path: |
             ~/.gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
@@ -62,7 +76,7 @@ jobs:
         run: ./gradlew bundleDebug
 
   build-release:
-    needs: ['build-debug', 'lint']
+    needs: ["build-debug", "lint"]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -74,12 +88,14 @@ jobs:
           java-version: 17
           distribution: "temurin"
 
-      - name: Cache Gradle dependencies
+      - name: Cache gradle dependencies
         uses: actions/cache@v4
         with:
           path: |
             ~/.gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
