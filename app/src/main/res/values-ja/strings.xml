@@ -37,6 +37,9 @@
   <string name="privacy">プライバシー</string>
   <string name="privacy_policy">NextDNSマネージャープライバシーポリシー</string>
   <string name="refresh_title">リフレッシュ</string>
+  <string name="sentry_enable_instructions">Sentry を有効にする</string>
+  <string name="sentry_info">もっと詳しく</string>
+  <string name="sentry_info_instructions">項目の詳細については、タップしてください。</string>
   <string name="settings">[設定]</string>
   <string name="settings_activity_title">[設定]</string>
   <string name="test_disabled">このアクションは現在使用できません。</string>
@@ -44,10 +47,15 @@
   <string name="test_short">テスト</string>
   <string name="test_title">接続テスト</string>
   <string name="translate">[翻訳]</string>
-  <string name="translate_summary">間違った翻訳が表示された場合は、こちらから修正してください！</string>
+  <string name="translate_summary">間違った翻訳が表示された場合は、こちらで修正してください。</string>
   <string name="user_agreement">ユーザー契約</string>
   <string name="version">[バージョン]</string>
   <string name="whitelist">ホワイトリスト</string>
-  <string name="whitelist_instructions">あなたがアプリを楽しんでそれを改善するために支援したい場合 匿名化されたエラー追跡を有効にしてくださいバグの理解とその修正を解放するのに役立ちます これを行った場合、個人情報は収集されません。 オプトインするには、NextDNS設定でこれらのドメインをホワイトリストに登録します。参加したくない場合は、NextDNS設定でこれらのドメインをブラックリストに登録してください。</string>
-  <string name="whitelist_title">ホワイトリスト</string>
+  <string name="whitelist_domains">これらのドメインをNextDNS設定でホワイトリストに登録してください。</string>
+  <string name="whitelist_instructions">Sentry error trackingへの参加を検討してください。これは個人情報を収集するものではなく、アプリを改善するのに役立ちます。</string>
+  <string-array name="darkmode_entries">
+    <item>システムに一致</item>
+    <item>オン</item>
+    <item>オフ</item>
+  </string-array>
 </resources>

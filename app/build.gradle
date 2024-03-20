@@ -9,8 +9,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdk 34
-        versionCode 216
-        versionName '5.0.0-beta6'
+        versionCode 217
+        versionName '5.0.0-beta7'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "id", "it", "ja", "pl", "pt", "es", "sv", "tr"]

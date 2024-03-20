@@ -37,6 +37,9 @@
   <string name="privacy">Privasi</string>
   <string name="privacy_policy">Kebijakan Privasi Manajer NextDNS</string>
   <string name="refresh_title">Menyegarkan</string>
+  <string name="sentry_enable_instructions">Aktifkan Sentry</string>
+  <string name="sentry_info">Pelajari Lebih Lanjut</string>
+  <string name="sentry_info_instructions">Ketuk untuk mempelajari lebih lanjut tentang Sentry.</string>
   <string name="settings">Pengaturan</string>
   <string name="settings_activity_title">Pengaturan</string>
   <string name="test_disabled">Tindakan ini saat ini tidak tersedia.</string>
@@ -44,10 +47,15 @@
   <string name="test_short">Uji</string>
   <string name="test_title">Tes Koneksi</string>
   <string name="translate">Terjemahkan</string>
-  <string name="translate_summary">Jika Anda menemukan terjemahan yang tidak tepat, tolong bantu saya memperbaikinya di sini!</string>
+  <string name="translate_summary">Jika Anda menemukan terjemahan yang tidak tepat, tolong bantu saya memperbaikinya di sini.</string>
   <string name="user_agreement">Perjanjian Pengguna</string>
   <string name="version">Versi</string>
   <string name="whitelist">Daftar putih</string>
-  <string name="whitelist_instructions">Jika Anda menikmati aplikasi ini dan ingin membantu membuatnya lebih baik, tolong aktifkan pelacakan kesalahan yang dianonimkan untuk membantu saya memahami bug dan merilis pembaruan untuk mereka. Tidak ada informasi pribadi yang dikumpulkan jika Anda melakukannya. Untuk ikut serta, masukkan domain-domain berikut ke dalam konfigurasi NextDNS Anda. Jika Anda tidak ingin berpartisipasi, cukup masukkan domain-domain ini ke dalam daftar hitam konfigurasi NextDNS Anda.</string>
-  <string name="whitelist_title">Daftar putih</string>
+  <string name="whitelist_domains">Harap memasukkan domain-domain ini ke dalam konfigurasi NextDNS Anda.</string>
+  <string name="whitelist_instructions">Harap pertimbangkan untuk mengaktifkan pelacakan kesalahan Sentry. Ini tidak mengumpulkan informasi pribadi dan membantu saya membuat aplikasi menjadi lebih baik.</string>
+  <string-array name="darkmode_entries">
+    <item>Sistem Pencocokan</item>
+    <item>Dihidupkan</item>
+    <item>Dimatikan</item>
+  </string-array>
 </resources>

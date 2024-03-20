@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.doubleangels.nextdnsmanagement.geckoruntime.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+import com.doubleangels.nextdnsmanagement.sentrymanager.SentryManager;
 
 import org.mozilla.geckoview.GeckoRuntime;
 import org.mozilla.geckoview.GeckoRuntimeSettings;
@@ -25,6 +26,7 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
+import io.sentry.android.core.SentryAndroid;
 
 public class PingActivity extends AppCompatActivity {
 
@@ -34,12 +36,24 @@ public class PingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ping);
 
         ITransaction pingCreateTransaction = Sentry.startTransaction("PingActivity_onCreate()", "PingActivity");
+        SentryManager sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
         try {
+            if (sentryManager.isSentryEnabled()) {
+                SentryAndroid.init(this, options -> {
+                    options.setDsn("https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.us.sentry.io/6270764");
+                    options.setEnableTracing(true);
+                    options.setAttachScreenshot(true);
+                    options.setAttachViewHierarchy(true);
+                    options.setTracesSampleRate(1.0);
+                    options.setEnableAppStartProfiling(true);
+                    options.setAnrEnabled(true);
+                });
+            }
             setupToolbar();
             setupLanguage();
             setupDarkMode(sharedPreferences);
-            setupVisualIndicator();
+            setupVisualIndicator(sentryManager);
             GeckoView view = findViewById(R.id.geckoView);
             GeckoSession session = new GeckoSession();
             GeckoRuntime runtime = GeckoRuntimeSingleton.getInstance();
@@ -50,7 +64,7 @@ public class PingActivity extends AppCompatActivity {
             view.setSession(session);
             session.loadUri(getString(R.string.ping_url));
         } catch (Exception e) {
-            Sentry.captureException(e);
+            sentryManager.captureExceptionIfEnabled(e);
         } finally {
             pingCreateTransaction.finish();
         }
@@ -65,7 +79,6 @@ public class PingActivity extends AppCompatActivity {
     private void setupLanguage() {
         String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
         String appLocaleStringResult = appLocaleString.split("_")[0];
-        Sentry.addBreadcrumb("Selected language is " + appLocaleStringResult + ".");
         Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
         Locale.setDefault(appLocale);
         Configuration appConfig = new Configuration();
@@ -75,7 +88,6 @@ public class PingActivity extends AppCompatActivity {
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {
         String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
-        Sentry.addBreadcrumb("Got string " + darkModeOverride + " from sharedPreferences.");
         if (darkModeOverride.contains("match")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         } else if (darkModeOverride.contains("on")) {
@@ -85,12 +97,12 @@ public class PingActivity extends AppCompatActivity {
         }
     }
 
-    private void setupVisualIndicator() {
+    private void setupVisualIndicator(SentryManager sentryManager) {
         try {
-            VisualIndicator visualIndicator = new VisualIndicator();
+            VisualIndicator visualIndicator = new VisualIndicator(this);
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            Sentry.captureException(e);
+            sentryManager.captureExceptionIfEnabled(e);
         }
     }
 

@@ -37,6 +37,9 @@
   <string name="privacy">隐私</string>
   <string name="privacy_policy">NextDNS 管理器隐私政策</string>
   <string name="refresh_title">刷新</string>
+  <string name="sentry_enable_instructions">启用 Sentry</string>
+  <string name="sentry_info">了解更多</string>
+  <string name="sentry_info_instructions">点击了解更多关于Sentry的信息。</string>
   <string name="settings">设置</string>
   <string name="settings_activity_title">设置</string>
   <string name="test_disabled">此操作当前不可用。</string>
@@ -44,10 +47,15 @@
   <string name="test_short">测试</string>
   <string name="test_title">连接测试</string>
   <string name="translate">翻译</string>
-  <string name="translate_summary">如果您看到任何不正确的翻译，请帮助我在这里修正它们！</string>
+  <string name="translate_summary">如果您看到任何不正确的翻译，请帮助我修复这些翻译。</string>
   <string name="user_agreement">用户协议</string>
   <string name="version">版本</string>
   <string name="whitelist">白名单</string>
-  <string name="whitelist_instructions">如果你喜欢这个应用并想帮助它变得更好， 请启用匿名错误跟踪以帮助我理解错误并为它们发布修复。 如果您这样做，则不会收集任何个人信息。 要选择加入，请在下一个NextDNS配置中将这些域名列入白名单。如果您不想参与，请在下一个NextDNS配置中将这些域名列入黑名单。</string>
-  <string name="whitelist_title">白名单</string>
+  <string name="whitelist_domains">请在下一个DNS配置中将这些域名加入白名单。</string>
+  <string name="whitelist_instructions">请考虑加入 Sentry 错误跟踪。这不会收集任何个人信息，并且有助于我使应用程序变得更好。</string>
+  <string-array name="darkmode_entries">
+    <item>匹配系统</item>
+    <item>开启</item>
+    <item>关闭</item>
+  </string-array>
 </resources>

@@ -37,6 +37,9 @@
   <string name="privacy">Privacidade</string>
   <string name="privacy_policy">Política de privacidade do NextDNS Manager</string>
   <string name="refresh_title">Atualizar</string>
+  <string name="sentry_enable_instructions">Habilitar Sentry</string>
+  <string name="sentry_info">Saiba Mais</string>
+  <string name="sentry_info_instructions">Toque para saber mais sobre o Sentry.</string>
   <string name="settings">Configurações</string>
   <string name="settings_activity_title">Configurações</string>
   <string name="test_disabled">Essa ação não está disponível no momento.</string>
@@ -44,10 +47,15 @@
   <string name="test_short">Teste</string>
   <string name="test_title">Teste de conexão</string>
   <string name="translate">Traduza</string>
-  <string name="translate_summary">Se você ver alguma tradução incorreta, por favor me ajude a corrigi-la aqui!</string>
+  <string name="translate_summary">Se você ver alguma tradução incorreta, por favor me ajude a corrigi-la aqui.</string>
   <string name="user_agreement">Contrato de usuário</string>
   <string name="version">Versão</string>
   <string name="whitelist">Lista branca</string>
-  <string name="whitelist_instructions">Se você gosta do aplicativo e quer ajudá-lo a melhorá-lo, por favor, habilite o rastreamento de erros anonimamente para me ajudar a entender bugs e correções de versão para eles. Não há informações pessoais coletadas se você fizer isso. Para optar, liste esses domínios na configuração NextDNS. Caso não queira participar, simplesmente bloqueie esses domínios na sua configuração NextDNS.</string>
-  <string name="whitelist_title">Lista branca</string>
+  <string name="whitelist_domains">Por favor, whitelist estes domínios na configuração NextDNS.</string>
+  <string name="whitelist_instructions">Por favor, considere optar pelo rastreamento de erros de entrada. Isso não coleta nenhuma informação pessoal e me ajuda a melhorar o aplicativo.</string>
+  <string-array name="darkmode_entries">
+    <item>Sistema de Correspondência</item>
+    <item>Ligado</item>
+    <item>Desligado</item>
+  </string-array>
 </resources>

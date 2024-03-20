@@ -20,9 +20,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import com.doubleangels.nextdnsmanagement.geckoruntime.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+import com.doubleangels.nextdnsmanagement.sentrymanager.SentryManager;
 
 import org.mozilla.geckoview.GeckoRuntime;
 import org.mozilla.geckoview.GeckoRuntimeSettings;
@@ -35,6 +37,7 @@ import java.util.Objects;
 
 import io.sentry.ITransaction;
 import io.sentry.Sentry;
+import io.sentry.android.core.SentryAndroid;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,15 +52,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ITransaction mainActivityCreateTransaction = Sentry.startTransaction("MainActivity_onCreate()", "MainActivity");
+        SentryManager sentryManager = new SentryManager(this);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         try {
             if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
             }
-            SharedPreferences sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
+            if (sentryManager.isSentryEnabled()) {
+                SentryAndroid.init(this, options -> {
+                    options.setDsn("https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.us.sentry.io/6270764");
+                    options.setEnableTracing(true);
+                    options.setAttachScreenshot(true);
+                    options.setAttachViewHierarchy(true);
+                    options.setTracesSampleRate(1.0);
+                    options.setEnableAppStartProfiling(true);
+                    options.setAnrEnabled(true);
+                });
+            }
             setupToolbar();
             String appLocale = setupLanguage();
             setupDarkMode(sharedPreferences);
-            setupVisualIndicator();
+            setupVisualIndicator(sentryManager);
             GeckoView geckoView = findViewById(R.id.geckoView);
             geckoSession = new GeckoSession();
             geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {});
@@ -87,13 +102,12 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    Sentry.addBreadcrumb("WebExtension not found!");
                     return null;
                 });
             }
             geckoSession.loadUri(getString(R.string.main_url));
         } catch (Exception e) {
-            Sentry.captureException(e);
+            sentryManager.captureExceptionIfEnabled(e);
         } finally {
             mainActivityCreateTransaction.finish();
         }
@@ -113,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
     private String setupLanguage() {
         String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
         String appLocaleStringResult = appLocaleString.split("_")[0];
-        Sentry.addBreadcrumb("Selected language is " + appLocaleStringResult + ".");
         Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
         Locale.setDefault(appLocale);
         Configuration appConfig = new Configuration();
@@ -124,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {
         String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
-        Sentry.addBreadcrumb("Got string " + darkModeOverride + " from sharedPreferences.");
         if (darkModeOverride.contains("match")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
@@ -138,12 +150,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setupVisualIndicator() {
+    private void setupVisualIndicator(SentryManager sentryManager) {
         try {
-            VisualIndicator visualIndicator = new VisualIndicator();
+            VisualIndicator visualIndicator = new VisualIndicator(this);
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            Sentry.captureException(e);
+            sentryManager.captureExceptionIfEnabled(e);
         }
     }
 

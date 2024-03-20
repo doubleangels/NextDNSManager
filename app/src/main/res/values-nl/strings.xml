@@ -37,6 +37,9 @@
   <string name="privacy">Privacy</string>
   <string name="privacy_policy">Privacybeleid van NextDNS Manager</string>
   <string name="refresh_title">Vernieuwen</string>
+  <string name="sentry_enable_instructions">Sentry Inschakelen</string>
+  <string name="sentry_info">Meer Informatie</string>
+  <string name="sentry_info_instructions">Tik voor meer informatie over Sentry.</string>
   <string name="settings">Instellingen</string>
   <string name="settings_activity_title">Instellingen</string>
   <string name="test_disabled">Deze actie is momenteel niet beschikbaar.</string>
@@ -44,10 +47,15 @@
   <string name="test_short">Test</string>
   <string name="test_title">Verbindingstest</string>
   <string name="translate">Vertaal</string>
-  <string name="translate_summary">Als je een onjuiste vertaling ziet, help me dan deze hier op te lossen!</string>
+  <string name="translate_summary">Als je een onjuiste vertaling ziet, help me dan deze hier op te lossen.</string>
   <string name="user_agreement">Gebruikersovereenkomst</string>
   <string name="version">Versie</string>
   <string name="whitelist">Witte lijst</string>
-  <string name="whitelist_instructions">Als u de app leuk vindt en wilt helpen om hem beter te maken Activeer ge-anonimiseerde foutopsporing om me te helpen fouten te begrijpen en fixes voor ze uit te brengen. Er worden geen persoonlijke gegevens verzameld als je dit doet. Om in te schakelen, whitelist je deze domeinen in je NextDNS configuratie. Als je niet wilt deelnemen, blacklist dan deze domeinen in je NextDNS configuratie.</string>
-  <string name="whitelist_title">Witte lijst</string>
+  <string name="whitelist_domains">Gelieve deze domeinen in uw NextDNS configuratie op de witte lijst te zetten.</string>
+  <string name="whitelist_instructions">Overweeg een opting in to Sentry error tracking. Dit verzamelt geen persoonlijke informatie en helpt mij de app beter te maken.</string>
+  <string-array name="darkmode_entries">
+    <item>Overeenkomen met Systeem</item>
+    <item>Op</item>
+    <item>Uit</item>
+  </string-array>
 </resources>

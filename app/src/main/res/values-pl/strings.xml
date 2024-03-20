@@ -37,6 +37,9 @@
   <string name="privacy">Prywatność</string>
   <string name="privacy_policy">NextDNS Manager Polityka prywatności</string>
   <string name="refresh_title">Odśwież</string>
+  <string name="sentry_enable_instructions">Włącz Sentry</string>
+  <string name="sentry_info">Poznaj Więcej</string>
+  <string name="sentry_info_instructions">Dotknij, aby dowiedzieć się więcej o Sentry.</string>
   <string name="settings">Ustawienia</string>
   <string name="settings_activity_title">Ustawienia</string>
   <string name="test_disabled">Ta akcja jest obecnie niedostępna.</string>
@@ -44,10 +47,15 @@
   <string name="test_short">Testowanie</string>
   <string name="test_title">Test połączenia</string>
   <string name="translate">Przetłumacz</string>
-  <string name="translate_summary">Jeśli widzisz niepoprawne tłumaczenia, pomóż mi naprawić je tutaj!</string>
+  <string name="translate_summary">Jeśli widzisz niepoprawne tłumaczenia, pomóż mi naprawić je tutaj.</string>
   <string name="user_agreement">Umowa użytkownika</string>
   <string name="version">Wersja</string>
   <string name="whitelist">Biała lista</string>
-  <string name="whitelist_instructions">Jeśli lubisz aplikację i chcesz pomóc jej ulepszyć, włącz anonimowe śledzenie błędów, aby pomóc mi zrozumieć błędy i je naprawić. Jeśli to zrobisz, nie gromadzi się żadnych danych osobowych. Aby wybrać, dodaj te domeny do konfiguracji NextDNS. Jeśli nie chcesz uczestniczyć, po prostu dodaj te domeny do konfiguracji NextDNS.</string>
-  <string name="whitelist_title">Biała lista</string>
+  <string name="whitelist_domains">Dodaj te domeny do konfiguracji NextDNS.</string>
+  <string name="whitelist_instructions">Proszę zastanowić się nad opcją śledzenia błędów Sentry . To nie zbiera żadnych danych osobowych i pomaga mi ulepszyć aplikację.</string>
+  <string-array name="darkmode_entries">
+    <item>Dopasuj System</item>
+    <item>Włączone</item>
+    <item>Wyłączony</item>
+  </string-array>
 </resources>

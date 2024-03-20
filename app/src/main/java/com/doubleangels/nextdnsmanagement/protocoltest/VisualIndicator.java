@@ -1,6 +1,7 @@
 package com.doubleangels.nextdnsmanagement.protocoltest;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import com.doubleangels.nextdnsmanagement.R;
 import com.google.gson.Gson;
@@ -35,12 +37,18 @@ import okhttp3.internal.http2.ConnectionShutdownException;
 
 public class VisualIndicator {
 
+    private final Context context;
     private final OkHttpClient httpClient;
 
-    public VisualIndicator() {
+    public VisualIndicator(Context context) {
         this.httpClient = new OkHttpClient();
+        this.context = context;
     }
 
+    public boolean isSentryEnabled() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getBoolean("sentry_enable", false);
+    }
 
     public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
         ITransaction initiateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
@@ -79,7 +87,9 @@ public class VisualIndicator {
                 }
             }
         } catch (Exception e) {
-            Sentry.captureException(e);
+            if (isSentryEnabled()) {
+                Sentry.captureException(e);
+            }
         } finally {
             updateVisualIndicatorTransaction.finish();
         }
@@ -123,7 +133,9 @@ public class VisualIndicator {
                             }
                         }
                     } catch (Exception e) {
-                        Sentry.captureException(e);
+                        if (isSentryEnabled()) {
+                            Sentry.captureException(e);
+                        }
                     }
                 }
                 response.close();
@@ -138,7 +150,9 @@ public class VisualIndicator {
                         e instanceof ConnectionShutdownException) {
                     Sentry.addBreadcrumb("Network exception captured: " + e);
                 } else {
-                    Sentry.captureException(e);
+                    if (isSentryEnabled()) {
+                        Sentry.captureException(e);
+                    }
                 }
             }
         });

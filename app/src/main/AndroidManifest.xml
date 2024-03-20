@@ -58,30 +58,7 @@
             </intent-filter>
         </activity>
 
-        <meta-data
-            android:name="io.sentry.dsn"
-            android:value="https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.sentry.io/6270764" />
-        <meta-data
-            android:name="io.sentry.traces.user-interaction.enable"
-            android:value="true" />
-        <meta-data
-            android:name="io.sentry.attach-screenshot"
-            android:value="true" />
-        <meta-data
-            android:name="io.sentry.attach-view-hierarchy"
-            android:value="true" />
-        <meta-data
-            android:name="io.sentry.traces.sample-rate"
-            android:value="1.0" />
-        <meta-data
-            android:name="io.sentry.traces.profiling.sample-rate"
-            android:value="1.0" />
-        <meta-data
-            android:name="io.sentry.traces.profiling.enable-app-start"
-            android:value="true" />
-        <meta-data
-            android:name="io.sentry.anr.enable"
-            android:value="false" />
+        <meta-data android:name="io.sentry.auto-init" android:value="false" />
     </application>
 
 </manifest>

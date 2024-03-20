@@ -16,12 +16,25 @@
         <Preference
             app:selectable="false"
             app:summary="@string/whitelist_instructions" />
+        <SwitchPreference
+            app:key="sentry_enable"
+            app:title="@string/sentry_enable_instructions"
+            app:defaultValue="false" />
+        <Preference
+            app:key="whitelist_domains"
+            app:summary="@string/whitelist_domains" />
         <Preference
             app:key="whitelist_domain_1_button"
-            app:summary="@string/whitelist_domain_1" />
+            app:summary="@string/whitelist_domain_1"
+            app:isPreferenceVisible="false"/>
         <Preference
             app:key="whitelist_domain_2_button"
-            app:summary="@string/whitelist_domain_2" />
+            app:summary="@string/whitelist_domain_2"
+            app:isPreferenceVisible="false"/>
+        <Preference
+            app:key="sentry_info_button"
+            app:title="@string/sentry_info"
+            app:summary="@string/sentry_info_instructions" />
     </PreferenceCategory>
     <PreferenceCategory
         app:selectable="false"
