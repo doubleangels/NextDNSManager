@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help improve the app
+about: Create a report to help improve the app.
 title: "[Replace with a descriptive title]"
 labels: "type: bug"
 assignees: "doubleangels"

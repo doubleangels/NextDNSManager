@@ -1,6 +1,6 @@
 ---
 name: Enhancement Proposal
-about: Propose significant enhancements or new features
+about: Propose significant enhancements or new features.
 title: ""
 labels: "type: enhancement"
 assignees: ""

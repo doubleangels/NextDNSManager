@@ -1,6 +1,6 @@
 ---
 name: Documentation Request
-about: Request clarification or additional documentation
+about: Request clarification or additional documentation.
 title: ""
 labels: "type: documentation"
 assignees: ""

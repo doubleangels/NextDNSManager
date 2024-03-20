@@ -1,6 +1,6 @@
 ---
 name: Feedback Submission
-about: Submit feedback or suggestions for improvement
+about: Submit feedback or suggestions for improvement.
 title: ""
 labels: "type: feedback"
 assignees: ""
