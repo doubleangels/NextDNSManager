@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -33,10 +34,18 @@ import org.mozilla.geckoview.GeckoRuntimeSettings;
 import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoView;
 import org.mozilla.geckoview.WebExtension;
+import org.mozilla.geckoview.WebResponse;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
+/** @noinspection resource*/
 public class MainActivity extends AppCompatActivity {
+
+
+    private static final String TAG = "StreamLogger";
 
     private static GeckoRuntime runtime;
     private GeckoSession geckoSession;
@@ -64,8 +73,17 @@ public class MainActivity extends AppCompatActivity {
             setupVisualIndicator(sentryManager);
             GeckoView geckoView = findViewById(R.id.geckoView);
             geckoSession = new GeckoSession();
-            geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {});
-            geckoSession.getSettings().setUseTrackingProtection(true);
+            geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {
+                @Override
+                public void onExternalResponse(@NonNull GeckoSession geckoSession, @NonNull WebResponse webResponse) {
+                    Log.d("DOWNLOAD", "Ping - " + webResponse.body);
+                    try {
+                        logInputStream(webResponse.body);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
             if (runtime == null) {
                 runtime = GeckoRuntime.create(this);
                 GeckoRuntimeSingleton.setInstance(runtime);
@@ -142,6 +160,34 @@ public class MainActivity extends AppCompatActivity {
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
+        }
+    }
+
+    public static void logInputStream(InputStream inputStream) {
+        if (inputStream == null) {
+            Log.d(TAG, "Input stream is null");
+            return;
+        }
+
+        try {
+            int bytesRead;
+            byte[] buffer = new byte[1024]; // Change buffer size as needed
+
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                // Convert bytes to string, ignoring invalid UTF-8 characters
+                String data = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
+                Log.d(TAG, "Read data: " + data);
+            }
+
+            Log.d(TAG, "End of stream reached");
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading input stream", e);
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                Log.e(TAG, "Error closing input stream", e);
+            }
         }
     }
 

@@ -9,8 +9,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdk 34
-        versionCode 218
-        versionName '5.0.0-beta8'
+        versionCode 219
+        versionName '5.0.0-beta9'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "id", "it", "ja", "pl", "pt", "es", "sv", "tr"]
@@ -29,8 +29,8 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
     dependenciesInfo {
-        includeInApk true
-        includeInBundle true
+        includeInApk false
+        includeInBundle false
     }
 
     packagingOptions {
@@ -61,9 +61,10 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'com.jakewharton:process-phoenix:2.2.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.10.0'
     implementation 'io.sentry:sentry-android:7.6.0'
     implementation("org.mozilla.geckoview:geckoview:123.0.20240304104836")
+    implementation "org.mozilla.components:feature-downloads:124.1.0"
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.23'))
 }
 
