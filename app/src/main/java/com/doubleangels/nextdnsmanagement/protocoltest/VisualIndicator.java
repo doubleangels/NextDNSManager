@@ -23,10 +23,10 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.util.Arrays;
 
 import javax.net.ssl.SSLException;
 
+import io.sentry.ITransaction;
 import io.sentry.Sentry;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -51,6 +51,7 @@ public class VisualIndicator {
     }
 
     public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
+        ITransaction initiateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_initiateVisualIndicator()", "VisualIndicator");
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         Network network = connectivityManager.getActiveNetwork();
         LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
@@ -62,35 +63,35 @@ public class VisualIndicator {
                 updateVisualIndicator(linkProperties, activity, context);
             }
         });
+        initiateVisualIndicatorTransaction.finish();
     }
 
     public void updateVisualIndicator(@Nullable LinkProperties linkProperties, AppCompatActivity activity, Context context) {
+        ITransaction updateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_updateVisualIndicator()", "VisualIndicator");
         try {
             ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
             if (connectionStatus != null) {
-                int drawableResId;
-                int colorResId;
-
                 if (linkProperties != null && linkProperties.isPrivateDnsActive()) {
                     String privateDnsServerName = linkProperties.getPrivateDnsServerName();
-                    if (privateDnsServerName != null && privateDnsServerName.contains("nextdns")) {
-                        drawableResId = R.drawable.success;
-                        colorResId = R.color.green;
+                    if (privateDnsServerName != null) {
+                        if (privateDnsServerName.contains("nextdns")) {
+                            setConnectionStatus(connectionStatus, R.drawable.success, R.color.green, context);
+                        } else {
+                            setConnectionStatus(connectionStatus, R.drawable.success, R.color.yellow, context);
+                        }
                     } else {
-                        drawableResId = R.drawable.success;
-                        colorResId = R.color.yellow;
+                        setConnectionStatus(connectionStatus, R.drawable.success, R.color.yellow, context);
                     }
                 } else {
-                    drawableResId = R.drawable.failure;
-                    colorResId = R.color.red;
+                    setConnectionStatus(connectionStatus, R.drawable.failure, R.color.red, context);
                 }
-
-                setConnectionStatus(connectionStatus, drawableResId, colorResId, context);
             }
         } catch (Exception e) {
             if (isSentryEnabled()) {
                 Sentry.captureException(e);
             }
+        } finally {
+            updateVisualIndicatorTransaction.finish();
         }
         checkInheritedDNS(context, activity);
     }
@@ -106,28 +107,28 @@ public class VisualIndicator {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
                 if (response.isSuccessful()) {
-                    try (response) {
+                    try {
                         assert response.body() != null;
                         String jsonResponse = response.body().string().trim();
                         Gson gson = new Gson();
                         JsonElement jsonElement = gson.fromJson(jsonResponse, JsonElement.class);
                         if (jsonElement.isJsonObject()) {
                             JsonObject testResponse = jsonElement.getAsJsonObject();
-                            JsonElement nextDNSStatusElement = testResponse.get(context.getString(R.string.nextdns_status));
-                            if (nextDNSStatusElement != null) {
-                                String nextDNSStatus = nextDNSStatusElement.getAsString();
-                                if (context.getString(R.string.using_nextdns_status).equalsIgnoreCase(nextDNSStatus)) {
-                                    JsonElement nextdnsProtocolElement = testResponse.get(context.getString(R.string.nextdns_protocol));
-                                    if (nextdnsProtocolElement != null) {
-                                        String nextdnsProtocol = nextdnsProtocolElement.getAsString();
-                                        boolean isSecure = Arrays.asList(context.getResources().getStringArray(R.array.secure_protocols))
-                                                .contains(nextdnsProtocol.toLowerCase());
-                                        ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
-                                        if (connectionStatus != null) {
-                                            setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
-                                                    isSecure ? R.color.green : R.color.orange, context);
-                                        }
+                            String nextDNSStatus = testResponse.get(context.getString(R.string.nextdns_status)).getAsString();
+                            if (context.getString(R.string.using_nextdns_status).equalsIgnoreCase(nextDNSStatus)) {
+                                String nextdnsProtocol = testResponse.get(context.getString(R.string.nextdns_protocol)).getAsString();
+                                ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
+                                String[] secureProtocols = context.getResources().getStringArray(R.array.secure_protocols);
+                                boolean isSecure = false;
+                                for (String s : secureProtocols) {
+                                    if (nextdnsProtocol.equalsIgnoreCase(s)) {
+                                        isSecure = true;
+                                        break;
                                     }
+                                }
+                                if (connectionStatus != null) {
+                                    setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
+                                            isSecure ? R.color.green : R.color.orange, context);
                                 }
                             }
                         }
@@ -137,6 +138,7 @@ public class VisualIndicator {
                         }
                     }
                 }
+                response.close();
             }
 
             @Override
