@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">NextDNS Manager</string>
-  <string name="application_name">Gestor de NextDNS</string>
   <string name="author">Autor</string>
   <string name="back_title">Atrás</string>
   <string name="crowdin">Crowdin</string>
@@ -21,12 +20,8 @@
   <string name="help_green">Se está utilizando un DNS seguro Y el dispositivo está conectado a NextDNS.</string>
   <string name="help_orange">El DNS seguro NO se está utilizando Y el dispositivo está conectado a NextDNS.</string>
   <string name="help_red">NO se utiliza el DNS seguro.</string>
-  <string name="help_title">Ayuda</string>
   <string name="help_yellow">Se está utilizando un DNS seguro, pero el dispositivo NO está conectado a NextDNS.</string>
   <string name="home_title">Inicio</string>
-  <string name="language">Idioma</string>
-  <string name="language_instruction">Presiona para seleccionar el idioma deseado.</string>
-  <string name="language_title">Idioma seleccionado</string>
   <string name="nextdns_privacy_policy">Política de privacidad de NextDNS</string>
   <string name="nextdns_user_agreement">Acuerdo de usuario de NextDNS</string>
   <string name="other">Otros</string>
@@ -42,15 +37,10 @@
   <string name="sentry_info_instructions">Pulsa para aprender más sobre Sentry.</string>
   <string name="settings">Ajustes</string>
   <string name="settings_activity_title">Ajustes</string>
-  <string name="test_disabled">Esta acción no está disponible en este momento.</string>
-  <string name="test_long">Obtenga rápidamente información de prueba importante sobre su conexión a NextDNS.</string>
-  <string name="test_short">Prueba</string>
-  <string name="test_title">Prueba de conexión</string>
   <string name="translate">Traducir</string>
   <string name="translate_summary">Si ves alguna traducción incorrecta, por favor ayúdame a arreglarlas aquí.</string>
   <string name="user_agreement">Acuerdo de usuario</string>
   <string name="version">Versión</string>
-  <string name="whitelist">Lista blanca</string>
   <string name="whitelist_domains">Si activa Sentry, por favor incluya estos dominios en su configuración NextDNS.</string>
   <string name="whitelist_instructions">Por favor, considere optar por el seguimiento de errores de Sentry. Esto no recopila ninguna información personal y me ayuda a mejorar la aplicación.</string>
   <string-array name="darkmode_entries">

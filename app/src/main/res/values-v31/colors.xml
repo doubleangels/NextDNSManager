@@ -2,5 +2,4 @@
 <resources>
     <color name="main">@android:color/system_accent1_300</color>
     <color name="main_dark">@android:color/system_accent1_900</color>
-    <color name="secondary_dark">@android:color/system_accent1_900</color>
 </resources>

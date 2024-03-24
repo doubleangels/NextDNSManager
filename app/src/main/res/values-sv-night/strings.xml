@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">NextDNS Manager</string>
-  <string name="application_name">NextDNS Manager</string>
   <string name="author">Författaren</string>
   <string name="back_title">Tillbaka</string>
   <string name="crowdin">Crowdin</string>
@@ -21,12 +20,8 @@
   <string name="help_green">Säker DNS används OCH enheten är ansluten till NextDNS.</string>
   <string name="help_orange">Secure DNS används INTE OCH enheten är ansluten till NextDNS.</string>
   <string name="help_red">Secure DNS används inte.</string>
-  <string name="help_title">Hjälp</string>
   <string name="help_yellow">Secure DNS används men enheten är INTE ansluten till NextDNS.</string>
   <string name="home_title">Hem</string>
-  <string name="language">Språk</string>
-  <string name="language_instruction">Tryck på för att välja önskat språk.</string>
-  <string name="language_title">Valt språk</string>
   <string name="nextdns_privacy_policy">NextDNS Sekretesspolicy</string>
   <string name="nextdns_user_agreement">NextDNS Användaravtal</string>
   <string name="other">Övrigt</string>
@@ -42,15 +37,10 @@
   <string name="sentry_info_instructions">Tryck för att läsa mer om Sentry.</string>
   <string name="settings">Inställningar</string>
   <string name="settings_activity_title">Inställningar</string>
-  <string name="test_disabled">Den här åtgärden är för närvarande inte tillgänglig.</string>
-  <string name="test_long">Få snabbt viktig testinformation om din anslutning till NextDNS.</string>
-  <string name="test_short">Prova</string>
-  <string name="test_title">Anslutningstest</string>
   <string name="translate">Översätt</string>
   <string name="translate_summary">Om du ser några felaktiga översättningar, var snäll och hjälp mig att fixa dem här.</string>
   <string name="user_agreement">Användaravtal</string>
   <string name="version">Versionen</string>
-  <string name="whitelist">Vitlista</string>
   <string name="whitelist_domains">Om du aktiverar Sentry, vänligen vitlista dessa domäner i din NextDNS-konfiguration.</string>
   <string name="whitelist_instructions">Vänligen överväg att välja till Sentry felspårning. Detta samlar inte in någon personlig information och hjälper mig att göra appen bättre.</string>
   <string-array name="darkmode_entries">

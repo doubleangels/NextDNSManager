@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">NextDNS Manager</string>
-  <string name="application_name">NextDNS Manager</string>
   <string name="author">作者</string>
   <string name="back_title">返回</string>
   <string name="crowdin">Crowdin</string>
@@ -21,12 +20,8 @@
   <string name="help_green">正在使用安全 DNS 并且设备已连接到 NextDNS。</string>
   <string name="help_orange">未使用安全 DNS 且设备已连接到 NextDNS。</string>
   <string name="help_red">未使用安全 DNS。</string>
-  <string name="help_title">帮帮我</string>
   <string name="help_yellow">正在使用安全 DNS，但设备未连接到 NextDNS。</string>
   <string name="home_title">主页</string>
-  <string name="language">语言</string>
-  <string name="language_instruction">点按选择所需的语言。</string>
-  <string name="language_title">所选语言</string>
   <string name="nextdns_privacy_policy">nextDNS 隐私政策</string>
   <string name="nextdns_user_agreement">NextDNS 用户协议</string>
   <string name="other">其他</string>
@@ -42,15 +37,10 @@
   <string name="sentry_info_instructions">点击了解更多关于Sentry的信息。</string>
   <string name="settings">设置</string>
   <string name="settings_activity_title">设置</string>
-  <string name="test_disabled">此操作当前不可用。</string>
-  <string name="test_long">快速获取有关您与 NextDNS 连接的重要测试信息。</string>
-  <string name="test_short">测试</string>
-  <string name="test_title">连接测试</string>
   <string name="translate">翻译</string>
   <string name="translate_summary">如果您看到任何不正确的翻译，请帮助我修复这些翻译。</string>
   <string name="user_agreement">用户协议</string>
   <string name="version">版本</string>
-  <string name="whitelist">白名单</string>
   <string name="whitelist_domains">如果您启用了 Sentry，请在您的NextDNS 配置中将这些域名加入白名单。</string>
   <string name="whitelist_instructions">请考虑加入 Sentry 错误跟踪。这不会收集任何个人信息，并且有助于我使应用程序变得更好。</string>
   <string-array name="darkmode_entries">

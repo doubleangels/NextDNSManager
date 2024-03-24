@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">NextDNS Manager</string>
-  <string name="application_name">NextDNS Manager</string>
   <string name="author">Author</string>
   <string name="back_title">Back</string>
   <string name="crowdin">Crowdin</string>
@@ -21,12 +20,8 @@
   <string name="help_green">Secure DNS is being used AND device is connected to NextDNS.</string>
   <string name="help_orange">Secure DNS is NOT being used AND device is connected to NextDNS.</string>
   <string name="help_red">Secure DNS is NOT being used.</string>
-  <string name="help_title">Help</string>
   <string name="help_yellow">Secure DNS is being used but device is NOT connected to NextDNS.</string>
   <string name="home_title">Home</string>
-  <string name="language">Language</string>
-  <string name="language_instruction">Tap to select your desired language.</string>
-  <string name="language_title">Selected Language</string>
   <string name="nextdns_privacy_policy">NextDNS Privacy Policy</string>
   <string name="nextdns_user_agreement">NextDNS User Agreement</string>
   <string name="other">Other</string>
@@ -42,15 +37,10 @@
   <string name="sentry_info_instructions">Tap to learn more about Sentry.</string>
   <string name="settings">Settings</string>
   <string name="settings_activity_title">Settings</string>
-  <string name="test_disabled">This action is currently unavailable.</string>
-  <string name="test_long">Quickly get important test information about your connection to NextDNS.</string>
-  <string name="test_short">Test</string>
-  <string name="test_title">Connection Test</string>
   <string name="translate">Translate</string>
   <string name="translate_summary">If you see any incorrect translations, please help me fix them here.</string>
   <string name="user_agreement">User Agreement</string>
   <string name="version">Version</string>
-  <string name="whitelist">Whitelist</string>
   <string name="whitelist_domains">If you enable Sentry, please whitelist these domains in your NextDNS configuration.</string>
   <string name="whitelist_instructions">Please consider opting in to Sentry error tracking. This doesn\'t collect any personal information and helps me make the app better.</string>
   <string-array name="darkmode_entries">
