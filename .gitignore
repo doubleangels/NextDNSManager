@@ -16,3 +16,4 @@ local.properties
 /.gradle
 /.externalNativeBuild
 /captures
+/release
