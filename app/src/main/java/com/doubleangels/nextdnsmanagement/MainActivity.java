@@ -3,20 +3,22 @@ package com.doubleangels.nextdnsmanagement;
 import static android.Manifest.permission.POST_NOTIFICATIONS;
 
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
@@ -26,8 +28,8 @@ import androidx.preference.PreferenceManager;
 
 import com.doubleangels.nextdnsmanagement.geckoruntime.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
-import com.doubleangels.nextdnsmanagement.sentrymanager.SentryInitializer;
-import com.doubleangels.nextdnsmanagement.sentrymanager.SentryManager;
+import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
+import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 
 import org.mozilla.geckoview.GeckoRuntime;
 import org.mozilla.geckoview.GeckoRuntimeSettings;
@@ -36,16 +38,9 @@ import org.mozilla.geckoview.GeckoView;
 import org.mozilla.geckoview.WebExtension;
 import org.mozilla.geckoview.WebResponse;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-/** @noinspection resource*/
 public class MainActivity extends AppCompatActivity {
-
-
-    private static final String TAG = "StreamLogger";
 
     private static GeckoRuntime runtime;
     private GeckoSession geckoSession;
@@ -76,19 +71,18 @@ public class MainActivity extends AppCompatActivity {
             geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {
                 @Override
                 public void onExternalResponse(@NonNull GeckoSession geckoSession, @NonNull WebResponse webResponse) {
-                    Log.d("DOWNLOAD", "Ping - " + webResponse.body);
-                    try {
-                        logInputStream(webResponse.body);
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
+                    GeckoSession.ContentDelegate.super.onExternalResponse(geckoSession, webResponse);
+                    if (webResponse.isSecure) {
+                        downloadFile(webResponse.uri.replace("?sign=1", ""));
                     }
                 }
             });
             if (runtime == null) {
                 runtime = GeckoRuntime.create(this);
                 GeckoRuntimeSingleton.setInstance(runtime);
-                runtime.getSettings().setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY);
-                runtime.getSettings().setAutomaticFontSizeAdjustment(true);
+                runtime.getSettings()
+                        .setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY)
+                        .setAutomaticFontSizeAdjustment(true);
             }
             runtime.getSettings().setLocales(new String[] {appLocale});
             geckoSession.open(runtime);
@@ -121,9 +115,8 @@ public class MainActivity extends AppCompatActivity {
     private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(false);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         ImageView imageView = findViewById(R.id.connectionStatus);
         imageView.setOnClickListener(v -> startActivity(new Intent(this, StatusActivity.class)));
@@ -131,63 +124,48 @@ public class MainActivity extends AppCompatActivity {
 
     private String setupLanguage() {
         Configuration config = getResources().getConfiguration();
-        String appLocaleString = config.getLocales().get(0).getLanguage();
-        Locale appLocale = new Locale(appLocaleString);
+        Locale appLocale = config.getLocales().get(0);
         Locale.setDefault(appLocale);
-        config.locale = appLocale;
+        config.setLocale(appLocale);
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
-        return appLocaleString;
+        return appLocale.getLanguage();
     }
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {
         String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
-        if (darkModeOverride.contains("match")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
-        } else if (darkModeOverride.contains("on")) {
+        boolean darkMode;
+        if (darkModeOverride.contains("on")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             darkMode = true;
-        } else {
+        } else if (darkModeOverride.contains("off")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             darkMode = false;
+        } else {
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            AppCompatDelegate.setDefaultNightMode(currentNightMode == Configuration.UI_MODE_NIGHT_YES ?
+                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM : AppCompatDelegate.MODE_NIGHT_NO);
+            darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
         }
+        this.darkMode = darkMode;
     }
 
     private void setupVisualIndicator(SentryManager sentryManager) {
         try {
-            VisualIndicator visualIndicator = new VisualIndicator(this);
-            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+            new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }
     }
 
-    public static void logInputStream(InputStream inputStream) {
-        if (inputStream == null) {
-            Log.d(TAG, "Input stream is null");
-            return;
-        }
 
-        try {
-            int bytesRead;
-            byte[] buffer = new byte[1024]; // Change buffer size as needed
-
-            while ((bytesRead = inputStream.read(buffer)) != -1) {
-                // Convert bytes to string, ignoring invalid UTF-8 characters
-                String data = new String(buffer, 0, bytesRead, StandardCharsets.UTF_8);
-                Log.d(TAG, "Read data: " + data);
-            }
-
-            Log.d(TAG, "End of stream reached");
-        } catch (IOException e) {
-            Log.e(TAG, "Error reading input stream", e);
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Error closing input stream", e);
-            }
+    private void downloadFile(String uri) {
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(uri))
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "NextDNSConfiguration.mobileconfig");
+        DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+        if (downloadManager != null) {
+            downloadManager.enqueue(request);
+            Toast.makeText(getApplicationContext(), "Downloading file!", Toast.LENGTH_LONG).show();
         }
     }
 

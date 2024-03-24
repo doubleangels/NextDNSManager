@@ -1,4 +1,4 @@
-package com.doubleangels.nextdnsmanagement.sentrymanager;
+package com.doubleangels.nextdnsmanagement.sentry;
 
 import android.content.Context;
 import android.os.AsyncTask;

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,16 +23,13 @@ import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
-import com.doubleangels.nextdnsmanagement.sentrymanager.SentryInitializer;
-import com.doubleangels.nextdnsmanagement.sentrymanager.SentryManager;
+import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
+import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.Locale;
-import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
-
-    public static final String SELECTED_LANGUAGE = "selected_language";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,27 +42,24 @@ public class SettingsActivity extends AppCompatActivity {
                 SentryInitializer sentryInitializer = new SentryInitializer();
                 sentryInitializer.execute(this);
             }
-            setupToolbar();
             setupLanguage();
             setupDarkMode(sharedPreferences);
-            initializeViews();
             setupVisualIndicator(sentryManager);
+            initializeViews();
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }
     }
 
-    private void setupToolbar() {
-        setSupportActionBar(findViewById(R.id.toolbar));
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-    }
-
     private void setupLanguage() {
-        Locale defaultLocale = getResources().getConfiguration().getLocales().get(0);
-        Locale.setDefault(defaultLocale);
-        Configuration config = new Configuration();
-        config.setLocale(defaultLocale);
-        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        Locale appLocale = configuration.getLocales().get(0);
+        if (appLocale != null) {
+            Locale.setDefault(appLocale);
+            configuration.setLocale(appLocale);
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        }
     }
 
     private void initializeViews() {
@@ -76,48 +71,34 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {
         String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
-        if (darkModeOverride.contains("match")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else if (darkModeOverride.contains("on")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        int defaultNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        if (darkModeOverride.contains("on")) {
+            defaultNightMode = AppCompatDelegate.MODE_NIGHT_YES;
+        } else if (darkModeOverride.contains("off")) {
+            defaultNightMode = AppCompatDelegate.MODE_NIGHT_NO;
         }
+        AppCompatDelegate.setDefaultNightMode(defaultNightMode);
     }
 
     private void setupVisualIndicator(SentryManager sentryManager) {
         try {
-            VisualIndicator visualIndicator = new VisualIndicator(this);
-            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+            new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }
     }
 
-    private void restartActivity() {
-        Intent intent = getIntent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        finish();
-        startActivity(intent);
-    }
-
     public static class SettingsFragment extends PreferenceFragmentCompat {
-
-        private final Preference.OnPreferenceChangeListener languageChangeListener = (preference, newValue) -> {
-            ((SettingsActivity) requireActivity()).restartActivity();
-            return true;
-        };
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
             ListPreference darkModePreference = findPreference("darkmode_override");
             SwitchPreference sentryEnablePreference = findPreference("sentry_enable");
             assert darkModePreference != null;
             setupDarkModeChangeListener(darkModePreference, sharedPreferences);
             setupSentryChangeListener(sentryEnablePreference, sharedPreferences);
-            setupLanguageChangeListener(languageChangeListener);
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
             setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
             setupButton("author_button", R.string.author_url);
@@ -141,19 +122,27 @@ public class SettingsActivity extends AppCompatActivity {
             Preference button = findPreference(buttonKey);
             if (button != null) {
                 button.setOnPreferenceClickListener(preference -> {
-                    if ("whitelist_domain_1_button".equals(buttonKey) || "whitelist_domain_2_button".equals(buttonKey)) {
-                        ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                        CharSequence copiedText = getString(textResource);
-                        ClipData copiedData = ClipData.newPlainText("text", copiedText);
-                        clipboardManager.setPrimaryClip(copiedData);
-                        Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
+                    if (buttonKey.startsWith("whitelist_domain")) {
+                        copyToClipboard(textResource);
                     } else {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
-                        startActivity(intent);
+                        openLink(textResource);
                     }
                     return true;
                 });
             }
+        }
+
+        private void copyToClipboard(int textResource) {
+            ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+            CharSequence copiedText = getString(textResource);
+            ClipData copiedData = ClipData.newPlainText("text", copiedText);
+            clipboardManager.setPrimaryClip(copiedData);
+            Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
+        }
+
+        private void openLink(int textResource) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
+            startActivity(intent);
         }
 
         private void setupDarkModeChangeListener(ListPreference setting, SharedPreferences sharedPreferences) {
@@ -167,29 +156,12 @@ public class SettingsActivity extends AppCompatActivity {
         private void setupSentryChangeListener(SwitchPreference switchPreference, SharedPreferences sharedPreferences) {
             if (switchPreference != null) {
                 switchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                    boolean isChecked = (boolean) newValue;
+                    boolean isVisible= (boolean) newValue;
                     SharedPreferences.Editor preferenceEdit = sharedPreferences.edit();
-                    preferenceEdit.putString("sentry_enable", String.valueOf(isChecked));
-                    setPreferenceVisibility("whitelist_domains", isChecked);
-                    setPreferenceVisibility("whitelist_domain_1_button", isChecked);
-                    setPreferenceVisibility("whitelist_domain_2_button", isChecked);
+                    preferenceEdit.putString("sentry_enable", String.valueOf(isVisible));
                     preferenceEdit.apply();
                     return true;
                 });
-            }
-        }
-
-        private void setPreferenceVisibility(String key, boolean visible) {
-            Preference preference = findPreference(key);
-            if (preference != null) {
-                preference.setVisible(visible);
-            }
-        }
-
-        private void setupLanguageChangeListener(Preference.OnPreferenceChangeListener setting) {
-            Preference preference = findPreference(SettingsActivity.SELECTED_LANGUAGE);
-            if (preference != null) {
-                preference.setOnPreferenceChangeListener(setting);
             }
         }
     }

@@ -3,6 +3,7 @@ package com.doubleangels.nextdnsmanagement;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,11 +11,13 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
+import androidx.preference.PreferenceManager;
 
 import com.doubleangels.nextdnsmanagement.geckoruntime.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
-import com.doubleangels.nextdnsmanagement.sentrymanager.SentryInitializer;
-import com.doubleangels.nextdnsmanagement.sentrymanager.SentryManager;
+import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
+import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 
 import org.mozilla.geckoview.GeckoRuntime;
 import org.mozilla.geckoview.GeckoRuntimeSettings;
@@ -22,7 +25,6 @@ import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoView;
 
 import java.util.Locale;
-import java.util.Objects;
 
 public class PingActivity extends AppCompatActivity {
 
@@ -31,7 +33,7 @@ public class PingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping);
         SentryManager sentryManager = new SentryManager(this);
-        SharedPreferences sharedPreferences = getSharedPreferences("preferences", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         try {
             if (sentryManager.isSentryEnabled()) {
                 SentryInitializer sentryInitializer = new SentryInitializer();
@@ -49,40 +51,43 @@ public class PingActivity extends AppCompatActivity {
             session.setContentDelegate(new GeckoSession.ContentDelegate() {});
             session.open(runtime);
             view.setSession(session);
-            new Thread(() -> session.loadUri(getString(R.string.ping_url))).start();
+            session.loadUri(getString(R.string.ping_url));
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }
     }
 
     private void setupToolbar() {
-        setSupportActionBar(findViewById(R.id.toolbar));
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
     }
 
     private void setupLanguage() {
-        Locale defaultLocale = getResources().getConfiguration().getLocales().get(0);
-        Locale.setDefault(defaultLocale);
-        Configuration config = new Configuration();
-        config.setLocale(defaultLocale);
-        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        Locale appLocale = configuration.getLocales().get(0);
+        if (appLocale != null) {
+            Locale.setDefault(appLocale);
+            configuration.setLocale(appLocale);
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        }
     }
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {
         String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
-        if (darkModeOverride.contains("match")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else if (darkModeOverride.contains("on")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        int defaultNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        if (darkModeOverride.contains("on")) {
+            defaultNightMode = AppCompatDelegate.MODE_NIGHT_YES;
+        } else if (darkModeOverride.contains("off")) {
+            defaultNightMode = AppCompatDelegate.MODE_NIGHT_NO;
         }
+        AppCompatDelegate.setDefaultNightMode(defaultNightMode);
     }
 
     private void setupVisualIndicator(SentryManager sentryManager) {
         try {
-            VisualIndicator visualIndicator = new VisualIndicator(this);
-            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+            new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }

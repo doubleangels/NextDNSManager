@@ -3,6 +3,7 @@ package com.doubleangels.nextdnsmanagement;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,15 +11,13 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
 import androidx.preference.PreferenceManager;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
-import com.doubleangels.nextdnsmanagement.sentrymanager.SentryInitializer;
-import com.doubleangels.nextdnsmanagement.sentrymanager.SentryManager;
+import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
+import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 
 import java.util.Locale;
-import java.util.Objects;
 
 public class StatusActivity extends AppCompatActivity {
 
@@ -33,50 +32,45 @@ public class StatusActivity extends AppCompatActivity {
                 SentryInitializer sentryInitializer = new SentryInitializer();
                 sentryInitializer.execute(this);
             }
-            setupToolbar();
             setupLanguage();
             setupDarkMode(sharedPreferences);
-            setVisualIndicator(sentryManager);
+            setupVisualIndicator(sentryManager);
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }
     }
 
-    private void setupToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
-    }
-
     private void setupLanguage() {
-        String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
-        String appLocaleStringResult = appLocaleString.split("_")[0];
-        Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
-        Locale.setDefault(appLocale);
-        Configuration appConfig = new Configuration();
-        appConfig.locale = appLocale;
-        getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        Locale appLocale = configuration.getLocales().get(0);
+        if (appLocale != null) {
+            Locale.setDefault(appLocale);
+            configuration.setLocale(appLocale);
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+        }
     }
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {
         String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
-        if (darkModeOverride.contains("match")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else if (darkModeOverride.contains("on")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        int defaultNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+        if (darkModeOverride.contains("on")) {
+            defaultNightMode = AppCompatDelegate.MODE_NIGHT_YES;
+        } else if (darkModeOverride.contains("off")) {
+            defaultNightMode = AppCompatDelegate.MODE_NIGHT_NO;
         }
+        AppCompatDelegate.setDefaultNightMode(defaultNightMode);
     }
 
-    private void setVisualIndicator(SentryManager sentryManager) {
+
+    private void setupVisualIndicator(SentryManager sentryManager) {
         try {
-            VisualIndicator visualIndicator = new VisualIndicator(this);
-            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+            new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
