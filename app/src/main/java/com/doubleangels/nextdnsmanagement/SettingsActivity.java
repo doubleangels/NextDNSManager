@@ -48,7 +48,7 @@ public class SettingsActivity extends AppCompatActivity {
             initializeViews();
             setupVisualIndicator(sentryManager);
         } catch (Exception e) {
-            sentryManager.captureExceptionIfEnabled(e);
+            sentryManager.captureException(e);
         }
     }
 
@@ -91,7 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
             VisualIndicator visualIndicator = new VisualIndicator(this);
             visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            sentryManager.captureExceptionIfEnabled(e);
+            sentryManager.captureException(e);
         }
     }
 

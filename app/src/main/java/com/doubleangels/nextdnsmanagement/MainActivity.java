@@ -61,13 +61,16 @@ public class MainActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
             }
             if (sentryManager.isSentryEnabled()) {
-                Log.d("Sentry", "Sentry is enabled for NextDNS Manager.");
+                Log.d("TESTING", "TESTING");
+                sentryManager.captureMessage("Sentry is enabled for NextDNS Manager.");
                 SentryInitializer sentryInitializer = new SentryInitializer();
                 sentryInitializer.execute(this);
             }
             setupToolbar();
+            //testExceptions();
             String appLocale = setupLanguage();
-            setupDarkMode(sharedPreferences);
+            sentryManager.captureMessage("Using locale: " + appLocale);
+            setupDarkMode(sentryManager, sharedPreferences);
             setupVisualIndicator(sentryManager);
             GeckoView geckoView = findViewById(R.id.geckoView);
             geckoSession = new GeckoSession();
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 geckoView.coverUntilFirstPaint(getColor(R.color.darkgray));
                 runtime.getWebExtensionController()
                         .ensureBuiltIn("resource://android/assets/darkmode/", "nextdns@doubleangels.com");
+                sentryManager.captureMessage("Dark mode extension installed.");
             } else {
                 geckoView.coverUntilFirstPaint(getColor(R.color.white));
                 String extensionId = "nextdns@doubleangels.com";
@@ -107,12 +111,13 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }
+                    sentryManager.captureMessage("Dark mode extension uninstalled.");
                     return null;
                 });
             }
             geckoSession.loadUri(getString(R.string.main_url));
         } catch (Exception e) {
-            sentryManager.captureExceptionIfEnabled(e);
+            sentryManager.captureException(e);
         }
     }
 
@@ -136,16 +141,19 @@ public class MainActivity extends AppCompatActivity {
         return appLocale.getLanguage();
     }
 
-    private void setupDarkMode(SharedPreferences sharedPreferences) {
+    private void setupDarkMode(SentryManager sentryManager, SharedPreferences sharedPreferences) {
         String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
         if (darkModeOverride.contains("match")) {
+            sentryManager.captureMessage("Dark mode set to match system.");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
         } else if (darkModeOverride.contains("on")) {
+            sentryManager.captureMessage("Dark mode set to on.");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             darkMode = true;
         } else {
+            sentryManager.captureMessage("Dark mode set to off.");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             darkMode = false;
         }
@@ -155,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            sentryManager.captureExceptionIfEnabled(e);
+            sentryManager.captureException(e);
         }
     }
 

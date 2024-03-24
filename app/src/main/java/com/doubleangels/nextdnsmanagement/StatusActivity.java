@@ -39,7 +39,7 @@ public class StatusActivity extends AppCompatActivity {
             setupDarkMode(sharedPreferences);
             setupVisualIndicator(sentryManager);
         } catch (Exception e) {
-            sentryManager.captureExceptionIfEnabled(e);
+            sentryManager.captureException(e);
         }
     }
 
@@ -76,7 +76,7 @@ public class StatusActivity extends AppCompatActivity {
         try {
             new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            sentryManager.captureExceptionIfEnabled(e);
+            sentryManager.captureException(e);
         }
     }
 

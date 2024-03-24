@@ -54,7 +54,7 @@ public class PingActivity extends AppCompatActivity {
             view.setSession(geckoSession);
             geckoSession.loadUri(getString(R.string.ping_url));
         } catch (Exception e) {
-            sentryManager.captureExceptionIfEnabled(e);
+            sentryManager.captureException(e);
         }
     }
 
@@ -89,7 +89,7 @@ public class PingActivity extends AppCompatActivity {
         try {
             new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
-            sentryManager.captureExceptionIfEnabled(e);
+            sentryManager.captureException(e);
         }
     }
 
