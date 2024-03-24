@@ -2,6 +2,7 @@ package com.doubleangels.nextdnsmanagement.sentry;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import androidx.preference.PreferenceManager;
 
@@ -18,9 +19,11 @@ public class SentryManager {
     public void captureExceptionIfEnabled(Exception e) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         boolean sentryEnabled = sharedPreferences.getBoolean("sentry_enable", false);
-
         if (sentryEnabled) {
             Sentry.captureException(e);
+            Log.e("ERROR", "Got error:", e);
+        } else {
+            Log.e("ERROR", "Got error:", e);
         }
     }
 

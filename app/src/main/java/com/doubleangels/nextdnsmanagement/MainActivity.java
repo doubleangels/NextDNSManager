@@ -4,6 +4,7 @@ import static android.Manifest.permission.POST_NOTIFICATIONS;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -19,12 +21,12 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.preference.PreferenceManager;
 
 import com.doubleangels.nextdnsmanagement.geckoruntime.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
@@ -53,12 +55,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SentryManager sentryManager = new SentryManager(this);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
             if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
             }
             if (sentryManager.isSentryEnabled()) {
+                Log.d("Sentry", "Sentry is enabled for NextDNS Manager.");
                 SentryInitializer sentryInitializer = new SentryInitializer();
                 sentryInitializer.execute(this);
             }
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             }
             runtime.getSettings().setLocales(new String[] {appLocale});
             geckoSession.open(runtime);
+            geckoSession.getSettings().setAllowJavascript(true);
             geckoView.setSession(geckoSession);
             if (darkMode) {
                 geckoView.coverUntilFirstPaint(getColor(R.color.darkgray));
@@ -115,8 +119,9 @@ public class MainActivity extends AppCompatActivity {
     private void setupToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
         }
         ImageView imageView = findViewById(R.id.connectionStatus);
         imageView.setOnClickListener(v -> startActivity(new Intent(this, StatusActivity.class)));
@@ -133,20 +138,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {
         String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
-        boolean darkMode;
-        if (darkModeOverride.contains("on")) {
+        if (darkModeOverride.contains("match")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
+        } else if (darkModeOverride.contains("on")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             darkMode = true;
-        } else if (darkModeOverride.contains("off")) {
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             darkMode = false;
-        } else {
-            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            AppCompatDelegate.setDefaultNightMode(currentNightMode == Configuration.UI_MODE_NIGHT_YES ?
-                    AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM : AppCompatDelegate.MODE_NIGHT_NO);
-            darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
         }
-        this.darkMode = darkMode;
     }
 
     private void setupVisualIndicator(SentryManager sentryManager) {

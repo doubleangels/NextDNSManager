@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
@@ -28,6 +27,7 @@ import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -36,19 +36,25 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         SentryManager sentryManager = new SentryManager(this);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
             if (sentryManager.isSentryEnabled()) {
                 SentryInitializer sentryInitializer = new SentryInitializer();
                 sentryInitializer.execute(this);
             }
+            setupToolbar();
             setupLanguage();
             setupDarkMode(sharedPreferences);
-            setupVisualIndicator(sentryManager);
             initializeViews();
+            setupVisualIndicator(sentryManager);
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }
+    }
+
+    private void setupToolbar() {
+        setSupportActionBar(findViewById(R.id.toolbar));
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
     private void setupLanguage() {
@@ -71,18 +77,19 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {
         String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
-        int defaultNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
-        if (darkModeOverride.contains("on")) {
-            defaultNightMode = AppCompatDelegate.MODE_NIGHT_YES;
-        } else if (darkModeOverride.contains("off")) {
-            defaultNightMode = AppCompatDelegate.MODE_NIGHT_NO;
+        if (darkModeOverride.contains("match")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        } else if (darkModeOverride.contains("on")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-        AppCompatDelegate.setDefaultNightMode(defaultNightMode);
     }
 
     private void setupVisualIndicator(SentryManager sentryManager) {
         try {
-            new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
+            VisualIndicator visualIndicator = new VisualIndicator(this);
+            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
         } catch (Exception e) {
             sentryManager.captureExceptionIfEnabled(e);
         }
@@ -93,7 +100,8 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+            setInitialSentryVisibility(sharedPreferences);
             ListPreference darkModePreference = findPreference("darkmode_override");
             SwitchPreference sentryEnablePreference = findPreference("sentry_enable");
             assert darkModePreference != null;
@@ -118,31 +126,30 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
 
+        private void setInitialSentryVisibility(SharedPreferences sharedPreferences) {
+            boolean visibility = sharedPreferences.getBoolean("sentry_enable", false);
+            setPreferenceVisibility("whitelist_domains", visibility);
+            setPreferenceVisibility("whitelist_domain_1_button", visibility);
+            setPreferenceVisibility("whitelist_domain_2_button", visibility);
+        }
+
         private void setupButton(String buttonKey, int textResource) {
             Preference button = findPreference(buttonKey);
             if (button != null) {
                 button.setOnPreferenceClickListener(preference -> {
-                    if (buttonKey.startsWith("whitelist_domain")) {
-                        copyToClipboard(textResource);
+                    if ("whitelist_domain_1_button".equals(buttonKey) || "whitelist_domain_2_button".equals(buttonKey)) {
+                        ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                        CharSequence copiedText = getString(textResource);
+                        ClipData copiedData = ClipData.newPlainText("text", copiedText);
+                        clipboardManager.setPrimaryClip(copiedData);
+                        Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
                     } else {
-                        openLink(textResource);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
+                        startActivity(intent);
                     }
                     return true;
                 });
             }
-        }
-
-        private void copyToClipboard(int textResource) {
-            ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
-            CharSequence copiedText = getString(textResource);
-            ClipData copiedData = ClipData.newPlainText("text", copiedText);
-            clipboardManager.setPrimaryClip(copiedData);
-            Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
-        }
-
-        private void openLink(int textResource) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
-            startActivity(intent);
         }
 
         private void setupDarkModeChangeListener(ListPreference setting, SharedPreferences sharedPreferences) {
@@ -156,12 +163,22 @@ public class SettingsActivity extends AppCompatActivity {
         private void setupSentryChangeListener(SwitchPreference switchPreference, SharedPreferences sharedPreferences) {
             if (switchPreference != null) {
                 switchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                    boolean isVisible= (boolean) newValue;
+                    boolean isEnabled = (boolean) newValue;
                     SharedPreferences.Editor preferenceEdit = sharedPreferences.edit();
-                    preferenceEdit.putString("sentry_enable", String.valueOf(isVisible));
+                    preferenceEdit.putBoolean("sentry_enable", isEnabled);
+                    setPreferenceVisibility("whitelist_domains", isEnabled);
+                    setPreferenceVisibility("whitelist_domain_1_button", isEnabled);
+                    setPreferenceVisibility("whitelist_domain_2_button", isEnabled);
                     preferenceEdit.apply();
                     return true;
                 });
+            }
+        }
+
+        private void setPreferenceVisibility(String key, Boolean visibility) {
+            Preference preference = findPreference(key);
+            if (preference != null) {
+                preference.setVisible(visibility);
             }
         }
     }
