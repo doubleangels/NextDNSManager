@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
     private void downloadFile(String uri) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(uri))
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                .setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "NextDNSConfiguration.mobileconfig");
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "NextDNSConfiguration.mobileconfig");
         DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         downloadManager.enqueue(request);
         Toast.makeText(getApplicationContext(), "Downloading file!", Toast.LENGTH_LONG).show();
