@@ -10,10 +10,10 @@ android {
         minSdkVersion 28
         targetSdk 34
         versionCode 221
-        versionName '5.0.0-beta11'
+        versionName '5.0.0-beta12'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "id", "it", "ja", "pl", "pt", "es", "sv", "tr"]
+        resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "in", "it", "ja", "pl", "pt", "es", "sv", "tr"]
     }
 
     buildTypes {
@@ -29,8 +29,8 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
     dependenciesInfo {
-        includeInApk false
-        includeInBundle false
+        includeInApk true
+        includeInBundle true
     }
 
     packagingOptions {
@@ -64,7 +64,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.10.0'
     implementation 'io.sentry:sentry-android:7.6.0'
     implementation("org.mozilla.geckoview:geckoview:123.0.20240304104836")
-    implementation "org.mozilla.components:feature-downloads:124.1.0"
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.23'))
 }
 
