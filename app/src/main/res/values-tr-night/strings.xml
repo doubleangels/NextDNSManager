@@ -51,7 +51,7 @@
   <string name="user_agreement">Kullanıcı Sözleşmesi</string>
   <string name="version">Versiyon</string>
   <string name="whitelist">Beyaz liste</string>
-  <string name="whitelist_domains">NextDNS konfigürasyonunuzda lütfen bu alan adlarını beyaz listeye ekleyin.</string>
+  <string name="whitelist_domains">Sentry\'yi etkinleştirirseniz, lütfen bu alanları NextDNS yapılandırmanızda beyaz listeye alın.</string>
   <string name="whitelist_instructions">Lütfen Sentry hata izleme sistemine katılmayı düşünün. Bu kişisel bilgi toplamaz ve uygulamayı daha iyi hale getirmeme yardımcı olur.</string>
   <string-array name="darkmode_entries">
     <item>Eşleştirme Sistemi</item>

@@ -51,7 +51,7 @@
   <string name="user_agreement">Användaravtal</string>
   <string name="version">Versionen</string>
   <string name="whitelist">Vitlista</string>
-  <string name="whitelist_domains">Vänligen vitlista dessa domäner i din NextDNS-konfiguration.</string>
+  <string name="whitelist_domains">Om du aktiverar Sentry, vänligen vitlista dessa domäner i din NextDNS-konfiguration.</string>
   <string name="whitelist_instructions">Vänligen överväg att välja till Sentry felspårning. Detta samlar inte in någon personlig information och hjälper mig att göra appen bättre.</string>
   <string-array name="darkmode_entries">
     <item>Matcha Systemet</item>

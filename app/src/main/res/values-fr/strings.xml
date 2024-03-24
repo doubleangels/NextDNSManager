@@ -51,7 +51,7 @@
   <string name="user_agreement">Contrat d\'utilisation</string>
   <string name="version">Version</string>
   <string name="whitelist">Liste blanche</string>
-  <string name="whitelist_domains">Veuillez mettre en liste blanche ces domaines dans votre configuration NextDNS.</string>
+  <string name="whitelist_domains">Si vous activez Sentry, veuillez mettre ces domaines en liste blanche dans votre configuration NextDNS.</string>
   <string name="whitelist_instructions">Veuillez envisager d\'opter pour le suivi des erreurs Sentr. Cela ne collecte aucune information personnelle et m\'aide à améliorer l\'application.</string>
   <string-array name="darkmode_entries">
     <item>Système de Correspondance</item>

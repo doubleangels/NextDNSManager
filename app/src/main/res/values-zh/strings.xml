@@ -51,7 +51,7 @@
   <string name="user_agreement">用户协议</string>
   <string name="version">版本</string>
   <string name="whitelist">白名单</string>
-  <string name="whitelist_domains">请在下一个DNS配置中将这些域名加入白名单。</string>
+  <string name="whitelist_domains">如果您启用了 Sentry，请在您的NextDNS 配置中将这些域名加入白名单。</string>
   <string name="whitelist_instructions">请考虑加入 Sentry 错误跟踪。这不会收集任何个人信息，并且有助于我使应用程序变得更好。</string>
   <string-array name="darkmode_entries">
     <item>匹配系统</item>

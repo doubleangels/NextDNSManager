@@ -51,7 +51,7 @@
   <string name="user_agreement">Käyttäjäsopimus</string>
   <string name="version">Versio</string>
   <string name="whitelist">Valkoinen luettelo</string>
-  <string name="whitelist_domains">Ole hyvä ja salli nämä verkkotunnukset NextDNS asetuksissa.</string>
+  <string name="whitelist_domains">Jos otat Sentryn käyttöön, ole hyvä ja salli nämä verkkotunnukset NextDNS-asetuksessasi.</string>
   <string name="whitelist_instructions">Harkitse valintaa Etsintävirheiden seurantaan. Tämä ei kerää henkilökohtaisia tietoja ja auttaa minua tekemään sovelluksesta paremman.</string>
   <string-array name="darkmode_entries">
     <item>Sovita Järjestelmä</item>

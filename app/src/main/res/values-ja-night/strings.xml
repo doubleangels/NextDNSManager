@@ -51,7 +51,7 @@
   <string name="user_agreement">ユーザー契約</string>
   <string name="version">[バージョン]</string>
   <string name="whitelist">ホワイトリスト</string>
-  <string name="whitelist_domains">これらのドメインをNextDNS設定でホワイトリストに登録してください。</string>
+  <string name="whitelist_domains">Sentryを有効にする場合は、NextDNS設定でこれらのドメインをホワイトリストに登録してください。</string>
   <string name="whitelist_instructions">Sentry error trackingへの参加を検討してください。これは個人情報を収集するものではなく、アプリを改善するのに役立ちます。</string>
   <string-array name="darkmode_entries">
     <item>システムに一致</item>

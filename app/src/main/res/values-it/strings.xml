@@ -51,7 +51,7 @@
   <string name="user_agreement">Accordo con l\'utente</string>
   <string name="version">Versione</string>
   <string name="whitelist">Lista bianca</string>
-  <string name="whitelist_domains">Si prega di whitelist questi domini nella configurazione NextDNS.</string>
+  <string name="whitelist_domains">Se si abilita Sentry, si prega di whitelist questi domini nella configurazione NextDNS.</string>
   <string name="whitelist_instructions">Si prega di considerare di optare per il monitoraggio degli errori Sentr. Questo non raccoglie alcuna informazione personale e mi aiuta a migliorare l\'app.</string>
   <string-array name="darkmode_entries">
     <item>Sistema Di Partita</item>

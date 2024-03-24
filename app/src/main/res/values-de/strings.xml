@@ -51,7 +51,7 @@
   <string name="user_agreement">Nutzervereinbarung</string>
   <string name="version">Version</string>
   <string name="whitelist">Weiße Liste</string>
-  <string name="whitelist_domains">Bitte markieren Sie diese Domains in Ihrer NextDNS-Konfiguration.</string>
+  <string name="whitelist_domains">Wenn Sie Sentry aktivieren, können Sie diese Domains in Ihrer NextDNS-Konfiguration whitelistieren.</string>
   <string name="whitelist_instructions">Bitte erwägen Sie, die Fehlerverfolgung bei Sentry einzuschalten. Dies sammelt keine persönlichen Informationen und hilft mir, die App besser zu machen.</string>
   <string-array name="darkmode_entries">
     <item>Match-System</item>
