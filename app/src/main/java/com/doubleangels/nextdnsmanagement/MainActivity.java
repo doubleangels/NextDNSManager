@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -28,7 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.doubleangels.nextdnsmanagement.geckoruntime.GeckoRuntimeSingleton;
+import com.doubleangels.nextdnsmanagement.gecko.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
@@ -48,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private GeckoSession geckoSession;
     private Boolean darkMode;
 
-    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @SuppressLint("WrongThread")
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,18 +60,26 @@ public class MainActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
             }
             if (sentryManager.isSentryEnabled()) {
-                Log.d("TESTING", "TESTING");
                 sentryManager.captureMessage("Sentry is enabled for NextDNS Manager.");
                 SentryInitializer sentryInitializer = new SentryInitializer();
                 sentryInitializer.execute(this);
             }
             setupToolbar();
-            //testExceptions();
             String appLocale = setupLanguage();
             sentryManager.captureMessage("Using locale: " + appLocale);
             setupDarkMode(sentryManager, sharedPreferences);
             setupVisualIndicator(sentryManager);
             GeckoView geckoView = findViewById(R.id.geckoView);
+            int color = darkMode ? R.color.darkgray : R.color.white;
+            geckoView.coverUntilFirstPaint(getColor(color));
+            if (runtime == null) {
+                runtime = GeckoRuntime.create(this);
+                GeckoRuntimeSingleton.setInstance(runtime);
+                runtime.getSettings()
+                        .setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY)
+                        .setAutomaticFontSizeAdjustment(true)
+                        .setLocales(new String[] {appLocale});
+            }
             geckoSession = new GeckoSession();
             geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {
                 @Override
@@ -83,24 +90,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-            if (runtime == null) {
-                runtime = GeckoRuntime.create(this);
-                GeckoRuntimeSingleton.setInstance(runtime);
-                runtime.getSettings()
-                        .setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY)
-                        .setAutomaticFontSizeAdjustment(true);
-            }
-            runtime.getSettings().setLocales(new String[] {appLocale});
             geckoSession.open(runtime);
             geckoSession.getSettings().setAllowJavascript(true);
             geckoView.setSession(geckoSession);
             if (darkMode) {
-                geckoView.coverUntilFirstPaint(getColor(R.color.darkgray));
                 runtime.getWebExtensionController()
                         .ensureBuiltIn("resource://android/assets/darkmode/", "nextdns@doubleangels.com");
                 sentryManager.captureMessage("Dark mode extension installed.");
             } else {
-                geckoView.coverUntilFirstPaint(getColor(R.color.white));
                 String extensionId = "nextdns@doubleangels.com";
                 runtime.getWebExtensionController().list().then(extensions -> {
                     if (extensions != null) {
@@ -119,6 +116,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        geckoSession.close();
     }
 
     private void setupToolbar() {

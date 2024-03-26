@@ -1,4 +1,4 @@
-package com.doubleangels.nextdnsmanagement.geckoruntime;
+package com.doubleangels.nextdnsmanagement.gecko;
 
 import org.mozilla.geckoview.GeckoRuntime;
 
