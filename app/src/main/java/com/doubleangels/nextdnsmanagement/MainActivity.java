@@ -35,6 +35,7 @@ import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 import org.mozilla.geckoview.GeckoRuntime;
 import org.mozilla.geckoview.GeckoRuntimeSettings;
 import org.mozilla.geckoview.GeckoSession;
+import org.mozilla.geckoview.GeckoSessionSettings;
 import org.mozilla.geckoview.GeckoView;
 import org.mozilla.geckoview.WebExtension;
 import org.mozilla.geckoview.WebResponse;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             });
             geckoSession.open(runtime);
             geckoSession.getSettings().setAllowJavascript(true);
+            geckoSession.getSettings().setUserAgentMode(GeckoSessionSettings.USER_AGENT_MODE_MOBILE);
             geckoView.setSession(geckoSession);
             if (darkMode) {
                 runtime.getWebExtensionController()
