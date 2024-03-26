@@ -44,7 +44,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static GeckoRuntime runtime;
+    private static GeckoRuntime geckoRuntime;
     private GeckoSession geckoSession;
     private Boolean darkMode;
 
@@ -73,10 +73,10 @@ public class MainActivity extends AppCompatActivity {
             GeckoView geckoView = findViewById(R.id.geckoView);
             int color = darkMode ? R.color.darkgray : R.color.white;
             geckoView.coverUntilFirstPaint(getColor(color));
-            if (runtime == null) {
-                runtime = GeckoRuntime.create(this);
-                GeckoRuntimeSingleton.setInstance(runtime);
-                runtime.getSettings()
+            if (geckoRuntime == null) {
+                geckoRuntime = GeckoRuntime.create(this);
+                GeckoRuntimeSingleton.setInstance(geckoRuntime);
+                geckoRuntime.getSettings()
                         .setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY)
                         .setAutomaticFontSizeAdjustment(true)
                         .setLocales(new String[] {appLocale});
@@ -91,21 +91,21 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-            geckoSession.open(runtime);
+            geckoSession.open(geckoRuntime);
             geckoSession.getSettings().setAllowJavascript(true);
             geckoSession.getSettings().setUserAgentMode(GeckoSessionSettings.USER_AGENT_MODE_MOBILE);
             geckoView.setSession(geckoSession);
             if (darkMode) {
-                runtime.getWebExtensionController()
+                geckoRuntime.getWebExtensionController()
                         .ensureBuiltIn("resource://android/assets/darkmode/", "nextdns@doubleangels.com");
                 sentryManager.captureMessage("Dark mode extension installed.");
             } else {
                 String extensionId = "nextdns@doubleangels.com";
-                runtime.getWebExtensionController().list().then(extensions -> {
+                geckoRuntime.getWebExtensionController().list().then(extensions -> {
                     if (extensions != null) {
                         for (WebExtension extension : extensions) {
                             if (extension.id.equals(extensionId)) {
-                                runtime.getWebExtensionController().uninstall(extension);
+                                geckoRuntime.getWebExtensionController().uninstall(extension);
                                 return null;
                             }
                         }
@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         geckoSession.close();
+        geckoRuntime.shutdown();
     }
 
     private void setupToolbar() {
