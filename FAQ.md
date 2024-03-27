@@ -27,14 +27,7 @@ This is one of the benefits of open source! Anyone can look at all the code and 
 # In the settings for the app, I see a section about Sentry error tracking. Does this mean you're tracking me?
 
 No. [Sentry](https://sentry.io) is a service for developers that gathers information about app crashes, bugs, and other errors and provides them to the developer. This information may contain information about your device (phone type, Android version, etc), about the app (app version, where in the app bugs are occurring, etc), and about the bugs themselves (crash data, stack traces, exceptions, etc). No personal information is collected about you, and nobody other than the maintainer of this project has access to the Sentry error data collected. Furthermore, this is an entirely opt-in option. As of version 5.0.0, there is a toggle in the settings to enable/disable Sentry within your app, and domains to whitelist/blacklist Sentry in your NextDNS configuration are provided. If you choose to disable Sentry, it is not initialized at all. If you choose to enable Sentry, thank you! Your bug and error data helps me push out bug fixes and improvements faster and more reliably.
-
-## How else does this app help protect my privacy? 
-
-In addition to not collecting your data, since version 5.0.0, the app is built around GeckoView. Gecko is the engine that powers Mozilla Firefox, a browser known for protecting privacy and security online.
-
-## I looked in the releases, and the release APK files are large. Why is this? Can you make it smaller?
-
-Since version 5.0.0, the app uses GeckoView from Mozilla. Prior to 5.0.0, the app used Android's WebView, which is already bundled with Android. Since the new GeckoView code is not already bundled with Android like the WebView code is, the APK files are much larger. I will continue to try to lower this size as much as possible, but if download/data usage is important to you, use the Google Play version, as downloads are customized for your device and will be smaller.
+.
 
 ## I am new to using NextDNS and I don't understand how to use it, can you teach me?
 
