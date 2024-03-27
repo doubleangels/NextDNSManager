@@ -26,12 +26,12 @@ This is one of the benefits of open source! Anyone can look at all the code and 
 
 ## In the settings for the app, I see a section about Sentry error tracking. Does this mean you're tracking me?
 
-No. [Sentry](https://sentry.io) is a service for developers that gathers information about app crashes, bugs, and other errors and provides them to the developer. This information may contain information about your device (phone type, Android version, etc), about the app (app version, where in the app bugs are occurring, etc), and about the bugs themselves (crash data, stack traces, exceptions, etc). No personal information is collected about you, and nobody other than the maintainer of this project has access to the Sentry error data collected. Furthermore, this is an entirely opt-in option. As of version 5.0.0, there is a toggle in the settings to enable/disable Sentry within your app, and domains to whitelist/blacklist Sentry in your NextDNS configuration are provided. If you choose to disable Sentry, it is not initialized at all. If you choose to enable Sentry, thank you! Your bug and error data helps me push out bug fixes and improvements faster and more reliably.
+No. [Sentry](https://github.com/getsentry/sentry) is a service for developers that gathers information about app crashes, bugs, and other errors and provides them to the developer. This information may contain information about your device (phone type, Android version, etc), about the app (app version, where in the app bugs are occurring, etc), and about the bugs themselves (crash data, stack traces, exceptions, etc). No personal information is collected about you, and nobody other than the maintainer of this project has access to the Sentry error data collected. Furthermore, this is an entirely opt-in option. As of version 5.0.0, there is a toggle in the settings to enable/disable Sentry within your app, and domains to whitelist/blacklist Sentry in your NextDNS configuration are provided. If you choose to disable Sentry, it is not initialized at all. If you choose to enable Sentry, thank you! Your bug and error data helps me push out bug fixes and improvements faster and more reliably.
 .
 
 ## I am new to using NextDNS and I don't understand how to use it, can you teach me?
 
-Sorry, but no. There's tons of excellent documentation out there as to how to effectively use NextDNS, and an amazing community who can help you as well. I simply don't have the time to do tech support.
+Sorry, but no. There's tons of excellent documentation out there as to how to effectively use NextDNS, and an amazing community who can help you as well. I recommend the NextDNS website, YouTube videos, and the r/nextdns subreddit. I simply don't have the time to do tech support.
 
 ## I've read all of this and still have a question, what now?
 
