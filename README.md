@@ -38,17 +38,19 @@ NextDNS Manager can be installed on any Android phone or tablet running Android 
 
 - **Real-time Statistics**: Get insights into your DNS queries, blocked requests, and security events in real-time.
 
-- **Security and Privacy**: Enhance your online security and privacy by leveraging NextDNS' filtering capabilities. This app also uses the same technology that powers Mozilla Firefox under the hood, so you can trust that the app is safe and secure.
+- **Security and Privacy**: Enhance your online security and privacy by leveraging NextDNS' filtering capabilities.
 
 - **Easy Installation**: You can download and install NextDNS Manager from the Google Play Store, F-Droid, or directly from GitHub, providing multiple installation options.
+
 # Installation
 
 ## Which installation method should I use?
 
 Which app you should use depends on your privacy preferences and how often you wish to receive updates:
-  - If you are able to use Google Play, use it.
-  - If you're not able to use Google Play, sideload an APK from this repository.
-  - If neither of these options work for you, install the app from F-Droid.
+
+- If you are able to use Google Play, use it.
+- If you're not able to use Google Play, sideload an APK from this repository.
+- If neither of these options work for you, install the app from F-Droid.
 
 For each build ("version") of the app, there are timelines for when the build will be available, so methods with longer timelines will result in longer wait times for updates.
 
