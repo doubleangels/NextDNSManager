@@ -57,7 +57,7 @@ dependencies {
 
     implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
 
-    implementation 'com.jakewharton:process-phoenix:2.2.0'
+    implementation 'com.jakewharton:process-phoenix:3.0.0'
     implementation 'io.sentry:sentry-android:7.6.0'
 
     implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.23'))
