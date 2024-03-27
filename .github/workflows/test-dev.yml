@@ -26,7 +26,7 @@ jobs:
       - name: Run Lint
         run: ./gradlew lint
         continue-on-error: false
-        
+
   build-debug:
     needs: lint
     runs-on: ubuntu-latest
