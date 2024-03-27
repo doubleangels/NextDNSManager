@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Locale;
 
+/** @noinspection deprecation*/
 public class MainActivity extends AppCompatActivity {
 
     private SentryManager sentryManager;
@@ -142,7 +143,6 @@ public class MainActivity extends AppCompatActivity {
         webSettings.setAllowFileAccess(false);
         webSettings.setAllowContentAccess(false);
         webSettings.setAllowUniversalAccessFromFileURLs(false);
-        webSettings.setSaveFormData(true);
         if (darkMode) {
             webView.setWebViewClient(new WebViewClient() {
                 @Override

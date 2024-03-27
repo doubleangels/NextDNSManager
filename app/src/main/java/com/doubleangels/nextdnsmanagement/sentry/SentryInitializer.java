@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import io.sentry.android.core.SentryAndroid;
 
+/** @noinspection deprecation*/
 public class SentryInitializer extends AsyncTask<Context, Void, Void> {
 
     @Override
