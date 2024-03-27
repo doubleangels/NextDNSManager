@@ -35,6 +35,9 @@ In addition to not collecting your data, since version 5.0.0, the app is built a
 
 Since version 5.0.0, the app uses GeckoView from Mozilla. Prior to 5.0.0, the app used Android's WebView, which is already bundled with Android. Since the new GeckoView code is not already bundled with Android like the WebView code is, the APK files are much larger. I will continue to try to lower this size as much as possible, but if download/data usage is important to you, use the Google Play version, as downloads are customized for your device and will be smaller.
 
+## I am new to using NextDNS and I don't understand how to use it, can you teach me?
+
+Sorry, but no. There's tons of excellent documentation out there as to how to effectively use NextDNS, and an amazing community who can help you as well. I simply don't have the time to do tech support.
 
 ## I've read all of this and still have a question, what now?
 
