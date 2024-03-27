@@ -13,11 +13,12 @@ The official app appears to have been taken down. On Google Play, there are a nu
 ## What features won't be able to be added to this app since it's not official?
 
 Unless NextDNS/Android make major changes, there are a few features that won't be able to be added. These include:
-    - Toggle on/off of NextDNS protection, through quick toggles and other means. This is a limitation of Android.
-    - Connecting through a VPN to NextDNS as was available in the official app. Since I don't have access to official infastructure, there is no VPN server available to facilitate a connection to.
-    - Changes (additions, removals, edits) to block lists or any of the parental control features.
-    - Addition of [NXEnhanced](https://github.com/hjk789/NXEnhanced)-like features. The developer of NXEnhanced has ceased development of his project after attempting to work with NextDNS and recieving no response.
-    - Changes (additions, removals, edits) of NextDNS payment methods.
+
+- Toggle on/off of NextDNS protection, through quick toggles and other means. This is a limitation of Android.
+- Connecting through a VPN to NextDNS as was available in the official app. Since I don't have access to official infastructure, there is no VPN server available to facilitate a connection to.
+- Changes (additions, removals, edits) to block lists or any of the parental control features.
+- Addition of [NXEnhanced](https://github.com/hjk789/NXEnhanced)-like features. The developer of NXEnhanced has ceased development of his project after attempting to work with NextDNS and recieving no response.
+- Changes (additions, removals, edits) of NextDNS payment methods.
 
 ## Is this app secure? Can you access my account or view my DNS queries?
 
