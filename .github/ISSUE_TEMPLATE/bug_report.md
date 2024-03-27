@@ -12,9 +12,9 @@ assignees: "doubleangels"
 **To Reproduce**
 Steps to reproduce the behavior:
 
-1. [Replace with the first step]
-2. [Replace with the second step]
-3. [Continue with as many steps as necessary]
+1. [Replace with the first step.]
+2. [Replace with the second step.]
+3. [Continue with as many steps as necessary.]
 
 **Expected behavior**
 [Replace with a clear and concise description of what you expected to happen.]
