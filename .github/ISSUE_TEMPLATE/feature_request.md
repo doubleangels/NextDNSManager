@@ -1,7 +1,7 @@
 ---
 name: Feature request
-about: Suggest an idea for this project.
-title: "[Replace with a descriptive title]"
+about: Suggest an idea for this project. **Make sure you read the [FAQ's](https://github.com/doubleangels/NextDNSManager/blob/main/FAQ.md) first or your issue may be closed.**
+title: "[Replace with a descriptive title.]"
 labels: "type: feature request"
 assignees: "doubleangels"
 ---
