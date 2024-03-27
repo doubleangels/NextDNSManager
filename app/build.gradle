@@ -9,9 +9,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdk 34
-        versionCode 222
-        versionName '5.0.0-beta13'
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        versionCode 223
+        versionName '5.0.0-beta14'
         resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "in", "it", "ja", "pl", "pt", "es", "sv", "tr"]
     }
 
@@ -62,7 +61,6 @@ dependencies {
     implementation 'com.jakewharton:process-phoenix:3.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.10.0'
     implementation 'io.sentry:sentry-android:7.6.0'
-    implementation("org.mozilla.geckoview:geckoview:123.0.20240304104836")
 }
 
 sentry {

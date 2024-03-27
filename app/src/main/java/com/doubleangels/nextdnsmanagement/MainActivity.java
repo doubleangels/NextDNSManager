@@ -13,8 +13,14 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,26 +33,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.doubleangels.nextdnsmanagement.gecko.GeckoRuntimeSingleton;
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 
-import org.mozilla.geckoview.GeckoRuntime;
-import org.mozilla.geckoview.GeckoRuntimeSettings;
-import org.mozilla.geckoview.GeckoSession;
-import org.mozilla.geckoview.GeckoSessionSettings;
-import org.mozilla.geckoview.GeckoView;
-import org.mozilla.geckoview.WebExtension;
-import org.mozilla.geckoview.WebResponse;
-
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SentryManager sentryManager;
-    private static GeckoRuntime geckoRuntime;
-    private GeckoSession geckoSession;
+    private WebView webView;
     private Boolean darkMode;
 
     @SuppressLint("WrongThread")
@@ -55,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        sentryManager = new SentryManager(this);
+        SentryManager sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
             if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
@@ -71,60 +70,10 @@ public class MainActivity extends AppCompatActivity {
             sentryManager.captureMessage("Using locale: " + appLocale);
             setupDarkMode(sentryManager, sharedPreferences);
             setupVisualIndicator(sentryManager);
-            GeckoView geckoView = findViewById(R.id.geckoView);
-            if (geckoRuntime == null) {
-                geckoRuntime = GeckoRuntime.create(this);
-                GeckoRuntimeSingleton.setInstance(geckoRuntime);
-                geckoRuntime.getSettings()
-                        .setAllowInsecureConnections(GeckoRuntimeSettings.HTTPS_ONLY)
-                        .setAutomaticFontSizeAdjustment(true)
-                        .setLocales(new String[] {appLocale});
-            }
-            geckoSession = new GeckoSession();
-            geckoSession.setContentDelegate(new GeckoSession.ContentDelegate() {
-                @Override
-                public void onExternalResponse(@NonNull GeckoSession geckoSession, @NonNull WebResponse webResponse) {
-                    GeckoSession.ContentDelegate.super.onExternalResponse(geckoSession, webResponse);
-                    if (webResponse.isSecure) {
-                        downloadFile(webResponse.uri.replace("?sign=1", ""));
-                    }
-                }
-            });
-            geckoSession.open(geckoRuntime);
-            geckoSession.getSettings().setAllowJavascript(true);
-            geckoSession.getSettings().setUserAgentMode(GeckoSessionSettings.USER_AGENT_MODE_MOBILE);
-            geckoView.setSession(geckoSession);
-            int color = darkMode ? R.color.darkgray : R.color.white;
-            geckoView.coverUntilFirstPaint(getColor(color));
-            if (darkMode) {
-                geckoRuntime.getWebExtensionController()
-                        .ensureBuiltIn("resource://android/assets/darkmode/", "nextdns@doubleangels.com");
-                sentryManager.captureMessage("Dark mode extension installed.");
-            } else {
-                String extensionId = "nextdns@doubleangels.com";
-                geckoRuntime.getWebExtensionController().list().then(extensions -> {
-                    if (extensions != null) {
-                        for (WebExtension extension : extensions) {
-                            if (extension.id.equals(extensionId)) {
-                                geckoRuntime.getWebExtensionController().uninstall(extension);
-                                return null;
-                            }
-                        }
-                    }
-                    sentryManager.captureMessage("Dark mode extension uninstalled.");
-                    return null;
-                });
-            }
-            geckoSession.loadUri(getString(R.string.main_url));
+            setupWebView(getString(R.string.main_url));
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
-    }
-
-    protected void onDestroy() {
-        super.onDestroy();
-        geckoSession.close();
-        geckoRuntime.shutdown();
     }
 
     private void setupToolbar() {
@@ -176,14 +125,62 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
+    public void setupWebView(String url) {
+        webView = findViewById(R.id.webView);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setDatabaseEnabled(true);
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webSettings.setAllowFileAccess(false);
+        webSettings.setAllowContentAccess(false);
+        webSettings.setAllowUniversalAccessFromFileURLs(false);
+        webSettings.setSaveFormData(true);
+        if (darkMode) {
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+                    if (request.getUrl().toString().endsWith(".css")) {
+                        try {
+                            InputStream inputStream = getAssets().open("minimized-full.css");
+                            String cssContent = convertStreamToString(inputStream);
+                            return new WebResourceResponse("text/css", "UTF-8", new ByteArrayInputStream(cssContent.getBytes()));
+                        } catch (IOException e) {
+                            Log.d("NextDNS Manager Logging", "Error loading CSS from assets:", e);
+                            // Handle the exception as needed (e.g., fall back to original request)
+                        }
+                    }
+                    return super.shouldInterceptRequest(view, request);
+                }
+            });
+        } else {
+            webView.setWebViewClient(new WebViewClient());
+        }
+        setupDownloadManager();
+        webView.loadUrl(url);
+    }
 
-    private void downloadFile(String uri) {
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(uri))
-                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "NextDNSConfiguration.mobileconfig");
-        DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-        downloadManager.enqueue(request);
-        Toast.makeText(getApplicationContext(), "Downloading file!", Toast.LENGTH_LONG).show();
+    private void setupDownloadManager() {
+        webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
+            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url.trim()));
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+            request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "NextDNS-Configuration.mobileconfig");
+            DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+            downloadManager.enqueue(request);
+            Toast.makeText(getApplicationContext(), "Downloading file!", Toast.LENGTH_LONG).show();
+        });
+    }
+    private String convertStreamToString(InputStream is) throws IOException {
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = is.read(buffer)) != -1) {
+            result.write(buffer, 0, length);
+        }
+        // Specify the encoding explicitly
+        return result.toString("UTF-8");
     }
 
     private void startIntent(Class<?> targetClass) {
@@ -201,10 +198,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.back -> geckoSession.goBack();
-            case R.id.refreshNextDNS -> geckoSession.reload();
+            case R.id.back -> webView.goBack();
+            case R.id.refreshNextDNS -> webView.reload();
             case R.id.pingNextDNS -> startIntent(PingActivity.class);
-            case R.id.returnHome -> geckoSession.loadUri(getString(R.string.main_url));
+            case R.id.returnHome -> webView.loadUrl(getString(R.string.main_url));
             case R.id.settings -> startIntent(SettingsActivity.class);
         }
         return super.onOptionsItemSelected(item);
