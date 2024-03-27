@@ -24,18 +24,6 @@ jobs:
         run: ./gradlew lint
         continue-on-error: false
 
-      - name: Save lint results
-        if: always()
-        run: |
-          mkdir -p lint-results
-          cp -r /home/runner/work/NextDNSManager/NextDNSManager/app/build/reports/lint-results-debug.html lint-results/
-
-      - name: Upload lint results as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: lint-results
-          path: lint-results
-
   build-for-github:
     needs: lint
     runs-on: ubuntu-latest
