@@ -9,7 +9,7 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-  target-branch: "main"
+  target-branch: "dev"
   commit-message:
     prefix: "[Gradle]"
   reviewers:
@@ -19,7 +19,7 @@ updates:
   directory: "/"
   schedule:
     interval: weekly
-  target-branch: "main"
+  target-branch: "dev"
   commit-message:
     prefix: "[Github Actions]"
   reviewers:
