@@ -150,15 +150,18 @@ public class MainActivity extends AppCompatActivity {
     private void setupDarkMode(SentryManager sentryManager, SharedPreferences sharedPreferences) {
         String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
         if (darkModeOverride.contains("match")) {
+            sentryManager.setTag("dark_mode", "match");
             sentryManager.captureMessage("Dark mode set to match system.");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
             darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
         } else if (darkModeOverride.contains("on")) {
+            sentryManager.setTag("dark_mode", "on");
             sentryManager.captureMessage("Dark mode set to on.");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             darkMode = true;
         } else {
+            sentryManager.setTag("dark_mode", "off");
             sentryManager.captureMessage("Dark mode set to off.");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             darkMode = false;

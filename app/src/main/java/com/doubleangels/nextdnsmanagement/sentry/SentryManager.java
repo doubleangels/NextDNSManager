@@ -12,15 +12,15 @@ public class SentryManager {
 
     private final Context context;
     public String TAG = "NextDNS Manager Logging";
+    public SharedPreferences sharedPreferences;
+
 
     public SentryManager(Context context) {
         this.context = context;
     }
 
     public void captureException(Exception e) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        boolean sentryEnabled = sharedPreferences.getBoolean("sentry_enable", false);
-        if (sentryEnabled) {
+        if (isSentryEnabled()) {
             Sentry.captureException(e);
             Log.e(TAG, "Got error:", e);
         } else {
@@ -29,9 +29,7 @@ public class SentryManager {
     }
 
     public void captureMessage(String message) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        boolean sentryEnabled = sharedPreferences.getBoolean("sentry_enable", false);
-        if (sentryEnabled) {
+        if (isSentryEnabled()) {
             Sentry.addBreadcrumb(message);
             Log.d(TAG, message);
         } else {
@@ -40,8 +38,14 @@ public class SentryManager {
 
     }
 
+    public void setTag(String key, String value) {
+        if (isSentryEnabled()) {
+            Sentry.setTag(key, value);
+        }
+    }
+
     public boolean isSentryEnabled() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean("sentry_enable", false);
     }
 }
