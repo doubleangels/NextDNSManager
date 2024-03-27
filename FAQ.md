@@ -31,6 +31,11 @@ No. [Sentry](https://sentry.io) is a service for developers that gathers informa
 
 In addition to not collecting your data, since version 5.0.0, the app is built around GeckoView. Gecko is the engine that powers Mozilla Firefox, a browser known for protecting privacy and security online.
 
+## I looked in the releases, and the release APK files are large. Why is this? Can you make it smaller?
+
+Since version 5.0.0, the app uses GeckoView from Mozilla. Prior to 5.0.0, the app used Android's WebView, which is already bundled with Android. Since the new GeckoView code is not already bundled with Android like the WebView code is, the APK files are much larger. I will continue to try to lower this size as much as possible, but if download/data usage is important to you, use the Google Play version, as downloads are customized for your device and will be smaller.
+
+
 ## I've read all of this and still have a question, what now?
 
 Please open an [issue](https://github.com/doubleangels/NextDNSManager/issues) or [ask the community](https://github.com/doubleangels/NextDNSManager/discussions/categories/q-a).
