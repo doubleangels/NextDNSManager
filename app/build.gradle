@@ -12,7 +12,6 @@ android {
         versionCode 222
         versionName '5.0.0-beta13'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "in", "it", "ja", "pl", "pt", "es", "sv", "tr"]
     }
 
@@ -64,7 +63,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.10.0'
     implementation 'io.sentry:sentry-android:7.6.0'
     implementation("org.mozilla.geckoview:geckoview:123.0.20240304104836")
-    implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.23'))
 }
 
 sentry {
