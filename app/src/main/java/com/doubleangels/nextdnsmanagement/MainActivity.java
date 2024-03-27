@@ -44,6 +44,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+    private SentryManager sentryManager;
     private static GeckoRuntime geckoRuntime;
     private GeckoSession geckoSession;
     private Boolean darkMode;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SentryManager sentryManager = new SentryManager(this);
+        sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
             if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
@@ -71,8 +72,6 @@ public class MainActivity extends AppCompatActivity {
             setupDarkMode(sentryManager, sharedPreferences);
             setupVisualIndicator(sentryManager);
             GeckoView geckoView = findViewById(R.id.geckoView);
-            int color = darkMode ? R.color.darkgray : R.color.white;
-            geckoView.coverUntilFirstPaint(getColor(color));
             if (geckoRuntime == null) {
                 geckoRuntime = GeckoRuntime.create(this);
                 GeckoRuntimeSingleton.setInstance(geckoRuntime);
@@ -95,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
             geckoSession.getSettings().setAllowJavascript(true);
             geckoSession.getSettings().setUserAgentMode(GeckoSessionSettings.USER_AGENT_MODE_MOBILE);
             geckoView.setSession(geckoSession);
+            int color = darkMode ? R.color.darkgray : R.color.white;
+            geckoView.coverUntilFirstPaint(getColor(color));
             if (darkMode) {
                 geckoRuntime.getWebExtensionController()
                         .ensureBuiltIn("resource://android/assets/darkmode/", "nextdns@doubleangels.com");
