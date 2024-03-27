@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 name: Deploy beta release
 
 on:
@@ -210,3 +211,217 @@ jobs:
           releaseFiles: app-release.aab
           track: beta
           whatsNewDirectory: whatsnew
+=======
+name: Deploy beta release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: gradle
+
+      - name: Cache gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Run Lint
+        run: ./gradlew lint
+        continue-on-error: false
+
+      - name: Save lint results
+        if: always()
+        run: |
+          mkdir -p lint-results
+          cp -r /home/runner/work/NextDNSManager/NextDNSManager/app/build/reports/lint-results-debug.html lint-results/
+
+      - name: Upload lint results as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-results
+          path: lint-results
+
+  build-for-github:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: "temurin"
+          cache: gradle
+
+      - name: Cache gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build APK for Github release
+        run: ./gradlew assembleRelease
+
+      - name: Sign APK for Github release
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: "34.0.0"
+
+      - name: Rename Github APK file
+        run: mv app/build/outputs/apk/release/app-release-unsigned-signed.apk app/build/outputs/apk/release/app-release.apk
+
+      - name: Upload APK to Github release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-release-apk
+          path: app/build/outputs/apk/release/app-release.apk
+
+  build-for-google-play:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: "temurin"
+          cache: gradle
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build bundle for Google Play release
+        run: ./gradlew bundleRelease
+
+      - name: Sign bundle for Google Play release
+        uses: r0adkll/sign-android-release@v1
+        with:
+          releaseDirectory: app/build/outputs/bundle/release
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Upload bundle to Github release artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: google-play-bundle
+          path: app/build/outputs/bundle/release/app-release.aab
+
+  publish-built-files:
+    needs: ["build-for-github", "build-for-google-play"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+
+      - name: Download APK from Github release artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: github-release-apk
+          path: .
+
+      - name: Download Google Play bundle from Github release artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: google-play-bundle
+          path: .
+
+      - name: Read APK info to get version code
+        id: android_version
+        uses: hkusu/apk-info-action@v1
+        with:
+          apk-path: app-release.apk
+
+      - name: Create Github release using release-drafter
+        id: create_release
+        uses: release-drafter/release-drafter@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          config-name: release-drafter-beta.yml
+          tag: v${{ steps.android_version.outputs.version-name }}
+          name: v${{ steps.android_version.outputs.version-name }}
+
+      - name: Upload APK to Github release
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: app-release.apk
+          asset_name: app-release.apk
+          asset_content_type: application/zip
+
+      - name: Publish Github release
+        uses: eregon/publish-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          release_id: ${{ steps.create_release.outputs.id }}
+
+      - name: Create service_account.json for Google Play release
+        run: echo '${{ secrets.SERVICE_ACCOUNT_JSON }}' > service_account.json
+
+      - name: Publish bundle to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJson: service_account.json
+          packageName: com.doubleangels.nextdnsmanagement
+          releaseFiles: app-release.aab
+          track: beta
+          whatsNewDirectory: whatsnew
+>>>>>>> origin

@@ -58,11 +58,25 @@ repositories {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.preference:preference:1.2.1'
+<<<<<<< HEAD
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'com.jakewharton:process-phoenix:3.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.10.0'
     implementation 'io.sentry:sentry-android:7.6.0'
     implementation("org.mozilla.geckoview:geckoview:123.0.20240304104836")
+=======
+
+    implementation 'com.squareup.retrofit2:retrofit:2.10.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.10.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.10.0'
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+
+    implementation 'com.jakewharton:process-phoenix:3.0.0'
+    implementation 'io.sentry:sentry-android:7.6.0'
+
+    implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.23'))
+>>>>>>> origin
 }
 
 sentry {
