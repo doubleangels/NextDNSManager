@@ -27,18 +27,6 @@ jobs:
         run: ./gradlew lint
         continue-on-error: false
 
-      - name: Save lint results
-        if: always()
-        run: |
-          mkdir -p lint-results
-          cp -r /home/runner/work/NextDNSManager/NextDNSManager/app/build/reports/lint-results-debug.html lint-results/
-
-      - name: Upload lint results as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: lint-results
-          path: lint-results
-
   build-debug:
     needs: lint
     runs-on: ubuntu-latest
@@ -63,9 +51,6 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
-      - name: Setup Gradle sanity checking
-        uses: gradle/gradle-build-action@v3
 
       - name: Build debug APK with Gradle
         run: ./gradlew assembleDebug
@@ -97,9 +82,6 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-
-      - name: Setup Gradle sanity checking
-        uses: gradle/gradle-build-action@v3
 
       - name: Build release APK with Gradle
         run: ./gradlew assembleRelease
