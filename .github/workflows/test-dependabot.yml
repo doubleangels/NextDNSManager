@@ -66,9 +66,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Setup Gradle sanity checking
-        uses: gradle/gradle-build-action@v3
-
       - name: Build debug APK with Gradle
         run: ./gradlew assembleDebug
 
