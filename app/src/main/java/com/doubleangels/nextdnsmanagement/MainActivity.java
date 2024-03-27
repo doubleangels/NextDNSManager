@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebResourceRequest;
@@ -45,6 +44,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+    private SentryManager sentryManager;
     private WebView webView;
     private Boolean darkMode;
 
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SentryManager sentryManager = new SentryManager(this);
+        sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
             if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
@@ -74,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.destroy();
     }
 
     private void setupToolbar() {
@@ -148,8 +153,7 @@ public class MainActivity extends AppCompatActivity {
                             String cssContent = convertStreamToString(inputStream);
                             return new WebResourceResponse("text/css", "UTF-8", new ByteArrayInputStream(cssContent.getBytes()));
                         } catch (IOException e) {
-                            Log.d("NextDNS Manager Logging", "Error loading CSS from assets:", e);
-                            // Handle the exception as needed (e.g., fall back to original request)
+                            sentryManager.captureMessage("Error loading CSS from assets:" + e);
                         }
                     }
                     return super.shouldInterceptRequest(view, request);
@@ -179,7 +183,6 @@ public class MainActivity extends AppCompatActivity {
         while ((length = is.read(buffer)) != -1) {
             result.write(buffer, 0, length);
         }
-        // Specify the encoding explicitly
         return result.toString("UTF-8");
     }
 

@@ -31,11 +31,13 @@ import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    public SentryManager sentryManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        SentryManager sentryManager = new SentryManager(this);
+        sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
             if (sentryManager.isSentryEnabled()) {
@@ -135,21 +137,20 @@ public class SettingsActivity extends AppCompatActivity {
 
         private void setupButton(String buttonKey, int textResource) {
             Preference button = findPreference(buttonKey);
-            if (button != null) {
-                button.setOnPreferenceClickListener(preference -> {
-                    if ("whitelist_domain_1_button".equals(buttonKey) || "whitelist_domain_2_button".equals(buttonKey)) {
-                        ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                        CharSequence copiedText = getString(textResource);
-                        ClipData copiedData = ClipData.newPlainText("text", copiedText);
-                        clipboardManager.setPrimaryClip(copiedData);
-                        Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
-                        startActivity(intent);
-                    }
-                    return true;
-                });
-            }
+            assert button != null;
+            button.setOnPreferenceClickListener(preference -> {
+                if ("whitelist_domain_1_button".equals(buttonKey) || "whitelist_domain_2_button".equals(buttonKey)) {
+                    ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                    CharSequence copiedText = getString(textResource);
+                    ClipData copiedData = ClipData.newPlainText("text", copiedText);
+                    clipboardManager.setPrimaryClip(copiedData);
+                    Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
+                    startActivity(intent);
+                }
+                return true;
+            });
         }
 
         private void setupDarkModeChangeListener(ListPreference setting, SharedPreferences sharedPreferences) {

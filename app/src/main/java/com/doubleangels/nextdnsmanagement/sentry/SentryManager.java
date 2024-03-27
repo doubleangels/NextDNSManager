@@ -14,7 +14,6 @@ public class SentryManager {
     public String TAG = "NextDNS Manager Logging";
     public SharedPreferences sharedPreferences;
 
-
     public SentryManager(Context context) {
         this.context = context;
     }

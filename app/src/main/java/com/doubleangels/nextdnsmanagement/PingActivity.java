@@ -26,11 +26,14 @@ import java.util.Objects;
 
 public class PingActivity extends AppCompatActivity {
 
+    public SentryManager sentryManager;
+    public WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping);
-        SentryManager sentryManager = new SentryManager(this);
+        sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
             if (sentryManager.isSentryEnabled()) {
@@ -45,6 +48,11 @@ public class PingActivity extends AppCompatActivity {
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
+    }
+
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.destroy();
     }
 
     private void setupToolbar() {
@@ -84,7 +92,7 @@ public class PingActivity extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     public void setupWebView(String url) {
-        WebView webView = findViewById(R.id.webView);
+        webView = findViewById(R.id.webView);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);

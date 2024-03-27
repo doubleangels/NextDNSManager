@@ -23,11 +23,13 @@ import java.util.Objects;
 
 public class StatusActivity extends AppCompatActivity {
 
+    public SentryManager sentryManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
-        SentryManager sentryManager = new SentryManager(this);
+        sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
             if (sentryManager.isSentryEnabled()) {

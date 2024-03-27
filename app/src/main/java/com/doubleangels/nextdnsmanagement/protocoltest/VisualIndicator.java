@@ -1,7 +1,6 @@
 package com.doubleangels.nextdnsmanagement.protocoltest;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
@@ -14,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.doubleangels.nextdnsmanagement.R;
+import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -25,8 +25,6 @@ import java.util.Arrays;
 
 import javax.net.ssl.SSLException;
 
-import io.sentry.ITransaction;
-import io.sentry.Sentry;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -36,17 +34,12 @@ import okhttp3.internal.http2.ConnectionShutdownException;
 
 public class VisualIndicator {
 
-    private final Context context;
+    private final SentryManager sentryManager;
     private final OkHttpClient httpClient;
 
     public VisualIndicator(Context context) {
+        this.sentryManager = new SentryManager(context);
         this.httpClient = new OkHttpClient();
-        this.context = context;
-    }
-
-    public boolean isSentryEnabled() {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean("sentry_enable", false);
     }
 
     public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
@@ -68,7 +61,6 @@ public class VisualIndicator {
     }
 
     public void updateVisualIndicator(@Nullable LinkProperties linkProperties, AppCompatActivity activity, Context context) {
-        ITransaction updateVisualIndicatorTransaction = Sentry.startTransaction("VisualIndicator_updateVisualIndicator()", "VisualIndicator");
         try {
             ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
             int statusDrawable;
@@ -92,9 +84,7 @@ public class VisualIndicator {
                 setConnectionStatus(connectionStatus, statusDrawable, statusColor, context);
             }
         } catch (Exception e) {
-            handleException(e);
-        } finally {
-            updateVisualIndicatorTransaction.finish();
+            sentryManager.captureException(e);
         }
         checkInheritedDNS(context, activity);
     }
@@ -125,7 +115,7 @@ public class VisualIndicator {
                             }
                         }
                     } catch (Exception e) {
-                        handleException(e);
+                        sentryManager.captureException(e);
                     }
                 }
                 response.close();
@@ -133,31 +123,21 @@ public class VisualIndicator {
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                handleFailure(e);
+                if (e instanceof UnknownHostException ||
+                        e instanceof SocketTimeoutException ||
+                        e instanceof SocketException ||
+                        e instanceof SSLException ||
+                        e instanceof ConnectionShutdownException) {
+                    sentryManager.captureMessage("Network exception captured: " + e);
+                } else {
+                    sentryManager.captureException(e);
+                }
             }
         });
-    }
-
-    private void handleFailure(IOException e) {
-        if (e instanceof UnknownHostException ||
-                e instanceof SocketTimeoutException ||
-                e instanceof SocketException ||
-                e instanceof SSLException ||
-                e instanceof ConnectionShutdownException) {
-            Sentry.addBreadcrumb("Network exception captured: " + e);
-        } else {
-            handleException(e);
-        }
     }
 
     private void setConnectionStatus(ImageView connectionStatus, int drawableResId, int colorResId, Context context) {
         connectionStatus.setImageResource(drawableResId);
         connectionStatus.setColorFilter(ContextCompat.getColor(context, colorResId));
-    }
-
-    private void handleException(Exception e) {
-        if (isSentryEnabled()) {
-            Sentry.captureException(e);
-        }
     }
 }
