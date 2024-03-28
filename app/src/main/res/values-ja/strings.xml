@@ -31,6 +31,7 @@
   <string name="ping_title">ピングテスト</string>
   <string name="privacy">プライバシー</string>
   <string name="privacy_policy">NextDNSマネージャープライバシーポリシー</string>
+  <string name="private_dns">プライベート DNS</string>
   <string name="refresh_title">リフレッシュ</string>
   <string name="sentry_enable_instructions">Sentry を有効にする</string>
   <string name="sentry_info">もっと詳しく</string>

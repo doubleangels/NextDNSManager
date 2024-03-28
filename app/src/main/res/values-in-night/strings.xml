@@ -31,6 +31,7 @@
   <string name="ping_title">Tes Ping</string>
   <string name="privacy">Privasi</string>
   <string name="privacy_policy">Kebijakan Privasi Manajer NextDNS</string>
+  <string name="private_dns">DNS Pribadi</string>
   <string name="refresh_title">Menyegarkan</string>
   <string name="sentry_enable_instructions">Aktifkan Sentry</string>
   <string name="sentry_info">Pelajari Lebih Lanjut</string>

@@ -31,6 +31,7 @@
   <string name="ping_title">Ping 测试</string>
   <string name="privacy">隐私</string>
   <string name="privacy_policy">NextDNS 管理器隐私政策</string>
+  <string name="private_dns">私有DNS</string>
   <string name="refresh_title">刷新</string>
   <string name="sentry_enable_instructions">启用 Sentry</string>
   <string name="sentry_info">了解更多</string>

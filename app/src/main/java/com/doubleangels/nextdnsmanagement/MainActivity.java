@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebResourceRequest;
@@ -205,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.refreshNextDNS -> webView.reload();
             case R.id.pingNextDNS -> startIntent(PingActivity.class);
             case R.id.returnHome -> webView.loadUrl(getString(R.string.main_url));
+            case R.id.privateDNS  -> startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));
             case R.id.settings -> startIntent(SettingsActivity.class);
         }
         return super.onOptionsItemSelected(item);
