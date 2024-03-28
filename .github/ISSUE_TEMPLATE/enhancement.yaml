@@ -1,5 +1,5 @@
 name: Enhancement Request
-description: Suggest a new feature or improvement to the project.
+description: Suggest a new feature or improvement to the project. Please check the FAQ before submitting.
 title: "[Enhancement] "
 labels: ["type: enhancement"]
 assignees:
