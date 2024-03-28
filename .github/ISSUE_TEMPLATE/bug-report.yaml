@@ -1,8 +1,7 @@
 name: Report a Bug or Issue
-about: Create a report to help us improve the app. Please check the FAQ before submitting.
+description: Report a bug or issue you're experieriencing with the app. Please check the FAQ before submitting.
 title: "[Bug/Issue] " # Encourage a brief but descriptive title
-labels:
-  - type: bug
+labels: ["type: bug"]
 assignees:
   - doubleangels # Consider using placeholders if you have a team, e.g., - 'bug-triage-team'
 
