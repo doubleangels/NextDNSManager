@@ -1,0 +1,38 @@
+name: Enhancement Request
+description: Suggest a new feature or improvement to the project.
+title: "[Enhancement] "
+labels: ["type: enhancement"]
+assignees:
+  - doubleangels
+
+body:
+  - type: dropdown
+    id: faq-check
+    attributes:
+      label: FAQ's Checked
+      description: Have you checked the FAQ's before opening this issue?
+      options:
+        - Yes
+        - No
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Describe the Enhancement
+      description: Clearly explain the new feature or improvement you're suggesting.
+      placeholder: "It would be great if the app could also..."
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: Describe how this enhancement would be used and how it would benefit users.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: If you have any ideas about how this might be implemented, or alternative solutions, please share them here.
+      placeholder: "Perhaps this could be done by..."
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Any other relevant information, links to similar features in other projects, etc.

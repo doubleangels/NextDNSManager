@@ -1,13 +1,21 @@
 name: Report a Bug or Issue
 description: Report a bug or issue you're experieriencing with the app. Please check the FAQ before submitting.
-title: "[Bug/Issue] " # Encourage a brief but descriptive title
+title: "[Bug/Issue] "
 labels: ["type: bug"]
 assignees:
-  - doubleangels # Consider using placeholders if you have a team, e.g., - 'bug-triage-team'
+  - doubleangels
 
 body:
   - type: dropdown
-    id: severity # 'urgent' might be too subjective
+    id: faq-check
+    attributes:
+      label: FAQ's Checked
+      description: Have you checked the FAQ's before opening this issue?
+      options:
+        - Yes
+        - No
+  - type: dropdown
+    id: severity
     attributes:
       label: Severity
       description: How severely does this impact your use of the app?
