@@ -36,12 +36,12 @@ body:
     attributes:
       label: Describe the Issue
       description: Please provide a clear and detailed description of the bug or issue.
-      placeholder: Explain what happened and what you expected to happen.
   - type: textarea
     id: steps
     attributes:
       label: Steps to Reproduce
       description: If possible, outline the steps to reproduce the bug or issue.
+
   - type: textarea
     id: additional-info
     attributes:
