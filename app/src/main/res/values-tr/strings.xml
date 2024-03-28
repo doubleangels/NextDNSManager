@@ -31,6 +31,7 @@
   <string name="ping_title">Ping Testi</string>
   <string name="privacy">Gizlilik</string>
   <string name="privacy_policy">NextDNS Yöneticisi Gizlilik Politikası</string>
+  <string name="private_dns">Özel DNS</string>
   <string name="refresh_title">Yenile</string>
   <string name="sentry_enable_instructions">Sentry\'yi Etkinleştir</string>
   <string name="sentry_info">Daha Fazla Öğren</string>

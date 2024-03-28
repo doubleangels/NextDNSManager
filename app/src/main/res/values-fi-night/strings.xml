@@ -31,6 +31,7 @@
   <string name="ping_title">Ping-testi</string>
   <string name="privacy">Yksityisyys</string>
   <string name="privacy_policy">NextDNS Managerin tietosuojakäytäntö</string>
+  <string name="private_dns">Yksityinen DNS</string>
   <string name="refresh_title">Päivitä</string>
   <string name="sentry_enable_instructions">Ota Käyttöön Sentry</string>
   <string name="sentry_info">Lue Lisää</string>

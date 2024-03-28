@@ -31,6 +31,7 @@
   <string name="ping_title">Teste de ping</string>
   <string name="privacy">Privacidade</string>
   <string name="privacy_policy">Política de privacidade do NextDNS Manager</string>
+  <string name="private_dns">DNS Particular</string>
   <string name="refresh_title">Atualizar</string>
   <string name="sentry_enable_instructions">Habilitar Sentry</string>
   <string name="sentry_info">Saiba Mais</string>

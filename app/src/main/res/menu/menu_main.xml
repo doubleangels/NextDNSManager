@@ -25,6 +25,12 @@
         android:fontFamily="sans-serif-thin">
     </item>
     <item
+        android:id="@+id/privateDNS"
+        android:title="@string/private_dns"
+        app:showAsAction="never"
+        android:fontFamily="sans-serif-thin">
+    </item>
+    <item
         android:id="@+id/settings"
         android:title="@string/settings"
         app:showAsAction="never">
