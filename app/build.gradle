@@ -48,12 +48,6 @@ android {
     }
 }
 
-repositories {
-    maven {
-        url "https://maven.mozilla.org/maven2/"
-    }
-}
-
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'androidx.preference:preference:1.2.1'
