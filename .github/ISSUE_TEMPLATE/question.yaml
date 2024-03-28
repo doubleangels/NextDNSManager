@@ -1,5 +1,5 @@
 name: Question
-description: Ask a question and get help about the project.
+description: Ask a question and get help about the project. Please check the FAQ before submitting.
 title: "[Question] "
 labels: ["type: question"]
 assignees:
