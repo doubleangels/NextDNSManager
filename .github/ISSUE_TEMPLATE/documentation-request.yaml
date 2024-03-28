@@ -36,7 +36,6 @@ body:
     attributes:
       label: Describe Your Request
       description: Explain what you'd like to see added, changed, or clarified in the documentation. Be as specific as possible.
-      placeholder: "The documentation for [feature X] is missing information about..."
   - type: textarea
     id: why
     attributes:
