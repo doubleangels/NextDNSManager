@@ -1,20 +1,44 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
     <PreferenceCategory
+        app:key="darkmode"
+        app:title="@string/darkmode">
+        <ListPreference
+            app:key="darkmode_override"
+            app:title="@string/darkmode_instructions"
+            app:summary="%s"
+            app:entries="@array/darkmode_entries"
+            app:entryValues="@array/darkmode_entries_values"
+            app:defaultValue="match" />
+    </PreferenceCategory>
+    <PreferenceCategory
         app:key="sentry"
-        app:title="@string/sentry">
+        app:title="@string/sentry"
+        app:selectable="false">
         <Preference
-            app:selectable="false"
-            app:summary="@string/whitelist_instructions" />
+            app:summary="@string/whitelist_instructions"
+            app:selectable="false" />
+        <SwitchPreference
+            app:key="sentry_enable"
+            app:title="@string/sentry_enable_instructions"
+            app:defaultValue="false" />
+        <Preference
+            app:key="whitelist_domains"
+            app:summary="@string/whitelist_domains"
+            app:selectable="false" />
         <Preference
             app:key="whitelist_domain_1_button"
             app:summary="@string/whitelist_domain_1" />
         <Preference
             app:key="whitelist_domain_2_button"
             app:summary="@string/whitelist_domain_2" />
+        <Preference
+            app:key="sentry_info_button"
+            app:title="@string/sentry_info"
+            app:summary="@string/sentry_info_instructions" />
     </PreferenceCategory>
     <PreferenceCategory
-        app:selectable="false"
-        app:title="@string/developer">
+        app:title="@string/developer"
+        app:selectable="false">
         <Preference
             app:key="author_button"
             app:summary="@string/author_name"
@@ -33,8 +57,8 @@
             app:title="@string/donation" />
     </PreferenceCategory>
     <PreferenceCategory
-        app:selectable="false"
-        app:title="@string/translate">
+        app:title="@string/translate"
+        app:selectable="false">
         <Preference
             app:key="translate_button"
             app:summary="@string/translate_summary"
@@ -53,8 +77,8 @@
     </PreferenceCategory>
     <PreferenceCategory
         app:key="user_agreement"
-        app:selectable="false"
-        app:title="@string/user_agreement">
+        app:title="@string/user_agreement"
+        app:selectable="false">
         <Preference
             app:key="nextdns_user_agreement_button"
             app:summary="@string/nextdns_user_agreement" />

@@ -9,11 +9,9 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdk 34
-        versionCode 208
-        versionName '4.11.3'
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "id", "it", "ja", "pl", "pt", "es", "sv", "tr"]
+        versionCode 223
+        versionName '5.0.0-beta14'
+        resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "in", "it", "ja", "pl", "pt", "es", "sv", "tr"]
     }
 
     buildTypes {
@@ -33,34 +31,36 @@ android {
         includeInBundle true
     }
 
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+
     bundle {
         language {
             enableSplit = false
         }
     }
+
     buildFeatures {
         buildConfig true
     }
 }
 
+repositories {
+    maven {
+        url "https://maven.mozilla.org/maven2/"
+    }
+}
+
 dependencies {
-    implementation 'androidx.webkit:webkit:1.10.0'
-    implementation 'androidx.core:core:1.12.0'
-    implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
     implementation 'androidx.preference:preference:1.2.1'
-
-    implementation 'com.squareup.retrofit2:retrofit:2.10.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.10.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.10.0'
-
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
-
+    implementation 'com.google.android.material:material:1.11.0'
     implementation 'com.jakewharton:process-phoenix:3.0.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.10.0'
     implementation 'io.sentry:sentry-android:7.6.0'
-
-    implementation(platform('org.jetbrains.kotlin:kotlin-bom:1.9.23'))
 }
 
 sentry {

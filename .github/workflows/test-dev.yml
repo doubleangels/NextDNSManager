@@ -88,3 +88,4 @@ jobs:
 
       - name: Build release bundle with Gradle
         run: ./gradlew bundleRelease
+        

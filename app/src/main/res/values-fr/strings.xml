@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">NextDNS Manager</string>
-  <string name="application_name">NextDNS Manager</string>
   <string name="author">Auteur</string>
   <string name="back_title">Retour</string>
   <string name="crowdin">Crowdin</string>
+  <string name="darkmode">Mode sombre</string>
+  <string name="darkmode_instructions">Réglages du mode sombre</string>
   <string name="developer">Développeur</string>
   <string name="disclaimer">Cette application n\'est PAS une application NextDNS officielle.</string>
   <string name="disclaimer_title">Avertissement</string>
@@ -19,12 +20,8 @@
   <string name="help_green">Le DNS sécurisé est utilisé ET l\'appareil est connecté à NextDNS.</string>
   <string name="help_orange">Le DNS sécurisé n\'est PAS utilisé ET l\'appareil est connecté à NextDNS.</string>
   <string name="help_red">Le DNS sécurisé n\'est PAS utilisé.</string>
-  <string name="help_title">Aide</string>
   <string name="help_yellow">Le DNS sécurisé est utilisé mais l\'appareil n\'est PAS connecté à NextDNS.</string>
   <string name="home_title">Accueil</string>
-  <string name="language">Langue</string>
-  <string name="language_instruction">Touchez pour sélectionner la langue de votre choix.</string>
-  <string name="language_title">Langue sélectionnée</string>
   <string name="nextdns_privacy_policy">Politique de confidentialité de NextDNS</string>
   <string name="nextdns_user_agreement">Contrat d\'utilisation de NextDNS</string>
   <string name="other">Autres</string>
@@ -35,17 +32,20 @@
   <string name="privacy">Confidentialité</string>
   <string name="privacy_policy">Politique de confidentialité de NextDNS Manager</string>
   <string name="refresh_title">Actualiser</string>
+  <string name="sentry_enable_instructions">Activer Sentry</string>
+  <string name="sentry_info">En Savoir Plus</string>
+  <string name="sentry_info_instructions">Appuyez pour en savoir plus sur Sentry.</string>
   <string name="settings">Réglages</string>
   <string name="settings_activity_title">Réglages</string>
-  <string name="test_disabled">Cette action n\'est pas disponible pour le moment.</string>
-  <string name="test_long">Obtenez rapidement des informations de test importantes concernant votre connexion à NextDNS.</string>
-  <string name="test_short">Testez</string>
-  <string name="test_title">Test de connexion</string>
   <string name="translate">Traduire</string>
-  <string name="translate_summary">Si vous voyez des traductions incorrectes, aidez-moi à les corriger ici !</string>
+  <string name="translate_summary">Si vous voyez des traductions incorrectes, aidez-moi à les corriger ici.</string>
   <string name="user_agreement">Contrat d\'utilisation</string>
   <string name="version">Version</string>
-  <string name="whitelist">Liste blanche</string>
-  <string name="whitelist_instructions">Si vous aimez l\'application et que vous voulez aider à l\'améliorer, veuillez activer le suivi anonyme des erreurs pour m\'aider à comprendre les bogues et à les corriger. Aucune information personnelle n\'est recueillie si vous le faites. Pour opter, mettez ces domaines en liste blanche dans votre configuration NextDNS. Si vous ne voulez pas y participer, mettez simplement en liste noire ces domaines dans votre configuration NextDNS.</string>
-  <string name="whitelist_title">Liste blanche</string>
+  <string name="whitelist_domains">Si vous activez Sentry, veuillez mettre ces domaines en liste blanche dans votre configuration NextDNS.</string>
+  <string name="whitelist_instructions">Veuillez envisager d\'opter pour le suivi des erreurs Sentr. Cela ne collecte aucune information personnelle et m\'aide à améliorer l\'application.</string>
+  <string-array name="darkmode_entries">
+    <item>Système de Correspondance</item>
+    <item>Activé</item>
+    <item>Désactivé</item>
+  </string-array>
 </resources>

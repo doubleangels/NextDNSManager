@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">NextDNS Manager</string>
-  <string name="application_name">NextDNS Manager</string>
   <string name="author">Auteur</string>
   <string name="back_title">Terug</string>
   <string name="crowdin">Crowdin</string>
+  <string name="darkmode">Donkere modus</string>
+  <string name="darkmode_instructions">Donkere modus instelling</string>
   <string name="developer">Ontwikkelaar</string>
   <string name="disclaimer">Deze app is GEEN officiële NextDNS-app.</string>
   <string name="disclaimer_title">Vrijwaring</string>
@@ -19,12 +20,8 @@
   <string name="help_green">Secure DNS wordt gebruikt EN het apparaat is verbonden met NextDNS.</string>
   <string name="help_orange">Secure DNS wordt NIET gebruikt EN het apparaat is verbonden met NextDNS.</string>
   <string name="help_red">Secure DNS wordt NIET gebruikt.</string>
-  <string name="help_title">Hulp</string>
   <string name="help_yellow">Secure DNS wordt gebruikt, maar het apparaat is NIET verbonden met NextDNS.</string>
   <string name="home_title">Home</string>
-  <string name="language">Taal</string>
-  <string name="language_instruction">Tik om de gewenste taal te selecteren.</string>
-  <string name="language_title">Geselecteerde taal</string>
   <string name="nextdns_privacy_policy">Privacybeleid van NextDNS</string>
   <string name="nextdns_user_agreement">NextDNS-gebruikersovereenkomst</string>
   <string name="other">Andere</string>
@@ -35,17 +32,20 @@
   <string name="privacy">Privacy</string>
   <string name="privacy_policy">Privacybeleid van NextDNS Manager</string>
   <string name="refresh_title">Vernieuwen</string>
+  <string name="sentry_enable_instructions">Sentry Inschakelen</string>
+  <string name="sentry_info">Meer Informatie</string>
+  <string name="sentry_info_instructions">Tik voor meer informatie over Sentry.</string>
   <string name="settings">Instellingen</string>
   <string name="settings_activity_title">Instellingen</string>
-  <string name="test_disabled">Deze actie is momenteel niet beschikbaar.</string>
-  <string name="test_long">Ontvang snel belangrijke testinformatie over uw verbinding met NextDNS.</string>
-  <string name="test_short">Test</string>
-  <string name="test_title">Verbindingstest</string>
   <string name="translate">Vertaal</string>
-  <string name="translate_summary">Als je een onjuiste vertaling ziet, help me dan deze hier op te lossen!</string>
+  <string name="translate_summary">Als je een onjuiste vertaling ziet, help me dan deze hier op te lossen.</string>
   <string name="user_agreement">Gebruikersovereenkomst</string>
   <string name="version">Versie</string>
-  <string name="whitelist">Witte lijst</string>
-  <string name="whitelist_instructions">Als u de app leuk vindt en wilt helpen om hem beter te maken Activeer anonimiseerde foutopsporing om me te helpen fouten te begrijpen en release fixes voor hen. Er worden geen persoonlijke gegevens verzameld als je dit doet. Om in te schakelen, whitelist je deze domeinen in je NextDNS configuratie. Als je niet wilt deelnemen, blacklist dan deze domeinen in je NextDNS configuratie.</string>
-  <string name="whitelist_title">Witte lijst</string>
+  <string name="whitelist_domains">Als u Sentry inschakelt, kunt u deze domeinen in uw NextDNS configuratie uitsluiten.</string>
+  <string name="whitelist_instructions">Overweeg een opting in to Sentry error tracking. Dit verzamelt geen persoonlijke informatie en helpt mij de app beter te maken.</string>
+  <string-array name="darkmode_entries">
+    <item>Overeenkomen met Systeem</item>
+    <item>Op</item>
+    <item>Uit</item>
+  </string-array>
 </resources>

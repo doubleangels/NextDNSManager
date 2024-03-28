@@ -1,103 +1,98 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.Toolbar;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
+import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 
 import java.util.Locale;
 import java.util.Objects;
 
-import io.sentry.ITransaction;
-import io.sentry.Sentry;
-
 public class PingActivity extends AppCompatActivity {
-    private WebView webView;
+
+    public SentryManager sentryManager;
+    public WebView webView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping);
-
-        ITransaction pingCreateTransaction = Sentry.startTransaction("PingActivity_onCreate()", "PingActivity");
+        sentryManager = new SentryManager(this);
+        SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
+            if (sentryManager.isSentryEnabled()) {
+                SentryInitializer sentryInitializer = new SentryInitializer();
+                sentryInitializer.execute(this);
+            }
             setupToolbar();
             setupLanguage();
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            setupVisualIndicator();
-            setupClickListeners();
+            setupDarkMode(sharedPreferences);
+            setupVisualIndicator(sentryManager);
             setupWebView(getString(R.string.ping_url));
         } catch (Exception e) {
-            Sentry.captureException(e);
-        } finally {
-            pingCreateTransaction.finish();
+            sentryManager.captureException(e);
         }
     }
 
+    protected void onDestroy() {
+        super.onDestroy();
+        webView.destroy();
+    }
+
     private void setupToolbar() {
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(findViewById(R.id.toolbar));
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
     private void setupLanguage() {
-        String appLocaleString = getResources().getConfiguration().getLocales().get(0).toString();
-        String appLocaleStringResult = appLocaleString.split("_")[0];
-        Locale appLocale = Locale.forLanguageTag(appLocaleStringResult);
-        Locale.setDefault(appLocale);
-        Configuration appConfig = new Configuration();
-        appConfig.locale = appLocale;
-        getResources().updateConfiguration(appConfig, getResources().getDisplayMetrics());
-    }
-
-    private void setupVisualIndicator() {
-        try {
-            VisualIndicator visualIndicator = new VisualIndicator();
-            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
-        } catch (Exception e) {
-            Sentry.captureException(e);
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        Locale appLocale = configuration.getLocales().get(0);
+        if (appLocale != null) {
+            Locale.setDefault(appLocale);
+            configuration.setLocale(appLocale);
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
         }
     }
 
-    private void setupClickListeners() {
-        ImageView statusIcon = findViewById(R.id.connectionStatus);
-        if (statusIcon != null) {
-            statusIcon.setOnClickListener(v -> {
-                Intent helpIntent = new Intent(v.getContext(), StatusActivity.class);
-                startActivity(helpIntent);
-            });
+    private void setupDarkMode(SharedPreferences sharedPreferences) {
+        String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
+        if (darkModeOverride.contains("match")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        } else if (darkModeOverride.contains("on")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
+
+    private void setupVisualIndicator(SentryManager sentryManager) {
+        try {
+            new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
+        } catch (Exception e) {
+            sentryManager.captureException(e);
         }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     public void setupWebView(String url) {
-        try {
-            if (webView == null) {
-                webView = findViewById(R.id.mWebview);
-                setupWebViewSettings();
-            }
-            webView.loadUrl(url);
-        } catch (Exception e) {
-            Sentry.captureException(e);
-        }
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    private void setupWebViewSettings() {
-        webView = findViewById(R.id.mWebview);
+        webView = findViewById(R.id.webView);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setDomStorageEnabled(true);
@@ -108,8 +103,8 @@ public class PingActivity extends AppCompatActivity {
         webSettings.setAllowContentAccess(false);
         webSettings.setAllowUniversalAccessFromFileURLs(false);
         webSettings.setSaveFormData(true);
-        webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl(url);
     }
 
     @Override

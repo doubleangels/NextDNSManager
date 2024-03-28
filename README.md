@@ -28,7 +28,7 @@ NextDNS Manager is an Android application that simplifies the management of your
 
 NextDNS Manager can be installed on any Android phone or tablet running Android 9+.
 
-**Note**: NextDNS Manager is a completely open-source project with no official ties to NextDNS.
+**NextDNS Manager is a completely open-source project with no official ties to NextDNS.**
 
 # Features:
 
@@ -41,14 +41,16 @@ NextDNS Manager can be installed on any Android phone or tablet running Android 
 - **Security and Privacy**: Enhance your online security and privacy by leveraging NextDNS' filtering capabilities.
 
 - **Easy Installation**: You can download and install NextDNS Manager from the Google Play Store, F-Droid, or directly from GitHub, providing multiple installation options.
+
 # Installation
 
 ## Which installation method should I use?
 
-It depends on your privacy preferences and how often you wish to receive updates.
+Which app you should use depends on your privacy preferences and how often you wish to receive updates:
 
 - If you are able to use Google Play, use it.
-- If you're not able to use Google Play, sideloading an APK from this repository is your next best option.
+- If you're not able to use Google Play, sideload an APK from this repository.
+- If neither of these options work for you, install the app from F-Droid.
 
 For each build ("version") of the app, there are timelines for when the build will be available, so methods with longer timelines will result in longer wait times for updates.
 
@@ -70,20 +72,10 @@ NextDNS Manager is available on F-Droid [here](https://f-droid.org/en/packages/c
 
 The most recent APK is available for download [here](https://github.com/doubleangels/NextDNSManager/releases).
 
-# Reporting Issues
+# Reporting Issues/Suggestions and Feedback
 
-If you encounter any issues while using NextDNS Manager, I encourage you to report them to me. To ensure a smooth resolution process, please follow these guidelines:
-
-- **Detailed Description**: Clearly describe the problem you're experiencing, including any relevant error messages or behaviors.
-- **Device Information**: Provide details about the device you're running the app on.
-- **Android Version**: Specify the version of Android you're using.
-- **App Version**: Include the version of the NextDNS Manager app you're using.
-
-Please open a new issue in this repository to report the problem.
-
-# Suggestions and Feedback
-
-Your suggestions and feedback are valuable to me as they help me improve NextDNS Manager. If you have any ideas for enhancements or feedback to share, please do so by opening a new issue in this repository. Be sure to provide a detailed description of your suggestion or feedback.
+If you encounter any issues while using NextDNS Manager, I encourage you to report them to me. Please read the [FAQ's](FAQ.md) and then open an [issue](https://github.com/doubleangels/NextDNSManager/issues/new/choose). Please note that I work on this project in my free time, so issue responses may be delayed.
+Your suggestions and feedback are valuable to me as they help me improve NextDNS Manager. If you have any ideas for enhancements or feedback to share, please do so by opening a new issue as outlined above. Be sure to provide a detailed description of your suggestion or feedback.
 
 # Contributing
 

@@ -1,9 +1,9 @@
 ---
 name: Documentation Request
-about: Request clarification or additional documentation.
-title: ""
+about: Request clarification or additional documentation. **Make sure you read the [FAQ's](https://github.com/doubleangels/NextDNSManager/blob/main/FAQ.md) first or your issue may be closed.**
+title: "[Replace with a descriptive title.]"
 labels: "type: documentation"
-assignees: ""
+assignees: "doubleangels"
 ---
 
 **Documentation Request**

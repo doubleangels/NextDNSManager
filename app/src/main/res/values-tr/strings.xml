@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">NextDNS Manager</string>
-  <string name="application_name">NextDNS Manager</string>
   <string name="author">Yazar</string>
   <string name="back_title">Geri</string>
   <string name="crowdin">Crowdin</string>
+  <string name="darkmode">Karanlık Mod</string>
+  <string name="darkmode_instructions">Karanlık Mod Ayarı</string>
   <string name="developer">Geliştirici</string>
   <string name="disclaimer">Bu uygulama resmi bir NextDNS uygulaması DEĞİLDİR.</string>
   <string name="disclaimer_title">Yasal Uyarı</string>
@@ -19,12 +20,8 @@
   <string name="help_green">Güvenli DNS kullanılıyor VE cihaz NextDNS\'ye bağlı.</string>
   <string name="help_orange">Güvenli DNS KULLANILMIYOR VE cihaz NextDNS\'ye bağlı.</string>
   <string name="help_red">Güvenli DNS kullanılmıyor.</string>
-  <string name="help_title">Yardım</string>
   <string name="help_yellow">Güvenli DNS kullanılıyor ancak cihaz NextDNS\'ye bağlı DEĞİLDİR.</string>
   <string name="home_title">Ana Sayfa</string>
-  <string name="language">Dil</string>
-  <string name="language_instruction">İstediğiniz dili seçmek için dokunun.</string>
-  <string name="language_title">Seçilen Dil</string>
   <string name="nextdns_privacy_policy">NextDNS Gizlilik Politikası</string>
   <string name="nextdns_user_agreement">NextDNS Kullanıcı Sözleşmesi</string>
   <string name="other">Diğer</string>
@@ -35,17 +32,20 @@
   <string name="privacy">Gizlilik</string>
   <string name="privacy_policy">NextDNS Yöneticisi Gizlilik Politikası</string>
   <string name="refresh_title">Yenile</string>
+  <string name="sentry_enable_instructions">Sentry\'yi Etkinleştir</string>
+  <string name="sentry_info">Daha Fazla Öğren</string>
+  <string name="sentry_info_instructions">Sentry hakkında daha fazla bilgi edinmek için dokunun.</string>
   <string name="settings">Ayarlar</string>
   <string name="settings_activity_title">Ayarlar</string>
-  <string name="test_disabled">Bu eylem şu anda kullanılamıyor.</string>
-  <string name="test_long">NextDNS bağlantınız hakkında hızlı bir şekilde önemli test bilgilerini alın.</string>
-  <string name="test_short">Test</string>
-  <string name="test_title">Bağlantı Testi</string>
   <string name="translate">Çevirmek</string>
-  <string name="translate_summary">Eğer yanlış çeviriler görürseniz, lütfen burada düzeltmem için yardımcı olun!</string>
+  <string name="translate_summary">Eğer yanlış çeviriler görürseniz, lütfen burada düzeltmem için yardımcı olun.</string>
   <string name="user_agreement">Kullanıcı Sözleşmesi</string>
   <string name="version">Versiyon</string>
-  <string name="whitelist">Beyaz liste</string>
-  <string name="whitelist_instructions">Uygulamadan keyif alıyorsanız ve daha iyi hale getirmeme yardımcı olmak istiyorsanız, lütfen hata takibini anonimleştirerek benim için hataları anlamama ve bunlar için düzeltmeler yayınlamama yardımcı olun. Bunu yaparsanız kişisel bilgiler toplanmaz. Katılmak için bu alan adlarını NextDNS yapılandırmanıza beyaz listeye ekleyin. Katılmak istemiyorsanız, bu alan adlarını NextDNS yapılandırmanıza basitçe siyah listeye ekleyin.</string>
-  <string name="whitelist_title">Beyaz liste</string>
+  <string name="whitelist_domains">Sentry\'yi etkinleştirirseniz, lütfen bu alanları NextDNS yapılandırmanızda beyaz listeye alın.</string>
+  <string name="whitelist_instructions">Lütfen Sentry hata izleme sistemine katılmayı düşünün. Bu kişisel bilgi toplamaz ve uygulamayı daha iyi hale getirmeme yardımcı olur.</string>
+  <string-array name="darkmode_entries">
+    <item>Eşleştirme Sistemi</item>
+    <item>Açık</item>
+    <item>Kapalı</item>
+  </string-array>
 </resources>

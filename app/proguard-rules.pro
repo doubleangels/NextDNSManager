@@ -1,32 +1,48 @@
-# Add project specific ProGuard rules here.
-# Preserve line number information for debugging stack traces.
--keepattributes SourceFile,LineNumberTable
+# Keep all classes in the support libraries
+-keep class androidx.appcompat.** { *; }
+-keep class androidx.preference.** { *; }
+-keep class com.google.android.material.** { *; }
 
-# Hide the original source file name.
--renamesourcefileattribute SourceFile
+# Keep all classes in other dependencies
+-keep class com.jakewharton.processphoenix.** { *; }
+-keep class com.squareup.retrofit2.** { *; }
+-keep class io.sentry.** { *; }
+-keep class org.mozilla.geckoview.** { *; }
 
-# Gson 2.2.4 specific rules
--keepattributes Signature, *Annotation*, EnclosingMethod
--keep class com.google.gson.stream.** { *; }
+# Keep all public and protected methods in the above libraries
+-keepclassmembers class androidx.appcompat.** { public protected *; }
+-keepclassmembers class androidx.preference.** { public protected *; }
+-keepclassmembers class com.google.android.material.** { public protected *; }
+-keepclassmembers class com.jakewharton.processphoenix.** { public protected *; }
+-keepclassmembers class com.squareup.retrofit2.** { public protected *; }
+-keepclassmembers class io.sentry.** { public protected *; }
+-keepclassmembers class org.mozilla.geckoview.** { public protected *; }
 
-# Retrofit 2.X
--dontwarn retrofit2.**
--keep class retrofit2.** { *; }
--keepattributes Signature, Exceptions
-
-# Keep Retrofit annotations and their methods
--keepclasseswithmembers class * {
+# Keep the Retrofit interfaces and their methods
+-keep interface retrofit2.** { *; }
+-keepclassmembers,allowobfuscation interface * {
     @retrofit2.http.* <methods>;
 }
 
-# Keep Retrofit interface annotations
--keep,allowobfuscation interface retrofit2.Callback
+# Keep the Gson classes
+-keep class com.google.gson.** { *; }
+-keep class org.apache.commons.** { *; }
 
-# Keep Retrofit method parameters (e.g., @Path, @Query, @Body)
--keepclassmembers,allowobfuscation class * {
-    @retrofit2.http.* <methods>;
+# Keep enum types and fields
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
 }
 
-# Keep Lifecycle ViewModel classes
--keep class androidx.lifecycle.** { *; }
--keep interface androidx.lifecycle.** { *; }
+# Keep the entry point for apps
+-keepattributes *Annotation*
+-keepclassmembers class * {
+    public static void main(java.lang.String[]);
+}
+
+# This is generated automatically by the Android Gradle plugin.
+-dontwarn java.beans.BeanInfo
+-dontwarn java.beans.FeatureDescriptor
+-dontwarn java.beans.IntrospectionException
+-dontwarn java.beans.Introspector
+-dontwarn java.beans.PropertyDescriptor

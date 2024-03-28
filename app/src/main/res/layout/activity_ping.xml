@@ -36,7 +36,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <WebView
-        android:id="@+id/mWebview"
+        android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="@+id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"

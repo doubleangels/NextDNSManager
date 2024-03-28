@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <dist:module dist:instant="true" />
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
 
     <application
         android:hardwareAccelerated="true"
@@ -27,6 +26,7 @@
                 android:name="autoStoreLocales"
                 android:value="true" />
         </service>
+
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
@@ -34,9 +34,6 @@
             android:theme="@style/PreferenceTheme" />
         <activity
             android:name=".PingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TestActivity"
             android:exported="false" />
         <activity
             android:name=".StatusActivity"
@@ -48,35 +45,20 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="https" />
+                <data android:host="my.nextdns.io" />
+            </intent-filter>
         </activity>
-        <meta-data
-            android:name="io.sentry.dsn"
-            android:value="https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.sentry.io/6270764" />
-        <meta-data
-            android:name="io.sentry.traces.user-interaction.enable"
-            android:value="true" />
-        <meta-data
-            android:name="io.sentry.attach-screenshot"
-            android:value="true" />
-        <meta-data
-            android:name="io.sentry.attach-view-hierarchy"
-            android:value="true" />
-        <meta-data
-            android:name="io.sentry.traces.sample-rate"
-            android:value="1.0" />
-        <meta-data
-            android:name="io.sentry.traces.profiling.sample-rate"
-            android:value="1.0" />
-        <meta-data
-            android:name="io.sentry.traces.profiling.enable-app-start"
-            android:value="true" />
-        <meta-data
-            android:name="io.sentry.anr.enable"
-            android:value="false" />
+
+        <meta-data android:name="io.sentry.auto-init" android:value="false" />
     </application>
 
 </manifest>

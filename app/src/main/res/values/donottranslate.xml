@@ -12,10 +12,20 @@
     <string name="nextdns_user_agreement_url">https://help.nextdns.io/terms</string>
     <string name="ping_url">https://ping.nextdns.io</string>
     <string name="privacy_policy_url">https://doubleangels.github.io/privacyPolicy/nextdns.html</string>
-    <string name="test_url">https://test.nextdns.io</string>
+    <string name="sentry_info_url">https://github.com/getsentry/sentry</string>
     <string name="translate_url">https://crowdin.com/project/nextdns-manager</string>
     <string name="using_nextdns_status">OK</string>
     <string name="versions_url">https://github.com/doubleangels/NextDNSManager/releases</string>
     <string name="whitelist_domain_1">*.o244019.sentry.io</string>
     <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
+    <string-array name="darkmode_entries_values">
+        <item>match</item>
+        <item>on</item>
+        <item>off</item>
+    </string-array>
+    <string-array name="secure_protocols">
+        <item>DOH</item>
+        <item>DOT</item>
+        <item>DOQ</item>
+    </string-array>
 </resources>
