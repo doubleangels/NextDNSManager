@@ -12,8 +12,8 @@ body:
       label: FAQ's Checked
       description: Have you checked the FAQ's before opening this issue?
       options:
-        - Yes
-        - No
+        - "Yes"
+        - "No"
   - type: textarea
     id: feature-description
     attributes:

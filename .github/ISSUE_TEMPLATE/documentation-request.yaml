@@ -7,14 +7,6 @@ assignees:
 
 body:
   - type: dropdown
-    id: faq-check
-    attributes:
-      label: FAQ's Checked
-      description: Have you checked the FAQ's before opening this issue?
-      options:
-        - Yes
-        - No
-  - type: dropdown
     id: severity
     attributes:
       label: Severity
