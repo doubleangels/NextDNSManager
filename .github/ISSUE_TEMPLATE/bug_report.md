@@ -1,32 +1,35 @@
----
-name: Bug report
-about: Create a report to help improve the app. **Make sure you read the [FAQ's](https://github.com/doubleangels/NextDNSManager/blob/main/FAQ.md) first or your issue may be closed.**
-title: "[Replace with a descriptive title]"
+name: Report a bug or issue
+about: Create a report to help improve the app. Make sure you read the FAQ's first or your issue may be closed.
+title: "[Bug/Issue] "
 labels: "type: bug"
 assignees: "doubleangels"
----
-
-**Describe the bug**
-[Replace with a clear and concise description of what the bug is. Include details such as what you were doing when the bug occurred and any error messages you received.]
-
-**To Reproduce**
-Steps to reproduce the behavior:
-
-1. [Replace with the first step.]
-2. [Replace with the second step.]
-3. [Continue with as many steps as necessary.]
-
-**Expected behavior**
-[Replace with a clear and concise description of what you expected to happen.]
-
-**Screenshots**
-[If applicable, add screenshots to help explain your problem.]
-
-**Device Info**
-
-- Device: [e.g. iPhone 12]
-- OS: [e.g. iOS 15.2]
-- App Version: [e.g. 1.2.3]
-
-**Additional context**
-[Add any other context or screenshots about the bug here, such as browser extensions or recent changes to your setup.]
+body:
+    - type: dropdown
+      id: urgent
+      attributes:
+            label: Is this bug/issue urgent?
+            description: Is this a critical bug, or do you need this fixed urgently?
+            options:
+                - "No"
+                - "Yes"
+    - type: input
+        id: android-version
+        attributes:
+            label: Android Version
+            description: What is your Android version?
+    - type: input
+        id: device
+        attributes:
+            label: Device
+            description: What kind of device do you have?
+    - type: input
+        id: app-version
+        attributes:
+            label: App Version
+            description: What verison of the app are you using?
+    - type: textarea
+        id: problem
+        attributes:
+            label: Bug/Issue
+            description: Explain what the bug/issue is.
+            render: plain text
