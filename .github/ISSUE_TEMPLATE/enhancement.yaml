@@ -19,7 +19,6 @@ body:
     attributes:
       label: Describe the Enhancement
       description: Clearly explain the new feature or improvement you're suggesting.
-      placeholder: "It would be great if the app could also..."
   - type: textarea
     id: use-case
     attributes:
@@ -30,7 +29,6 @@ body:
     attributes:
       label: Alternatives Considered
       description: If you have any ideas about how this might be implemented, or alternative solutions, please share them here.
-      placeholder: "Perhaps this could be done by..."
   - type: textarea
     id: additional-context
     attributes:

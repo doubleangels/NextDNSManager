@@ -20,7 +20,6 @@ body:
     attributes:
       label: Your Feedback
       description: Please provide your feedback. Be as specific as possible.
-      placeholder: "I really like... I found ... confusing. It would be great if..."
   - type: checkboxes
     id: impact
     attributes:
