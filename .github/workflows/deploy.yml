@@ -181,15 +181,6 @@ jobs:
           track: production
           whatsNewDirectory: whatsnew
 
-      - name: Publish bundle to Google Play
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJson: service_account.json
-          packageName: com.doubleangels.nextdnsmanagement
-          releaseFiles: app-release.aab
-          track: beta
-          whatsNewDirectory: whatsnew
-
   appsweep-scan:
     needs: ["build-for-github", "build-for-google-play"]
     runs-on: ubuntu-latest
