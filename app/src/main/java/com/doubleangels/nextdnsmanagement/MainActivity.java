@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onDestroy() {
         super.onDestroy();
+        webView.removeAllViews();
         webView.destroy();
     }
 
