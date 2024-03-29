@@ -53,7 +53,7 @@ dependencies {
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'com.jakewharton:process-phoenix:3.0.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.10.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
     implementation 'io.sentry:sentry-android:7.6.0'
 }
 
