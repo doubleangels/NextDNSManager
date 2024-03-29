@@ -45,48 +45,44 @@ public class VisualIndicator {
     public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkRequest networkRequest = new NetworkRequest.Builder().build();
-        ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
+        Network network = connectivityManager.getActiveNetwork();
+        if (network == null) {
+            return;
+        }
+        LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
+        updateVisualIndicator(linkProperties, activity, context);
+        connectivityManager.registerNetworkCallback(networkRequest, new ConnectivityManager.NetworkCallback() {
             @Override
             public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
                 super.onLinkPropertiesChanged(network, linkProperties);
-                updateVisualIndicator(linkProperties, activity, context);
+                if (linkProperties != null) {
+                    updateVisualIndicator(linkProperties, activity, context);
+                }
             }
-        };
-        Network network = connectivityManager.getActiveNetwork();
-        if (network != null) {
-            LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
-            updateVisualIndicator(linkProperties, activity, context);
-        }
-        connectivityManager.registerNetworkCallback(networkRequest, networkCallback);
+        });
     }
 
     public void updateVisualIndicator(@Nullable LinkProperties linkProperties, AppCompatActivity activity, Context context) {
         try {
+            if (linkProperties == null) {
+                setConnectionStatus(activity.findViewById(R.id.connectionStatus), R.drawable.failure, R.color.red, context);
+                checkInheritedDNS(context, activity);
+                return;
+            }
             ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
-            int statusDrawable;
-            int statusColor;
-
-            if (linkProperties != null && linkProperties.isPrivateDnsActive()) {
-                String privateDnsServerName = linkProperties.getPrivateDnsServerName();
-                if (privateDnsServerName != null && privateDnsServerName.contains("nextdns")) {
-                    statusDrawable = R.drawable.success;
-                    statusColor = R.color.green;
-                } else {
-                    statusDrawable = R.drawable.success;
-                    statusColor = R.color.yellow;
-                }
-            } else {
-                statusDrawable = R.drawable.failure;
-                statusColor = R.color.red;
-            }
-
-            if (connectionStatus != null) {
-                setConnectionStatus(connectionStatus, statusDrawable, statusColor, context);
-            }
+            String privateDnsServerName = linkProperties.getPrivateDnsServerName();
+            int statusDrawable = linkProperties.isPrivateDnsActive()
+                    ? (R.drawable.success)
+                    : R.drawable.failure;
+            int statusColor = linkProperties.isPrivateDnsActive()
+                    ? (privateDnsServerName != null && privateDnsServerName.contains("nextdns")
+                    ? R.color.green : R.color.yellow)
+                    : R.color.red;
+            setConnectionStatus(connectionStatus, statusDrawable, statusColor, context);
+            checkInheritedDNS(context, activity);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
-        checkInheritedDNS(context, activity);
     }
 
     public void checkInheritedDNS(Context context, AppCompatActivity activity) {
@@ -99,39 +95,39 @@ public class VisualIndicator {
         httpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) {
-                if (response.isSuccessful()) {
-                    try {
-                        assert response.body() != null;
-                        JsonObject testResponse = JsonParser.parseString(response.body().string().trim()).getAsJsonObject();
-                        String nextDNSStatus = testResponse.getAsJsonPrimitive(context.getString(R.string.nextdns_status)).getAsString();
-                        if (context.getString(R.string.using_nextdns_status).equalsIgnoreCase(nextDNSStatus)) {
-                            String nextdnsProtocol = testResponse.getAsJsonPrimitive(context.getString(R.string.nextdns_protocol)).getAsString();
-                            ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
-                            String[] secureProtocols = context.getResources().getStringArray(R.array.secure_protocols);
-                            boolean isSecure = Arrays.asList(secureProtocols).contains(nextdnsProtocol);
-                            if (connectionStatus != null) {
-                                setConnectionStatus(connectionStatus, isSecure ? R.drawable.success : R.drawable.failure,
-                                        isSecure ? R.color.green : R.color.orange, context);
-                            }
-                        }
-                    } catch (Exception e) {
-                        sentryManager.captureException(e);
+                try {
+                    if (!response.isSuccessful()) {
+                        sentryManager.captureMessage("Response was not successful.");
+                        response.close();
+                        return;
                     }
+                    assert response.body() != null;
+                    JsonObject testResponse = JsonParser.parseString(response.body().string().trim()).getAsJsonObject();
+                    String nextDnsStatusKey = context.getString(R.string.nextdns_status);
+                    String nextDnsProtocolKey = context.getString(R.string.nextdns_protocol);
+                    String usingNextDnsStatusValue = context.getString(R.string.using_nextdns_status);
+                    String[] secureProtocols = context.getResources().getStringArray(R.array.secure_protocols);
+                    String nextDNSStatus = testResponse.getAsJsonPrimitive(nextDnsStatusKey).getAsString();
+                    if (!usingNextDnsStatusValue.equalsIgnoreCase(nextDNSStatus)) {
+                        response.close();
+                        return;
+                    }
+                    String nextdnsProtocol = testResponse.getAsJsonPrimitive(nextDnsProtocolKey).getAsString();
+                    boolean isSecure = Arrays.asList(secureProtocols).contains(nextdnsProtocol);
+                    ImageView connectionStatus = activity.findViewById(R.id.connectionStatus);
+                    if (connectionStatus != null) {
+                        connectionStatus.setImageResource(isSecure ? R.drawable.success : R.drawable.failure);
+                        connectionStatus.setColorFilter(ContextCompat.getColor(context, isSecure ? R.color.green : R.color.orange));
+                    }
+                    response.close();
+                } catch (Exception e) {
+                    catchNetworkErrors(e);
                 }
-                response.close();
             }
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                if (e instanceof UnknownHostException ||
-                        e instanceof SocketTimeoutException ||
-                        e instanceof SocketException ||
-                        e instanceof SSLException ||
-                        e instanceof ConnectionShutdownException) {
-                    sentryManager.captureMessage("Network exception captured: " + e);
-                } else {
-                    sentryManager.captureException(e);
-                }
+                catchNetworkErrors(e);
             }
         });
     }
@@ -139,5 +135,17 @@ public class VisualIndicator {
     private void setConnectionStatus(ImageView connectionStatus, int drawableResId, int colorResId, Context context) {
         connectionStatus.setImageResource(drawableResId);
         connectionStatus.setColorFilter(ContextCompat.getColor(context, colorResId));
+    }
+
+    private void catchNetworkErrors(@NonNull Exception e) {
+        if (e instanceof UnknownHostException ||
+                e instanceof SocketTimeoutException ||
+                e instanceof SocketException ||
+                e instanceof SSLException ||
+                e instanceof ConnectionShutdownException) {
+            sentryManager.captureMessage("Network exception captured: " + e);
+        } else {
+            sentryManager.captureException(e);
+        }
     }
 }
