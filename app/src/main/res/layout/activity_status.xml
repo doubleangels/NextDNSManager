@@ -14,18 +14,27 @@
         android:layout_height="?attr/actionBarSize"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ToolbarTheme"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0">
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:paddingHorizontal="10dp"
-            android:contentDescription="@string/generic_content_description"
-            app:srcCompat="@drawable/nextdns_logo"/>
+            app:srcCompat="@drawable/nextdns_logo"
+            android:contentDescription="@string/generic_content_description"/>
 
+        <ImageView
+            android:id="@+id/connectionStatus"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:srcCompat="@drawable/failure"
+            tools:ignore="ImageContrastCheck"
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="17dp"
+            android:contentDescription="@string/generic_content_description"/>
     </androidx.appcompat.widget.Toolbar>
 
     <ImageView
