@@ -5,7 +5,7 @@
         <ListPreference
             app:key="darkmode_override"
             app:title="@string/darkmode_instructions"
-            app:summary="%s"
+            app:useSimpleSummaryProvider="true"
             app:entries="@array/darkmode_entries"
             app:entryValues="@array/darkmode_entries_values"
             app:defaultValue="match" />
