@@ -52,6 +52,7 @@ public class PingActivity extends AppCompatActivity {
 
     protected void onDestroy() {
         super.onDestroy();
+        webView.removeAllViews();
         webView.destroy();
     }
 
