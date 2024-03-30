@@ -18,7 +18,7 @@ updates:
 - package-ecosystem: github-actions
   directory: "/"
   schedule:
-    interval: weekly
+    interval: daily
   target-branch: "dev"
   commit-message:
     prefix: "[Github Actions]"
