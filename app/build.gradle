@@ -9,8 +9,8 @@ android {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 28
         targetSdk 34
-        versionCode 228
-        versionName '5.0.4'
+        versionCode 229
+        versionName '5.0.5'
         resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "in", "it", "ja", "pl", "pt", "es", "sv", "tr"]
     }
 
@@ -57,6 +57,7 @@ dependencies {
     implementation 'com.jakewharton:process-phoenix:3.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
     implementation 'io.sentry:sentry-android:7.6.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.13'
 }
 
 sentry {
