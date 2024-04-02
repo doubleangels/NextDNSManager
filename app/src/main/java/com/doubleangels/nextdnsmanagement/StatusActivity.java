@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
@@ -23,6 +24,7 @@ import java.util.Objects;
 
 public class StatusActivity extends AppCompatActivity {
 
+    public LifecycleOwner lifecycleOwner;
     public SentryManager sentryManager;
 
     @Override
@@ -39,7 +41,7 @@ public class StatusActivity extends AppCompatActivity {
             setupToolbar();
             setupLanguage();
             setupDarkMode(sharedPreferences);
-            setupVisualIndicator(sentryManager);
+            setupVisualIndicator(sentryManager, lifecycleOwner);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
@@ -74,9 +76,9 @@ public class StatusActivity extends AppCompatActivity {
     }
 
 
-    private void setupVisualIndicator(SentryManager sentryManager) {
+    private void setupVisualIndicator(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
         try {
-            new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
+            new VisualIndicator(this).initiateVisualIndicator(this, lifecycleOwner, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }

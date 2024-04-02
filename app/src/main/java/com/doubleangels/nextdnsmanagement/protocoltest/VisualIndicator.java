@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.doubleangels.nextdnsmanagement.R;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
@@ -36,14 +40,16 @@ public class VisualIndicator {
 
     private final SentryManager sentryManager;
     private final OkHttpClient httpClient;
+    private ConnectivityManager connectivityManager;
+    private ConnectivityManager.NetworkCallback networkCallback;
 
     public VisualIndicator(Context context) {
         this.sentryManager = new SentryManager(context);
         this.httpClient = new OkHttpClient();
     }
 
-    public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public void initiateVisualIndicator(Context context, LifecycleOwner lifecycleOwner, AppCompatActivity activity) {
+        connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkRequest networkRequest = new NetworkRequest.Builder().build();
         Network network = connectivityManager.getActiveNetwork();
         if (network == null) {
@@ -51,13 +57,18 @@ public class VisualIndicator {
         }
         LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
         updateVisualIndicator(linkProperties, activity, context);
-        connectivityManager.registerNetworkCallback(networkRequest, new ConnectivityManager.NetworkCallback() {
+        networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
                 super.onLinkPropertiesChanged(network, linkProperties);
-                if (linkProperties != null) {
-                    updateVisualIndicator(linkProperties, activity, context);
-                }
+                updateVisualIndicator(linkProperties, activity, context);
+            }
+        };
+        connectivityManager.registerNetworkCallback(networkRequest, networkCallback);
+        lifecycleOwner.getLifecycle().addObserver(new LifecycleObserver() {
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+            void onDestroy() {
+                connectivityManager.unregisterNetworkCallback(networkCallback);
             }
         });
     }

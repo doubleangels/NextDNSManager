@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -31,6 +32,7 @@ import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    public LifecycleOwner lifecycleOwner;
     public SentryManager sentryManager;
 
     @Override
@@ -48,7 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
             setupLanguage();
             setupDarkMode(sharedPreferences);
             initializeViews();
-            setupVisualIndicator(sentryManager);
+            setupVisualIndicator(sentryManager, lifecycleOwner);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
@@ -88,10 +90,10 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void setupVisualIndicator(SentryManager sentryManager) {
+    private void setupVisualIndicator(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
         try {
             VisualIndicator visualIndicator = new VisualIndicator(this);
-            visualIndicator.initiateVisualIndicator(this, getApplicationContext());
+            visualIndicator.initiateVisualIndicator(this, lifecycleOwner, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
