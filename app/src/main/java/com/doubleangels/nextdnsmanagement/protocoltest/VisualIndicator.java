@@ -160,11 +160,4 @@ public class VisualIndicator {
             sentryManager.captureException(e);
         }
     }
-
-    public void cleanup() {
-        if (networkCallback != null) {
-            connectivityManager.unregisterNetworkCallback(networkCallback);
-            networkCallback = null;
-        }
-    }
 }
