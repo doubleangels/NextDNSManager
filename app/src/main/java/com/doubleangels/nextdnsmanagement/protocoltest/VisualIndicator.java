@@ -57,15 +57,14 @@ public class VisualIndicator {
         }
         LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
         updateVisualIndicator(linkProperties, activity, context);
-        connectivityManager.registerNetworkCallback(networkRequest, new ConnectivityManager.NetworkCallback() {
+        networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
                 super.onLinkPropertiesChanged(network, linkProperties);
-                if (linkProperties != null) {
-                    updateVisualIndicator(linkProperties, activity, context);
-                }
+                updateVisualIndicator(linkProperties, activity, context);
             }
-        });
+        };
+        connectivityManager.registerNetworkCallback(networkRequest, networkCallback);
         lifecycleOwner.getLifecycle().addObserver(new LifecycleObserver() {
             @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
             void onDestroy() {
