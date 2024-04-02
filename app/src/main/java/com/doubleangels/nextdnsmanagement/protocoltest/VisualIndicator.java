@@ -11,6 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.doubleangels.nextdnsmanagement.R;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
@@ -36,14 +40,16 @@ public class VisualIndicator {
 
     private final SentryManager sentryManager;
     private final OkHttpClient httpClient;
+    private ConnectivityManager connectivityManager;
+    private ConnectivityManager.NetworkCallback networkCallback;
 
     public VisualIndicator(Context context) {
         this.sentryManager = new SentryManager(context);
         this.httpClient = new OkHttpClient();
     }
 
-    public void initiateVisualIndicator(AppCompatActivity activity, Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public void initiateVisualIndicator(Context context, LifecycleOwner lifecycleOwner, AppCompatActivity activity) {
+        connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkRequest networkRequest = new NetworkRequest.Builder().build();
         Network network = connectivityManager.getActiveNetwork();
         if (network == null) {
@@ -58,6 +64,12 @@ public class VisualIndicator {
                 if (linkProperties != null) {
                     updateVisualIndicator(linkProperties, activity, context);
                 }
+            }
+        });
+        lifecycleOwner.getLifecycle().addObserver(new LifecycleObserver() {
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+            void onDestroy() {
+                connectivityManager.unregisterNetworkCallback(networkCallback);
             }
         });
     }
@@ -146,6 +158,13 @@ public class VisualIndicator {
             sentryManager.captureMessage("Network exception captured: " + e);
         } else {
             sentryManager.captureException(e);
+        }
+    }
+
+    public void cleanup() {
+        if (networkCallback != null) {
+            connectivityManager.unregisterNetworkCallback(networkCallback);
+            networkCallback = null;
         }
     }
 }

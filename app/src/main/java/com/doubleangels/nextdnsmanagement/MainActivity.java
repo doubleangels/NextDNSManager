@@ -32,6 +32,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private SentryManager sentryManager;
     private WebView webView;
     private Boolean darkMode;
+    private LifecycleOwner lifecycleOwner;
 
     @SuppressLint("WrongThread")
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
@@ -71,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             String appLocale = setupLanguage();
             sentryManager.captureMessage("Using locale: " + appLocale);
             setupDarkMode(sentryManager, sharedPreferences);
-            setupVisualIndicator(sentryManager);
+            setupVisualIndicator(sentryManager, lifecycleOwner);
             setupWebView(getString(R.string.main_url));
         } catch (Exception e) {
             sentryManager.captureException(e);
@@ -125,9 +127,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void setupVisualIndicator(SentryManager sentryManager) {
+    private void setupVisualIndicator(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
         try {
-            new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
+            new VisualIndicator(this).initiateVisualIndicator(this, lifecycleOwner, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }

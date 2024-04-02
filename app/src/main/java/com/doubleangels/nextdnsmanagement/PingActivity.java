@@ -16,6 +16,7 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.LifecycleOwner;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
@@ -26,6 +27,7 @@ import java.util.Objects;
 
 public class PingActivity extends AppCompatActivity {
 
+    private LifecycleOwner lifecycleOwner;
     public SentryManager sentryManager;
     public WebView webView;
 
@@ -43,7 +45,7 @@ public class PingActivity extends AppCompatActivity {
             setupToolbar();
             setupLanguage();
             setupDarkMode(sharedPreferences);
-            setupVisualIndicator(sentryManager);
+            setupVisualIndicator(sentryManager, lifecycleOwner);
             setupWebView(getString(R.string.ping_url));
         } catch (Exception e) {
             sentryManager.captureException(e);
@@ -83,9 +85,9 @@ public class PingActivity extends AppCompatActivity {
         }
     }
 
-    private void setupVisualIndicator(SentryManager sentryManager) {
+    private void setupVisualIndicator(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
         try {
-            new VisualIndicator(this).initiateVisualIndicator(this, getApplicationContext());
+            new VisualIndicator(this).initiateVisualIndicator(this, lifecycleOwner, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
