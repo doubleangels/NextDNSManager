@@ -24,7 +24,6 @@ import java.util.Objects;
 
 public class StatusActivity extends AppCompatActivity {
 
-    public LifecycleOwner lifecycleOwner;
     public SentryManager sentryManager;
 
     @Override
@@ -41,7 +40,7 @@ public class StatusActivity extends AppCompatActivity {
             setupToolbar();
             setupLanguage();
             setupDarkMode(sharedPreferences);
-            setupVisualIndicator(sentryManager, lifecycleOwner);
+            setupVisualIndicator(sentryManager, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }

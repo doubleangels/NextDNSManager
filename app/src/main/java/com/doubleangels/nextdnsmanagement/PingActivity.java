@@ -27,7 +27,6 @@ import java.util.Objects;
 
 public class PingActivity extends AppCompatActivity {
 
-    private LifecycleOwner lifecycleOwner;
     public SentryManager sentryManager;
     public WebView webView;
 
@@ -45,7 +44,7 @@ public class PingActivity extends AppCompatActivity {
             setupToolbar();
             setupLanguage();
             setupDarkMode(sharedPreferences);
-            setupVisualIndicator(sentryManager, lifecycleOwner);
+            setupVisualIndicator(sentryManager, this);
             setupWebView(getString(R.string.ping_url));
         } catch (Exception e) {
             sentryManager.captureException(e);
