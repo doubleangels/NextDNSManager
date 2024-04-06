@@ -31,3 +31,7 @@ local.properties
 # Gradle wrapper files
 gradlew
 gradlew.bat
+
+# Intermediate files
+
+/app/src/build/*
