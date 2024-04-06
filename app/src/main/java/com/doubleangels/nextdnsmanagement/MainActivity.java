@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private SentryManager sentryManager;
     private WebView webView;
     private Boolean darkMode;
-    private LifecycleOwner lifecycleOwner;
 
     @SuppressLint("WrongThread")
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             String appLocale = setupLanguage();
             sentryManager.captureMessage("Using locale: " + appLocale);
             setupDarkMode(sentryManager, sharedPreferences);
-            setupVisualIndicator(sentryManager, lifecycleOwner);
+            setupVisualIndicator(sentryManager, this);
             setupWebView(getString(R.string.main_url));
         } catch (Exception e) {
             sentryManager.captureException(e);

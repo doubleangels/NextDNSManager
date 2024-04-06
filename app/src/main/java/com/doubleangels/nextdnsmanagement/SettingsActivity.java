@@ -32,7 +32,6 @@ import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    public LifecycleOwner lifecycleOwner;
     public SentryManager sentryManager;
 
     @Override
@@ -50,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
             setupLanguage();
             setupDarkMode(sharedPreferences);
             initializeViews();
-            setupVisualIndicator(sentryManager, lifecycleOwner);
+            setupVisualIndicator(sentryManager, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
