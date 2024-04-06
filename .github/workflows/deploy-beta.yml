@@ -198,3 +198,15 @@ jobs:
           releaseFiles: app-release.aab
           track: beta
           whatsNewDirectory: whatsnew
+
+  delete-workflow-runs:
+    needs: ["build-for-github", "build-for-google-play", "publish-built-files"]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 30
+          keep_minimum_runs: 1
