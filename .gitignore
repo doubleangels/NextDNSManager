@@ -1,19 +1,33 @@
+# Built application files
 *.apk
+*.aar
 *.ap_
 *.aab
+
+# Files for the ART/Dalvik VM
 *.dex
-local.properties
-/proguard/
+
+# Java class files
+*.class
+
+# Generated files
+build/
+gradle/
 .gradle/
-/build/
-.navigation/
+
+# Local configuration files
+local.properties
+
+# IDE-specific files
 .idea/
-.externalNativeBuild/
-/build/generated/
-/local.properties
+.iml/
+
+# Miscellaneous files
+*.txt
 *.log
-/.idea
-/.gradle
-/.externalNativeBuild
-/captures
-/release
+*.swp
+*.DS_Store
+
+# Gradle wrapper files
+gradlew
+gradlew.bat
