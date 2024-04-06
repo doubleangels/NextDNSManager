@@ -1,8 +1,12 @@
 # Built application files
+# Built application files
 *.apk
+*.aar
 *.aar
 *.ap_
 *.aab
+
+# Files for the ART/Dalvik VM
 
 # Files for the ART/Dalvik VM
 *.dex
@@ -16,10 +20,26 @@ gradle/
 .gradle/
 
 # Local configuration files
+
+# Java class files
+*.class
+
+# Generated files
+build/
+gradle/
+.gradle/
+
+# Local configuration files
 local.properties
 
 # IDE-specific files
+
+# IDE-specific files
 .idea/
+.iml/
+
+# Miscellaneous files
+*.txt
 .iml/
 
 # Miscellaneous files
