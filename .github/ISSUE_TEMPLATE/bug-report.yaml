@@ -1,0 +1,57 @@
+name: Report a Bug or Issue
+description: Report a bug or issue you're experieriencing with the app. Please check the FAQ before submitting.
+title: "[Bug/Issue] "
+labels: ["type: bug"]
+assignees:
+  - doubleangels
+
+body:
+  - type: dropdown
+    id: faq-check
+    attributes:
+      label: FAQ's Checked
+      description: Have you checked the FAQ's before opening this issue?
+      options:
+        - "Yes"
+        - "No"
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severely does this impact your use of the app?
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+  - type: input
+    id: android-version
+    attributes:
+      label: Android Version
+      description: What is your Android version? (e.g., Android 10)
+  - type: input
+    id: device
+    attributes:
+      label: Device Model
+      description: What kind of device do you have? (e.g., Samsung Galaxy S22)
+  - type: input
+    id: app-version
+    attributes:
+      label: App Version
+      description: What version of the app are you using? (You can usually find this in the app's settings)
+  - type: textarea
+    id: problem
+    attributes:
+      label: Describe the Issue
+      description: Please provide a clear and detailed description of the bug or issue.
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: If possible, outline the steps to reproduce the bug or issue.
+
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information
+      description: Any other details that might be helpful (screenshots, logs, etc.)

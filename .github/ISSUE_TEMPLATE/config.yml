@@ -1,0 +1,5 @@
+contact_links:
+  - name: FAQ's
+    url: https://github.com/doubleangels/NextDNSManager/blob/main/FAQ.md
+    about: Please read the FAQ's before creating an issue or your issue may be closed.
+blank_issues_enabled: false

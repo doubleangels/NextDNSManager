@@ -1,0 +1,71 @@
+plugins {
+    id "com.android.application"
+    id "io.sentry.android.gradle" version "4.4.0"
+}
+
+android {
+    compileSdk 34
+    defaultConfig {
+        applicationId "com.doubleangels.nextdnsmanagement"
+        minSdkVersion 28
+        targetSdk 34
+        versionCode 229
+        versionName '5.0.5'
+        resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "in", "it", "ja", "pl", "pt", "es", "sv", "tr"]
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debugSentryOn {
+        }
+    }
+    namespace 'com.doubleangels.nextdnsmanagement'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    dependenciesInfo {
+        includeInApk true
+        includeInBundle true
+    }
+
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.preference:preference:1.2.1'
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation 'com.jakewharton:process-phoenix:3.0.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'io.sentry:sentry-android:7.6.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.13'
+}
+
+sentry {
+    authToken = System.getenv("SENTRY_AUTH_TOKEN")
+    includeProguardMapping = true
+    autoUploadProguardMapping = true
+    uploadNativeSymbols = true
+    autoUploadNativeSymbols = true
+    includeNativeSources = true
+    includeSourceContext = true
+}

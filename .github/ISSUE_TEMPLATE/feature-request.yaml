@@ -1,0 +1,42 @@
+name: Feature Request
+description: Propose a new feature for the project. Please check the FAQ before submitting.
+title: "[Feature Request] "
+labels: ["type: feature"]
+assignees:
+  - doubleangels
+
+body:
+  - type: dropdown
+    id: faq-check
+    attributes:
+      label: FAQ's Checked
+      description: Have you checked the FAQ's before opening this issue?
+      options:
+        - "Yes"
+        - "No"
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: Feature Description
+      description: Explain the new feature clearly and concisely.
+  - type: textarea
+    id: problem-solved
+    attributes:
+      label: What Problem Would This Solve?
+      description: Describe the specific problem(s) this feature would address for users.
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use Cases
+      description: Outline a few typical scenarios where this feature would be used.
+      placeholder: "This would allow me to..."
+  - type: textarea
+    id: current-workarounds
+    attributes:
+      label: Current Workarounds
+      description: If there are ways to partially achieve this functionality now, mention them here.
+  - type: textarea
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you? Explain why.

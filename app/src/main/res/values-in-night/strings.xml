@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">NextDNS Manager</string>
+  <string name="author">Penulis</string>
+  <string name="back_title">Kembali</string>
+  <string name="crowdin">Crowdin</string>
+  <string name="darkmode">Mode Gelap</string>
+  <string name="darkmode_instructions">Pengaturan Mode Gelap</string>
+  <string name="developer">Pengembang</string>
+  <string name="disclaimer">Aplikasi ini BUKAN aplikasi NextDNS resmi.</string>
+  <string name="disclaimer_title">Penafian</string>
+  <string name="donation">Donasi</string>
+  <string name="donation_name">Jika Anda menikmati aplikasi ini dan ingin menyumbang, Anda bisa melakukannya di sini. Harap dicatat, ini sepenuhnya bersifat sukarela. Terima kasih atas dukungan Anda!</string>
+  <string name="sentry">Sentry</string>
+  <string name="generic_content_description">Ini adalah deskripsi konten generik.</string>
+  <string name="github">Github</string>
+  <string name="github_summary">Ketuk untuk melihat repositori Github aplikasi ini.</string>
+  <string name="github_issues">Laporkan Masalah</string>
+  <string name="github_issues_summary">Ketuk untuk melaporkan masalah atau melihat masalah yang dilaporkan saat ini.</string>
+  <string name="help_green">DNS aman sedang digunakan DAN perangkat terhubung ke NextDNS.</string>
+  <string name="help_orange">DNS aman TIDAK digunakan DAN perangkat terhubung ke NextDNS.</string>
+  <string name="help_red">DNS aman tidak digunakan.</string>
+  <string name="help_yellow">DNS aman sedang digunakan tetapi perangkat TIDAK terhubung ke NextDNS.</string>
+  <string name="home_title">Rumah</string>
+  <string name="nextdns_privacy_policy">Kebijakan Privasi NextDNS</string>
+  <string name="nextdns_user_agreement">Perjanjian Pengguna NextDNS</string>
+  <string name="other">Lainnya</string>
+  <string name="ping_disabled">Tindakan ini saat ini tidak tersedia.</string>
+  <string name="ping_long">Cepat periksa waktu ping ke server NextDNS.</string>
+  <string name="ping_short">Ping</string>
+  <string name="ping_title">Tes Ping</string>
+  <string name="privacy">Privasi</string>
+  <string name="privacy_policy">Kebijakan Privasi Manajer NextDNS</string>
+  <string name="private_dns">DNS Pribadi</string>
+  <string name="refresh_title">Menyegarkan</string>
+  <string name="sentry_enable_instructions">Aktifkan Sentry</string>
+  <string name="sentry_info">Pelajari Lebih Lanjut</string>
+  <string name="sentry_info_instructions">Ketuk untuk mempelajari lebih lanjut tentang Sentry.</string>
+  <string name="settings">Pengaturan</string>
+  <string name="settings_activity_title">Pengaturan</string>
+  <string name="translate">Terjemahkan</string>
+  <string name="translate_summary">Jika Anda menemukan terjemahan yang tidak tepat, tolong bantu saya memperbaikinya di sini.</string>
+  <string name="user_agreement">Perjanjian Pengguna</string>
+  <string name="version">Versi</string>
+  <string name="whitelist_domains">Jika Anda mengaktifkan Sentry, harap masukkan domain-domain berikut ke dalam konfigurasi NextDNS Anda.</string>
+  <string name="whitelist_instructions">Harap pertimbangkan untuk mengaktifkan pelacakan kesalahan Sentry. Ini tidak mengumpulkan informasi pribadi dan membantu saya membuat aplikasi menjadi lebih baik.</string>
+  <string-array name="darkmode_entries">
+    <item>Sistem Pencocokan</item>
+    <item>Dihidupkan</item>
+    <item>Dimatikan</item>
+  </string-array>
+</resources>

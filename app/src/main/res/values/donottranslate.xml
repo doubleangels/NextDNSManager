@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="author_name">DoubleAngels</string>
+    <string name="author_url">https://doubleangels.com</string>
+    <string name="donation_url">https://donate.stripe.com/4gw8yhbvH0mg6SQ7ss</string>
+    <string name="github_url">https://github.com/doubleangels/NextDNSManager</string>
+    <string name="github_issues_url">https://github.com/doubleangels/NextDNSManager/issues</string>
+    <string name="main_url">https://my.nextdns.io/</string>
+    <string name="nextdns_privacy_policy_url">https://nextdns.io/privacy</string>
+    <string name="nextdns_protocol">protocol</string>
+    <string name="nextdns_status">status</string>
+    <string name="nextdns_user_agreement_url">https://help.nextdns.io/terms</string>
+    <string name="ping_url">https://ping.nextdns.io</string>
+    <string name="privacy_policy_url">https://doubleangels.github.io/privacyPolicy/nextdns.html</string>
+    <string name="sentry_info_url">https://github.com/getsentry/sentry</string>
+    <string name="translate_url">https://crowdin.com/project/nextdns-manager</string>
+    <string name="using_nextdns_status">OK</string>
+    <string name="versions_url">https://github.com/doubleangels/NextDNSManager/releases</string>
+    <string name="whitelist_domain_1">*.o244019.sentry.io</string>
+    <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
+    <string-array name="darkmode_entries_values">
+        <item>match</item>
+        <item>on</item>
+        <item>off</item>
+    </string-array>
+    <string-array name="secure_protocols">
+        <item>DOH</item>
+        <item>DOT</item>
+        <item>DOQ</item>
+    </string-array>
+</resources>

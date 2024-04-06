@@ -1,0 +1,35 @@
+name: Feedback
+description: Share your thoughts and suggestions to help us improve.
+title: "[Feedback] "
+labels: ["type: feedback"]
+assignees:
+  - doubleangels
+
+body:
+  - type: dropdown
+    id: feedback-type
+    attributes:
+      label: Type of Feedback
+      description: What kind of feedback are you providing?
+      options:
+        - General Feedback
+        - Performance
+        - Other
+  - type: textarea
+    id: feedback
+    attributes:
+      label: Your Feedback
+      description: Please provide your feedback. Be as specific as possible.
+  - type: checkboxes
+    id: impact
+    attributes:
+      label: How does this affect your experience?
+      options:
+        - label: Minor
+        - label: Moderate
+        - label: Significant
+  - type: textarea
+    id: additional-info
+    attributes:
+      label: Additional Information (Optional)
+      description: Any screenshots, links, or other details that could help us understand your feedback.

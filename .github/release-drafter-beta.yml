@@ -1,0 +1,6 @@
+prerelease: true
+prerelease-identifier: beta
+template: |
+  ## Changelog
+
+  This is a beta release. As such, patch notes will change frequently. Final patch notes will be added if/when this release is moved to production.

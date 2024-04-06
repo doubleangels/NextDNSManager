@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">NextDNS Manager</string>
+  <string name="author">Autor</string>
+  <string name="back_title">Wstecz</string>
+  <string name="crowdin">Crowdin</string>
+  <string name="darkmode">Tryb ciemny</string>
+  <string name="darkmode_instructions">Ustawienia trybu ciemnego</string>
+  <string name="developer">Deweloper</string>
+  <string name="disclaimer">Ta aplikacja NIE jest oficjalną aplikacją NextDNS.</string>
+  <string name="disclaimer_title">Zrzeczenie się odpowiedzialności</string>
+  <string name="donation">Wpłać</string>
+  <string name="donation_name">Jeśli podoba Ci się ta aplikacja i chcesz ją wesprzeć, możesz to zrobić tutaj. Pamiętaj, że jest to całkowicie opcjonalne. Dziękujemy za wsparcie!</string>
+  <string name="sentry">Sentry</string>
+  <string name="generic_content_description">Jest to ogólny opis treści.</string>
+  <string name="github">Github</string>
+  <string name="github_summary">Dotknij, aby wyświetlić repozytorium Github tej aplikacji.</string>
+  <string name="github_issues">Zgłoś problem</string>
+  <string name="github_issues_summary">Dotknij, aby zgłosić problem lub wyświetlić aktualnie zgłoszone.</string>
+  <string name="help_green">Bezpieczny DNS jest używany, a urządzenie jest podłączone do NextDNS.</string>
+  <string name="help_orange">Bezpieczny DNS NIE jest używany, A urządzenie jest podłączone do NextDNS.</string>
+  <string name="help_red">Bezpieczny DNS nie jest używany.</string>
+  <string name="help_yellow">Używany jest bezpieczny DNS, ale urządzenie NIE jest podłączone do NextDNS.</string>
+  <string name="home_title">Strona główna</string>
+  <string name="nextdns_privacy_policy">NextDNS Polityka prywatności</string>
+  <string name="nextdns_user_agreement">Umowa użytkownika NextDNS</string>
+  <string name="other">Pozostałe</string>
+  <string name="ping_disabled">Ta akcja jest obecnie niedostępna.</string>
+  <string name="ping_long">Szybko sprawdź czasy ping na serwerach NextDNS.</string>
+  <string name="ping_short">Ping</string>
+  <string name="ping_title">Test ping</string>
+  <string name="privacy">Prywatność</string>
+  <string name="privacy_policy">NextDNS Manager Polityka prywatności</string>
+  <string name="private_dns">Prywatny DNS</string>
+  <string name="refresh_title">Odśwież</string>
+  <string name="sentry_enable_instructions">Włącz Sentry</string>
+  <string name="sentry_info">Poznaj Więcej</string>
+  <string name="sentry_info_instructions">Dotknij, aby dowiedzieć się więcej o Sentry.</string>
+  <string name="settings">Ustawienia</string>
+  <string name="settings_activity_title">Ustawienia</string>
+  <string name="translate">Przetłumacz</string>
+  <string name="translate_summary">Jeśli widzisz niepoprawne tłumaczenia, pomóż mi naprawić je tutaj.</string>
+  <string name="user_agreement">Umowa użytkownika</string>
+  <string name="version">Wersja</string>
+  <string name="whitelist_domains">Jeśli włączysz Sentry proszę dodać te domeny do konfiguracji NextDNS.</string>
+  <string name="whitelist_instructions">Proszę zastanowić się nad opcją śledzenia błędów Sentry . To nie zbiera żadnych danych osobowych i pomaga mi ulepszyć aplikację.</string>
+  <string-array name="darkmode_entries">
+    <item>Dopasuj System</item>
+    <item>Włączone</item>
+    <item>Wyłączony</item>
+  </string-array>
+</resources>

@@ -1,0 +1,43 @@
+name: Documentation Request
+description: Suggest improvements or additions to our documentation.
+title: "[Documentation] "
+labels: ["type: documentation"]
+assignees:
+  - doubleangels
+
+body:
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      description: How severely does this impact your use of the app?
+      options:
+        - Low
+        - Medium
+        - High
+        - Critical
+  - type: dropdown
+    id: doc-type
+    attributes:
+      label: Type of Request
+      description: What kind of documentation change are you requesting?
+      options:
+        - New documentation
+        - Update existing documentation
+        - Clarification
+        - Example
+  - type: input
+    id: doc-section
+    attributes:
+      label: Documentation Section/Page
+      description: If applicable, specify the documentation section or link to the page.
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe Your Request
+      description: Explain what you'd like to see added, changed, or clarified in the documentation. Be as specific as possible.
+  - type: textarea
+    id: why
+    attributes:
+      label: Why This is Needed
+      description: Briefly explain why this change would be beneficial (e.g., improve understanding, resolve a common issue).

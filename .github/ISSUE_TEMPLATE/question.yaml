@@ -1,0 +1,21 @@
+name: Question
+description: Ask a question and get help about the project. Please check the FAQ before submitting.
+title: "[Question] "
+labels: ["type: question"]
+assignees:
+  - doubleangels
+
+body:
+  - type: dropdown
+    id: faq-check
+    attributes:
+      label: FAQ's Checked
+      description: Have you checked the FAQ's before opening this issue?
+      options:
+        - "Yes"
+        - "No"
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: Clearly state your question. Be as specific as possible.

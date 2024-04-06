@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">NextDNS Manager</string>
+  <string name="author">著者</string>
+  <string name="back_title">戻る</string>
+  <string name="crowdin">Crowdin</string>
+  <string name="darkmode">ダークモード</string>
+  <string name="darkmode_instructions">ダークモードの設定</string>
+  <string name="developer">開発者</string>
+  <string name="disclaimer">このアプリは公式のNextDNSアプリではありません。</string>
+  <string name="disclaimer_title">免責事項</string>
+  <string name="donation">寄付</string>
+  <string name="donation_name">このアプリを楽しんで寄付したい場合は、こちらで行うことができます。ご注意ください。これは完全に任意です。ご支援ありがとうございます！</string>
+  <string name="sentry">Sentry</string>
+  <string name="generic_content_description">これは一般的な内容説明です。</string>
+  <string name="github">Github</string>
+  <string name="github_summary">このアプリの Github リポジトリを表示するにはタップします。</string>
+  <string name="github_issues">問題を報告する</string>
+  <string name="github_issues_summary">タップして課題を報告するか、現在報告されている課題を表示します。</string>
+  <string name="help_green">セキュア DNS が使用されており、デバイスが NextDNS に接続されています。</string>
+  <string name="help_orange">安全なDNSは使用されておらず、デバイスはNextDNSに接続されています。</string>
+  <string name="help_red">セキュア DNS は使用されていません。</string>
+  <string name="help_yellow">セキュアDNSは使用されていますが、デバイスはNextDNSに接続されていません。</string>
+  <string name="home_title">ホーム</string>
+  <string name="nextdns_privacy_policy">ネクストDNSプライバシーポリシー</string>
+  <string name="nextdns_user_agreement">ネクストDNSユーザー契約</string>
+  <string name="other">その他</string>
+  <string name="ping_disabled">このアクションは現在使用できません。</string>
+  <string name="ping_long">NextDNSサーバーへのPING時間をすばやく確認できます。</string>
+  <string name="ping_short">ping</string>
+  <string name="ping_title">ピングテスト</string>
+  <string name="privacy">プライバシー</string>
+  <string name="privacy_policy">NextDNSマネージャープライバシーポリシー</string>
+  <string name="private_dns">プライベート DNS</string>
+  <string name="refresh_title">リフレッシュ</string>
+  <string name="sentry_enable_instructions">Sentry を有効にする</string>
+  <string name="sentry_info">もっと詳しく</string>
+  <string name="sentry_info_instructions">項目の詳細については、タップしてください。</string>
+  <string name="settings">[設定]</string>
+  <string name="settings_activity_title">[設定]</string>
+  <string name="translate">[翻訳]</string>
+  <string name="translate_summary">間違った翻訳が表示された場合は、こちらで修正してください。</string>
+  <string name="user_agreement">ユーザー契約</string>
+  <string name="version">[バージョン]</string>
+  <string name="whitelist_domains">Sentryを有効にする場合は、NextDNS設定でこれらのドメインをホワイトリストに登録してください。</string>
+  <string name="whitelist_instructions">Sentry error trackingへの参加を検討してください。これは個人情報を収集するものではなく、アプリを改善するのに役立ちます。</string>
+  <string-array name="darkmode_entries">
+    <item>システムに一致</item>
+    <item>オン</item>
+    <item>オフ</item>
+  </string-array>
+</resources>
