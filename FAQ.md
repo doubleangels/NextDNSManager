@@ -31,7 +31,9 @@ No. [Sentry](https://github.com/getsentry/sentry) is a service for developers th
 
 ## I am new to using NextDNS and I don't understand how to use it, can you teach me?
 
-Sorry, but no. There's tons of excellent documentation out there as to how to effectively use NextDNS, and an amazing community who can help you as well. I recommend the NextDNS website, YouTube videos, and the r/nextdns subreddit. I simply don't have the time to do tech support.
+Because NextDNS support and communication from the developers is lacking, I am happy to try and help any users that open an issue or discussions post. For simple setup/configuration questions or specific questions about this app and its features, I will do whatever I can to help users get to a point where their configuration is working. 
+
+I also recommend the r/nextdns community on Reddit, there are many knowledgeable people who can help as well.
 
 ## I've read all of this and still have a question, what now?
 
