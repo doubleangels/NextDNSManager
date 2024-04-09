@@ -1,3 +1,4 @@
+<!--suppress ALL -->
 <p align="center">
   <img src="https://img.shields.io/github/release/doubleangels/NextDNSManager.svg?logo=github&label=GitHub%20Build&style=for-the-badge" alt="GitHub Build">
   <img src="https://img.shields.io/f-droid/v/com.doubleangels.nextdnsmanagement.svg?logo=F-Droid&label=F-Droid%20Build&style=for-the-badge" alt="F-Droid Build">
@@ -55,7 +56,7 @@ Which app you should use depends on your privacy preferences and how often you w
 For each build ("version") of the app, there are timelines for when the build will be available, so methods with longer timelines will result in longer wait times for updates.
 
 |                  | Google Play   | Sideloaded APK | F-Droid       |
-| ---------------- | ------------- | -------------- | ------------- |
+|------------------|---------------|----------------|---------------|
 | **Availability** | A few minutes | A few minutes  | Up to 14 days |
 
 F-Droid takes much longer than any of the other methods because they have a human involved in the process, each app is signed by a human on a computer that is air-gapped (not connected to the internet).
