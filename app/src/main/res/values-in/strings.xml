@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Penulis</string>
   <string name="back_title">Kembali</string>
   <string name="crowdin">Crowdin</string>
-  <string name="dark_mode">Mode Gelap</string>
-  <string name="dark_mode_instructions">Pengaturan Mode Gelap</string>
+  <string name="dark_mode">Dark Mode</string>
+  <string name="dark_mode_instructions">Dark Mode Setting</string>
   <string name="developer">Pengembang</string>
-  <string name="disclaimer">Aplikasi ini BUKAN aplikasi NextDNS resmi.</string>
+  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
   <string name="disclaimer_title">Penafian</string>
   <string name="donation">Donasi</string>
   <string name="donation_name">Jika Anda menikmati aplikasi ini dan ingin menyumbang, Anda bisa melakukannya di sini. Harap dicatat, ini sepenuhnya bersifat sukarela. Terima kasih atas dukungan Anda!</string>
@@ -25,6 +25,10 @@
   <string name="nextdns_privacy_policy">Kebijakan Privasi NextDNS</string>
   <string name="nextdns_user_agreement">Perjanjian Pengguna NextDNS</string>
   <string name="other">Lainnya</string>
+  <string name="permission">Tap to see this app\'s permissions.</string>
+  <string name="permission_details">This app uses the following permissions:</string>
+  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
+  <string name="permission_title">Permissions</string>
   <string name="ping_disabled">Tindakan ini saat ini tidak tersedia.</string>
   <string name="ping_long">Cepat periksa waktu ping ke server NextDNS.</string>
   <string name="ping_short">Ping</string>
@@ -45,8 +49,8 @@
   <string name="whitelist_domains">Jika Anda mengaktifkan Sentry, harap masukkan domain-domain berikut ke dalam konfigurasi NextDNS Anda.</string>
   <string name="whitelist_instructions">Harap pertimbangkan untuk mengaktifkan pelacakan kesalahan Sentry. Ini tidak mengumpulkan informasi pribadi dan membantu saya membuat aplikasi menjadi lebih baik.</string>
   <string-array name="dark_mode_entries">
-    <item>Sistem Pencocokan</item>
-    <item>Dihidupkan</item>
-    <item>Dimatikan</item>
+    <item>Match System</item>
+    <item>On</item>
+    <item>Off</item>
   </string-array>
 </resources>

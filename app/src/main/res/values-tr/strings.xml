@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Yazar</string>
   <string name="back_title">Geri</string>
   <string name="crowdin">Crowdin</string>
-  <string name="dark_mode">Karanlık Mod</string>
-  <string name="dark_mode_instructions">Karanlık Mod Ayarı</string>
+  <string name="dark_mode">Dark Mode</string>
+  <string name="dark_mode_instructions">Dark Mode Setting</string>
   <string name="developer">Geliştirici</string>
-  <string name="disclaimer">Bu uygulama resmi bir NextDNS uygulaması DEĞİLDİR.</string>
+  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
   <string name="disclaimer_title">Yasal Uyarı</string>
   <string name="donation">Bağış</string>
   <string name="donation_name">Bu uygulamadan keyif alıyorsanız ve bağış yapmak istiyorsanız, bunu buradan yapabilirsiniz. Lütfen unutmayın, bu tamamen isteğe bağlıdır. Desteğiniz için teşekkürler!</string>
@@ -25,6 +25,10 @@
   <string name="nextdns_privacy_policy">NextDNS Gizlilik Politikası</string>
   <string name="nextdns_user_agreement">NextDNS Kullanıcı Sözleşmesi</string>
   <string name="other">Diğer</string>
+  <string name="permission">Tap to see this app\'s permissions.</string>
+  <string name="permission_details">This app uses the following permissions:</string>
+  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
+  <string name="permission_title">Permissions</string>
   <string name="ping_disabled">Bu eylem şu anda kullanılamıyor.</string>
   <string name="ping_long">NextDNS sunucularına ping sürelerini hızla kontrol edin.</string>
   <string name="ping_short">Ping</string>
@@ -45,8 +49,8 @@
   <string name="whitelist_domains">Sentry\'yi etkinleştirirseniz, lütfen bu alanları NextDNS yapılandırmanızda beyaz listeye alın.</string>
   <string name="whitelist_instructions">Lütfen Sentry hata izleme sistemine katılmayı düşünün. Bu kişisel bilgi toplamaz ve uygulamayı daha iyi hale getirmeme yardımcı olur.</string>
   <string-array name="dark_mode_entries">
-    <item>Eşleştirme Sistemi</item>
-    <item>Açık</item>
-    <item>Kapalı</item>
+    <item>Match System</item>
+    <item>On</item>
+    <item>Off</item>
   </string-array>
 </resources>
