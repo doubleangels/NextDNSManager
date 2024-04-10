@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Autore</string>
   <string name="back_title">Indietro</string>
@@ -7,7 +7,7 @@
   <string name="dark_mode">Modalità Oscura</string>
   <string name="dark_mode_instructions">Impostazioni Modalità Scura</string>
   <string name="developer">Sviluppatore</string>
-  <string name="disclaimer">Questa app NON è un\'app NextDNS ufficiale.</string>
+  <string name="disclaimer">Questa app e il suo sviluppatore NON sono affiliati a NextDNS.</string>
   <string name="disclaimer_title">Esclusione di responsabilità</string>
   <string name="donation">Fai una donazione</string>
   <string name="donation_name">Se ti piace questa app e desideri donare, puoi farlo qui. Attenzione, questo è completamente opzionale. Grazie per il tuo supporto!</string>
@@ -25,13 +25,17 @@
   <string name="nextdns_privacy_policy">Informativa sulla privacy di NextDNS</string>
   <string name="nextdns_user_agreement">Accordo per gli utenti di NextDNS</string>
   <string name="other">Altro</string>
+  <string name="permission">Tocca per vedere i permessi di questa app.</string>
+  <string name="permission_details">Questa app utilizza i seguenti permessi:</string>
+  <string name="permission_question">Se avete una domanda su questi permessi, si prega di aprire un problema su Github.</string>
+  <string name="permission_title">Permessi</string>
   <string name="ping_disabled">Questa azione non è al momento disponibile.</string>
   <string name="ping_long">Controlla rapidamente i tempi di ping verso i server NextDNS.</string>
   <string name="ping_short">Ping</string>
   <string name="ping_title">Test ping</string>
   <string name="privacy">Privacy</string>
   <string name="privacy_policy">Informativa sulla privacy di NextDNS Manager</string>
-  <string name="private_dns">DNS Privati</string>
+  <string name="private_dns">DNS Privato</string>
   <string name="refresh_title">Aggiorna</string>
   <string name="sentry_enable_instructions">Abilita Sentry</string>
   <string name="sentry_info">Scopri Di Più</string>
