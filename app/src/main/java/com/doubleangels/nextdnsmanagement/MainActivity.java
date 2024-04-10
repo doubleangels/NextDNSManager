@@ -65,8 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
             if (sentryManager.isSentryEnabled()) {
                 sentryManager.captureMessage("Sentry is enabled for NextDNS Manager.");
-                SentryInitializer sentryInitializer = new SentryInitializer();
-                sentryInitializer.execute(this);
+                SentryInitializer.initialize(this);
             }
             setupToolbar();
             String appLocale = setupLanguage();

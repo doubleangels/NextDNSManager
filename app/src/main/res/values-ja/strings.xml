@@ -4,8 +4,8 @@
   <string name="author">著者</string>
   <string name="back_title">戻る</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">ダークモード</string>
-  <string name="darkmode_instructions">ダークモードの設定</string>
+  <string name="dark_mode">ダークモード</string>
+  <string name="dark_mode_instructions">ダークモードの設定</string>
   <string name="developer">開発者</string>
   <string name="disclaimer">このアプリは公式のNextDNSアプリではありません。</string>
   <string name="disclaimer_title">免責事項</string>
@@ -44,7 +44,7 @@
   <string name="version">[バージョン]</string>
   <string name="whitelist_domains">Sentryを有効にする場合は、NextDNS設定でこれらのドメインをホワイトリストに登録してください。</string>
   <string name="whitelist_instructions">Sentry error trackingへの参加を検討してください。これは個人情報を収集するものではなく、アプリを改善するのに役立ちます。</string>
-  <string-array name="darkmode_entries">
+  <string-array name="dark_mode_entries">
     <item>システムに一致</item>
     <item>オン</item>
     <item>オフ</item>

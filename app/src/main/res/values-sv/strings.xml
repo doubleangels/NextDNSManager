@@ -4,8 +4,8 @@
   <string name="author">Författaren</string>
   <string name="back_title">Tillbaka</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">Mörkt läge</string>
-  <string name="darkmode_instructions">Mörkt läge inställning</string>
+  <string name="dark_mode">Mörkt läge</string>
+  <string name="dark_mode_instructions">Mörkt läge inställning</string>
   <string name="developer">Utvecklare</string>
   <string name="disclaimer">Denna app är INTE en officiell NextDNS-app.</string>
   <string name="disclaimer_title">friskrivningsklausul</string>
@@ -44,7 +44,7 @@
   <string name="version">Versionen</string>
   <string name="whitelist_domains">Om du aktiverar Sentry, vänligen vitlista dessa domäner i din NextDNS-konfiguration.</string>
   <string name="whitelist_instructions">Vänligen överväg att välja till Sentry felspårning. Detta samlar inte in någon personlig information och hjälper mig att göra appen bättre.</string>
-  <string-array name="darkmode_entries">
+  <string-array name="dark_mode_entries">
     <item>Matcha Systemet</item>
     <item>På</item>
     <item>Av</item>

@@ -4,8 +4,8 @@
   <string name="author">Auteur</string>
   <string name="back_title">Terug</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">Donkere modus</string>
-  <string name="darkmode_instructions">Donkere modus instelling</string>
+  <string name="dark_mode">Donkere modus</string>
+  <string name="dark_mode_instructions">Donkere modus instelling</string>
   <string name="developer">Ontwikkelaar</string>
   <string name="disclaimer">Deze app is GEEN officiële NextDNS-app.</string>
   <string name="disclaimer_title">Vrijwaring</string>
@@ -44,7 +44,7 @@
   <string name="version">Versie</string>
   <string name="whitelist_domains">Als u Sentry inschakelt, kunt u deze domeinen in uw NextDNS configuratie uitsluiten.</string>
   <string name="whitelist_instructions">Overweeg een opting in to Sentry error tracking. Dit verzamelt geen persoonlijke informatie en helpt mij de app beter te maken.</string>
-  <string-array name="darkmode_entries">
+  <string-array name="dark_mode_entries">
     <item>Overeenkomen met Systeem</item>
     <item>Op</item>
     <item>Uit</item>

@@ -4,8 +4,8 @@
   <string name="author">Kirjoittaja</string>
   <string name="back_title">Takaisin</string>
   <string name="crowdin">Crowdiini</string>
-  <string name="darkmode">Tumma tila</string>
-  <string name="darkmode_instructions">Tumma tilan asetus</string>
+  <string name="dark_mode">Tumma tila</string>
+  <string name="dark_mode_instructions">Tumma tilan asetus</string>
   <string name="developer">Kehittäjä</string>
   <string name="disclaimer">Tämä sovellus EI ole virallinen NextDNS-sovellus.</string>
   <string name="disclaimer_title">Vastuuvapauslauseke</string>
@@ -44,7 +44,7 @@
   <string name="version">Versio</string>
   <string name="whitelist_domains">Jos otat Sentryn käyttöön, ole hyvä ja salli nämä verkkotunnukset NextDNS-asetuksessasi.</string>
   <string name="whitelist_instructions">Harkitse valintaa Etsintävirheiden seurantaan. Tämä ei kerää henkilökohtaisia tietoja ja auttaa minua tekemään sovelluksesta paremman.</string>
-  <string-array name="darkmode_entries">
+  <string-array name="dark_mode_entries">
     <item>Sovita Järjestelmä</item>
     <item>Päällä</item>
     <item>Pois</item>

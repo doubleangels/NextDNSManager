@@ -4,8 +4,8 @@
   <string name="author">作者</string>
   <string name="back_title">返回</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">黑暗模式</string>
-  <string name="darkmode_instructions">暗色模式设置</string>
+  <string name="dark_mode">黑暗模式</string>
+  <string name="dark_mode_instructions">暗色模式设置</string>
   <string name="developer">开发者</string>
   <string name="disclaimer">这个应用程序不是官方的 NextDNS 应用程序。</string>
   <string name="disclaimer_title">免责声明</string>
@@ -44,7 +44,7 @@
   <string name="version">版本</string>
   <string name="whitelist_domains">如果您启用了 Sentry，请在您的NextDNS 配置中将这些域名加入白名单。</string>
   <string name="whitelist_instructions">请考虑加入 Sentry 错误跟踪。这不会收集任何个人信息，并且有助于我使应用程序变得更好。</string>
-  <string-array name="darkmode_entries">
+  <string-array name="dark_mode_entries">
     <item>匹配系统</item>
     <item>开启</item>
     <item>关闭</item>

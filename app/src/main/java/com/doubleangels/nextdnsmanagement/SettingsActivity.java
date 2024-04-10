@@ -30,6 +30,8 @@ import com.jakewharton.processphoenix.ProcessPhoenix;
 import java.util.Locale;
 import java.util.Objects;
 
+import io.sentry.android.core.BuildConfig;
+
 public class SettingsActivity extends AppCompatActivity {
 
     public SentryManager sentryManager;
@@ -42,8 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
             if (sentryManager.isSentryEnabled()) {
-                SentryInitializer sentryInitializer = new SentryInitializer();
-                sentryInitializer.execute(this);
+                SentryInitializer.initialize(this);
             }
             setupToolbar();
             setupLanguage();
@@ -60,6 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
+    /** @noinspection deprecation*/
     private void setupLanguage() {
         Resources resources = getResources();
         Configuration configuration = resources.getConfiguration();
@@ -112,7 +114,8 @@ public class SettingsActivity extends AppCompatActivity {
             setupSentryChangeListener(sentryEnablePreference, sharedPreferences);
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
             setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
-            setupButton("author_button", R.string.author_url);
+            setupButton("sentry_info_button", R.string.sentry_info_url);
+            setupButtonForIntent("author_button");
             setupButton("github_button", R.string.github_url);
             setupButton("github_issue_button", R.string.github_issues_url);
             setupButton("donation_button", R.string.donation_url);
@@ -120,7 +123,7 @@ public class SettingsActivity extends AppCompatActivity {
             setupButton("privacy_policy_button", R.string.privacy_policy_url);
             setupButton("nextdns_privacy_policy_button", R.string.nextdns_privacy_policy_url);
             setupButton("nextdns_user_agreement_button", R.string.nextdns_user_agreement_url);
-            setupButton("sentry_info_button", R.string.sentry_info_url);
+            setupButtonForIntent("permission_button");
             setupButton("version_button", R.string.versions_url);
             String versionName = BuildConfig.VERSION_NAME;
             Preference versionPreference = findPreference("version_button");
@@ -148,6 +151,22 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
+                    startActivity(intent);
+                }
+                return true;
+            });
+        }
+
+        private void setupButtonForIntent(String buttonKey) {
+            Preference button = findPreference(buttonKey);
+            assert button != null;
+            button.setOnPreferenceClickListener(preference -> {
+                if ("author_button".equals(buttonKey)) {
+                    Intent intent = new Intent(getContext(), AuthorActivity.class);
+                    startActivity(intent);
+                }
+                if ("permission_button".equals(buttonKey)) {
+                    Intent intent = new Intent(getContext(), PermissionActivity.class);
                     startActivity(intent);
                 }
                 return true;

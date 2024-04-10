@@ -4,8 +4,8 @@
   <string name="author">Autor</string>
   <string name="back_title">Atrás</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">Modo Oscuro</string>
-  <string name="darkmode_instructions">Ajustes del Modo Oscuro</string>
+  <string name="dark_mode">Modo Oscuro</string>
+  <string name="dark_mode_instructions">Ajustes del Modo Oscuro</string>
   <string name="developer">Desarrollador</string>
   <string name="disclaimer">Esta aplicación NO es una aplicación oficial de NextDNS.</string>
   <string name="disclaimer_title">Descargo de responsabilidad</string>
@@ -44,7 +44,7 @@
   <string name="version">Versión</string>
   <string name="whitelist_domains">Si activa Sentry, por favor incluya estos dominios en su configuración NextDNS.</string>
   <string name="whitelist_instructions">Por favor, considere optar por el seguimiento de errores de Sentry. Esto no recopila ninguna información personal y me ayuda a mejorar la aplicación.</string>
-  <string-array name="darkmode_entries">
+  <string-array name="dark_mode_entries">
     <item>Coincidir Sistema</item>
     <item>En</item>
     <item>Apagado</item>

@@ -4,8 +4,8 @@
   <string name="author">Autore</string>
   <string name="back_title">Indietro</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">Modalità Oscura</string>
-  <string name="darkmode_instructions">Impostazioni Modalità Scura</string>
+  <string name="dark_mode">Modalità Oscura</string>
+  <string name="dark_mode_instructions">Impostazioni Modalità Scura</string>
   <string name="developer">Sviluppatore</string>
   <string name="disclaimer">Questa app NON è un\'app NextDNS ufficiale.</string>
   <string name="disclaimer_title">Esclusione di responsabilità</string>
@@ -44,7 +44,7 @@
   <string name="version">Versione</string>
   <string name="whitelist_domains">Se si abilita Sentry, si prega di whitelist questi domini nella configurazione NextDNS.</string>
   <string name="whitelist_instructions">Si prega di considerare di optare per il monitoraggio degli errori Sentr. Questo non raccoglie alcuna informazione personale e mi aiuta a migliorare l\'app.</string>
-  <string-array name="darkmode_entries">
+  <string-array name="dark_mode_entries">
     <item>Sistema Di Partita</item>
     <item>Acceso</item>
     <item>Off</item>

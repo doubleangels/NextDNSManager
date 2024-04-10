@@ -4,8 +4,8 @@
   <string name="author">Penulis</string>
   <string name="back_title">Kembali</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">Mode Gelap</string>
-  <string name="darkmode_instructions">Pengaturan Mode Gelap</string>
+  <string name="dark_mode">Mode Gelap</string>
+  <string name="dark_mode_instructions">Pengaturan Mode Gelap</string>
   <string name="developer">Pengembang</string>
   <string name="disclaimer">Aplikasi ini BUKAN aplikasi NextDNS resmi.</string>
   <string name="disclaimer_title">Penafian</string>
@@ -44,7 +44,7 @@
   <string name="version">Versi</string>
   <string name="whitelist_domains">Jika Anda mengaktifkan Sentry, harap masukkan domain-domain berikut ke dalam konfigurasi NextDNS Anda.</string>
   <string name="whitelist_instructions">Harap pertimbangkan untuk mengaktifkan pelacakan kesalahan Sentry. Ini tidak mengumpulkan informasi pribadi dan membantu saya membuat aplikasi menjadi lebih baik.</string>
-  <string-array name="darkmode_entries">
+  <string-array name="dark_mode_entries">
     <item>Sistem Pencocokan</item>
     <item>Dihidupkan</item>
     <item>Dimatikan</item>

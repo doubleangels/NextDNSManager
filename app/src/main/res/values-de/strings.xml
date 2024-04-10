@@ -4,8 +4,8 @@
   <string name="author">Autor</string>
   <string name="back_title">Zurück</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">Dunkelmodus</string>
-  <string name="darkmode_instructions">Dunkelmodus-Einstellung</string>
+  <string name="dark_mode">Dunkelmodus</string>
+  <string name="dark_mode_instructions">Dunkelmodus-Einstellung</string>
   <string name="developer">Entwickler</string>
   <string name="disclaimer">Diese App ist KEINE offizielle NextDNS-App.</string>
   <string name="disclaimer_title">Haftungsausschluss</string>
@@ -44,7 +44,7 @@
   <string name="version">Version</string>
   <string name="whitelist_domains">Wenn Sie Sentry aktivieren, können Sie diese Domains in Ihrer NextDNS-Konfiguration whitelistieren.</string>
   <string name="whitelist_instructions">Bitte erwägen Sie, die Fehlerverfolgung bei Sentry einzuschalten. Dies sammelt keine persönlichen Informationen und hilft mir, die App besser zu machen.</string>
-  <string-array name="darkmode_entries">
+  <string-array name="dark_mode_entries">
     <item>Match-System</item>
     <item>An</item>
     <item>Aus</item>
