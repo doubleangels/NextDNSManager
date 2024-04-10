@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Författaren</string>
   <string name="back_title">Tillbaka</string>
@@ -7,7 +7,7 @@
   <string name="dark_mode">Mörkt läge</string>
   <string name="dark_mode_instructions">Mörkt läge inställning</string>
   <string name="developer">Utvecklare</string>
-  <string name="disclaimer">Denna app är INTE en officiell NextDNS-app.</string>
+  <string name="disclaimer">Denna app och dess utvecklare är INTE anslutna till NextDNS.</string>
   <string name="disclaimer_title">friskrivningsklausul</string>
   <string name="donation">Donera</string>
   <string name="donation_name">Om du gillar denna app och vill donera, kan du göra det här. Observera att detta är helt frivilligt. Tack för ditt stöd!</string>
@@ -25,6 +25,10 @@
   <string name="nextdns_privacy_policy">NextDNS Sekretesspolicy</string>
   <string name="nextdns_user_agreement">NextDNS Användaravtal</string>
   <string name="other">Övrigt</string>
+  <string name="permission">Tryck för att se appens behörigheter.</string>
+  <string name="permission_details">Denna app använder följande behörigheter:</string>
+  <string name="permission_question">Om du har en fråga om dessa behörigheter, vänligen öppna ett problem på Github.</string>
+  <string name="permission_title">Behörigheter</string>
   <string name="ping_disabled">Den här åtgärden är för närvarande inte tillgänglig.</string>
   <string name="ping_long">Kontrollera snabbt pingtider till NextDNS-servrar.</string>
   <string name="ping_short">Ping</string>

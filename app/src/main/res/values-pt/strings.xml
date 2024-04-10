@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Autor</string>
   <string name="back_title">Voltar</string>
   <string name="crowdin">Crowdin</string>
-  <string name="dark_mode">Modo Escuro</string>
-  <string name="dark_mode_instructions">Configuração do Modo Escuro</string>
+  <string name="dark_mode">Dark Mode</string>
+  <string name="dark_mode_instructions">Dark Mode Setting</string>
   <string name="developer">Desenvolvedor</string>
-  <string name="disclaimer">Este aplicativo NÃO é um aplicativo oficial do NextDNS.</string>
+  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
   <string name="disclaimer_title">Aviso de responsabilidade</string>
   <string name="donation">Doe</string>
   <string name="donation_name">Se você gosta deste aplicativo e deseja fazer uma doação, você pode fazê-lo aqui. Por favor, note que isso é completamente opcional. Obrigado pelo seu apoio!</string>
@@ -25,6 +25,10 @@
   <string name="nextdns_privacy_policy">Política de privacidade do NextDNS</string>
   <string name="nextdns_user_agreement">Contrato de usuário NextDNS</string>
   <string name="other">Outros</string>
+  <string name="permission">Tap to see this app\'s permissions.</string>
+  <string name="permission_details">This app uses the following permissions:</string>
+  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
+  <string name="permission_title">Permissions</string>
   <string name="ping_disabled">Essa ação não está disponível no momento.</string>
   <string name="ping_long">Verifique rapidamente os tempos de ping nos servidores NextDNS.</string>
   <string name="ping_short">Latência</string>
@@ -45,8 +49,8 @@
   <string name="whitelist_domains">Se você habilitar o Sentry, por favor whitelist esses domínios na sua configuração de NextDNS.</string>
   <string name="whitelist_instructions">Por favor, considere optar pelo rastreamento de erros de entrada. Isso não coleta nenhuma informação pessoal e me ajuda a melhorar o aplicativo.</string>
   <string-array name="dark_mode_entries">
-    <item>Sistema de Correspondência</item>
-    <item>Ligado</item>
-    <item>Desligado</item>
+    <item>Match System</item>
+    <item>On</item>
+    <item>Off</item>
   </string-array>
 </resources>
