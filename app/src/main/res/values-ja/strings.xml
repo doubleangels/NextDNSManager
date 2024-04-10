@@ -4,10 +4,10 @@
   <string name="author">著者</string>
   <string name="back_title">戻る</string>
   <string name="crowdin">Crowdin</string>
-  <string name="dark_mode">Dark Mode</string>
-  <string name="dark_mode_instructions">Dark Mode Setting</string>
+  <string name="dark_mode">ダークモード</string>
+  <string name="dark_mode_instructions">ダークモードの設定</string>
   <string name="developer">開発者</string>
-  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
+  <string name="disclaimer">このアプリとその開発者はNextDNSとは提携していません。</string>
   <string name="disclaimer_title">免責事項</string>
   <string name="donation">寄付</string>
   <string name="donation_name">このアプリを楽しんで寄付したい場合は、こちらで行うことができます。ご注意ください。これは完全に任意です。ご支援ありがとうございます！</string>
@@ -25,10 +25,10 @@
   <string name="nextdns_privacy_policy">ネクストDNSプライバシーポリシー</string>
   <string name="nextdns_user_agreement">ネクストDNSユーザー契約</string>
   <string name="other">その他</string>
-  <string name="permission">Tap to see this app\'s permissions.</string>
-  <string name="permission_details">This app uses the following permissions:</string>
-  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
-  <string name="permission_title">Permissions</string>
+  <string name="permission">このアプリの権限を見るにはタップしてください。</string>
+  <string name="permission_details">このアプリは次の権限を使用します：</string>
+  <string name="permission_question">これらの権限について質問がある場合は、Github で課題を開いてください。</string>
+  <string name="permission_title">アクセス許可</string>
   <string name="ping_disabled">このアクションは現在使用できません。</string>
   <string name="ping_long">NextDNSサーバーへのPING時間をすばやく確認できます。</string>
   <string name="ping_short">ping</string>
@@ -49,8 +49,8 @@
   <string name="whitelist_domains">Sentryを有効にする場合は、NextDNS設定でこれらのドメインをホワイトリストに登録してください。</string>
   <string name="whitelist_instructions">Sentry error trackingへの参加を検討してください。これは個人情報を収集するものではなく、アプリを改善するのに役立ちます。</string>
   <string-array name="dark_mode_entries">
-    <item>Match System</item>
-    <item>On</item>
-    <item>Off</item>
+    <item>システムに一致</item>
+    <item>オン</item>
+    <item>オフ</item>
   </string-array>
 </resources>
