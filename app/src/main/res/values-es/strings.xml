@@ -4,10 +4,10 @@
   <string name="author">Autor</string>
   <string name="back_title">Atrás</string>
   <string name="crowdin">Crowdin</string>
-  <string name="dark_mode">Dark Mode</string>
-  <string name="dark_mode_instructions">Dark Mode Setting</string>
+  <string name="dark_mode">Modo Oscuro</string>
+  <string name="dark_mode_instructions">Ajustes del Modo Oscuro</string>
   <string name="developer">Desarrollador</string>
-  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
+  <string name="disclaimer">Esta aplicación y su desarrollador NO están afiliados a NextDNS.</string>
   <string name="disclaimer_title">Descargo de responsabilidad</string>
   <string name="donation">Donar</string>
   <string name="donation_name">Si te gusta esta aplicación y deseas donar, puedes hacerlo aquí. Ten en cuenta que esto es completamente opcional. ¡Gracias por tu apoyo!</string>
@@ -25,10 +25,10 @@
   <string name="nextdns_privacy_policy">Política de privacidad de NextDNS</string>
   <string name="nextdns_user_agreement">Acuerdo de usuario de NextDNS</string>
   <string name="other">Otros</string>
-  <string name="permission">Tap to see this app\'s permissions.</string>
-  <string name="permission_details">This app uses the following permissions:</string>
-  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
-  <string name="permission_title">Permissions</string>
+  <string name="permission">Pulsa para ver los permisos de esta aplicación.</string>
+  <string name="permission_details">Esta aplicación utiliza los siguientes permisos:</string>
+  <string name="permission_question">Si tiene alguna pregunta sobre estos permisos, por favor abra un problema en Github.</string>
+  <string name="permission_title">Permisos</string>
   <string name="ping_disabled">Esta acción no está disponible en este momento.</string>
   <string name="ping_long">Comprueba rápidamente los tiempos de ping en los servidores de NextDNS.</string>
   <string name="ping_short">Ping</string>
@@ -49,8 +49,8 @@
   <string name="whitelist_domains">Si activa Sentry, por favor incluya estos dominios en su configuración NextDNS.</string>
   <string name="whitelist_instructions">Por favor, considere optar por el seguimiento de errores de Sentry. Esto no recopila ninguna información personal y me ayuda a mejorar la aplicación.</string>
   <string-array name="dark_mode_entries">
-    <item>Match System</item>
-    <item>On</item>
-    <item>Off</item>
+    <item>Coincidir Sistema</item>
+    <item>En</item>
+    <item>Apagado</item>
   </string-array>
 </resources>

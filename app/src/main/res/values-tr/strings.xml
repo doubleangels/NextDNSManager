@@ -4,8 +4,8 @@
   <string name="author">Yazar</string>
   <string name="back_title">Geri</string>
   <string name="crowdin">Crowdin</string>
-  <string name="dark_mode">Dark Mode</string>
-  <string name="dark_mode_instructions">Dark Mode Setting</string>
+  <string name="dark_mode">Karanlık Mod</string>
+  <string name="dark_mode_instructions">Karanlık Mod Ayarı</string>
   <string name="developer">Geliştirici</string>
   <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
   <string name="disclaimer_title">Yasal Uyarı</string>
@@ -49,8 +49,8 @@
   <string name="whitelist_domains">Sentry\'yi etkinleştirirseniz, lütfen bu alanları NextDNS yapılandırmanızda beyaz listeye alın.</string>
   <string name="whitelist_instructions">Lütfen Sentry hata izleme sistemine katılmayı düşünün. Bu kişisel bilgi toplamaz ve uygulamayı daha iyi hale getirmeme yardımcı olur.</string>
   <string-array name="dark_mode_entries">
-    <item>Match System</item>
-    <item>On</item>
-    <item>Off</item>
+    <item>Eşleştirme Sistemi</item>
+    <item>Açık</item>
+    <item>Kapalı</item>
   </string-array>
 </resources>
