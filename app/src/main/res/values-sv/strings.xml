@@ -4,8 +4,8 @@
   <string name="author">Författaren</string>
   <string name="back_title">Tillbaka</string>
   <string name="crowdin">Crowdin</string>
-  <string name="dark_mode">Mörkt läge</string>
-  <string name="dark_mode_instructions">Mörkt läge inställning</string>
+  <string name="dark_mode">Mörkt Läge</string>
+  <string name="dark_mode_instructions">Mörkt läge Inställning</string>
   <string name="developer">Utvecklare</string>
   <string name="disclaimer">Denna app och dess utvecklare är INTE anslutna till NextDNS.</string>
   <string name="disclaimer_title">friskrivningsklausul</string>
