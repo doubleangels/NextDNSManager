@@ -7,7 +7,7 @@
   <string name="dark_mode">Mode Gelap</string>
   <string name="dark_mode_instructions">Pengaturan Mode Gelap</string>
   <string name="developer">Pengembang</string>
-  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
+  <string name="disclaimer">Aplikasi ini dan pengembangnya TIDAK berafiliasi dengan NextDNS.</string>
   <string name="disclaimer_title">Penafian</string>
   <string name="donation">Donasi</string>
   <string name="donation_name">Jika Anda menikmati aplikasi ini dan ingin menyumbang, Anda bisa melakukannya di sini. Harap dicatat, ini sepenuhnya bersifat sukarela. Terima kasih atas dukungan Anda!</string>
@@ -25,10 +25,10 @@
   <string name="nextdns_privacy_policy">Kebijakan Privasi NextDNS</string>
   <string name="nextdns_user_agreement">Perjanjian Pengguna NextDNS</string>
   <string name="other">Lainnya</string>
-  <string name="permission">Tap to see this app\'s permissions.</string>
-  <string name="permission_details">This app uses the following permissions:</string>
-  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
-  <string name="permission_title">Permissions</string>
+  <string name="permission">Ketuk untuk melihat izin aplikasi ini.</string>
+  <string name="permission_details">Aplikasi ini menggunakan izin-izin berikut:</string>
+  <string name="permission_question">Jika Anda memiliki pertanyaan tentang izin-izin ini, silakan buka masalah di Github.</string>
+  <string name="permission_title">Izin</string>
   <string name="ping_disabled">Tindakan ini saat ini tidak tersedia.</string>
   <string name="ping_long">Cepat periksa waktu ping ke server NextDNS.</string>
   <string name="ping_short">Ping</string>

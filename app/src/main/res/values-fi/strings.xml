@@ -4,8 +4,8 @@
   <string name="author">Kirjoittaja</string>
   <string name="back_title">Takaisin</string>
   <string name="crowdin">Crowdiini</string>
-  <string name="dark_mode">Tumma tila</string>
-  <string name="dark_mode_instructions">Tumma tilan asetus</string>
+  <string name="dark_mode">Tumma Tila</string>
+  <string name="dark_mode_instructions">Tumma Tilan Asetus</string>
   <string name="developer">Kehittäjä</string>
   <string name="disclaimer">Tämä sovellus ja sen kehittäjä EIVÄT ole sidoksissa NextDNS.</string>
   <string name="disclaimer_title">Vastuuvapauslauseke</string>

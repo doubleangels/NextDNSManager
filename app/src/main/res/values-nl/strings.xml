@@ -4,8 +4,8 @@
   <string name="author">Auteur</string>
   <string name="back_title">Terug</string>
   <string name="crowdin">Crowdin</string>
-  <string name="dark_mode">Donkere modus</string>
-  <string name="dark_mode_instructions">Donkere modus instelling</string>
+  <string name="dark_mode">Donkere Modus</string>
+  <string name="dark_mode_instructions">Donkere Modus Instelling</string>
   <string name="developer">Ontwikkelaar</string>
   <string name="disclaimer">Deze app en zijn ontwikkelaar zijn NIET verbonden met NextDNS.</string>
   <string name="disclaimer_title">Vrijwaring</string>
