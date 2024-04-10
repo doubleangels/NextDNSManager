@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Författaren</string>
   <string name="back_title">Tillbaka</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">Mörkt läge</string>
-  <string name="darkmode_instructions">Mörkt läge inställning</string>
+  <string name="dark_mode">Dark Mode</string>
+  <string name="dark_mode_instructions">Dark Mode Setting</string>
   <string name="developer">Utvecklare</string>
-  <string name="disclaimer">Denna app är INTE en officiell NextDNS-app.</string>
+  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
   <string name="disclaimer_title">friskrivningsklausul</string>
   <string name="donation">Donera</string>
   <string name="donation_name">Om du gillar denna app och vill donera, kan du göra det här. Observera att detta är helt frivilligt. Tack för ditt stöd!</string>
@@ -25,6 +25,10 @@
   <string name="nextdns_privacy_policy">NextDNS Sekretesspolicy</string>
   <string name="nextdns_user_agreement">NextDNS Användaravtal</string>
   <string name="other">Övrigt</string>
+  <string name="permission">Tap to see this app\'s permissions.</string>
+  <string name="permission_details">This app uses the following permissions:</string>
+  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
+  <string name="permission_title">Permissions</string>
   <string name="ping_disabled">Den här åtgärden är för närvarande inte tillgänglig.</string>
   <string name="ping_long">Kontrollera snabbt pingtider till NextDNS-servrar.</string>
   <string name="ping_short">Ping</string>
@@ -44,9 +48,9 @@
   <string name="version">Versionen</string>
   <string name="whitelist_domains">Om du aktiverar Sentry, vänligen vitlista dessa domäner i din NextDNS-konfiguration.</string>
   <string name="whitelist_instructions">Vänligen överväg att välja till Sentry felspårning. Detta samlar inte in någon personlig information och hjälper mig att göra appen bättre.</string>
-  <string-array name="darkmode_entries">
-    <item>Matcha Systemet</item>
-    <item>På</item>
-    <item>Av</item>
+  <string-array name="dark_mode_entries">
+    <item>Match System</item>
+    <item>On</item>
+    <item>Off</item>
   </string-array>
 </resources>

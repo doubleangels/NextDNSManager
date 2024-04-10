@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Auteur</string>
   <string name="back_title">Terug</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">Donkere modus</string>
-  <string name="darkmode_instructions">Donkere modus instelling</string>
+  <string name="dark_mode">Dark Mode</string>
+  <string name="dark_mode_instructions">Dark Mode Setting</string>
   <string name="developer">Ontwikkelaar</string>
-  <string name="disclaimer">Deze app is GEEN officiële NextDNS-app.</string>
+  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
   <string name="disclaimer_title">Vrijwaring</string>
   <string name="donation">Doneer</string>
   <string name="donation_name">Als u deze app leuk vindt en wilt doneren, kunt u dit hier doen. Let op, dit is volledig optioneel. Bedankt voor uw steun!</string>
@@ -25,6 +25,10 @@
   <string name="nextdns_privacy_policy">Privacybeleid van NextDNS</string>
   <string name="nextdns_user_agreement">NextDNS-gebruikersovereenkomst</string>
   <string name="other">Andere</string>
+  <string name="permission">Tap to see this app\'s permissions.</string>
+  <string name="permission_details">This app uses the following permissions:</string>
+  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
+  <string name="permission_title">Permissions</string>
   <string name="ping_disabled">Deze actie is momenteel niet beschikbaar.</string>
   <string name="ping_long">Controleer snel de ping-tijden naar NextDNS-servers.</string>
   <string name="ping_short">Ping</string>
@@ -44,9 +48,9 @@
   <string name="version">Versie</string>
   <string name="whitelist_domains">Als u Sentry inschakelt, kunt u deze domeinen in uw NextDNS configuratie uitsluiten.</string>
   <string name="whitelist_instructions">Overweeg een opting in to Sentry error tracking. Dit verzamelt geen persoonlijke informatie en helpt mij de app beter te maken.</string>
-  <string-array name="darkmode_entries">
-    <item>Overeenkomen met Systeem</item>
-    <item>Op</item>
-    <item>Uit</item>
+  <string-array name="dark_mode_entries">
+    <item>Match System</item>
+    <item>On</item>
+    <item>Off</item>
   </string-array>
 </resources>

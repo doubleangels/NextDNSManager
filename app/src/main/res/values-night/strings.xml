@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Author</string>
   <string name="back_title">Back</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">Dark Mode</string>
-  <string name="darkmode_instructions">Dark Mode Setting</string>
+  <string name="dark_mode">Dark Mode</string>
+  <string name="dark_mode_instructions">Dark Mode Setting</string>
   <string name="developer">Developer</string>
-  <string name="disclaimer">This app is NOT an official NextDNS app.</string>
+  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
   <string name="disclaimer_title">Disclaimer</string>
   <string name="donation">Donate</string>
   <string name="donation_name">If you enjoy this app and wish to donate, you can do so here. Please note, this is completely optional. Thanks for your support!</string>
@@ -25,6 +25,10 @@
   <string name="nextdns_privacy_policy">NextDNS Privacy Policy</string>
   <string name="nextdns_user_agreement">NextDNS User Agreement</string>
   <string name="other">Other</string>
+  <string name="permission">Tap to see this app\'s permissions.</string>
+  <string name="permission_details">This app uses the following permissions:</string>
+  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
+  <string name="permission_title">Permissions</string>
   <string name="ping_disabled">This action is currently unavailable.</string>
   <string name="ping_long">Quickly check ping times to NextDNS servers.</string>
   <string name="ping_short">Ping</string>
@@ -44,7 +48,7 @@
   <string name="version">Version</string>
   <string name="whitelist_domains">If you enable Sentry, please whitelist these domains in your NextDNS configuration.</string>
   <string name="whitelist_instructions">Please consider opting in to Sentry error tracking. This doesn\'t collect any personal information and helps me make the app better.</string>
-  <string-array name="darkmode_entries">
+  <string-array name="dark_mode_entries">
     <item>Match System</item>
     <item>On</item>
     <item>Off</item>

@@ -38,6 +38,10 @@
         <activity
             android:name=".StatusActivity"
             android:exported="false" />
+        <activity android:name=".AuthorActivity"
+            android:exported="false" />
+        <activity android:name=".PermissionActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

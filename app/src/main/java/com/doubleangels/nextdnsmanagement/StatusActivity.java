@@ -34,8 +34,7 @@ public class StatusActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
             if (sentryManager.isSentryEnabled()) {
-                SentryInitializer sentryInitializer = new SentryInitializer();
-                sentryInitializer.execute(this);
+                SentryInitializer.initialize(this);
             }
             setupToolbar();
             setupLanguage();
@@ -52,6 +51,7 @@ public class StatusActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
+    /** @noinspection deprecation*/
     private void setupLanguage() {
         Resources resources = getResources();
         Configuration configuration = resources.getConfiguration();

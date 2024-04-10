@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Auteur</string>
   <string name="back_title">Retour</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">Mode sombre</string>
-  <string name="darkmode_instructions">Réglages du mode sombre</string>
+  <string name="dark_mode">Dark Mode</string>
+  <string name="dark_mode_instructions">Dark Mode Setting</string>
   <string name="developer">Développeur</string>
-  <string name="disclaimer">Cette application n\'est PAS une application NextDNS officielle.</string>
+  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
   <string name="disclaimer_title">Avertissement</string>
   <string name="donation">Faites un don</string>
   <string name="donation_name">Si vous appréciez cette application et que vous souhaitez faire un don, vous pouvez le faire ici. Veuillez noter que c\'est complètement optionnel. Merci pour votre soutien !</string>
@@ -25,6 +25,10 @@
   <string name="nextdns_privacy_policy">Politique de confidentialité de NextDNS</string>
   <string name="nextdns_user_agreement">Contrat d\'utilisation de NextDNS</string>
   <string name="other">Autres</string>
+  <string name="permission">Tap to see this app\'s permissions.</string>
+  <string name="permission_details">This app uses the following permissions:</string>
+  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
+  <string name="permission_title">Permissions</string>
   <string name="ping_disabled">Cette action n\'est pas disponible pour le moment.</string>
   <string name="ping_long">Vérifiez rapidement les temps de ping des serveurs NextDNS.</string>
   <string name="ping_short">Ping</string>
@@ -44,9 +48,9 @@
   <string name="version">Version</string>
   <string name="whitelist_domains">Si vous activez Sentry, veuillez mettre ces domaines en liste blanche dans votre configuration NextDNS.</string>
   <string name="whitelist_instructions">Veuillez envisager d\'opter pour le suivi des erreurs Sentr. Cela ne collecte aucune information personnelle et m\'aide à améliorer l\'application.</string>
-  <string-array name="darkmode_entries">
-    <item>Système de Correspondance</item>
-    <item>Activé</item>
-    <item>Désactivé</item>
+  <string-array name="dark_mode_entries">
+    <item>Match System</item>
+    <item>On</item>
+    <item>Off</item>
   </string-array>
 </resources>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Kirjoittaja</string>
   <string name="back_title">Takaisin</string>
   <string name="crowdin">Crowdiini</string>
-  <string name="darkmode">Tumma tila</string>
-  <string name="darkmode_instructions">Tumma tilan asetus</string>
+  <string name="dark_mode">Tumma tila</string>
+  <string name="dark_mode_instructions">Tumma tilan asetus</string>
   <string name="developer">Kehittäjä</string>
-  <string name="disclaimer">Tämä sovellus EI ole virallinen NextDNS-sovellus.</string>
+  <string name="disclaimer">Tämä sovellus ja sen kehittäjä EIVÄT ole sidoksissa NextDNS.</string>
   <string name="disclaimer_title">Vastuuvapauslauseke</string>
   <string name="donation">Lahjoita</string>
   <string name="donation_name">Jos pidät tästä sovelluksesta ja haluat lahjoittaa, voit tehdä sen tässä. Huomaa, että tämä on täysin valinnainen. Kiitos tuestasi!</string>
@@ -25,6 +25,10 @@
   <string name="nextdns_privacy_policy">NextDNS Tietosuojakäytäntö</string>
   <string name="nextdns_user_agreement">NextDNS-käyttäjäsopimus</string>
   <string name="other">Muu</string>
+  <string name="permission">Napauta nähdäksesi tämän sovelluksen oikeudet.</string>
+  <string name="permission_details">Tämä sovellus käyttää seuraavia käyttöoikeuksia:</string>
+  <string name="permission_question">Jos sinulla on kysymys näistä käyttöoikeuksista, avaa ongelma GitHubissa.</string>
+  <string name="permission_title">Käyttöoikeudet</string>
   <string name="ping_disabled">Tämä toiminto ei ole tällä hetkellä käytettävissä.</string>
   <string name="ping_long">Tarkista nopeasti ping-ajat NextDNS-palvelimille.</string>
   <string name="ping_short">Ping</string>
@@ -44,7 +48,7 @@
   <string name="version">Versio</string>
   <string name="whitelist_domains">Jos otat Sentryn käyttöön, ole hyvä ja salli nämä verkkotunnukset NextDNS-asetuksessasi.</string>
   <string name="whitelist_instructions">Harkitse valintaa Etsintävirheiden seurantaan. Tämä ei kerää henkilökohtaisia tietoja ja auttaa minua tekemään sovelluksesta paremman.</string>
-  <string-array name="darkmode_entries">
+  <string-array name="dark_mode_entries">
     <item>Sovita Järjestelmä</item>
     <item>Päällä</item>
     <item>Pois</item>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Autor</string>
   <string name="back_title">Wstecz</string>
   <string name="crowdin">Crowdin</string>
-  <string name="darkmode">Tryb ciemny</string>
-  <string name="darkmode_instructions">Ustawienia trybu ciemnego</string>
+  <string name="dark_mode">Dark Mode</string>
+  <string name="dark_mode_instructions">Dark Mode Setting</string>
   <string name="developer">Deweloper</string>
-  <string name="disclaimer">Ta aplikacja NIE jest oficjalną aplikacją NextDNS.</string>
+  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
   <string name="disclaimer_title">Zrzeczenie się odpowiedzialności</string>
   <string name="donation">Wpłać</string>
   <string name="donation_name">Jeśli podoba Ci się ta aplikacja i chcesz ją wesprzeć, możesz to zrobić tutaj. Pamiętaj, że jest to całkowicie opcjonalne. Dziękujemy za wsparcie!</string>
@@ -25,6 +25,10 @@
   <string name="nextdns_privacy_policy">NextDNS Polityka prywatności</string>
   <string name="nextdns_user_agreement">Umowa użytkownika NextDNS</string>
   <string name="other">Pozostałe</string>
+  <string name="permission">Tap to see this app\'s permissions.</string>
+  <string name="permission_details">This app uses the following permissions:</string>
+  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
+  <string name="permission_title">Permissions</string>
   <string name="ping_disabled">Ta akcja jest obecnie niedostępna.</string>
   <string name="ping_long">Szybko sprawdź czasy ping na serwerach NextDNS.</string>
   <string name="ping_short">Ping</string>
@@ -44,9 +48,9 @@
   <string name="version">Wersja</string>
   <string name="whitelist_domains">Jeśli włączysz Sentry proszę dodać te domeny do konfiguracji NextDNS.</string>
   <string name="whitelist_instructions">Proszę zastanowić się nad opcją śledzenia błędów Sentry . To nie zbiera żadnych danych osobowych i pomaga mi ulepszyć aplikację.</string>
-  <string-array name="darkmode_entries">
-    <item>Dopasuj System</item>
-    <item>Włączone</item>
-    <item>Wyłączony</item>
+  <string-array name="dark_mode_entries">
+    <item>Match System</item>
+    <item>On</item>
+    <item>Off</item>
   </string-array>
 </resources>

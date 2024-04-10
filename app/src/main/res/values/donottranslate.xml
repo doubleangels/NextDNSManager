@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="author_name">DoubleAngels</string>
+    <string name="author_real_name">Matt VerLee</string>
     <string name="author_url">https://doubleangels.com</string>
     <string name="donation_url">https://donate.stripe.com/4gw8yhbvH0mg6SQ7ss</string>
+    <string name="github_profile_url">https://github.com/doubleangels</string>
     <string name="github_url">https://github.com/doubleangels/NextDNSManager</string>
     <string name="github_issues_url">https://github.com/doubleangels/NextDNSManager/issues</string>
     <string name="main_url">https://my.nextdns.io/</string>
@@ -18,7 +20,7 @@
     <string name="versions_url">https://github.com/doubleangels/NextDNSManager/releases</string>
     <string name="whitelist_domain_1">*.o244019.sentry.io</string>
     <string name="whitelist_domain_2">*.o244019.ingest.sentry.io</string>
-    <string-array name="darkmode_entries_values">
+    <string-array name="dark_mode_entries_values">
         <item>match</item>
         <item>on</item>
         <item>off</item>

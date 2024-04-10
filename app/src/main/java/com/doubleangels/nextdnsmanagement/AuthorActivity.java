@@ -1,21 +1,21 @@
 package com.doubleangels.nextdnsmanagement;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.ImageView;
 
-import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
@@ -23,17 +23,15 @@ import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 
 import java.util.Locale;
-import java.util.Objects;
 
-public class PingActivity extends AppCompatActivity {
+public class AuthorActivity extends AppCompatActivity {
 
     public SentryManager sentryManager;
-    public WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ping);
+        setContentView(R.layout.activity_author);
         sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
@@ -44,21 +42,21 @@ public class PingActivity extends AppCompatActivity {
             setupLanguage();
             setupDarkMode(sharedPreferences);
             setupVisualIndicator(sentryManager, this);
-            setupWebView(getString(R.string.ping_url));
+            setupPersonalLinks(sentryManager);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
     }
 
-    protected void onDestroy() {
-        super.onDestroy();
-        webView.removeAllViews();
-        webView.destroy();
-    }
-
     private void setupToolbar() {
-        setSupportActionBar(findViewById(R.id.toolbar));
-        Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+        ImageView imageView = findViewById(R.id.connectionStatus);
+        imageView.setOnClickListener(v -> startActivity(new Intent(this, StatusActivity.class)));
     }
 
     /** @noinspection deprecation*/
@@ -92,31 +90,42 @@ public class PingActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    public void setupWebView(String url) {
-        webView = findViewById(R.id.webView);
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setDatabaseEnabled(true);
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webSettings.setAllowFileAccess(false);
-        webSettings.setAllowContentAccess(false);
-        webSettings.setAllowUniversalAccessFromFileURLs(false);
-        webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl(url);
+    public void setupPersonalLinks(SentryManager sentryManager) {
+        try {
+            ImageView githubButton = findViewById(R.id.githubImageView);
+            ImageView emailButton = findViewById(R.id.emailImageView);
+            ImageView websiteButton = findViewById(R.id.websiteImageView);
+            githubButton.setOnClickListener(view -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_profile_url)));
+                startActivity(intent);
+            });
+
+            emailButton.setOnClickListener(view -> {
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                emailIntent.setData(Uri.parse("mailto:nextdns@doubleangels.com"));
+                startActivity(Intent.createChooser(emailIntent, "Send Email"));
+            });
+
+            websiteButton.setOnClickListener(view -> {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.author_url)));
+                startActivity(intent);
+            });
+        } catch (Exception e) {
+            sentryManager.captureException(e);
+        }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_back_only, menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_back_only, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
-            Intent mainIntent = new Intent(this, MainActivity.class);
+            Intent mainIntent = new Intent(this, SettingsActivity.class);
             startActivity(mainIntent);
         }
         return super.onContextItemSelected(item);
