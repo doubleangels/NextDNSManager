@@ -30,8 +30,6 @@ import com.jakewharton.processphoenix.ProcessPhoenix;
 import java.util.Locale;
 import java.util.Objects;
 
-import io.sentry.android.core.BuildConfig;
-
 public class SettingsActivity extends AppCompatActivity {
 
     public SentryManager sentryManager;
