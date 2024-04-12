@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebSettings;
@@ -41,7 +41,8 @@ public class PingActivity extends AppCompatActivity {
                 SentryInitializer.initialize(this);
             }
             setupToolbarForActivity();
-            setupLanguageForActivity();
+            String appLocale = setupLanguageForActivity();
+            sentryManager.captureMessage("Using locale: " + appLocale);
             setupDarkModeForActivity(sharedPreferences);
             setupVisualIndicatorForActivity(sentryManager, this);
             setupWebViewForActivity(getString(R.string.ping_url));
@@ -61,16 +62,14 @@ public class PingActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
-    /** @noinspection deprecation*/
-    private void setupLanguageForActivity() {
-        Resources resources = getResources();
-        Configuration configuration = resources.getConfiguration();
-        Locale appLocale = configuration.getLocales().get(0);
-        if (appLocale != null) {
-            Locale.setDefault(appLocale);
-            configuration.setLocale(appLocale);
-            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-        }
+    private String setupLanguageForActivity() {
+        Configuration config = getResources().getConfiguration();
+        Locale appLocale = config.getLocales().get(0);
+        Locale.setDefault(appLocale);
+        Configuration newConfig = new Configuration(config);
+        newConfig.setLocale(appLocale);
+        new ContextThemeWrapper(getBaseContext(), R.style.AppTheme).applyOverrideConfiguration(newConfig);
+        return appLocale.getLanguage();
     }
 
     private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {

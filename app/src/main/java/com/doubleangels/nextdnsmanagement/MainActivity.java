@@ -14,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebResourceRequest;
@@ -99,8 +100,9 @@ public class MainActivity extends AppCompatActivity {
         Configuration config = getResources().getConfiguration();
         Locale appLocale = config.getLocales().get(0);
         Locale.setDefault(appLocale);
-        config.setLocale(appLocale);
-        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+        Configuration newConfig = new Configuration(config);
+        newConfig.setLocale(appLocale);
+        new ContextThemeWrapper(getBaseContext(), R.style.AppTheme).applyOverrideConfiguration(newConfig);
         return appLocale.getLanguage();
     }
 
