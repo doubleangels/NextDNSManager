@@ -10,7 +10,7 @@ android {
         minSdkVersion 28
         targetSdk 34
         versionCode 230
-        versionName '5.1'
+        versionName '5.2.0'
         resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "in", "it", "ja", "pl", "pt", "es", "sv", "tr"]
     }
 
@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.jakewharton:process-phoenix:3.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'io.sentry:sentry-android:7.7.0'
+    implementation 'io.sentry:sentry-android:7.8.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.13'
 }
 

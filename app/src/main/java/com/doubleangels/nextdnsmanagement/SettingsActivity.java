@@ -6,9 +6,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -32,45 +32,82 @@ import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    // SentryManager instance for error tracking
     public SentryManager sentryManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        // Initialize SentryManager for error tracking
         sentryManager = new SentryManager(this);
+        // Get SharedPreferences for storing app preferences
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+
         try {
-            if (sentryManager.isSentryEnabled()) {
+            // Check if Sentry is enabled and initialize it
+            if (sentryManager.isEnabled()) {
                 SentryInitializer.initialize(this);
             }
-            setupToolbar();
-            setupLanguage();
-            setupDarkMode(sharedPreferences);
+            // Setup toolbar
+            setupToolbarForActivity();
+            // Setup language/locale
+            String appLocale = setupLanguageForActivity();
+            sentryManager.captureMessage("Using locale: " + appLocale);
+            // Setup dark mode
+            setupDarkModeForActivity(sharedPreferences);
+            // Initialize views (PreferenceFragment)
             initializeViews();
-            setupVisualIndicator(sentryManager, this);
+            // Setup visual indicator
+            setupVisualIndicatorForActivity(sentryManager, this);
         } catch (Exception e) {
+            // Catch and log exceptions
             sentryManager.captureException(e);
         }
     }
 
-    private void setupToolbar() {
+    // Setup toolbar for the activity
+    private void setupToolbarForActivity() {
         setSupportActionBar(findViewById(R.id.toolbar));
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
-    /** @noinspection deprecation*/
-    private void setupLanguage() {
-        Resources resources = getResources();
-        Configuration configuration = resources.getConfiguration();
-        Locale appLocale = configuration.getLocales().get(0);
-        if (appLocale != null) {
-            Locale.setDefault(appLocale);
-            configuration.setLocale(appLocale);
-            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+    // Setup language/locale for the activity
+    private String setupLanguageForActivity() {
+        Configuration config = getResources().getConfiguration();
+        Locale appLocale = config.getLocales().get(0);
+        Locale.setDefault(appLocale);
+        Configuration newConfig = new Configuration(config);
+        newConfig.setLocale(appLocale);
+        new ContextThemeWrapper(getBaseContext(), R.style.AppTheme).applyOverrideConfiguration(newConfig);
+        return appLocale.getLanguage();
+    }
+
+    // Setup dark mode for the activity based on user preferences
+    private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {
+        String darkMode = sharedPreferences.getString("dark_mode", "match");
+        if (darkMode.contains("match")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        } else if (darkMode.contains("on")) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 
+    // Setup visual indicator for the activity
+    private void setupVisualIndicatorForActivity(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
+        try {
+            VisualIndicator visualIndicator = new VisualIndicator(this);
+            visualIndicator.initialize(this, lifecycleOwner, this);
+        } catch (Exception e) {
+            // Catch and log exceptions
+            sentryManager.captureException(e);
+        }
+    }
+
+    // Initialize views (PreferenceFragment)
     private void initializeViews() {
         getSupportFragmentManager()
                 .beginTransaction()
@@ -78,38 +115,24 @@ public class SettingsActivity extends AppCompatActivity {
                 .commitNow();
     }
 
-    private void setupDarkMode(SharedPreferences sharedPreferences) {
-        String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
-        if (darkModeOverride.contains("match")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else if (darkModeOverride.contains("on")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-    }
-
-    private void setupVisualIndicator(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
-        try {
-            VisualIndicator visualIndicator = new VisualIndicator(this);
-            visualIndicator.initiateVisualIndicator(this, lifecycleOwner, this);
-        } catch (Exception e) {
-            sentryManager.captureException(e);
-        }
-    }
-
+    // Inner class representing the preference fragment
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+            // Load preferences from XML resource
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+            // Get SharedPreferences
             SharedPreferences sharedPreferences = requireContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+            // Set initial visibility for certain preferences based on user settings
             setInitialSentryVisibility(sharedPreferences);
-            ListPreference darkModePreference = findPreference("darkmode_override");
+            // Find preferences and set up listeners
+            ListPreference darkModePreference = findPreference("dark_mode");
             SwitchPreference sentryEnablePreference = findPreference("sentry_enable");
             assert darkModePreference != null;
             setupDarkModeChangeListener(darkModePreference, sharedPreferences);
             setupSentryChangeListener(sentryEnablePreference, sharedPreferences);
+            // Set up click listeners for various buttons
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
             setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
             setupButton("sentry_info_button", R.string.sentry_info_url);
@@ -123,6 +146,7 @@ public class SettingsActivity extends AppCompatActivity {
             setupButton("nextdns_user_agreement_button", R.string.nextdns_user_agreement_url);
             setupButtonForIntent("permission_button");
             setupButton("version_button", R.string.versions_url);
+            // Set version name as summary for version button
             String versionName = BuildConfig.VERSION_NAME;
             Preference versionPreference = findPreference("version_button");
             if (versionPreference != null) {
@@ -130,6 +154,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
 
+        // Set initial visibility for Sentry-related preferences
         private void setInitialSentryVisibility(SharedPreferences sharedPreferences) {
             boolean visibility = sharedPreferences.getBoolean("sentry_enable", false);
             setPreferenceVisibility("whitelist_domains", visibility);
@@ -137,17 +162,20 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferenceVisibility("whitelist_domain_2_button", visibility);
         }
 
+        // Set up click listener for a button preference
         private void setupButton(String buttonKey, int textResource) {
             Preference button = findPreference(buttonKey);
             assert button != null;
             button.setOnPreferenceClickListener(preference -> {
                 if ("whitelist_domain_1_button".equals(buttonKey) || "whitelist_domain_2_button".equals(buttonKey)) {
+                    // Copy text to clipboard for whitelist buttons
                     ClipboardManager clipboardManager = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
                     CharSequence copiedText = getString(textResource);
                     ClipData copiedData = ClipData.newPlainText("text", copiedText);
                     clipboardManager.setPrimaryClip(copiedData);
                     Toast.makeText(getContext(), "Text copied!", Toast.LENGTH_SHORT).show();
                 } else {
+                    // Open URL in browser for other buttons
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(textResource)));
                     startActivity(intent);
                 }
@@ -155,6 +183,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
+        // Set up click listener for a button preference that starts an intent
         private void setupButtonForIntent(String buttonKey) {
             Preference button = findPreference(buttonKey);
             assert button != null;
@@ -171,18 +200,23 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
+        // Set up listener for dark mode preference changes
         private void setupDarkModeChangeListener(ListPreference setting, SharedPreferences sharedPreferences) {
             setting.setOnPreferenceChangeListener((preference, newValue) -> {
-                sharedPreferences.edit().putString("darkmode_override", newValue.toString()).apply();
+                // Store new value in SharedPreferences
+                sharedPreferences.edit().putString("dark_mode", newValue.toString()).apply();
+                // Restart activity to apply changes
                 ProcessPhoenix.triggerRebirth(requireContext());
                 return true;
             });
         }
 
+        // Set up listener for Sentry enable/disable preference changes
         private void setupSentryChangeListener(SwitchPreference switchPreference, SharedPreferences sharedPreferences) {
             if (switchPreference != null) {
                 switchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
                     boolean isEnabled = (boolean) newValue;
+                    // Store new value in SharedPreferences and adjust visibility of related preferences
                     SharedPreferences.Editor preferenceEdit = sharedPreferences.edit();
                     preferenceEdit.putBoolean("sentry_enable", isEnabled);
                     setPreferenceVisibility("whitelist_domains", isEnabled);
@@ -194,6 +228,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
 
+        // Set visibility of a preference
         private void setPreferenceVisibility(String key, Boolean visibility) {
             Preference preference = findPreference(key);
             if (preference != null) {
@@ -201,15 +236,19 @@ public class SettingsActivity extends AppCompatActivity {
             }
         }
     }
+
+    // Inflate menu for the activity
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
 
+    // Handle menu item selection
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
+            // Navigate back to MainActivity
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }
