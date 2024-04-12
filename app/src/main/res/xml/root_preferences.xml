@@ -3,7 +3,7 @@
         app:key="darkmode"
         app:title="@string/dark_mode">
         <ListPreference
-            app:key="darkmode_override"
+            app:key="dark_mode"
             app:title="@string/dark_mode_instructions"
             app:useSimpleSummaryProvider="true"
             app:entries="@array/dark_mode_entries"
