@@ -48,7 +48,7 @@ public class VisualIndicator {
         this.httpClient = new OkHttpClient();
     }
 
-    public void initiateVisualIndicator(Context context, LifecycleOwner lifecycleOwner, AppCompatActivity activity) {
+    public void initialize(Context context, LifecycleOwner lifecycleOwner, AppCompatActivity activity) {
         connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkRequest networkRequest = new NetworkRequest.Builder().build();
         Network network = connectivityManager.getActiveNetwork();
@@ -56,12 +56,12 @@ public class VisualIndicator {
             return;
         }
         LinkProperties linkProperties = connectivityManager.getLinkProperties(network);
-        updateVisualIndicator(linkProperties, activity, context);
+        update(linkProperties, activity, context);
         networkCallback = new ConnectivityManager.NetworkCallback() {
             @Override
             public void onLinkPropertiesChanged(@NonNull Network network, @NonNull LinkProperties linkProperties) {
                 super.onLinkPropertiesChanged(network, linkProperties);
-                updateVisualIndicator(linkProperties, activity, context);
+                update(linkProperties, activity, context);
             }
         };
         connectivityManager.registerNetworkCallback(networkRequest, networkCallback);
@@ -73,7 +73,7 @@ public class VisualIndicator {
         });
     }
 
-    public void updateVisualIndicator(@Nullable LinkProperties linkProperties, AppCompatActivity activity, Context context) {
+    public void update(@Nullable LinkProperties linkProperties, AppCompatActivity activity, Context context) {
         try {
             if (linkProperties == null) {
                 setConnectionStatus(activity.findViewById(R.id.connectionStatus), R.drawable.failure, R.color.red, context);

@@ -42,13 +42,13 @@ public class PermissionActivity extends AppCompatActivity {
         sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
-            if (sentryManager.isSentryEnabled()) {
+            if (sentryManager.isEnabled()) {
                 SentryInitializer.initialize(this);
             }
-            setupToolbar();
-            setupLanguage();
-            setupDarkMode(sharedPreferences);
-            setupVisualIndicator(sentryManager, this);
+            setupToolbarForActivity();
+            setupLanguageForActivity();
+            setupDarkModeForActivity(sharedPreferences);
+            setupVisualIndicatorForActivity(sentryManager, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
@@ -62,7 +62,7 @@ public class PermissionActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    private void setupToolbar() {
+    private void setupToolbarForActivity() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -74,7 +74,7 @@ public class PermissionActivity extends AppCompatActivity {
     }
 
     /** @noinspection deprecation*/
-    private void setupLanguage() {
+    private void setupLanguageForActivity() {
         Resources resources = getResources();
         Configuration configuration = resources.getConfiguration();
         Locale appLocale = configuration.getLocales().get(0);
@@ -85,20 +85,20 @@ public class PermissionActivity extends AppCompatActivity {
         }
     }
 
-    private void setupDarkMode(SharedPreferences sharedPreferences) {
-        String darkModeOverride = sharedPreferences.getString("dark_mode", "match");
-        if (darkModeOverride.contains("match")) {
+    private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {
+        String darkMode = sharedPreferences.getString("dark_mode", "match");
+        if (darkMode.contains("match")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else if (darkModeOverride.contains("on")) {
+        } else if (darkMode.contains("on")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 
-    private void setupVisualIndicator(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
+    private void setupVisualIndicatorForActivity(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
         try {
-            new VisualIndicator(this).initiateVisualIndicator(this, lifecycleOwner, this);
+            new VisualIndicator(this).initialize(this, lifecycleOwner, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }

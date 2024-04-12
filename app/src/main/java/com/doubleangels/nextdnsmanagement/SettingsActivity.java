@@ -41,26 +41,26 @@ public class SettingsActivity extends AppCompatActivity {
         sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
-            if (sentryManager.isSentryEnabled()) {
+            if (sentryManager.isEnabled()) {
                 SentryInitializer.initialize(this);
             }
-            setupToolbar();
-            setupLanguage();
-            setupDarkMode(sharedPreferences);
+            setupToolbarForActivity();
+            setupLanguageForActivity();
+            setupDarkModeForActivity(sharedPreferences);
             initializeViews();
-            setupVisualIndicator(sentryManager, this);
+            setupVisualIndicatorForActivity(sentryManager, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
     }
 
-    private void setupToolbar() {
+    private void setupToolbarForActivity() {
         setSupportActionBar(findViewById(R.id.toolbar));
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
     /** @noinspection deprecation*/
-    private void setupLanguage() {
+    private void setupLanguageForActivity() {
         Resources resources = getResources();
         Configuration configuration = resources.getConfiguration();
         Locale appLocale = configuration.getLocales().get(0);
@@ -71,31 +71,31 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void initializeViews() {
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.settings, new SettingsFragment())
-                .commitNow();
-    }
-
-    private void setupDarkMode(SharedPreferences sharedPreferences) {
-        String darkModeOverride = sharedPreferences.getString("dark_mode", "match");
-        if (darkModeOverride.contains("match")) {
+    private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {
+        String darkMode = sharedPreferences.getString("dark_mode", "match");
+        if (darkMode.contains("match")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else if (darkModeOverride.contains("on")) {
+        } else if (darkMode.contains("on")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 
-    private void setupVisualIndicator(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
+    private void setupVisualIndicatorForActivity(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
         try {
             VisualIndicator visualIndicator = new VisualIndicator(this);
-            visualIndicator.initiateVisualIndicator(this, lifecycleOwner, this);
+            visualIndicator.initialize(this, lifecycleOwner, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
+    }
+
+    private void initializeViews() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.settings, new SettingsFragment())
+                .commitNow();
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {

@@ -37,14 +37,14 @@ public class PingActivity extends AppCompatActivity {
         sentryManager = new SentryManager(this);
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
         try {
-            if (sentryManager.isSentryEnabled()) {
+            if (sentryManager.isEnabled()) {
                 SentryInitializer.initialize(this);
             }
-            setupToolbar();
-            setupLanguage();
-            setupDarkMode(sharedPreferences);
-            setupVisualIndicator(sentryManager, this);
-            setupWebView(getString(R.string.ping_url));
+            setupToolbarForActivity();
+            setupLanguageForActivity();
+            setupDarkModeForActivity(sharedPreferences);
+            setupVisualIndicatorForActivity(sentryManager, this);
+            setupWebViewForActivity(getString(R.string.ping_url));
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
@@ -56,13 +56,13 @@ public class PingActivity extends AppCompatActivity {
         webView.destroy();
     }
 
-    private void setupToolbar() {
+    private void setupToolbarForActivity() {
         setSupportActionBar(findViewById(R.id.toolbar));
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
     /** @noinspection deprecation*/
-    private void setupLanguage() {
+    private void setupLanguageForActivity() {
         Resources resources = getResources();
         Configuration configuration = resources.getConfiguration();
         Locale appLocale = configuration.getLocales().get(0);
@@ -73,36 +73,36 @@ public class PingActivity extends AppCompatActivity {
         }
     }
 
-    private void setupDarkMode(SharedPreferences sharedPreferences) {
-        String darkModeOverride = sharedPreferences.getString("dark_mode", "match");
-        if (darkModeOverride.contains("match")) {
+    private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {
+        String darkMode = sharedPreferences.getString("dark_mode", "match");
+        if (darkMode.contains("match")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else if (darkModeOverride.contains("on")) {
+        } else if (darkMode.contains("on")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 
-    private void setupVisualIndicator(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
+    private void setupVisualIndicatorForActivity(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
         try {
-            new VisualIndicator(this).initiateVisualIndicator(this, lifecycleOwner, this);
+            new VisualIndicator(this).initialize(this, lifecycleOwner, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    public void setupWebView(String url) {
+    public void setupWebViewForActivity(String url) {
         webView = findViewById(R.id.webView);
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setDatabaseEnabled(true);
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webSettings.setAllowFileAccess(false);
-        webSettings.setAllowContentAccess(false);
-        webSettings.setAllowUniversalAccessFromFileURLs(false);
+        WebSettings webViewSettings = webView.getSettings();
+        webViewSettings.setJavaScriptEnabled(true);
+        webViewSettings.setDomStorageEnabled(true);
+        webViewSettings.setDatabaseEnabled(true);
+        webViewSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        webViewSettings.setAllowFileAccess(false);
+        webViewSettings.setAllowContentAccess(false);
+        webViewSettings.setAllowUniversalAccessFromFileURLs(false);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
     }

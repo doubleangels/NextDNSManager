@@ -19,7 +19,7 @@ public class SentryManager {
     }
 
     public void captureException(Exception e) {
-        if (isSentryEnabled()) {
+        if (isEnabled()) {
             Sentry.captureException(e);
             Log.e(TAG, "Got error:", e);
         } else {
@@ -28,7 +28,7 @@ public class SentryManager {
     }
 
     public void captureMessage(String message) {
-        if (isSentryEnabled()) {
+        if (isEnabled()) {
             Sentry.addBreadcrumb(message);
             Log.d(TAG, message);
         } else {
@@ -38,12 +38,12 @@ public class SentryManager {
     }
 
     public void setTag(String key, String value) {
-        if (isSentryEnabled()) {
+        if (isEnabled()) {
             Sentry.setTag(key, value);
         }
     }
 
-    public boolean isSentryEnabled() {
+    public boolean isEnabled() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getBoolean("sentry_enable", false);
     }

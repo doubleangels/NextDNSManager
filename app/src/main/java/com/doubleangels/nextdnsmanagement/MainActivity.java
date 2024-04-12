@@ -63,16 +63,16 @@ public class MainActivity extends AppCompatActivity {
             if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
             }
-            if (sentryManager.isSentryEnabled()) {
+            if (sentryManager.isEnabled()) {
                 sentryManager.captureMessage("Sentry is enabled for NextDNS Manager.");
                 SentryInitializer.initialize(this);
             }
-            setupToolbar();
-            String appLocale = setupLanguage();
+            setupToolbarForActivity();
+            String appLocale = setupLanguageForActivity();
             sentryManager.captureMessage("Using locale: " + appLocale);
-            setupDarkMode(sentryManager, sharedPreferences);
-            setupVisualIndicator(sentryManager, this);
-            setupWebView(getString(R.string.main_url));
+            setupDarkModeForActivity(sentryManager, sharedPreferences);
+            setupVisualIndicatorForActivity(sentryManager, this);
+            setupWebViewForActivity(getString(R.string.main_url));
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         webView.destroy();
     }
 
-    private void setupToolbar() {
+    private void setupToolbarForActivity() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         imageView.setOnClickListener(v -> startActivity(new Intent(this, StatusActivity.class)));
     }
 
-    private String setupLanguage() {
+    private String setupLanguageForActivity() {
         Configuration config = getResources().getConfiguration();
         Locale appLocale = config.getLocales().get(0);
         Locale.setDefault(appLocale);
@@ -104,47 +104,47 @@ public class MainActivity extends AppCompatActivity {
         return appLocale.getLanguage();
     }
 
-    private void setupDarkMode(SentryManager sentryManager, SharedPreferences sharedPreferences) {
-        String darkModeOverride = sharedPreferences.getString("dark_mode", "match");
-        if (darkModeOverride.contains("match")) {
+    private void setupDarkModeForActivity(SentryManager sentryManager, SharedPreferences sharedPreferences) {
+        String darkMode = sharedPreferences.getString("dark_mode", "match");
+        if (darkMode.contains("match")) {
             sentryManager.setTag("dark_mode", "match");
             sentryManager.captureMessage("Dark mode set to match system.");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-            darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
-        } else if (darkModeOverride.contains("on")) {
+            this.darkMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
+        } else if (darkMode.contains("on")) {
             sentryManager.setTag("dark_mode", "on");
             sentryManager.captureMessage("Dark mode set to on.");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            darkMode = true;
+            this.darkMode = true;
         } else {
             sentryManager.setTag("dark_mode", "off");
             sentryManager.captureMessage("Dark mode set to off.");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            darkMode = false;
+            this.darkMode = false;
         }
     }
 
-    private void setupVisualIndicator(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
+    private void setupVisualIndicatorForActivity(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
         try {
-            new VisualIndicator(this).initiateVisualIndicator(this, lifecycleOwner, this);
+            new VisualIndicator(this).initialize(this, lifecycleOwner, this);
         } catch (Exception e) {
             sentryManager.captureException(e);
         }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    public void setupWebView(String url) {
+    public void setupWebViewForActivity(String url) {
         webView = findViewById(R.id.webView);
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setDatabaseEnabled(true);
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webSettings.setAllowFileAccess(false);
-        webSettings.setAllowContentAccess(false);
-        webSettings.setAllowUniversalAccessFromFileURLs(false);
+        WebSettings webViewSettings = webView.getSettings();
+        webViewSettings.setJavaScriptEnabled(true);
+        webViewSettings.setDomStorageEnabled(true);
+        webViewSettings.setDatabaseEnabled(true);
+        webViewSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        webViewSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        webViewSettings.setAllowFileAccess(false);
+        webViewSettings.setAllowContentAccess(false);
+        webViewSettings.setAllowUniversalAccessFromFileURLs(false);
         if (darkMode) {
             webView.setWebViewClient(new WebViewClient() {
                 @Override
@@ -164,11 +164,11 @@ public class MainActivity extends AppCompatActivity {
         } else {
             webView.setWebViewClient(new WebViewClient());
         }
-        setupDownloadManager();
+        setupDownloadManagerForActivity();
         webView.loadUrl(url);
     }
 
-    private void setupDownloadManager() {
+    private void setupDownloadManagerForActivity() {
         webView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url.trim()));
             request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
