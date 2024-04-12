@@ -170,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
         webViewSettings.setDomStorageEnabled(true);
         webViewSettings.setDatabaseEnabled(true);
         webViewSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webViewSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         webViewSettings.setAllowFileAccess(false);
         webViewSettings.setAllowContentAccess(false);
         webViewSettings.setAllowUniversalAccessFromFileURLs(false);
@@ -214,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Convert input stream to string
+    /** @noinspection CharsetObjectCanBeUsed*/ // Convert input stream to string
     private String convertStreamToString(InputStream is) throws IOException {
         ByteArrayOutputStream result = new ByteArrayOutputStream();
         byte[] buffer = new byte[1024];

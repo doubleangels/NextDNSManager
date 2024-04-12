@@ -11,10 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.OnLifecycleEvent;
 
 import com.doubleangels.nextdnsmanagement.R;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
@@ -80,12 +78,15 @@ public class VisualIndicator {
         // Register network callback
         connectivityManager.registerNetworkCallback(networkRequest, networkCallback);
         // Add observer to lifecycle to unregister network callback on destroy
-        lifecycleOwner.getLifecycle().addObserver(new LifecycleObserver() {
-            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-            void onDestroy() {
-                connectivityManager.unregisterNetworkCallback(networkCallback);
-            }
-        });
+        lifecycleOwner.getLifecycle().addObserver(new NetworkConnectivityObserver());
+    }
+
+    // Custom LifecycleObserver class to unregister network callback on destroy
+    private class NetworkConnectivityObserver implements DefaultLifecycleObserver {
+        @Override
+        public void onDestroy(@NonNull LifecycleOwner owner) {
+            connectivityManager.unregisterNetworkCallback(networkCallback);
+        }
     }
 
     // Method to update visual indicator based on link properties
