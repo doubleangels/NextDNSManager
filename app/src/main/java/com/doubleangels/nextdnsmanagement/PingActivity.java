@@ -27,41 +27,57 @@ import java.util.Objects;
 
 public class PingActivity extends AppCompatActivity {
 
+    // SentryManager instance for error tracking
     public SentryManager sentryManager;
+    // WebView instance for displaying web content
     public WebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping);
+
+        // Initialize SentryManager for error tracking
         sentryManager = new SentryManager(this);
+        // Get SharedPreferences for storing app preferences
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+
         try {
+            // Check if Sentry is enabled and initialize it
             if (sentryManager.isEnabled()) {
                 SentryInitializer.initialize(this);
             }
+            // Setup toolbar
             setupToolbarForActivity();
+            // Setup language/locale
             String appLocale = setupLanguageForActivity();
             sentryManager.captureMessage("Using locale: " + appLocale);
+            // Setup dark mode
             setupDarkModeForActivity(sharedPreferences);
+            // Setup visual indicator
             setupVisualIndicatorForActivity(sentryManager, this);
+            // Setup WebView
             setupWebViewForActivity(getString(R.string.ping_url));
         } catch (Exception e) {
+            // Catch and log exceptions
             sentryManager.captureException(e);
         }
     }
 
+    // Clean up WebView resources onDestroy
     protected void onDestroy() {
         super.onDestroy();
         webView.removeAllViews();
         webView.destroy();
     }
 
+    // Setup toolbar for the activity
     private void setupToolbarForActivity() {
         setSupportActionBar(findViewById(R.id.toolbar));
         Objects.requireNonNull(getSupportActionBar()).setDisplayShowTitleEnabled(false);
     }
 
+    // Setup language/locale for the activity
     private String setupLanguageForActivity() {
         Configuration config = getResources().getConfiguration();
         Locale appLocale = config.getLocales().get(0);
@@ -72,6 +88,7 @@ public class PingActivity extends AppCompatActivity {
         return appLocale.getLanguage();
     }
 
+    // Setup dark mode for the activity based on user preferences
     private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {
         String darkMode = sharedPreferences.getString("dark_mode", "match");
         if (darkMode.contains("match")) {
@@ -83,14 +100,17 @@ public class PingActivity extends AppCompatActivity {
         }
     }
 
+    // Setup visual indicator for the activity
     private void setupVisualIndicatorForActivity(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
         try {
             new VisualIndicator(this).initialize(this, lifecycleOwner, this);
         } catch (Exception e) {
+            // Catch and log exceptions
             sentryManager.captureException(e);
         }
     }
 
+    // Setup WebView for displaying web content
     @SuppressLint("SetJavaScriptEnabled")
     public void setupWebViewForActivity(String url) {
         webView = findViewById(R.id.webView);
@@ -106,15 +126,18 @@ public class PingActivity extends AppCompatActivity {
         webView.loadUrl(url);
     }
 
+    // Inflate menu for the activity
     @Override
     public boolean onCreateOptionsMenu(@NonNull Menu menu) {
         getMenuInflater().inflate(R.menu.menu_back_only, menu);
         return true;
     }
 
+    // Handle menu item selection
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.back) {
+            // Navigate back to MainActivity
             Intent mainIntent = new Intent(this, MainActivity.class);
             startActivity(mainIntent);
         }
