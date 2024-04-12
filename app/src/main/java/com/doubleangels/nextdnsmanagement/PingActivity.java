@@ -74,7 +74,7 @@ public class PingActivity extends AppCompatActivity {
     }
 
     private void setupDarkMode(SharedPreferences sharedPreferences) {
-        String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
+        String darkModeOverride = sharedPreferences.getString("dark_mode", "match");
         if (darkModeOverride.contains("match")) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         } else if (darkModeOverride.contains("on")) {
