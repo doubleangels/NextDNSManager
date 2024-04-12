@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupDarkMode(SentryManager sentryManager, SharedPreferences sharedPreferences) {
-        String darkModeOverride = sharedPreferences.getString("darkmode_override", "match");
+        String darkModeOverride = sharedPreferences.getString("dark_mode", "match");
         if (darkModeOverride.contains("match")) {
             sentryManager.setTag("dark_mode", "match");
             sentryManager.captureMessage("Dark mode set to match system.");
