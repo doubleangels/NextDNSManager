@@ -14,7 +14,6 @@ import com.doubleangels.nextdnsmanagement.R;
 
 import java.util.List;
 
-/** @noinspection ALL*/
 public class PermissionsAdapter extends RecyclerView.Adapter<PermissionsAdapter.PermissionViewHolder> {
 
     private final List<PermissionInfo> permissions;
@@ -49,7 +48,7 @@ public class PermissionsAdapter extends RecyclerView.Adapter<PermissionsAdapter.
         return permissions.size();
     }
 
-    static class PermissionViewHolder extends RecyclerView.ViewHolder {
+    public static class PermissionViewHolder extends RecyclerView.ViewHolder {
         TextView permissionName;
         TextView permissionDescription;
 
