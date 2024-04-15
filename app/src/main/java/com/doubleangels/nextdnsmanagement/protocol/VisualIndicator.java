@@ -1,4 +1,4 @@
-package com.doubleangels.nextdnsmanagement.protocoltest;
+package com.doubleangels.nextdnsmanagement.protocol;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
