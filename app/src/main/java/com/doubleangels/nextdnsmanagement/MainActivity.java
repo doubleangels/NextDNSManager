@@ -17,6 +17,7 @@ import android.provider.Settings;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.CookieManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -191,9 +192,23 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return super.shouldInterceptRequest(view, request);
                 }
+
+                @Override
+                public void onPageFinished(WebView webView, String url) {
+                    CookieManager.getInstance().setAcceptCookie(true);
+                    CookieManager.getInstance().acceptCookie();
+                    CookieManager.getInstance().flush();
+                }
             });
         } else {
-            webView.setWebViewClient(new WebViewClient());
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView webView, String url) {
+                    CookieManager.getInstance().setAcceptCookie(true);
+                    CookieManager.getInstance().acceptCookie();
+                    CookieManager.getInstance().flush();
+                }
+            });
         }
         // Setup DownloadManager for handling file downloads
         setupDownloadManagerForActivity();
