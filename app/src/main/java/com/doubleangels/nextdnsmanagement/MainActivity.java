@@ -193,6 +193,7 @@ public class MainActivity extends AppCompatActivity {
                     return super.shouldInterceptRequest(view, request);
                 }
 
+                // Allow cookies so that user can stay logged in
                 @Override
                 public void onPageFinished(WebView webView, String url) {
                     CookieManager.getInstance().setAcceptCookie(true);
@@ -201,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         } else {
+            // Allow cookies so that user can stay logged in
             webView.setWebViewClient(new WebViewClient() {
                 @Override
                 public void onPageFinished(WebView webView, String url) {
