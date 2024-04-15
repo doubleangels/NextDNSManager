@@ -17,6 +17,7 @@ import android.provider.Settings;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.CookieManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -35,7 +36,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+import com.doubleangels.nextdnsmanagement.protocol.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 
@@ -191,9 +192,25 @@ public class MainActivity extends AppCompatActivity {
                     }
                     return super.shouldInterceptRequest(view, request);
                 }
+
+                // Allow cookies so that user can stay logged in
+                @Override
+                public void onPageFinished(WebView webView, String url) {
+                    CookieManager.getInstance().setAcceptCookie(true);
+                    CookieManager.getInstance().acceptCookie();
+                    CookieManager.getInstance().flush();
+                }
             });
         } else {
-            webView.setWebViewClient(new WebViewClient());
+            // Allow cookies so that user can stay logged in
+            webView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onPageFinished(WebView webView, String url) {
+                    CookieManager.getInstance().setAcceptCookie(true);
+                    CookieManager.getInstance().acceptCookie();
+                    CookieManager.getInstance().flush();
+                }
+            });
         }
         // Setup DownloadManager for handling file downloads
         setupDownloadManagerForActivity();

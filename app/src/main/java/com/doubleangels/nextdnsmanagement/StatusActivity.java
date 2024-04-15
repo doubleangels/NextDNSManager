@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LifecycleOwner;
 
-import com.doubleangels.nextdnsmanagement.protocoltest.VisualIndicator;
+import com.doubleangels.nextdnsmanagement.protocol.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 
