@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Get light mode Crowdin translations
-        uses: crowdin/github-action@v1
+        uses: crowdin/github-action@v2
         with:
           upload_sources: true
           upload_translations: false
@@ -30,7 +30,7 @@ jobs:
           CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
 
       - name: Get dark mode Crowdin translations
-        uses: crowdin/github-action@v1
+        uses: crowdin/github-action@v2
         with:
           upload_sources: true
           upload_translations: false
