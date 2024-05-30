@@ -18,7 +18,7 @@
   <string name="github_issues">Relatar um problema</string>
   <string name="github_issues_summary">Toque para relatar um problema ou ver relatados atualmente.</string>
   <string name="help_green">O DNS seguro está sendo usado E o dispositivo está conectado ao NextDNS.</string>
-  <string name="help_orange">O DNS seguro NÃO está sendo usado E o dispositivo está conectado ao NextDNS.</string>
+  <string name="help_orange">O DNS seguro NÃO está a ser usado E o aparelho está ligado ao NextDNS.</string>
   <string name="help_red">O DNS seguro NÃO está sendo usado.</string>
   <string name="help_yellow">O DNS seguro está sendo usado, mas o dispositivo NÃO está conectado ao NextDNS.</string>
   <string name="home_title">Início</string>
