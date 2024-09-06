@@ -4,7 +4,7 @@ api_token_env: CROWDIN_PERSONAL_TOKEN
 "files":
   [
     {
-      "source": "/app/src/main/res/values-night/strings.xml",
+      "source": "/app/src/main/res/values/strings.xml",
       "translation": "/app/src/main/res/values-%two_letters_code%-night/%original_file_name%",
     },
   ]
