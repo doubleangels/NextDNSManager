@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources>
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Auteur</string>
   <string name="back_title">Retour</string>
   <string name="crowdin">Crowdin</string>
-  <string name="dark_mode">Mode sombre</string>
-  <string name="dark_mode_instructions">Réglages du mode sombre</string>
+  <string name="dark_mode">Mode Sombre</string>
+  <string name="dark_mode_instructions">Réglage du Mode Sombre</string>
   <string name="developer">Développeur</string>
   <string name="disclaimer">Cette application et son développeur ne sont PAS affiliés à NextDNS.</string>
   <string name="disclaimer_title">Avertissement</string>

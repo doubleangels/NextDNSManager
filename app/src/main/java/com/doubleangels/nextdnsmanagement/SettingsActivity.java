@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
@@ -19,6 +20,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
+import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.SwitchPreference;
 
@@ -86,13 +88,15 @@ public class SettingsActivity extends AppCompatActivity {
 
     // Setup dark mode for the activity based on user preferences
     private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {
-        String darkMode = sharedPreferences.getString("dark_mode", "match");
-        if (darkMode.contains("match")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else if (darkMode.contains("on")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+            String darkMode = sharedPreferences.getString("dark_mode", "match");
+            if (darkMode.contains("match")) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            } else if (darkMode.contains("on")) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
         }
     }
 
@@ -126,12 +130,21 @@ public class SettingsActivity extends AppCompatActivity {
             SharedPreferences sharedPreferences = requireContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
             // Set initial visibility for certain preferences based on user settings
             setInitialSentryVisibility(sharedPreferences);
-            // Find preferences and set up listeners
-            ListPreference darkModePreference = findPreference("dark_mode");
-            SwitchPreference sentryEnablePreference = findPreference("sentry_enable");
-            assert darkModePreference != null;
-            setupDarkModeChangeListener(darkModePreference, sharedPreferences);
-            setupSentryChangeListener(sentryEnablePreference, sharedPreferences);
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                // Find the PreferenceCategory by its key
+                PreferenceCategory darkModePreferenceCategory = findPreference("darkmode");
+                if (darkModePreferenceCategory != null) {
+                    // Hide the PreferenceCategory if SDK is below 33
+                    darkModePreferenceCategory.setVisible(false);
+                }
+            } else {
+                // Find preferences and set up listeners
+                ListPreference darkModePreference = findPreference("dark_mode");
+                SwitchPreference sentryEnablePreference = findPreference("sentry_enable");
+                assert darkModePreference != null;
+                setupDarkModeChangeListener(darkModePreference, sharedPreferences);
+                setupSentryChangeListener(sentryEnablePreference, sharedPreferences);
+            }
             // Set up click listeners for various buttons
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
             setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
@@ -203,10 +216,12 @@ public class SettingsActivity extends AppCompatActivity {
         // Set up listener for dark mode preference changes
         private void setupDarkModeChangeListener(ListPreference setting, SharedPreferences sharedPreferences) {
             setting.setOnPreferenceChangeListener((preference, newValue) -> {
-                // Store new value in SharedPreferences
-                sharedPreferences.edit().putString("dark_mode", newValue.toString()).apply();
-                // Restart activity to apply changes
-                ProcessPhoenix.triggerRebirth(requireContext());
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                    // Store new value in SharedPreferences
+                    sharedPreferences.edit().putString("dark_mode", newValue.toString()).apply();
+                    // Restart activity to apply changes
+                    ProcessPhoenix.triggerRebirth(requireContext());
+                }
                 return true;
             });
         }
