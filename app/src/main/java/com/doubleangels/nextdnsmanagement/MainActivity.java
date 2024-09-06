@@ -18,8 +18,6 @@ import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.CookieManager;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -35,21 +33,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.webkit.WebSettingsCompat;
+import androidx.webkit.WebViewFeature;
 
 import com.doubleangels.nextdnsmanagement.protocol.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    // SentryManager instance for error tracking
-    private SentryManager sentryManager;
     // WebView for displaying web content
     private WebView webView;
     // Boolean flag for dark mode status
@@ -63,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Initialize SentryManager for error tracking
-        sentryManager = new SentryManager(this);
+        // SentryManager instance for error tracking
+        SentryManager sentryManager = new SentryManager(this);
         // Get SharedPreferences for storing app preferences
         SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
 
@@ -175,32 +170,9 @@ public class MainActivity extends AppCompatActivity {
         webViewSettings.setAllowContentAccess(false);
         webViewSettings.setAllowUniversalAccessFromFileURLs(false);
         if (darkMode) {
-            // Apply custom WebViewClient for dark mode
-            webView.setWebViewClient(new WebViewClient() {
-                @Override
-                public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
-                    if (request.getUrl().toString().endsWith(".css")) {
-                        try {
-                            // Load custom CSS for dark mode from assets
-                            InputStream inputStream = getAssets().open("minimized-full.css");
-                            String cssContent = convertStreamToString(inputStream);
-                            return new WebResourceResponse("text/css", "UTF-8", new ByteArrayInputStream(cssContent.getBytes()));
-                        } catch (IOException e) {
-                            // Log error if CSS loading fails
-                            sentryManager.captureMessage("Error loading CSS from assets:" + e);
-                        }
-                    }
-                    return super.shouldInterceptRequest(view, request);
-                }
-
-                // Allow cookies so that user can stay logged in
-                @Override
-                public void onPageFinished(WebView webView, String url) {
-                    CookieManager.getInstance().setAcceptCookie(true);
-                    CookieManager.getInstance().acceptCookie();
-                    CookieManager.getInstance().flush();
-                }
-            });
+            if(WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+                WebSettingsCompat.setAlgorithmicDarkeningAllowed(webView.getSettings(), true);
+            }
         } else {
             // Allow cookies so that user can stay logged in
             webView.setWebViewClient(new WebViewClient() {
@@ -228,17 +200,6 @@ public class MainActivity extends AppCompatActivity {
             downloadManager.enqueue(request);
             Toast.makeText(getApplicationContext(), "Downloading file!", Toast.LENGTH_LONG).show();
         });
-    }
-
-    /** @noinspection CharsetObjectCanBeUsed*/ // Convert input stream to string
-    private String convertStreamToString(InputStream is) throws IOException {
-        ByteArrayOutputStream result = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = is.read(buffer)) != -1) {
-            result.write(buffer, 0, length);
-        }
-        return result.toString("UTF-8");
     }
 
     // Start new activity using intent

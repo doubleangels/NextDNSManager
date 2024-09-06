@@ -7,7 +7,7 @@ android {
     compileSdk 34
     defaultConfig {
         applicationId "com.doubleangels.nextdnsmanagement"
-        minSdkVersion 28
+        minSdkVersion 29
         targetSdk 34
         versionCode 232
         versionName '5.2.1'
@@ -53,6 +53,7 @@ android {
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.preference:preference:1.2.1'
+    implementation 'androidx.webkit:webkit:1.11.0'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'com.jakewharton:process-phoenix:3.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
