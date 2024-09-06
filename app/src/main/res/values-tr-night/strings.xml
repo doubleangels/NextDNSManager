@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+<resources>
   <string name="app_name">NextDNS Manager</string>
   <string name="author">Yazar</string>
   <string name="back_title">Geri</string>
@@ -7,7 +7,7 @@
   <string name="dark_mode">Karanlık Mod</string>
   <string name="dark_mode_instructions">Karanlık Mod Ayarı</string>
   <string name="developer">Geliştirici</string>
-  <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
+  <string name="disclaimer">Bu uygulama ve geliştiricisi NextDNS ile BAĞLANTISI YOKTUR.</string>
   <string name="disclaimer_title">Yasal Uyarı</string>
   <string name="donation">Bağış</string>
   <string name="donation_name">Bu uygulamadan keyif alıyorsanız ve bağış yapmak istiyorsanız, bunu buradan yapabilirsiniz. Lütfen unutmayın, bu tamamen isteğe bağlıdır. Desteğiniz için teşekkürler!</string>
@@ -25,10 +25,10 @@
   <string name="nextdns_privacy_policy">NextDNS Gizlilik Politikası</string>
   <string name="nextdns_user_agreement">NextDNS Kullanıcı Sözleşmesi</string>
   <string name="other">Diğer</string>
-  <string name="permission">Tap to see this app\'s permissions.</string>
-  <string name="permission_details">This app uses the following permissions:</string>
-  <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
-  <string name="permission_title">Permissions</string>
+  <string name="permission">Dokunarak bu uygulamanın izinlerini görüntüleyin.</string>
+  <string name="permission_details">Bu uygulama aşağıdaki izinleri kullanıyor:</string>
+  <string name="permission_question">Eğer bu izinlerle ilgili bir sorunuz varsa, lütfen GitHub üzerinde bir sorun açın.</string>
+  <string name="permission_title">İzinler</string>
   <string name="ping_disabled">Bu eylem şu anda kullanılamıyor.</string>
   <string name="ping_long">NextDNS sunucularına ping sürelerini hızla kontrol edin.</string>
   <string name="ping_short">Ping</string>
