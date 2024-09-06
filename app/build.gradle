@@ -1,6 +1,6 @@
 plugins {
     id "com.android.application"
-    id "io.sentry.android.gradle" version "4.8.0"
+    id "io.sentry.android.gradle" version "4.11.0"
 }
 
 android {
@@ -57,7 +57,7 @@ dependencies {
     implementation 'com.jakewharton:process-phoenix:3.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'io.sentry:sentry-android:7.10.0'
+    implementation 'io.sentry:sentry-android:7.14.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 }
 
