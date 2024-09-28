@@ -4,9 +4,9 @@
     <color name="orange">#fd7e14</color>
     <color name="yellow">#ffc107</color>
     <color name="green">#28a745</color>
-    <color name="darkgray">#161616</color>
+    <color name="darkgray">#212529</color>
     <color name="white">#fff</color>
     <color name="black">#000</color>
     <color name="main">#007bff</color>
-    <color name="main_dark">#161616</color>
+    <color name="main_dark">#212529</color>
 </resources>
