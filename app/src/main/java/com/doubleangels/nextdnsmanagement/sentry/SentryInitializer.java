@@ -31,6 +31,12 @@ public class SentryInitializer {
                 options.setCollectAdditionalContext(true);
                 // Enable tracking of frames for performance monitoring
                 options.setEnableFramesTracking(true);
+                // Enable mobile replays
+                options.getExperimental().getSessionReplay().setErrorSampleRate(1.0);
+                options.getExperimental().getSessionReplay().setSessionSampleRate(1.0);
+                options.getExperimental().getSessionReplay().setRedactAllText(true);
+                options.getExperimental().getSessionReplay().setRedactAllImages(true);
+
             });
         }).start(); // Start the thread
     }

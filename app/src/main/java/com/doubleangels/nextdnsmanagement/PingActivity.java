@@ -32,6 +32,7 @@ public class PingActivity extends AppCompatActivity {
     public SentryManager sentryManager;
     // WebView instance for displaying web content
     public WebView webView;
+    public WebView webView2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class PingActivity extends AppCompatActivity {
             // Setup visual indicator
             setupVisualIndicatorForActivity(sentryManager, this);
             // Setup WebView
-            setupWebViewForActivity(getString(R.string.ping_url));
+            setupWebViewForActivity(getString(R.string.ping_url), getString(R.string.test_url));
         } catch (Exception e) {
             // Catch and log exceptions
             sentryManager.captureException(e);
@@ -115,19 +116,29 @@ public class PingActivity extends AppCompatActivity {
 
     // Setup WebView for displaying web content
     @SuppressLint("SetJavaScriptEnabled")
-    public void setupWebViewForActivity(String url) {
+    public void setupWebViewForActivity(String url1, String url2) {
         webView = findViewById(R.id.webView);
-        WebSettings webViewSettings = webView.getSettings();
-        webViewSettings.setJavaScriptEnabled(true);
-        webViewSettings.setDomStorageEnabled(true);
-        webViewSettings.setDatabaseEnabled(true);
-        webViewSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        webViewSettings.setAllowFileAccess(false);
-        webViewSettings.setAllowContentAccess(false);
-        webViewSettings.setAllowUniversalAccessFromFileURLs(false);
-        webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl(url);
+        webView2 = findViewById(R.id.webView2);
+
+        setupWebView(webView);
+        setupWebView(webView2);
+
+        webView.loadUrl(url1);
+        webView2.loadUrl(url2);
     }
+
+    private void setupWebView(WebView webView) {
+        WebSettings settings = webView.getSettings();
+        settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
+        settings.setDatabaseEnabled(true);
+        settings.setCacheMode(WebSettings.LOAD_DEFAULT);
+        settings.setAllowFileAccess(false);
+        settings.setAllowContentAccess(false);
+        settings.setAllowUniversalAccessFromFileURLs(false);
+        webView.setWebViewClient(new WebViewClient());
+    }
+
 
     // Inflate menu for the activity
     @Override
