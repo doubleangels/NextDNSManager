@@ -127,6 +127,7 @@ public class PingActivity extends AppCompatActivity {
         webView2.loadUrl(url2);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void setupWebView(WebView webView) {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
