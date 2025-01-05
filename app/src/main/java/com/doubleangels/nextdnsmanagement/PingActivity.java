@@ -2,7 +2,6 @@ package com.doubleangels.nextdnsmanagement;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
@@ -15,7 +14,6 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.preference.PreferenceManager;
 
 import com.doubleangels.nextdnsmanagement.protocol.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
@@ -38,8 +36,6 @@ public class PingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_ping);
         // Initialize SentryManager for error tracking
         sentryManager = new SentryManager(this);
-        // Get SharedPreferences for storing app preferences
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         try {
             // Check if Sentry is enabled and initialize it
             if (sentryManager.isEnabled()) {
@@ -114,7 +110,6 @@ public class PingActivity extends AppCompatActivity {
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(false);
-        settings.setAllowUniversalAccessFromFileURLs(false);
         webView.setWebViewClient(new WebViewClient());
     }
 

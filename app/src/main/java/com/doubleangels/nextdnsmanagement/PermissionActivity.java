@@ -1,7 +1,6 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionInfo;
@@ -17,7 +16,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,8 +39,6 @@ public class PermissionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_permission);
         // Initialize SentryManager for error tracking
         sentryManager = new SentryManager(this);
-        // Get SharedPreferences for storing app preferences
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         try {
             // Check if Sentry is enabled and initialize it
             if (sentryManager.isEnabled()) {

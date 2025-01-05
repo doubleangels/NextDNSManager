@@ -55,9 +55,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (ProcessPhoenix.isPhoenixProcess(this)) {
-            return;
-        } else {
+        if (!ProcessPhoenix.isPhoenixProcess(this)) {
             // Initialize SentryManager for error tracking
             SentryManager sentryManager = new SentryManager(this);
             // Get SharedPreferences for storing app preferences

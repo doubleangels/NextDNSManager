@@ -1,7 +1,6 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LifecycleOwner;
-import androidx.preference.PreferenceManager;
 
 import com.doubleangels.nextdnsmanagement.protocol.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
@@ -32,8 +30,6 @@ public class AuthorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_author);
         // Initialize SentryManager
         sentryManager = new SentryManager(this);
-        // Get shared preferences
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         try {
             // Check if Sentry is enabled and initialize
             if (sentryManager.isEnabled()) {

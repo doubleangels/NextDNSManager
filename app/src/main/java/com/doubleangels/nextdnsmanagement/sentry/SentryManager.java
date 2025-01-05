@@ -48,15 +48,6 @@ public class SentryManager {
         }
     }
 
-    // Method to set a tag for Sentry events
-    public void setTag(String key, String value) {
-        // Check if Sentry is enabled
-        if (isEnabled()) {
-            // Set a tag for Sentry events
-            Sentry.setTag(key, value);
-        }
-    }
-
     // Method to check if Sentry is enabled in app preferences
     public boolean isEnabled() {
         // Get default SharedPreferences instance

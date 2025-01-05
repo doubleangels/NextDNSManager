@@ -10,7 +10,7 @@ android {
         minSdkVersion 32
         targetSdk 35
         versionCode 234
-        versionName '5.3.1'
+        versionName '5.4.0'
         resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "in", "it", "ja", "pl", "pt", "es", "sv", "tr"]
     }
 
