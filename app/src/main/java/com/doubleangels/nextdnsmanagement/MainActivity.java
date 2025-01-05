@@ -79,9 +79,7 @@ public class MainActivity extends AppCompatActivity {
             String appLocale = setupLanguageForActivity();
             sentryManager.captureMessage("Using locale: " + appLocale);
             // Setup dark mode
-            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.S_V2) {
-                setupDarkModeForActivity(sentryManager, sharedPreferences);
-            }
+            setupDarkModeForActivity(sentryManager, sharedPreferences);
 
             // Setup visual indicator
             setupVisualIndicatorForActivity(sentryManager, this);
@@ -126,10 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Setup dark mode for the activity
     private void setupDarkModeForActivity(SentryManager sentryManager, SharedPreferences sharedPreferences) {
-        String darkMode = sharedPreferences.getString("dark_mode", "off");
-        if (Build.VERSION.SDK_INT < 32) {
-            darkMode = "disabled";
-        }
+        String darkMode = sharedPreferences.getString("dark_mode", "match");
         switch (darkMode) {
             case "match":
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
