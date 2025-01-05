@@ -30,29 +30,22 @@ public class AuthorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author);
-
         // Initialize SentryManager
         sentryManager = new SentryManager(this);
-
         // Get shared preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         try {
             // Check if Sentry is enabled and initialize
             if (sentryManager.isEnabled()) {
                 SentryInitializer.initialize(this);
             }
-
             // Setup toolbar
             setupToolbarForActivity();
-
             // Setup language for the activity
             String appLocale = setupLanguageForActivity();
             sentryManager.captureMessage("Using locale: " + appLocale);
-
             // Setup visual indicator for the activity
             setupVisualIndicatorForActivity(sentryManager, this);
-
             // Setup personal links
             setupPersonalLinks(sentryManager);
         } catch (Exception e) {
@@ -69,7 +62,6 @@ public class AuthorActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
         }
-
         // Set onClickListener for connection status image
         ImageView imageView = findViewById(R.id.connectionStatus);
         imageView.setOnClickListener(v -> startActivity(new Intent(this, StatusActivity.class)));
@@ -106,13 +98,11 @@ public class AuthorActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_profile_url)));
                 startActivity(intent);
             });
-
             emailButton.setOnClickListener(view -> {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                 emailIntent.setData(Uri.parse("mailto:nextdns@doubleangels.com"));
                 startActivity(Intent.createChooser(emailIntent, "Send Email"));
             });
-
             websiteButton.setOnClickListener(view -> {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.author_url)));
                 startActivity(intent);

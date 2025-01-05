@@ -36,28 +36,22 @@ public class PingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping);
-
         // Initialize SentryManager for error tracking
         sentryManager = new SentryManager(this);
         // Get SharedPreferences for storing app preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         try {
             // Check if Sentry is enabled and initialize it
             if (sentryManager.isEnabled()) {
                 SentryInitializer.initialize(this);
             }
-
             // Setup toolbar
             setupToolbarForActivity();
-
             // Setup language/locale
             String appLocale = setupLanguageForActivity();
             sentryManager.captureMessage("Using locale: " + appLocale);
-
             // Setup visual indicator
             setupVisualIndicatorForActivity(sentryManager, this);
-
             // Setup WebView
             setupWebViewForActivity(getString(R.string.ping_url), getString(R.string.test_url));
         } catch (Exception e) {
@@ -105,10 +99,8 @@ public class PingActivity extends AppCompatActivity {
     public void setupWebViewForActivity(String url1, String url2) {
         webView = findViewById(R.id.webView);
         webView2 = findViewById(R.id.webView2);
-
         setupWebView(webView);
         setupWebView(webView2);
-
         webView.loadUrl(url1);
         webView2.loadUrl(url2);
     }

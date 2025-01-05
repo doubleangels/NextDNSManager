@@ -41,12 +41,10 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
         // Initialize SentryManager for error tracking
         sentryManager = new SentryManager(this);
         // Get SharedPreferences for storing app preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         try {
             // Check if Sentry is enabled and initialize it
             if (sentryManager.isEnabled()) {
@@ -127,17 +125,13 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             // Load preferences from XML resource
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
             // Get the default SharedPreferences
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-
             // Set initial visibility for certain preferences based on user settings
             setInitialSentryVisibility(sharedPreferences);
-
             // Find preferences and set up listeners
             SwitchPreference sentryEnablePreference = findPreference("sentry_enable");
             ListPreference darkModePreference = findPreference("dark_mode");
-
             if (sentryEnablePreference != null) {
                 setupSentryChangeListener(sentryEnablePreference, sharedPreferences);
             }

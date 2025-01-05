@@ -4,6 +4,7 @@ import static android.Manifest.permission.POST_NOTIFICATIONS;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
+import android.app.UiModeManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -48,31 +49,26 @@ public class MainActivity extends AppCompatActivity {
     private WebView webView;
     // Boolean flag for dark mode status
     private Boolean darkModeEnabled = false;
-
     @SuppressLint("WrongThread")
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // Initialize SentryManager for error tracking
         SentryManager sentryManager = new SentryManager(this);
         // Get SharedPreferences for storing app preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         try {
             // Request necessary permissions
             if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
                 ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
             }
-
             // Check if Sentry is enabled and initialize it
             if (sentryManager.isEnabled()) {
                 sentryManager.captureMessage("Sentry is enabled for NextDNS Manager.");
                 SentryInitializer.initialize(this);
             }
-
             // Setup toolbar
             setupToolbarForActivity();
             // Setup language/locale
@@ -80,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
             sentryManager.captureMessage("Using locale: " + appLocale);
             // Setup dark mode
             setupDarkModeForActivity(sentryManager, sharedPreferences);
-
             // Setup visual indicator
             setupVisualIndicatorForActivity(sentryManager, this);
             // Setup WebView
@@ -96,6 +91,12 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         webView.removeAllViews();
         webView.destroy();
+        // Fix an issue with Android 14 where UiModeManager has a memory leak
+        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
+        if (uiModeManager != null) {
+            uiModeManager.disableCarMode(UiModeManager.DISABLE_CAR_MODE_GO_HOME);
+        }
+
     }
 
     // Setup toolbar for the activity
@@ -122,42 +123,51 @@ public class MainActivity extends AppCompatActivity {
         return appLocale.getLanguage();
     }
 
-    // Setup dark mode for the activity
+    // Setup dark mode for the activity based on user preference
     private void setupDarkModeForActivity(SentryManager sentryManager, SharedPreferences sharedPreferences) {
+        // Retrieve the stored dark mode preference, defaulting to "match" if not found
         String darkMode = sharedPreferences.getString("dark_mode", "match");
+        // Apply the appropriate dark mode setting based on the preference value
         switch (darkMode) {
+            // Follow the system's dark mode setting
             case "match":
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                 updateDarkModeState();
                 sentryManager.captureMessage("Dark mode set to follow system.");
                 break;
+            // Enable dark mode explicitly
             case "on":
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 darkModeEnabled = true;
                 sentryManager.captureMessage("Dark mode set to on.");
                 break;
+            // Disable dark mode due to unsupported SDK version
             case "disabled":
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 darkModeEnabled = false;
                 sentryManager.captureMessage("Dark mode is disabled due to SDK version.");
                 break;
+            // Default case to disable dark mode when preference is "off" or unrecognized
             case "off":
             default:
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 darkModeEnabled = false;
                 sentryManager.captureMessage("Dark mode set to off.");
                 break;
-
         }
     }
 
-    // Helper function to determine dark mode setting when matching system theme
+    // Update the internal dark mode state when following the system theme
     private void updateDarkModeState() {
+        // Get the current UI mode and extract the night mode flag
         int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        // Determine whether dark mode is enabled based on the night mode flag
         switch (nightModeFlags) {
+            // Set darkModeEnabled to true if night mode is active
             case Configuration.UI_MODE_NIGHT_YES:
                 darkModeEnabled = true;
                 break;
+            // Set darkModeEnabled to false if night mode is not active
             case Configuration.UI_MODE_NIGHT_NO:
                 darkModeEnabled = false;
                 break;
@@ -185,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
         webViewSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         webViewSettings.setAllowFileAccess(false);
         webViewSettings.setAllowContentAccess(false);
-        webViewSettings.setAllowUniversalAccessFromFileURLs(false);
         if (Boolean.TRUE.equals(darkModeEnabled)) {
             if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
                 WebSettingsCompat.setAlgorithmicDarkeningAllowed(webView.getSettings(), true);

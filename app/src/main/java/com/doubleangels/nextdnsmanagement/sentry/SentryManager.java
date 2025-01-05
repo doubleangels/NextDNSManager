@@ -16,12 +16,10 @@ public class SentryManager {
     public String TAG = "NextDNS Manager Logging";
     // SharedPreferences instance for accessing app preferences
     public SharedPreferences sharedPreferences;
-
     // Constructor to initialize the SentryManager with a context
     public SentryManager(Context context) {
         this.context = context;
     }
-
     // Method to capture and log exceptions
     public void captureException(Exception e) {
         // Check if Sentry is enabled

@@ -39,36 +39,29 @@ public class PermissionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission);
-
         // Initialize SentryManager for error tracking
         sentryManager = new SentryManager(this);
         // Get SharedPreferences for storing app preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
         try {
             // Check if Sentry is enabled and initialize it
             if (sentryManager.isEnabled()) {
                 SentryInitializer.initialize(this);
             }
-
             // Setup toolbar
             setupToolbarForActivity();
-
             // Setup language/locale
             String appLocale = setupLanguageForActivity();
             sentryManager.captureMessage("Using locale: " + appLocale);
-
             // Setup visual indicator
             setupVisualIndicatorForActivity(sentryManager, this);
         } catch (Exception e) {
             // Catch and log exceptions
             sentryManager.captureException(e);
         }
-
         // Setup RecyclerView for displaying permissions list
         RecyclerView recyclerView = findViewById(R.id.permissionRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         // Get list of permissions and set up RecyclerView adapter
         List<PermissionInfo> permissions = getPermissionsList(sentryManager);
         PermissionsAdapter adapter = new PermissionsAdapter(permissions);
@@ -115,7 +108,6 @@ public class PermissionActivity extends AppCompatActivity {
         try {
             // Get package info including requested permissions
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_PERMISSIONS);
-
             if (packageInfo.requestedPermissions != null) {
                 // Retrieve PermissionInfo for each requested permission and add to list
                 for (String permission : packageInfo.requestedPermissions) {

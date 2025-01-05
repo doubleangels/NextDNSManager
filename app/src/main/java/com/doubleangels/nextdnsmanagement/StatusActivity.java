@@ -30,27 +30,20 @@ public class StatusActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_status);
-
         // Initialize SentryManager for error tracking
         sentryManager = new SentryManager(this);
-
         // Get SharedPreferences for storing app preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-
         try {
             // Check if Sentry is enabled and initialize it
             if (sentryManager.isEnabled()) {
                 SentryInitializer.initialize(this);
             }
-
             // Setup toolbar
             setupToolbarForActivity();
-
             // Setup language/locale
             String appLocale = setupLanguageForActivity();
             sentryManager.captureMessage("Using locale: " + appLocale);
-
             // Setup visual indicator
             setupVisualIndicatorForActivity(sentryManager, this);
         } catch (Exception e) {
