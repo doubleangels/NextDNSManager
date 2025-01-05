@@ -25,4 +25,10 @@
     <style name="StatusTheme" parent="@style/AppTheme">
         <item name="android:background">@color/white</item>
     </style>
+    <style name="AuthorTheme">
+        <item name="android:background">@color/white</item>
+    </style>
+    <style name="PermissionTheme">
+        <item name="android:background">@color/white</item>
+    </style>
 </resources>
