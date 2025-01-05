@@ -1,16 +1,16 @@
 plugins {
     id "com.android.application"
-    id "io.sentry.android.gradle" version "4.11.0"
+    id "io.sentry.android.gradle" version "4.14.1"
 }
 
 android {
     compileSdk 34
     defaultConfig {
         applicationId "com.doubleangels.nextdnsmanagement"
-        minSdkVersion 29
-        targetSdk 34
+        minSdkVersion 32
+        targetSdk 35
         versionCode 234
-        versionName '5.3.1'
+        versionName '5.4.0'
         resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "in", "it", "ja", "pl", "pt", "es", "sv", "tr"]
     }
 
@@ -25,8 +25,8 @@ android {
     }
     namespace 'com.doubleangels.nextdnsmanagement'
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     dependenciesInfo {
         includeInApk true
@@ -51,14 +51,15 @@ android {
 }
 
 dependencies {
+    implementation "androidx.activity:activity:1.9.3"
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.preference:preference:1.2.1'
-    implementation 'androidx.webkit:webkit:1.12.0'
+    implementation 'androidx.webkit:webkit:1.12.1'
     implementation 'com.google.android.material:material:1.12.0'
     implementation 'com.jakewharton:process-phoenix:3.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    implementation 'io.sentry:sentry-android:7.18.0'
+    implementation 'io.sentry:sentry-android:7.20.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 }
 
