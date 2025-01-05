@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
-import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
@@ -135,24 +134,16 @@ public class SettingsActivity extends AppCompatActivity {
             // Set initial visibility for certain preferences based on user settings
             setInitialSentryVisibility(sharedPreferences);
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S_V2) {
-                // Find the PreferenceCategory by its key
-                PreferenceCategory darkModePreferenceCategory = findPreference("darkmode");
-                if (darkModePreferenceCategory != null) {
-                    darkModePreferenceCategory.setVisible(false);
-                }
-            } else {
-                ListPreference darkModePreference = findPreference("dark_mode");
-                if (darkModePreference != null) {
-                    setupDarkModeChangeListener(darkModePreference, sharedPreferences);
-                }
-            }
-
             // Find preferences and set up listeners
             SwitchPreference sentryEnablePreference = findPreference("sentry_enable");
+            ListPreference darkModePreference = findPreference("dark_mode");
+
             if (sentryEnablePreference != null) {
                 setupSentryChangeListener(sentryEnablePreference, sharedPreferences);
             }
+            if (darkModePreference != null) {
+            setupDarkModeChangeListener(darkModePreference, sharedPreferences);
+        }
 
             // Set up click listeners for various buttons
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
