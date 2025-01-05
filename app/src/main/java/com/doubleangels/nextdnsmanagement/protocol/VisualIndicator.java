@@ -44,7 +44,6 @@ public class VisualIndicator {
     private ConnectivityManager connectivityManager;
     // NetworkCallback instance for monitoring network changes
     private ConnectivityManager.NetworkCallback networkCallback;
-
     // Constructor to initialize VisualIndicator with context
     public VisualIndicator(Context context) {
         this.sentryManager = new SentryManager(context);

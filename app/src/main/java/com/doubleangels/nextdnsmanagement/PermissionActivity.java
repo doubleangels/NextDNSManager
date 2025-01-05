@@ -1,13 +1,10 @@
 package com.doubleangels.nextdnsmanagement;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionInfo;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
@@ -17,7 +14,6 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -41,12 +37,8 @@ public class PermissionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission);
-
         // Initialize SentryManager for error tracking
         sentryManager = new SentryManager(this);
-        // Get SharedPreferences for storing app preferences
-        SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
-
         try {
             // Check if Sentry is enabled and initialize it
             if (sentryManager.isEnabled()) {
@@ -57,19 +49,15 @@ public class PermissionActivity extends AppCompatActivity {
             // Setup language/locale
             String appLocale = setupLanguageForActivity();
             sentryManager.captureMessage("Using locale: " + appLocale);
-            // Setup dark mode
-            setupDarkModeForActivity(sharedPreferences);
             // Setup visual indicator
             setupVisualIndicatorForActivity(sentryManager, this);
         } catch (Exception e) {
             // Catch and log exceptions
             sentryManager.captureException(e);
         }
-
         // Setup RecyclerView for displaying permissions list
         RecyclerView recyclerView = findViewById(R.id.permissionRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         // Get list of permissions and set up RecyclerView adapter
         List<PermissionInfo> permissions = getPermissionsList(sentryManager);
         PermissionsAdapter adapter = new PermissionsAdapter(permissions);
@@ -100,20 +88,6 @@ public class PermissionActivity extends AppCompatActivity {
         return appLocale.getLanguage();
     }
 
-    // Setup dark mode for the activity based on user preferences
-    private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            String darkMode = sharedPreferences.getString("dark_mode", "match");
-            if (darkMode.contains("match")) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            } else if (darkMode.contains("on")) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-        }
-    }
-
     // Setup visual indicator for the activity
     private void setupVisualIndicatorForActivity(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
         try {
@@ -130,7 +104,6 @@ public class PermissionActivity extends AppCompatActivity {
         try {
             // Get package info including requested permissions
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_PERMISSIONS);
-
             if (packageInfo.requestedPermissions != null) {
                 // Retrieve PermissionInfo for each requested permission and add to list
                 for (String permission : packageInfo.requestedPermissions) {
