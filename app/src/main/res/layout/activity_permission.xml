@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/AuthorTheme"
+    android:fitsSystemWindows="true"
     tools:context=".SettingsActivity">
 
     <androidx.appcompat.widget.Toolbar

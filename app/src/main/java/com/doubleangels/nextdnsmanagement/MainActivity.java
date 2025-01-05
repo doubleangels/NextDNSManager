@@ -4,7 +4,6 @@ import static android.Manifest.permission.POST_NOTIFICATIONS;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
-import android.app.UiModeManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -40,6 +39,7 @@ import androidx.webkit.WebViewFeature;
 import com.doubleangels.nextdnsmanagement.protocol.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
+import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.Locale;
 
@@ -55,34 +55,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Initialize SentryManager for error tracking
-        SentryManager sentryManager = new SentryManager(this);
-        // Get SharedPreferences for storing app preferences
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        try {
-            // Request necessary permissions
-            if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
-                ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
+        if (ProcessPhoenix.isPhoenixProcess(this)) {
+            return;
+        } else {
+            // Initialize SentryManager for error tracking
+            SentryManager sentryManager = new SentryManager(this);
+            // Get SharedPreferences for storing app preferences
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            try {
+                // Request necessary permissions
+                if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
+                }
+                // Check if Sentry is enabled and initialize it
+                if (sentryManager.isEnabled()) {
+                    sentryManager.captureMessage("Sentry is enabled for NextDNS Manager.");
+                    SentryInitializer.initialize(this);
+                }
+                // Setup toolbar
+                setupToolbarForActivity();
+                // Setup language/locale
+                String appLocale = setupLanguageForActivity();
+                sentryManager.captureMessage("Using locale: " + appLocale);
+                // Setup dark mode
+                setupDarkModeForActivity(sentryManager, sharedPreferences);
+                // Setup visual indicator
+                setupVisualIndicatorForActivity(sentryManager, this);
+                // Setup WebView
+                setupWebViewForActivity(getString(R.string.main_url));
+            } catch (Exception e) {
+                // Catch and log exceptions
+                sentryManager.captureException(e);
             }
-            // Check if Sentry is enabled and initialize it
-            if (sentryManager.isEnabled()) {
-                sentryManager.captureMessage("Sentry is enabled for NextDNS Manager.");
-                SentryInitializer.initialize(this);
-            }
-            // Setup toolbar
-            setupToolbarForActivity();
-            // Setup language/locale
-            String appLocale = setupLanguageForActivity();
-            sentryManager.captureMessage("Using locale: " + appLocale);
-            // Setup dark mode
-            setupDarkModeForActivity(sentryManager, sharedPreferences);
-            // Setup visual indicator
-            setupVisualIndicatorForActivity(sentryManager, this);
-            // Setup WebView
-            setupWebViewForActivity(getString(R.string.main_url));
-        } catch (Exception e) {
-            // Catch and log exceptions
-            sentryManager.captureException(e);
         }
     }
 
@@ -91,12 +95,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         webView.removeAllViews();
         webView.destroy();
-        // Fix an issue with Android 14 where UiModeManager has a memory leak
-        UiModeManager uiModeManager = (UiModeManager) getSystemService(UI_MODE_SERVICE);
-        if (uiModeManager != null) {
-            uiModeManager.disableCarMode(UiModeManager.DISABLE_CAR_MODE_GO_HOME);
-        }
-
     }
 
     // Setup toolbar for the activity

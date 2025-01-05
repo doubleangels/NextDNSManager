@@ -28,6 +28,7 @@ import androidx.preference.SwitchPreference;
 import com.doubleangels.nextdnsmanagement.protocol.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
+import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -214,7 +215,7 @@ public class SettingsActivity extends AppCompatActivity {
                 // Store new value in SharedPreferences
                 sharedPreferences.edit().putString("dark_mode", newValue.toString()).apply();
                 // Restart activity to apply changes
-                requireActivity().recreate();
+                ProcessPhoenix.triggerRebirth(requireContext());
                 return true;
             });
         }
