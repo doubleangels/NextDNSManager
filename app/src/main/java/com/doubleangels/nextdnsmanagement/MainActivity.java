@@ -191,20 +191,19 @@ public class MainActivity extends AppCompatActivity {
         webViewSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
         webViewSettings.setAllowFileAccess(false);
         webViewSettings.setAllowContentAccess(false);
+        // Allow cookies so that user can stay logged in
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView webView, String url) {
+                CookieManager.getInstance().setAcceptCookie(true);
+                CookieManager.getInstance().acceptCookie();
+                CookieManager.getInstance().flush();
+            }
+        });
         if (Boolean.TRUE.equals(darkModeEnabled)) {
             if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
                 WebSettingsCompat.setAlgorithmicDarkeningAllowed(webView.getSettings(), true);
             }
-        } else {
-            // Allow cookies so that user can stay logged in
-            webView.setWebViewClient(new WebViewClient() {
-                @Override
-                public void onPageFinished(WebView webView, String url) {
-                    CookieManager.getInstance().setAcceptCookie(true);
-                    CookieManager.getInstance().acceptCookie();
-                    CookieManager.getInstance().flush();
-                }
-            });
         }
         // Setup DownloadManager for handling file downloads
         setupDownloadManagerForActivity();
