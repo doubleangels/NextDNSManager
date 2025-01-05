@@ -1,13 +1,10 @@
 package com.doubleangels.nextdnsmanagement;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,9 +12,9 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.preference.PreferenceManager;
 
 import com.doubleangels.nextdnsmanagement.protocol.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
@@ -38,7 +35,7 @@ public class AuthorActivity extends AppCompatActivity {
         sentryManager = new SentryManager(this);
 
         // Get shared preferences
-        SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         try {
             // Check if Sentry is enabled and initialize
@@ -52,9 +49,6 @@ public class AuthorActivity extends AppCompatActivity {
             // Setup language for the activity
             String appLocale = setupLanguageForActivity();
             sentryManager.captureMessage("Using locale: " + appLocale);
-
-            // Setup dark mode for the activity
-            setupDarkModeForActivity(sharedPreferences);
 
             // Setup visual indicator for the activity
             setupVisualIndicatorForActivity(sentryManager, this);
@@ -88,22 +82,7 @@ public class AuthorActivity extends AppCompatActivity {
         Locale.setDefault(appLocale);
         Configuration newConfig = new Configuration(config);
         newConfig.setLocale(appLocale);
-        new ContextThemeWrapper(getBaseContext(), R.style.AppTheme).applyOverrideConfiguration(newConfig);
         return appLocale.getLanguage();
-    }
-
-    // Method to setup dark mode for the activity
-    private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            String darkMode = sharedPreferences.getString("dark_mode", "match");
-            if (darkMode.contains("match")) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            } else if (darkMode.contains("on")) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-        }
     }
 
     // Method to setup visual indicator for the activity

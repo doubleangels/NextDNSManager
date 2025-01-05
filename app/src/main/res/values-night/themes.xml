@@ -28,4 +28,10 @@
         <style name="StatusTheme" parent="@style/AppTheme">
                 <item name="android:background">@color/darkgray</item>
         </style>
+        <style name="AuthorTheme" parent="@style/AppTheme">
+                <item name="android:background">@color/darkgray</item>
+        </style>
+        <style name="PermissionTheme" parent="@style/AppTheme">
+                <item name="android:background">@color/darkgray</item>
+        </style>
 </resources>

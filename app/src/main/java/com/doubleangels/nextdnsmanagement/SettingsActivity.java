@@ -9,6 +9,7 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,12 +23,12 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceCategory;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
 
 import com.doubleangels.nextdnsmanagement.protocol.VisualIndicator;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
-import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -45,7 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
         // Initialize SentryManager for error tracking
         sentryManager = new SentryManager(this);
         // Get SharedPreferences for storing app preferences
-        SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         try {
             // Check if Sentry is enabled and initialize it
@@ -90,6 +91,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
             String darkMode = sharedPreferences.getString("dark_mode", "match");
+            sentryManager.captureMessage("Dark mode setting: " + darkMode);
             if (darkMode.contains("match")) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             } else if (darkMode.contains("on")) {
@@ -126,25 +128,32 @@ public class SettingsActivity extends AppCompatActivity {
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             // Load preferences from XML resource
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
-            // Get SharedPreferences
-            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+
+            // Get the default SharedPreferences
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+
             // Set initial visibility for certain preferences based on user settings
             setInitialSentryVisibility(sharedPreferences);
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S_V2) {
                 // Find the PreferenceCategory by its key
                 PreferenceCategory darkModePreferenceCategory = findPreference("darkmode");
                 if (darkModePreferenceCategory != null) {
-                    // Hide the PreferenceCategory if SDK is below 33
                     darkModePreferenceCategory.setVisible(false);
                 }
             } else {
-                // Find preferences and set up listeners
                 ListPreference darkModePreference = findPreference("dark_mode");
-                SwitchPreference sentryEnablePreference = findPreference("sentry_enable");
-                assert darkModePreference != null;
-                setupDarkModeChangeListener(darkModePreference, sharedPreferences);
+                if (darkModePreference != null) {
+                    setupDarkModeChangeListener(darkModePreference, sharedPreferences);
+                }
+            }
+
+            // Find preferences and set up listeners
+            SwitchPreference sentryEnablePreference = findPreference("sentry_enable");
+            if (sentryEnablePreference != null) {
                 setupSentryChangeListener(sentryEnablePreference, sharedPreferences);
             }
+
             // Set up click listeners for various buttons
             setupButton("whitelist_domain_1_button", R.string.whitelist_domain_1);
             setupButton("whitelist_domain_2_button", R.string.whitelist_domain_2);
@@ -216,12 +225,11 @@ public class SettingsActivity extends AppCompatActivity {
         // Set up listener for dark mode preference changes
         private void setupDarkModeChangeListener(ListPreference setting, SharedPreferences sharedPreferences) {
             setting.setOnPreferenceChangeListener((preference, newValue) -> {
-                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-                    // Store new value in SharedPreferences
-                    sharedPreferences.edit().putString("dark_mode", newValue.toString()).apply();
-                    // Restart activity to apply changes
-                    ProcessPhoenix.triggerRebirth(requireContext());
-                }
+                Log.i("Output","Output: " + newValue.toString());
+                // Store new value in SharedPreferences
+                sharedPreferences.edit().putString("dark_mode", newValue.toString()).apply();
+                // Restart activity to apply changes
+                requireActivity().recreate();
                 return true;
             });
         }
