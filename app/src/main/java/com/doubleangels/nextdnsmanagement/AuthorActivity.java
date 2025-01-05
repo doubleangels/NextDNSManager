@@ -1,13 +1,9 @@
 package com.doubleangels.nextdnsmanagement;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,7 +11,6 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LifecycleOwner;
 
@@ -33,32 +28,20 @@ public class AuthorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_author);
-
         // Initialize SentryManager
         sentryManager = new SentryManager(this);
-
-        // Get shared preferences
-        SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
-
         try {
             // Check if Sentry is enabled and initialize
             if (sentryManager.isEnabled()) {
                 SentryInitializer.initialize(this);
             }
-
             // Setup toolbar
             setupToolbarForActivity();
-
             // Setup language for the activity
             String appLocale = setupLanguageForActivity();
             sentryManager.captureMessage("Using locale: " + appLocale);
-
-            // Setup dark mode for the activity
-            setupDarkModeForActivity(sharedPreferences);
-
             // Setup visual indicator for the activity
             setupVisualIndicatorForActivity(sentryManager, this);
-
             // Setup personal links
             setupPersonalLinks(sentryManager);
         } catch (Exception e) {
@@ -75,7 +58,6 @@ public class AuthorActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);
         }
-
         // Set onClickListener for connection status image
         ImageView imageView = findViewById(R.id.connectionStatus);
         imageView.setOnClickListener(v -> startActivity(new Intent(this, StatusActivity.class)));
@@ -88,22 +70,7 @@ public class AuthorActivity extends AppCompatActivity {
         Locale.setDefault(appLocale);
         Configuration newConfig = new Configuration(config);
         newConfig.setLocale(appLocale);
-        new ContextThemeWrapper(getBaseContext(), R.style.AppTheme).applyOverrideConfiguration(newConfig);
         return appLocale.getLanguage();
-    }
-
-    // Method to setup dark mode for the activity
-    private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            String darkMode = sharedPreferences.getString("dark_mode", "match");
-            if (darkMode.contains("match")) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            } else if (darkMode.contains("on")) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-        }
     }
 
     // Method to setup visual indicator for the activity
@@ -127,13 +94,11 @@ public class AuthorActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.github_profile_url)));
                 startActivity(intent);
             });
-
             emailButton.setOnClickListener(view -> {
                 Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                 emailIntent.setData(Uri.parse("mailto:nextdns@doubleangels.com"));
                 startActivity(Intent.createChooser(emailIntent, "Send Email"));
             });
-
             websiteButton.setOnClickListener(view -> {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.author_url)));
                 startActivity(intent);

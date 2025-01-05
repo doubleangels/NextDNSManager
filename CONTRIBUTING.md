@@ -12,7 +12,7 @@ Improvements to the project's documentation are always welcome. You can suggest 
 
 ### Translations
 
-If you notice inaccuracies in translations, please open an issue to report them. You can also contribute to translations and locales [here](https://crowdin.com/project/nextdns-manager).
+If you notice inaccuracies in translations, please open an issue to report them.
 
 ### Code Contributions
 

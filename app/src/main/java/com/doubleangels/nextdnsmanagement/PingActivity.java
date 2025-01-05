@@ -1,11 +1,8 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.Menu;
@@ -16,7 +13,6 @@ import android.webkit.WebViewClient;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.LifecycleOwner;
 
 import com.doubleangels.nextdnsmanagement.protocol.VisualIndicator;
@@ -38,12 +34,8 @@ public class PingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ping);
-
         // Initialize SentryManager for error tracking
         sentryManager = new SentryManager(this);
-        // Get SharedPreferences for storing app preferences
-        SharedPreferences sharedPreferences = this.getSharedPreferences("preferences", Context.MODE_PRIVATE);
-
         try {
             // Check if Sentry is enabled and initialize it
             if (sentryManager.isEnabled()) {
@@ -54,8 +46,6 @@ public class PingActivity extends AppCompatActivity {
             // Setup language/locale
             String appLocale = setupLanguageForActivity();
             sentryManager.captureMessage("Using locale: " + appLocale);
-            // Setup dark mode
-            setupDarkModeForActivity(sharedPreferences);
             // Setup visual indicator
             setupVisualIndicatorForActivity(sentryManager, this);
             // Setup WebView
@@ -90,20 +80,6 @@ public class PingActivity extends AppCompatActivity {
         return appLocale.getLanguage();
     }
 
-    // Setup dark mode for the activity based on user preferences
-    private void setupDarkModeForActivity(SharedPreferences sharedPreferences) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
-            String darkMode = sharedPreferences.getString("dark_mode", "match");
-            if (darkMode.contains("match")) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            } else if (darkMode.contains("on")) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
-        }
-    }
-
     // Setup visual indicator for the activity
     private void setupVisualIndicatorForActivity(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
         try {
@@ -119,10 +95,8 @@ public class PingActivity extends AppCompatActivity {
     public void setupWebViewForActivity(String url1, String url2) {
         webView = findViewById(R.id.webView);
         webView2 = findViewById(R.id.webView2);
-
         setupWebView(webView);
         setupWebView(webView2);
-
         webView.loadUrl(url1);
         webView2.loadUrl(url2);
     }
@@ -136,7 +110,6 @@ public class PingActivity extends AppCompatActivity {
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(false);
-        settings.setAllowUniversalAccessFromFileURLs(false);
         webView.setWebViewClient(new WebViewClient());
     }
 

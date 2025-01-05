@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:localeConfig="@xml/locales_config"
-        tools:targetApi="tiramisu">
+        tools:targetApi="tiramisu"
+        android:enableOnBackInvokedCallback="true">
         <service
             android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
             android:enabled="false"
