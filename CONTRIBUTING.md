@@ -12,7 +12,7 @@ Improvements to the project's documentation are always welcome. You can suggest 
 
 ### Translations
 
-If you notice inaccuracies in translations, please open an issue to report them.
+If you notice inaccuracies in translations, please open an issue to report them or contribute to the [translation project](https://poeditor.com/join/project/EupqZ3cGCJ).
 
 ### Code Contributions
 
