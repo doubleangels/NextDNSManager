@@ -258,7 +258,7 @@ jobs:
           whatsNewDirectory: whatsnew
 
       - name: Set up Ruby for Fastlane
-        uses: ruby/setup-ruby@v1.315.0
+        uses: ruby/setup-ruby@v1.327.0
         with:
           ruby-version: "3.3"
           bundler-cache: false
