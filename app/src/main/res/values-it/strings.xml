@@ -3,6 +3,7 @@
     <string name="app_lock">Blocco app</string>
     <string name="app_lock_instructions">Richiede l\'uso di biometria o PIN per accedere a questa app.</string>
     <string name="webview_load_error">Impossibile caricare la pagina. Tocca per riprovare.</string>
+    <string name="webview_unavailable">Il componente WebView di questo dispositivo non è disponibile o è danneggiato. Aggiorna Android System WebView dal Play Store e riprova.</string>
     <string name="app_lock_unavailable">Il blocco app è attivo, ma l\'autenticazione non è disponibile su questo dispositivo.</string>
     <string name="download_started">Download del file in corso!</string>
     <string name="download_failed">Download non riuscito</string>

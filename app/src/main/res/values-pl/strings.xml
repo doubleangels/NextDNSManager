@@ -3,6 +3,7 @@
     <string name="app_lock">Blokada aplikacji</string>
     <string name="app_lock_instructions">Wymagane są dane biometryczne lub PIN, aby uzyskać dostęp do tej aplikacji.</string>
     <string name="webview_load_error">Nie można załadować strony. Stuknij, aby spróbować ponownie.</string>
+    <string name="webview_unavailable">Komponent WebView na tym urządzeniu jest niedostępny lub uszkodzony. Zaktualizuj Android System WebView w Sklepie Play i spróbuj ponownie.</string>
     <string name="app_lock_unavailable">Blokada aplikacji jest włączona, ale uwierzytelnianie jest niedostępne na tym urządzeniu.</string>
     <string name="download_started">Pobieranie pliku!</string>
     <string name="download_failed">Pobieranie nie powiodło się</string>

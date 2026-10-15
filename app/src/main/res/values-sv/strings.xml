@@ -3,6 +3,7 @@
     <string name="app_lock">App-lås</string>
     <string name="app_lock_instructions">Kräver biometrik eller PIN för att få åtkomst till denna app.</string>
     <string name="webview_load_error">Kunde inte ladda sidan. Tryck för att försöka igen.</string>
+    <string name="webview_unavailable">Enhetens WebView-komponent är otillgänglig eller trasig. Uppdatera Android System WebView via Play Butik och försök igen.</string>
     <string name="app_lock_unavailable">App-lås är aktiverat, men autentisering är inte tillgänglig på den här enheten.</string>
     <string name="download_started">Laddar ner fil!</string>
     <string name="download_failed">Nedladdningen misslyckades</string>

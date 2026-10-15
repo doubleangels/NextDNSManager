@@ -3,6 +3,7 @@
     <string name="app_lock">App Lock</string>
     <string name="app_lock_instructions">Require biometrics or PIN to access this app.</string>
     <string name="webview_load_error">Unable to load page. Tap to retry.</string>
+    <string name="webview_unavailable">This device\'s WebView component is unavailable or broken. Please update Android System WebView from the Play Store and try again.</string>
     <string name="app_lock_unavailable">App lock is enabled but authentication is unavailable on this device.</string>
     <string name="download_started">Downloading file!</string>
     <string name="download_failed">Download failed</string>

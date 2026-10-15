@@ -29,12 +29,28 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
     private SentryManager sentryManager;
 
     /**
-     * Called when the service is created. Initializes the SentryManager.
+     * Called when the service is created. Initializes the SentryManager and the
+     * notification channel (created once here rather than on every message).
      */
     @Override
     public void onCreate() {
         super.onCreate();
         sentryManager = new SentryManager(this);
+        try {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(
+                    Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+                NotificationChannel channel = new NotificationChannel(
+                        CHANNEL_ID,
+                        CHANNEL_NAME,
+                        NotificationManager.IMPORTANCE_HIGH);
+                notificationManager.createNotificationChannel(channel);
+            } else {
+                sentryManager.captureMessage("NotificationManager is null");
+            }
+        } catch (Exception e) {
+            sentryManager.captureException(e);
+        }
     }
 
     /**
@@ -103,18 +119,7 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
             NotificationManager notificationManager = (NotificationManager) getSystemService(
                     Context.NOTIFICATION_SERVICE);
             if (notificationManager != null) {
-                // Create a notification channel for Android O and above
-                try {
-                    NotificationChannel channel = new NotificationChannel(
-                            CHANNEL_ID,
-                            CHANNEL_NAME,
-                            NotificationManager.IMPORTANCE_HIGH);
-                    notificationManager.createNotificationChannel(channel);
-                } catch (Exception e) {
-                    // Capture any exception that occurs during channel creation
-                    sentryManager.captureException(e);
-                }
-                // Show the notification
+                // Show the notification (the channel is created once in onCreate())
                 try {
                     int notificationId = (title + messageBody).hashCode();
                     notificationManager.notify(notificationId, notificationBuilder.build());

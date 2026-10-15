@@ -3,6 +3,7 @@
     <string name="app_lock">Uygulama Kilidi</string>
     <string name="app_lock_instructions">Bu uygulamaya erişmek için biyometrik doğrulama veya PIN gereklidir.</string>
     <string name="webview_load_error">Sayfa yüklenemedi. Yeniden denemek için dokunun.</string>
+    <string name="webview_unavailable">Bu cihazın WebView bileşeni kullanılamıyor veya bozuk. Lütfen Play Store üzerinden Android System WebView\'i güncelleyip tekrar deneyin.</string>
     <string name="app_lock_unavailable">Uygulama kilidi etkin, ancak bu cihazda kimlik doğrulama kullanılamıyor.</string>
     <string name="download_started">Dosya indiriliyor!</string>
     <string name="download_failed">İndirme başarısız</string>

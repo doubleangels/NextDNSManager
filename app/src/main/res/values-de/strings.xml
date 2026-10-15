@@ -3,6 +3,7 @@
     <string name="app_lock">App-Sperre</string>
     <string name="app_lock_instructions">Biometrie oder PIN erforderlich, um auf diese App zuzugreifen.</string>
     <string name="webview_load_error">Seite konnte nicht geladen werden. Tippen, um es erneut zu versuchen.</string>
+    <string name="webview_unavailable">Die WebView-Komponente dieses Geräts ist nicht verfügbar oder beschädigt. Bitte aktualisiere Android System WebView über den Play Store und versuche es erneut.</string>
     <string name="app_lock_unavailable">App-Sperre ist aktiviert, aber auf diesem Gerät ist keine Authentifizierung verfügbar.</string>
     <string name="download_started">Datei wird heruntergeladen!</string>
     <string name="download_failed">Download fehlgeschlagen</string>
