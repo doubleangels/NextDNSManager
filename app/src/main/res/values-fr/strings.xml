@@ -3,6 +3,7 @@
     <string name="app_lock">Verrouillage de l\'application</string>
     <string name="app_lock_instructions">Nécessite la biométrie ou un code PIN pour accéder à cette application.</string>
     <string name="webview_load_error">Impossible de charger la page. Appuyez pour réessayer.</string>
+    <string name="webview_unavailable">Le composant WebView de cet appareil est indisponible ou endommagé. Veuillez mettre à jour Android System WebView depuis le Play Store et réessayer.</string>
     <string name="app_lock_unavailable">Le verrouillage de l\'application est activé, mais l\'authentification n\'est pas disponible sur cet appareil.</string>
     <string name="download_started">Téléchargement du fichier !</string>
     <string name="download_failed">Échec du téléchargement</string>

@@ -3,6 +3,7 @@
     <string name="app_lock">Sovelluksen lukitus</string>
     <string name="app_lock_instructions">Sovelluksen avaamiseen vaaditaan biometria tai PIN-koodi.</string>
     <string name="webview_load_error">Sivua ei voitu ladata. Napauta yrittääksesi uudelleen.</string>
+    <string name="webview_unavailable">Tämän laitteen WebView-komponentti ei ole käytettävissä tai on viallinen. Päivitä Android System WebView Play Kaupasta ja yritä uudelleen.</string>
     <string name="app_lock_unavailable">Sovelluksen lukitus on käytössä, mutta tunnistautuminen ei ole saatavilla tällä laitteella.</string>
     <string name="download_started">Ladataan tiedostoa!</string>
     <string name="download_failed">Lataus epäonnistui</string>

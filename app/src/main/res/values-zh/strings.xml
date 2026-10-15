@@ -3,6 +3,7 @@
     <string name="app_lock">应用锁</string>
     <string name="app_lock_instructions">访问此应用需要生物识别或 PIN 码。</string>
     <string name="webview_load_error">无法加载页面。点击重试。</string>
+    <string name="webview_unavailable">此设备的 WebView 组件不可用或已损坏。请从 Play 商店更新 Android System WebView 后重试。</string>
     <string name="app_lock_unavailable">应用锁已启用，但此设备无法使用身份验证。</string>
     <string name="download_started">正在下载文件！</string>
     <string name="download_failed">下载失败</string>

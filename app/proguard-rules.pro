@@ -34,7 +34,6 @@
 # Sentry Android
 -keep class io.sentry.** { *; }
 -dontwarn io.sentry.**
--keepattributes *Annotation*
 
 # LeakCanary (debug only, no need to obfuscate for debug builds)
 -dontwarn com.squareup.leakcanary.**

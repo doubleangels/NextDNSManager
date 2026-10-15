@@ -87,7 +87,8 @@
             android:exported="true"
             android:hardwareAccelerated="true"
             android:theme="@style/Theme.App.Starting"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="screenLayout|smallestScreenSize|screenSize|orientation">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

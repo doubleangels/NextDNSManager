@@ -3,6 +3,7 @@
     <string name="app_lock">App-vergrendeling</string>
     <string name="app_lock_instructions">Biometrie of PIN vereist om toegang te krijgen tot deze app.</string>
     <string name="webview_load_error">Kan pagina niet laden. Tik om opnieuw te proberen.</string>
+    <string name="webview_unavailable">De WebView-component van dit apparaat is niet beschikbaar of beschadigd. Werk Android System WebView bij via de Play Store en probeer het opnieuw.</string>
     <string name="app_lock_unavailable">App-vergrendeling is ingeschakeld, maar authenticatie is niet beschikbaar op dit apparaat.</string>
     <string name="download_started">Bestand wordt gedownload!</string>
     <string name="download_failed">Download mislukt</string>

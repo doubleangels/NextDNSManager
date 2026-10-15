@@ -3,6 +3,7 @@
     <string name="app_lock">Bloqueio da aplicação</string>
     <string name="app_lock_instructions">É necessário utilizar biometria ou um PIN para aceder a esta aplicação.</string>
     <string name="webview_load_error">Não foi possível carregar a página. Toque para tentar novamente.</string>
+    <string name="webview_unavailable">O componente WebView deste dispositivo está indisponível ou danificado. Atualize o Android System WebView na Play Store e tente novamente.</string>
     <string name="app_lock_unavailable">O bloqueio da aplicação está ativado, mas a autenticação não está disponível neste dispositivo.</string>
     <string name="download_started">A transferir ficheiro!</string>
     <string name="download_failed">Falha na transferência</string>

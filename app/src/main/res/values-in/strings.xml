@@ -3,6 +3,7 @@
     <string name="app_lock">Kunci Aplikasi</string>
     <string name="app_lock_instructions">Memerlukan biometrik atau PIN untuk mengakses aplikasi ini.</string>
     <string name="webview_load_error">Tidak dapat memuat halaman. Ketuk untuk coba lagi.</string>
+    <string name="webview_unavailable">Komponen WebView perangkat ini tidak tersedia atau rusak. Perbarui Android System WebView dari Play Store lalu coba lagi.</string>
     <string name="app_lock_unavailable">Kunci aplikasi diaktifkan, tetapi autentikasi tidak tersedia di perangkat ini.</string>
     <string name="download_started">Mengunduh file!</string>
     <string name="download_failed">Unduhan gagal</string>

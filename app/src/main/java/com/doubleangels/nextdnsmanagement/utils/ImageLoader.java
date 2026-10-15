@@ -15,8 +15,6 @@ import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
  */
 public class ImageLoader {
 
-    // Maximum image size in pixels
-
     /**
      * Loads a drawable resource into an ImageView.
      * Resource drawables are loaded synchronously on the calling thread since

@@ -5,6 +5,7 @@ import android.view.ViewGroup;
 
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewGroupCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 /**
@@ -21,7 +22,7 @@ public final class InsetsHelper {
 
     public static void installOnRoot(View root) {
         if (root instanceof ViewGroup) {
-            ViewGroupCompatHelper.installCompatInsetsDispatch((ViewGroup) root);
+            ViewGroupCompat.installCompatInsetsDispatch((ViewGroup) root);
         }
     }
 
@@ -67,18 +68,5 @@ public final class InsetsHelper {
             return windowInsets;
         });
         ViewCompat.requestApplyInsets(view);
-    }
-
-    /**
-     * Wrapper to avoid requiring androidx.core:core dependency on ViewGroupCompat at compile time
-     * for older tooling; delegates to androidx.core.view.ViewGroupCompat.
-     */
-    private static final class ViewGroupCompatHelper {
-        private ViewGroupCompatHelper() {
-        }
-
-        static void installCompatInsetsDispatch(ViewGroup root) {
-            androidx.core.view.ViewGroupCompat.installCompatInsetsDispatch(root);
-        }
     }
 }

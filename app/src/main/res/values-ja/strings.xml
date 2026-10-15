@@ -3,6 +3,7 @@
     <string name="app_lock">アプリロック</string>
     <string name="app_lock_instructions">このアプリにアクセスするには生体認証またはPINコードが必要です。</string>
     <string name="webview_load_error">ページを読み込めませんでした。タップして再試行してください。</string>
+    <string name="webview_unavailable">この端末の WebView コンポーネントが利用できないか破損しています。Play ストアから Android System WebView を更新してから再度お試しください。</string>
     <string name="app_lock_unavailable">アプリロックは有効ですが、このデバイスでは認証を利用できません。</string>
     <string name="download_started">ファイルをダウンロード中！</string>
     <string name="download_failed">ダウンロードに失敗しました</string>
