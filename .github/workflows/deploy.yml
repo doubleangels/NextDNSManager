@@ -279,7 +279,7 @@ jobs:
           echo "release=${VERSION_NAME}" >> "$GITHUB_OUTPUT"
 
       - name: Finalize Sentry release
-        uses: getsentry/action-release@v3.7.0
+        uses: getsentry/action-release@v3.7.1
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: doubleangels
