@@ -158,19 +158,19 @@ jobs:
           persist-credentials: false
 
       - name: Download GMS APK from artifacts
-        uses: actions/download-artifact@v8.0.1
+        uses: actions/download-artifact@v8.0.2
         with:
           name: github-release-apk
           path: .
 
       - name: Download FOSS APK from artifacts
-        uses: actions/download-artifact@v8.0.1
+        uses: actions/download-artifact@v8.0.2
         with:
           name: github-foss-release-apk
           path: .
 
       - name: Download bundle from artifacts
-        uses: actions/download-artifact@v8.0.1
+        uses: actions/download-artifact@v8.0.2
         with:
           name: google-play-bundle
           path: .
