@@ -177,7 +177,7 @@ jobs:
 
       - name: Read APK info to get version code
         id: android_version
-        uses: hkusu/apk-info-action@v1
+        uses: hkusu/apk-info-action@v1.0.3
         with:
           apk-path: app-release.apk
 
@@ -215,7 +215,7 @@ jobs:
           footer: ${{ steps.git_merges.outputs.footer }}
 
       - name: Upload GMS APK to GitHub release
-        uses: shogo82148/actions-upload-release-asset@v1
+        uses: shogo82148/actions-upload-release-asset@v1.10.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -226,7 +226,7 @@ jobs:
           overwrite: true
 
       - name: Upload FOSS APK to GitHub release
-        uses: shogo82148/actions-upload-release-asset@v1
+        uses: shogo82148/actions-upload-release-asset@v1.10.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -237,7 +237,7 @@ jobs:
           overwrite: true
 
       - name: Publish GitHub release
-        uses: eregon/publish-release@v1
+        uses: eregon/publish-release@v1.0.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -257,17 +257,13 @@ jobs:
           tracks: production
           whatsNewDirectory: whatsnew
 
-      - name: Set up Ruby for Fastlane
+      # Installs the exact gems (and checksums) from the committed Gemfile.lock in
+      # frozen/deployment mode.
+      - name: Set up Ruby and install Fastlane
         uses: ruby/setup-ruby@v1.329.0
         with:
           ruby-version: "3.3"
-          bundler-cache: false
-
-      - name: Lock Ruby gems for reproducible Fastlane
-        run: bundle lock
-
-      - name: Install Ruby gems
-        run: bundle install --deployment
+          bundler-cache: true
 
       - name: Push Fastlane metadata to Play Store
         run: bundle exec fastlane supply --skip_upload_apk true --skip_upload_aab true --skip_upload_changelogs true --json_key service_account.json --package_name com.doubleangels.nextdnsmanagement --track production

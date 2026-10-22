@@ -44,7 +44,7 @@ import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 import com.doubleangels.nextdnsmanagement.utils.ExternalLinkHandler;
 import com.doubleangels.nextdnsmanagement.utils.InsetsHelper;
 import com.doubleangels.nextdnsmanagement.sharedpreferences.SharedPreferencesManager;
-import com.doubleangels.nextdnsmanagement.webview.WebAppInterface;
+import com.doubleangels.nextdnsmanagement.webview.SwipeRefreshBridge;
 import com.doubleangels.nextdnsmanagement.webview.WebDownloadHelper;
 import com.doubleangels.nextdnsmanagement.webview.WebViewInteractionScript;
 import com.doubleangels.nextdnsmanagement.webview.WebViewLayoutHelper;
@@ -90,6 +90,9 @@ public abstract class BaseMainActivity extends BaseActivity {
     // Enabled only while the WebView has history, so the system back gesture can
     // show its predictive back-to-home animation otherwise.
     private OnBackPressedCallback webViewBackCallback;
+    // WebView the swipe-refresh bridge is installed on. Installing it twice on the
+    // same WebView throws, and setupWebViewForActivity can run more than once.
+    private WebView bridgedWebView;
 
     /**
      * Called when the activity is created.
@@ -247,8 +250,8 @@ public abstract class BaseMainActivity extends BaseActivity {
             }
             if (webView != null) {
                 webView.evaluateJavascript(WebViewInteractionScript.DISCONNECT_SCRIPT, null);
-                // Remove JavaScript interfaces and clients
-                webView.removeJavascriptInterface("AndroidInterface");
+                // Remove the JavaScript bridge and clients
+                detachSwipeRefreshBridge();
                 webView.setWebViewClient(new WebViewClient());
                 webView.setWebChromeClient(new WebChromeClient());
                 webView.setDownloadListener(null);
@@ -476,8 +479,9 @@ public abstract class BaseMainActivity extends BaseActivity {
                             SharedPreferencesManager.putString(LAST_WEBVIEW_URL_KEY, pageUrl);
                         }
                         CookieManager.getInstance().setAcceptCookie(true);
-                        CookieManager.getInstance().acceptCookie();
-                        view.evaluateJavascript(WebViewInteractionScript.PAGE_FINISHED_SCRIPT, null);
+                        if (isValidNextDnsUrl(pageUrl)) {
+                            view.evaluateJavascript(WebViewInteractionScript.PAGE_FINISHED_SCRIPT, null);
+                        }
                     } catch (Exception e) {
                         SentryManager.captureException(e);
                     }
@@ -514,10 +518,10 @@ public abstract class BaseMainActivity extends BaseActivity {
             });
 
             webView.setWebChromeClient(new WebChromeClient());
-            // Re-attach on every setup so a WebView recreated after a render-process
-            // crash keeps the swipe-refresh bridge.
-            if (swipeRefreshLayout != null) {
-                webView.addJavascriptInterface(new WebAppInterface(this, swipeRefreshLayout), "AndroidInterface");
+            // A WebView recreated after a render-process crash needs the bridge again.
+            if (swipeRefreshLayout != null && bridgedWebView != webView
+                    && SwipeRefreshBridge.attach(webView, swipeRefreshLayout)) {
+                bridgedWebView = webView;
             }
 
             if (darkModeEnabled && WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
@@ -839,7 +843,7 @@ public abstract class BaseMainActivity extends BaseActivity {
             if (webView.getParent() != null) {
                 ((ViewGroup) webView.getParent()).removeView(webView);
             }
-            webView.removeJavascriptInterface("AndroidInterface");
+            detachSwipeRefreshBridge();
             webView.setWebViewClient(new WebViewClient());
             webView.setWebChromeClient(new WebChromeClient());
             webView.setDownloadListener(null);
@@ -850,6 +854,13 @@ public abstract class BaseMainActivity extends BaseActivity {
             webView = null;
             updateBackCallback();
         }
+    }
+
+    private void detachSwipeRefreshBridge() {
+        if (webView != null && webView == bridgedWebView) {
+            SwipeRefreshBridge.detach(webView);
+        }
+        bridgedWebView = null;
     }
 
     private boolean isValidNextDnsUrl(String url) {
