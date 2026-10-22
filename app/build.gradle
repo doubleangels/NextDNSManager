@@ -63,6 +63,13 @@ android {
         buildConfig = true
         compose = true
     }
+
+    lint {
+        // TEMP: print every finding in the CI log.
+        textReport = true
+        textOutput = file("stdout")
+        explainIssues = false
+    }
 }
 
 kotlin {

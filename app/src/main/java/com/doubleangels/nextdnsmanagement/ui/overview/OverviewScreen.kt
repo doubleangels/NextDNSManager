@@ -46,6 +46,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLocale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -74,7 +75,6 @@ import com.doubleangels.nextdnsmanagement.ui.theme.ChartPalette
 import com.doubleangels.nextdnsmanagement.ui.theme.LocalStatusColors
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -298,10 +298,13 @@ private fun QueriesChart(series: Series, range: TimeRange, totalColor: Color, bl
     }
     val totals = (0 until size).map { i -> series.values.values.sumOf { it.getOrElse(i) { 0L } } }
     val blocked = series.values["blocked"] ?: List(size) { 0L }
+    val locale = LocalLocale.current.platformLocale
     val pattern = android.text.format.DateFormat.getBestDateTimePattern(
-        Locale.getDefault(), if (range == TimeRange.DAY) "jm" else "MMMd",
+        locale, if (range == TimeRange.DAY) "jm" else "MMMd",
     )
-    val formatter = remember(pattern) { DateTimeFormatter.ofPattern(pattern).withZone(ZoneId.systemDefault()) }
+    val formatter = remember(pattern, locale) {
+        DateTimeFormatter.ofPattern(pattern, locale).withZone(ZoneId.systemDefault())
+    }
     fun label(i: Int): String = series.times.getOrNull(i)?.let { formatter.format(it) } ?: ""
     LineChart(
         lines = listOf(
