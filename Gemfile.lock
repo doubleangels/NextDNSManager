@@ -277,7 +277,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  fastlane (~> 2.241, >= 2.241.1)
+  fastlane (= 2.241.1)
 
 CHECKSUMS
   CFPropertyList (3.0.8) sha256=2c99d0d980536d3d7ab252f7bd59ac8be50fbdd1ff487c98c949bb66bb114261
