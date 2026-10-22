@@ -5,6 +5,7 @@ import android.app.DownloadManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
@@ -16,6 +17,7 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.RenderProcessGoneDetail;
+import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -85,26 +87,9 @@ public abstract class BaseMainActivity extends BaseActivity {
     // Blur overlay view to hide content during biometric authentication
     private View blurOverlay;
     private View webViewErrorView;
-
-    /**
-     * Saves the current state of the activity, including the WebView state and dark
-     * mode flag.
-     *
-     * @param outState Bundle in which to save the activity state.
-     */
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        try {
-            // We consciously avoid saving the WebView state to prevent
-            // TransactionTooLargeException which occurs when the WebView
-            // accumulates too much data (e.g. from single-page apps like nextdns.io)
-            // in its saved bundle.
-            outState.putBoolean("darkModeEnabled", darkModeEnabled);
-        } catch (Exception e) {
-            SentryManager.captureException(e);
-        }
-    }
+    // Enabled only while the WebView has history, so the system back gesture can
+    // show its predictive back-to-home animation otherwise.
+    private OnBackPressedCallback webViewBackCallback;
 
     /**
      * Called when the activity is created.
@@ -120,9 +105,6 @@ public abstract class BaseMainActivity extends BaseActivity {
         androidx.core.splashscreen.SplashScreen splashScreen =
                 androidx.core.splashscreen.SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            darkModeEnabled = savedInstanceState.getBoolean("darkModeEnabled");
-        }
         try {
             setContentView(R.layout.activity_main);
         } catch (Throwable e) {
@@ -133,11 +115,6 @@ public abstract class BaseMainActivity extends BaseActivity {
             finish();
             return;
         }
-
-        // Enable hardware acceleration programmatically
-        getWindow().setFlags(
-                android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-                android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
 
         // Initialize blur overlay
         blurOverlay = findViewById(R.id.blurOverlay);
@@ -224,17 +201,21 @@ public abstract class BaseMainActivity extends BaseActivity {
     }
 
     private void setupPredictiveBackForActivity() {
-        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+        webViewBackCallback = new OnBackPressedCallback(false) {
             @Override
             public void handleOnBackPressed() {
                 if (webView != null && webView.canGoBack()) {
                     webView.goBack();
-                } else {
-                    setEnabled(false);
-                    getOnBackPressedDispatcher().onBackPressed();
                 }
             }
-        });
+        };
+        getOnBackPressedDispatcher().addCallback(this, webViewBackCallback);
+    }
+
+    private void updateBackCallback() {
+        if (webViewBackCallback != null) {
+            webViewBackCallback.setEnabled(webView != null && webView.canGoBack());
+        }
     }
 
     private void setupInsetsForActivity() {
@@ -377,11 +358,19 @@ public abstract class BaseMainActivity extends BaseActivity {
      *         timeout.
      */
     private boolean shouldAuthenticate() {
-        return System.currentTimeMillis() - lastAuthenticatedTime > AUTH_TIMEOUT_MS;
+        long elapsed = System.currentTimeMillis() - lastAuthenticatedTime;
+        // A negative value means the clock was moved back; never treat that as
+        // "recently authenticated", or app lock could be bypassed that way.
+        return elapsed < 0 || elapsed > AUTH_TIMEOUT_MS;
     }
 
     private void maybeShowBiometricPrompt() {
-        if (SharedPreferencesManager.getBoolean("app_lock_enable", false) && shouldAuthenticate()) {
+        boolean appLockEnabled = SharedPreferencesManager.getBoolean("app_lock_enable", false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Keep the dashboard (DNS logs) out of the Recents thumbnail when locked.
+            setRecentsScreenshotEnabled(!appLockEnabled);
+        }
+        if (appLockEnabled && shouldAuthenticate()) {
             showBiometricPrompt();
         }
     }
@@ -464,6 +453,11 @@ public abstract class BaseMainActivity extends BaseActivity {
                         return false;
                     }
                     return ExternalLinkHandler.openExternalLink(view.getContext(), view, uri);
+                }
+
+                @Override
+                public void doUpdateVisitedHistory(WebView view, String historyUrl, boolean isReload) {
+                    updateBackCallback();
                 }
 
                 @Override
@@ -574,8 +568,11 @@ public abstract class BaseMainActivity extends BaseActivity {
             try {
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url.trim()));
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setMimeType(mimetype);
+                // Use the server-provided name so non-profile downloads (e.g. a CSV
+                // log export) don't get saved with a .mobileconfig extension.
                 request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS,
-                        "NextDNS-Configuration-" + System.currentTimeMillis() + ".mobileconfig");
+                        URLUtil.guessFileName(url, contentDisposition, mimetype));
                 DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                 if (downloadManager != null) {
                     // Enqueue the download request
@@ -851,6 +848,7 @@ public abstract class BaseMainActivity extends BaseActivity {
             SentryManager.captureException(e);
         } finally {
             webView = null;
+            updateBackCallback();
         }
     }
 

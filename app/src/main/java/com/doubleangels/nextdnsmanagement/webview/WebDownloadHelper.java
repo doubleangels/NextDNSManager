@@ -11,7 +11,8 @@ public final class WebDownloadHelper {
     }
 
     /**
-     * Returns true when the URL uses a scheme supported by {@link android.app.DownloadManager}.
+     * Returns true for HTTPS URLs. Plain HTTP is rejected because DownloadManager
+     * runs in a system process and is not bound by this app's cleartext policy.
      */
     public static boolean isDownloadManagerSupportedUrl(String url) {
         if (url == null || url.isBlank()) {
@@ -19,6 +20,6 @@ public final class WebDownloadHelper {
         }
         Uri uri = Uri.parse(url.trim());
         String scheme = uri.getScheme();
-        return "http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme);
+        return "https".equalsIgnoreCase(scheme);
     }
 }

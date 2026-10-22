@@ -34,7 +34,9 @@ public class SharedPreferencesManager {
 
     // A reference to the SharedPreferences object, backed by the application
     // context.
-    private static SharedPreferences sharedPreferences;
+    // Volatile because init() runs on a background thread while isInitialized()
+    // is polled from the main thread.
+    private static volatile SharedPreferences sharedPreferences;
 
     // Store only the application context to avoid leaking an Activity context.
     private static Context appContext;

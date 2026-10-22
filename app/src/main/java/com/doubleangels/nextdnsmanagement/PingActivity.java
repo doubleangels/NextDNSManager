@@ -31,10 +31,6 @@ public class PingActivity extends BaseActivity {
         setContentView(R.layout.activity_ping);
         setupInsets();
 
-        getWindow().setFlags(
-                android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
-                android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
-
         try {
             setupWebViewsForActivity(getString(R.string.ping_url), getString(R.string.test_url));
         } catch (Exception e) {

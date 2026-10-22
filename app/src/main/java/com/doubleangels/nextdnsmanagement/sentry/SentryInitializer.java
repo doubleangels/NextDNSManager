@@ -54,9 +54,9 @@ public final class SentryInitializer {
             // network calls, and more to provide context around errors
             options.enableAllAutoBreadcrumbs(true);
 
-            // Attach a screenshot of the user's view hierarchy at the time of the error
-            // This helps visualize the state of the UI when the crash or error occurred
-            options.setAttachScreenshot(true);
+            // No screenshots: the WebView shows the NextDNS dashboard, whose query log
+            // is effectively the user's browsing history.
+            options.setAttachScreenshot(false);
 
             // Attach the full view hierarchy for debugging layout or view-related issues
             options.setAttachViewHierarchy(true);

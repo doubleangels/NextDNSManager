@@ -4,7 +4,6 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.LinkProperties;
 import android.net.Network;
-import android.net.NetworkRequest;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
@@ -89,7 +88,10 @@ public class VisualIndicator {
                 }
             };
 
-            connectivityManager.registerNetworkCallback(new NetworkRequest.Builder().build(), networkCallback);
+            // Track only the default network. A callback for every network would let a
+            // secondary network (e.g. mobile data while on Wi-Fi) dropping turn the
+            // indicator red even though the device is still online.
+            connectivityManager.registerDefaultNetworkCallback(networkCallback);
             activity.getLifecycle().addObserver(new DefaultLifecycleObserver() {
                 @Override
                 public void onDestroy(@NonNull LifecycleOwner owner) {

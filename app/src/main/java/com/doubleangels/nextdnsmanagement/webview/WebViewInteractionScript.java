@@ -46,8 +46,20 @@ public final class WebViewInteractionScript {
             "       });" +
             "   }" +
             "   setupInteractionGuards();" +
+            // Coalesce mutation bursts into one pass per frame. The dashboard's live
+            // query log mutates the DOM constantly, and re-running querySelectorAll
+            // on every mutation record wastes CPU and battery.
+            "   var guardsScheduled = false;" +
+            "   function scheduleInteractionGuards() {" +
+            "       if (guardsScheduled) return;" +
+            "       guardsScheduled = true;" +
+            "       requestAnimationFrame(function() {" +
+            "           guardsScheduled = false;" +
+            "           setupInteractionGuards();" +
+            "       });" +
+            "   }" +
             "   if (!window.__ndmsInteractionObserver) {" +
-            "       window.__ndmsInteractionObserver = new MutationObserver(setupInteractionGuards);" +
+            "       window.__ndmsInteractionObserver = new MutationObserver(scheduleInteractionGuards);" +
             "       window.__ndmsInteractionObserver.observe(document.body, {childList: true, subtree: true});" +
             "   }" +
             "   window.__ndmsDisconnectInteractionObserver = function() {" +
