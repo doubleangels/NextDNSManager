@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
-import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -30,10 +29,8 @@ import android.widget.Toast;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 import androidx.biometric.BiometricPrompt;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewFeature;
@@ -50,11 +47,9 @@ import com.doubleangels.nextdnsmanagement.webview.WebDownloadHelper;
 import com.doubleangels.nextdnsmanagement.webview.WebViewInteractionScript;
 import com.doubleangels.nextdnsmanagement.webview.WebViewLayoutHelper;
 
-import java.util.Locale;
-
 /**
  * Shared implementation for the app's main activity: UI, WebView, and various
- * settings such as dark mode, locale, biometric re-authentication, and notification
+ * settings such as dark mode, biometric re-authentication, and notification
  * permission checks.
  * <p>
  * The gms and foss flavors differ only in Firebase Cloud Messaging availability;
@@ -71,9 +66,9 @@ public abstract class BaseMainActivity extends BaseActivity {
     // functionality
     private SwipeRefreshLayout swipeRefreshLayout;
     // Flag indicating whether dark mode is enabled
-    private Boolean darkModeEnabled = false;
+    private boolean darkModeEnabled = false;
     // Flag to avoid re-initializing the WebView if it has already been set up
-    private Boolean isWebViewInitialized = false;
+    private boolean isWebViewInitialized = false;
     // Biometric authentication timeout in milliseconds (5 minutes)
     private static final long AUTH_TIMEOUT_MS = 5 * 60 * 1000;
     private static final String LAST_WEBVIEW_URL_KEY = "last_webview_url";
@@ -90,9 +85,6 @@ public abstract class BaseMainActivity extends BaseActivity {
     // Blur overlay view to hide content during biometric authentication
     private View blurOverlay;
     private View webViewErrorView;
-    // SentryManager instance for error logging. Protected so flavor subclasses can
-    // report from their own hook overrides (e.g. gms's FCM init failure path).
-    protected SentryManager sentryManager;
 
     /**
      * Saves the current state of the activity, including the WebView state and dark
@@ -110,7 +102,7 @@ public abstract class BaseMainActivity extends BaseActivity {
             // in its saved bundle.
             outState.putBoolean("darkModeEnabled", darkModeEnabled);
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -136,7 +128,7 @@ public abstract class BaseMainActivity extends BaseActivity {
         } catch (Throwable e) {
             // Some devices ship a broken/mismatched system WebView provider that fails
             // to inflate; there is no way to recover the WebView-based UI in that case.
-            SentryManager.captureStaticException(e instanceof Exception ? (Exception) e : new RuntimeException(e));
+            SentryManager.captureException(e);
             Toast.makeText(this, R.string.webview_unavailable, Toast.LENGTH_LONG).show();
             finish();
             return;
@@ -151,8 +143,6 @@ public abstract class BaseMainActivity extends BaseActivity {
         blurOverlay = findViewById(R.id.blurOverlay);
         webViewErrorView = findViewById(R.id.webViewErrorView);
 
-        sentryManager = new SentryManager(this);
-
         if (SharedPreferencesManager.isInitialized()) {
             // Warm recreation (locale/density/theme change, or returning to a
             // still-warm process) -- nothing to wait on, so skip the background
@@ -165,24 +155,24 @@ public abstract class BaseMainActivity extends BaseActivity {
     }
 
     private void finishStartup() {
-        if (isFinishing() || isDestroyed() || sentryManager == null) {
+        if (isFinishing() || isDestroyed()) {
             return;
         }
 
         lastAuthenticatedTime = SharedPreferencesManager.getLong(LAST_AUTH_TIME_KEY, 0);
 
         try {
-            if (sentryManager.isEnabled()) {
+            if (SentryManager.isEnabled()) {
                 SentryInitializer.initialize(this);
             }
         } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
 
         try {
             initializeMessaging();
         } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
 
         try {
@@ -190,36 +180,31 @@ public abstract class BaseMainActivity extends BaseActivity {
             setupToolbarForActivity();
             setupPredictiveBackForActivity();
         } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
         try {
-            setupLanguageForActivity();
+            setupDarkModeForActivity();
         } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
         try {
-            setupDarkModeForActivity(sentryManager, SharedPreferencesManager.getString("dark_mode", "match"));
+            new VisualIndicator().initialize(this);
         } catch (Exception e) {
-            sentryManager.captureException(e);
-        }
-        try {
-            setupVisualIndicatorForActivity(sentryManager, this);
-        } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
         try {
             setupSwipeToRefreshForActivity();
         } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
         SwipeRefreshLayout refreshLayout = findViewById(R.id.swipeRefreshLayout);
         if (refreshLayout != null) {
             refreshLayout.post(() -> {
-                if (!isFinishing()) {
+                if (!isFinishing() && !isDestroyed()) {
                     try {
                         setupWebViewForActivity(getString(R.string.main_url));
                     } catch (Exception e) {
-                        sentryManager.captureException(e);
+                        SentryManager.captureException(e);
                     }
                 }
             });
@@ -286,10 +271,6 @@ public abstract class BaseMainActivity extends BaseActivity {
                 webView.setWebViewClient(new WebViewClient());
                 webView.setWebChromeClient(new WebChromeClient());
                 webView.setDownloadListener(null);
-                // Clear WebView cache and data
-                webView.clearCache(true);
-                webView.clearHistory();
-                webView.clearFormData();
                 // Destroy the WebView
                 webView.destroy();
                 webView = null;
@@ -304,10 +285,8 @@ public abstract class BaseMainActivity extends BaseActivity {
                 blurOverlay.clearAnimation();
                 blurOverlay = null;
             }
-            // Clear sentry manager reference
-            sentryManager = null;
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -325,7 +304,7 @@ public abstract class BaseMainActivity extends BaseActivity {
         try {
             CookieManager.getInstance().flush();
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -384,16 +363,10 @@ public abstract class BaseMainActivity extends BaseActivity {
             try {
                 setupWebViewForActivity(getString(R.string.main_url));
             } catch (Exception e) {
-                if (sentryManager != null) {
-                    sentryManager.captureException(e);
-                } else {
-                    SentryManager.captureStaticException(e);
-                }
+                SentryManager.captureException(e);
             }
         }
-        if (sentryManager != null) {
-            setupDarkModeForActivity(sentryManager, SharedPreferencesManager.getString("dark_mode", "match"));
-        }
+        setupDarkModeForActivity();
         maybeShowBiometricPrompt();
     }
 
@@ -434,72 +407,17 @@ public abstract class BaseMainActivity extends BaseActivity {
     }
 
     /**
-     * Configures the language settings for the activity.
-     * Applies the current locale to the application's configuration.
-     *
-     * @return The language code of the current locale.
+     * Applies the saved dark mode preference and records whether the WebView
+     * should render dark.
      */
-    private String setupLanguageForActivity() {
-        Configuration config = getResources().getConfiguration();
-        Locale appLocale = !config.getLocales().isEmpty()
-                ? config.getLocales().get(0)
-                : Locale.getDefault();
-        Locale.setDefault(appLocale);
-        Configuration newConfig = new Configuration(config);
-        newConfig.setLocale(appLocale);
-        new ContextThemeWrapper(getBaseContext(), R.style.AppTheme).applyOverrideConfiguration(newConfig);
-        return appLocale.getLanguage();
-    }
-
-    /**
-     * Sets up dark mode based on user preference.
-     * Configures the AppCompatDelegate accordingly and logs the setting.
-     *
-     * @param sentryManager SentryManager instance for logging.
-     * @param darkMode      Dark mode setting ("match", "on", "disabled", "off").
-     */
-    private void setupDarkModeForActivity(SentryManager sentryManager, String darkMode) {
-        switch (darkMode) {
-            case "match":
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                updateDarkModeState();
-                break;
-            case "on":
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                darkModeEnabled = true;
-                break;
-            case "disabled":
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                darkModeEnabled = false;
-                break;
-            case "off":
-            default:
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                darkModeEnabled = false;
-                break;
-        }
-    }
-
-    /**
-     * Updates the internal dark mode flag based on the current UI configuration.
-     */
-    private void updateDarkModeState() {
-        int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-        darkModeEnabled = (nightModeFlags == Configuration.UI_MODE_NIGHT_YES);
-    }
-
-    /**
-     * Initializes a visual indicator (e.g., a network or loading indicator) using
-     * the VisualIndicator class.
-     *
-     * @param sentryManager  SentryManager instance for logging.
-     * @param lifecycleOwner LifecycleOwner to manage the indicator's lifecycle.
-     */
-    private void setupVisualIndicatorForActivity(SentryManager sentryManager, LifecycleOwner lifecycleOwner) {
-        try {
-            new VisualIndicator(this).initialize(this, lifecycleOwner, this);
-        } catch (Exception e) {
-            sentryManager.captureException(e);
+    private void setupDarkModeForActivity() {
+        String darkMode = SharedPreferencesManager.getString("dark_mode", "match");
+        applyDarkMode(darkMode);
+        if ("match".equals(darkMode)) {
+            int nightModeFlags = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            darkModeEnabled = nightModeFlags == Configuration.UI_MODE_NIGHT_YES;
+        } else {
+            darkModeEnabled = "on".equals(darkMode);
         }
     }
 
@@ -567,7 +485,7 @@ public abstract class BaseMainActivity extends BaseActivity {
                         CookieManager.getInstance().acceptCookie();
                         view.evaluateJavascript(WebViewInteractionScript.PAGE_FINISHED_SCRIPT, null);
                     } catch (Exception e) {
-                        SentryManager.captureStaticException(e);
+                        SentryManager.captureException(e);
                     }
                 }
 
@@ -575,10 +493,8 @@ public abstract class BaseMainActivity extends BaseActivity {
                 public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                     if (request.isForMainFrame()) {
                         showWebViewError();
-                        if (sentryManager != null) {
-                            sentryManager.captureMessage(
-                                    "WebView error: " + error.getDescription() + " url=" + request.getUrl());
-                        }
+                        SentryManager.captureMessage(
+                                "WebView error: " + error.getDescription() + " url=" + request.getUrl());
                     }
                 }
 
@@ -587,48 +503,31 @@ public abstract class BaseMainActivity extends BaseActivity {
                         WebResourceResponse errorResponse) {
                     if (request.isForMainFrame()) {
                         showWebViewError();
-                        if (sentryManager != null) {
-                            sentryManager.captureMessage(
-                                    "WebView HTTP error: " + errorResponse.getStatusCode()
-                                            + " url=" + request.getUrl());
-                        }
+                        SentryManager.captureMessage(
+                                "WebView HTTP error: " + errorResponse.getStatusCode()
+                                        + " url=" + request.getUrl());
                     }
                 }
 
                 @Override
                 public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
-                    if (sentryManager != null) {
-                        sentryManager.captureMessage(
-                                "WebView render process gone, didCrash=" + detail.didCrash());
-                    }
+                    SentryManager.captureMessage(
+                            "WebView render process gone, didCrash=" + detail.didCrash());
                     teardownWebViewForRecovery();
                     setupWebViewForActivity(getString(R.string.main_url));
                     return true;
                 }
             });
 
-            webView.setWebChromeClient(new WebChromeClient() {
-                @Override
-                public void onShowCustomView(android.view.View view, CustomViewCallback callback) {
-                    super.onShowCustomView(view, callback);
-                }
+            webView.setWebChromeClient(new WebChromeClient());
+            // Re-attach on every setup so a WebView recreated after a render-process
+            // crash keeps the swipe-refresh bridge.
+            if (swipeRefreshLayout != null) {
+                webView.addJavascriptInterface(new WebAppInterface(this, swipeRefreshLayout), "AndroidInterface");
+            }
 
-                @Override
-                public void onHideCustomView() {
-                    super.onHideCustomView();
-                }
-
-                @Override
-                public boolean onShowFileChooser(WebView webView, android.webkit.ValueCallback<Uri[]> filePathCallback,
-                        FileChooserParams fileChooserParams) {
-                    return super.onShowFileChooser(webView, filePathCallback, fileChooserParams);
-                }
-            });
-
-            if (Boolean.TRUE.equals(darkModeEnabled)) {
-                if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                    WebSettingsCompat.setAlgorithmicDarkeningAllowed(webView.getSettings(), true);
-                }
+            if (darkModeEnabled && WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+                WebSettingsCompat.setAlgorithmicDarkeningAllowed(webView.getSettings(), true);
             }
 
             setupDownloadManagerForActivity();
@@ -637,7 +536,7 @@ public abstract class BaseMainActivity extends BaseActivity {
             loadWebViewUrl(webView, url);
             isWebViewInitialized = true;
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -649,11 +548,9 @@ public abstract class BaseMainActivity extends BaseActivity {
     private void setupSwipeToRefreshForActivity() {
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         webView = findViewById(R.id.webView);
-        if (webView == null || swipeRefreshLayout == null) {
+        if (swipeRefreshLayout == null) {
             return;
         }
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.addJavascriptInterface(new WebAppInterface(this, swipeRefreshLayout), "AndroidInterface");
         swipeRefreshLayout.setOnRefreshListener(() -> {
             if (webView != null) {
                 webView.reload();
@@ -688,7 +585,7 @@ public abstract class BaseMainActivity extends BaseActivity {
                 }
                 Toast.makeText(getApplicationContext(), R.string.download_started, Toast.LENGTH_LONG).show();
             } catch (Exception e) {
-                SentryManager.captureStaticException(e);
+                SentryManager.captureException(e);
                 Toast.makeText(BaseMainActivity.this, R.string.download_failed, Toast.LENGTH_SHORT).show();
             }
         });
@@ -705,16 +602,7 @@ public abstract class BaseMainActivity extends BaseActivity {
         View overlay = blurOverlay;
         overlay.animate().cancel();
         // Set overlay color based on current theme
-        int overlayColor;
-        if (darkModeEnabled) {
-            // Dark mode: #212529
-            overlayColor = android.graphics.Color.parseColor("#212529");
-        } else {
-            // Light mode: #007bff
-            overlayColor = android.graphics.Color.parseColor("#007bff");
-        }
-
-        overlay.setBackgroundColor(overlayColor);
+        overlay.setBackgroundColor(android.graphics.Color.parseColor(darkModeEnabled ? "#212529" : "#007bff"));
         overlay.setVisibility(View.VISIBLE);
         overlay.setScaleX(0.95f);
         overlay.setScaleY(0.95f);
@@ -960,7 +848,7 @@ public abstract class BaseMainActivity extends BaseActivity {
             webView.setDownloadListener(null);
             webView.destroy();
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
         } finally {
             webView = null;
         }

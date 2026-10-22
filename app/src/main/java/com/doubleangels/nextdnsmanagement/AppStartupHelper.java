@@ -33,7 +33,7 @@ public final class AppStartupHelper {
             try {
                 SharedPreferencesManager.init(activity.getApplicationContext());
             } catch (Exception e) {
-                SentryManager.captureStaticException(e);
+                SentryManager.captureException(e);
             }
             activity.runOnUiThread(() -> {
                 preferencesReady.set(true);

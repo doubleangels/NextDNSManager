@@ -1,8 +1,6 @@
 package com.doubleangels.nextdnsmanagement;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -12,8 +10,6 @@ import android.widget.Toast;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 import com.doubleangels.nextdnsmanagement.utils.ExternalLinkHandler;
 import com.doubleangels.nextdnsmanagement.utils.InsetsHelper;
-
-import java.util.Locale;
 
 /**
  * Activity displaying information about the author, including links to GitHub
@@ -30,18 +26,8 @@ public class AuthorActivity extends BaseActivity {
         try {
             setupPersonalLinks();
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
         }
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        Configuration config = newBase.getResources().getConfiguration();
-        Locale newLocale = (!config.getLocales().isEmpty()) ? config.getLocales().get(0) : Locale.getDefault();
-        Configuration overrideConfig = new Configuration(config);
-        overrideConfig.setLocale(newLocale);
-        Context localizedContext = newBase.createConfigurationContext(overrideConfig);
-        super.attachBaseContext(localizedContext);
     }
 
     private void setupInsets() {

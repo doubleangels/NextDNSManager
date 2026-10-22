@@ -42,14 +42,10 @@ public class WebAppInterface {
                     }
                 });
             } else {
-                new SentryManager(context)
-                        .captureMessage("Context is not an Activity instance. Cannot update swipe refresh.");
+                SentryManager.captureMessage("Context is not an Activity instance. Cannot update swipe refresh.");
             }
         } catch (Exception e) {
-            Context context = contextRef.get();
-            if (context != null) {
-                new SentryManager(context).captureException(e);
-            }
+            SentryManager.captureException(e);
         }
     }
 }

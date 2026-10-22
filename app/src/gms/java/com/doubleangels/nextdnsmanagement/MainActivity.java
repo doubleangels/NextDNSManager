@@ -22,13 +22,8 @@ public class MainActivity extends BaseMainActivity {
         if (MessagingInitializer.isInitialized()) {
             return;
         }
-        new Thread(() -> {
-            try {
-                MessagingInitializer.initialize(getApplicationContext());
-            } catch (Exception e) {
-                runOnUiThread(() -> sentryManager.captureException(e));
-            }
-        }, "fcm-init").start();
+        // initialize() reports its own failures to Sentry.
+        new Thread(() -> MessagingInitializer.initialize(getApplicationContext()), "fcm-init").start();
     }
 
     @Override

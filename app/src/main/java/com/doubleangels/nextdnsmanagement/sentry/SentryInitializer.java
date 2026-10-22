@@ -4,9 +4,8 @@ import android.content.Context;
 
 import com.doubleangels.nextdnsmanagement.BuildConfig;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 import io.sentry.Hint;
+import io.sentry.Sentry;
 import io.sentry.SentryEvent;
 import io.sentry.TypeCheckHint;
 import io.sentry.android.core.SentryAndroid;
@@ -25,9 +24,10 @@ import okhttp3.Request;
  * for better error monitoring, performance tracing, and diagnostic
  * capabilities.
  */
-public class SentryInitializer {
+public final class SentryInitializer {
 
-    private static final AtomicBoolean INITIALIZED = new AtomicBoolean(false);
+    private SentryInitializer() {
+    }
 
     /**
      * Initializes Sentry, providing DSN (Data Source Name), release version,
@@ -37,11 +37,11 @@ public class SentryInitializer {
      * @param context The application or activity context needed for Sentry's
      *                initialization.
      */
-    public static void initialize(Context context) {
-        if (!INITIALIZED.compareAndSet(false, true)) {
+    public static synchronized void initialize(Context context) {
+        if (Sentry.isEnabled()) {
             return;
         }
-        SentryAndroid.init(context, options -> {
+        SentryAndroid.init(context.getApplicationContext(), options -> {
             // The DSN (Data Source Name) for your Sentry project:
             // This tells Sentry where to send the error data
             options.setDsn("https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.us.sentry.io/6270764");
@@ -98,6 +98,18 @@ public class SentryInitializer {
             });
 
         });
+    }
+
+    /**
+     * Initializes or shuts down Sentry to match the user's opt-in preference, so
+     * toggling the setting takes effect without restarting the app.
+     */
+    public static synchronized void applyPreference(Context context, boolean enabled) {
+        if (enabled) {
+            initialize(context);
+        } else if (Sentry.isEnabled()) {
+            Sentry.close();
+        }
     }
 
     private static boolean shouldDropEvent(SentryEvent event, Hint hint) {

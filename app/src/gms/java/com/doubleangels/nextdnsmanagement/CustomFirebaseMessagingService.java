@@ -25,17 +25,13 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
     private static final String CHANNEL_ID = "general";
     private static final String CHANNEL_NAME = "General";
 
-    // Sentry manager instance for capturing errors
-    private SentryManager sentryManager;
-
     /**
-     * Called when the service is created. Initializes the SentryManager and the
-     * notification channel (created once here rather than on every message).
+     * Called when the service is created. Creates the notification channel once
+     * here rather than on every message.
      */
     @Override
     public void onCreate() {
         super.onCreate();
-        sentryManager = new SentryManager(this);
         try {
             NotificationManager notificationManager = (NotificationManager) getSystemService(
                     Context.NOTIFICATION_SERVICE);
@@ -46,10 +42,10 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
                         NotificationManager.IMPORTANCE_HIGH);
                 notificationManager.createNotificationChannel(channel);
             } else {
-                sentryManager.captureMessage("NotificationManager is null");
+                SentryManager.captureMessage("NotificationManager is null");
             }
         } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -79,7 +75,7 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
             } catch (Exception e) {
                 // Capture exception if an error occurs while processing the notification
                 // payload
-                sentryManager.captureException(e);
+                SentryManager.captureException(e);
             }
 
             // Attempt to override with data payload if available
@@ -94,7 +90,7 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
                 }
             } catch (Exception e) {
                 // Capture exception if an error occurs while processing the data payload
-                sentryManager.captureException(e);
+                SentryManager.captureException(e);
             }
 
             // Create an intent to open MainActivity when the notification is clicked
@@ -125,15 +121,15 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
                     notificationManager.notify(notificationId, notificationBuilder.build());
                 } catch (Exception e) {
                     // Capture any exception that occurs while displaying the notification
-                    sentryManager.captureException(e);
+                    SentryManager.captureException(e);
                 }
             } else {
                 // Log a message if the NotificationManager is not available
-                sentryManager.captureMessage("NotificationManager is null");
+                SentryManager.captureMessage("NotificationManager is null");
             }
         } catch (Exception e) {
             // Capture any general exception during message processing
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -148,10 +144,10 @@ public class CustomFirebaseMessagingService extends FirebaseMessagingService {
         try {
             super.onNewToken(token);
             // Log the new token using Sentry
-            sentryManager.captureMessage("New FCM token received");
+            SentryManager.captureMessage("New FCM token received");
         } catch (Exception e) {
             // Capture any exception that occurs while handling the new token
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
     }
 }

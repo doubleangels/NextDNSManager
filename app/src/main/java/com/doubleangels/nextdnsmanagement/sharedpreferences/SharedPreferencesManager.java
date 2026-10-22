@@ -10,6 +10,7 @@ import androidx.security.crypto.MasterKey;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * A thread-safe utility class for managing encrypted SharedPreferences.
@@ -24,6 +25,9 @@ public class SharedPreferencesManager {
 
     // Key to track if migration from unencrypted to encrypted has been completed.
     private static final String MIGRATION_COMPLETE_KEY = "_encryption_migration_complete";
+
+    // Prefix of the keys EncryptedSharedPreferences uses to store its own keysets.
+    private static final String TINK_KEYSET_PREFIX = "__androidx_security_crypto_encrypted_prefs_";
 
     // Set when encrypted storage could not be initialized.
     private static final String ENCRYPTION_FALLBACK_KEY = "_encryption_fallback_active";
@@ -98,8 +102,7 @@ public class SharedPreferencesManager {
 
     private static void handleEncryptionFailure(Exception e) {
         Log.e(TAG, "Failed to initialize encrypted SharedPreferences; using plaintext fallback", e);
-        SentryManager.captureStaticException(
-                e instanceof Exception ? (Exception) e : new Exception(e));
+        SentryManager.captureException(e);
 
         sharedPreferences = appContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         usingEncryptedStorage = false;
@@ -114,67 +117,60 @@ public class SharedPreferencesManager {
     /**
      * Migrates existing unencrypted SharedPreferences to encrypted storage.
      * This is a one-time operation that runs on first use of encrypted preferences.
+     * <p>
+     * EncryptedSharedPreferences stores its entries in the same
+     * {@code PREF_NAME}.xml file as the old plaintext preferences, so the
+     * plaintext entries are removed key by key. Deleting the file would also wipe
+     * the encrypted entries that were just written.
      *
      * @param context The context used to access the unencrypted preferences.
      */
     private static void migrateUnencryptedPreferences(Context context) {
         try {
-            // Check if unencrypted preferences file exists.
-            File unencryptedFile = new File(
+            File prefsFile = new File(
                     context.getApplicationInfo().dataDir + "/shared_prefs/" + PREF_NAME + ".xml");
-            if (!unencryptedFile.exists()) {
+            if (!prefsFile.exists()) {
                 // No unencrypted preferences to migrate.
                 sharedPreferences.edit().putBoolean(MIGRATION_COMPLETE_KEY, true).apply();
                 return;
             }
 
-            // Read from unencrypted preferences.
             SharedPreferences unencryptedPrefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
             SharedPreferences.Editor encryptedEditor = sharedPreferences.edit();
+            SharedPreferences.Editor plaintextEditor = unencryptedPrefs.edit();
 
-            // Migrate all existing key-value pairs.
-            boolean hasData = false;
-            java.util.Map<String, ?> allPrefs = unencryptedPrefs.getAll();
-            for (String key : allPrefs.keySet()) {
-                Object value = allPrefs.get(key);
+            for (Map.Entry<String, ?> entry : unencryptedPrefs.getAll().entrySet()) {
+                String key = entry.getKey();
+                Object value = entry.getValue();
+                if (key.startsWith(TINK_KEYSET_PREFIX)) {
+                    // The encryption keysets live in this file too; leave them alone.
+                    continue;
+                }
                 if (value instanceof String) {
                     encryptedEditor.putString(key, (String) value);
-                    hasData = true;
                 } else if (value instanceof Boolean) {
                     encryptedEditor.putBoolean(key, (Boolean) value);
-                    hasData = true;
                 } else if (value instanceof Integer) {
                     encryptedEditor.putInt(key, (Integer) value);
-                    hasData = true;
                 } else if (value instanceof Long) {
                     encryptedEditor.putLong(key, (Long) value);
-                    hasData = true;
                 } else if (value instanceof Float) {
                     encryptedEditor.putFloat(key, (Float) value);
-                    hasData = true;
+                } else {
+                    continue;
                 }
+                plaintextEditor.remove(key);
             }
 
-            // Mark migration as complete only after a successful copy.
+            // Write the encrypted copies before dropping the plaintext originals, and
+            // mark migration complete only after a successful copy.
             encryptedEditor.putBoolean(MIGRATION_COMPLETE_KEY, true);
-            encryptedEditor.apply();
-
-            // Delete unencrypted preferences file after successful migration.
-            if (hasData) {
-                try {
-                    boolean deleted = unencryptedFile.delete();
-                    if (deleted) {
-                        Log.d(TAG, "Successfully migrated and deleted unencrypted preferences");
-                    } else {
-                        Log.w(TAG, "Migration completed but failed to delete unencrypted file");
-                    }
-                } catch (Exception e) {
-                    Log.w(TAG, "Failed to delete unencrypted preferences file", e);
-                }
+            if (encryptedEditor.commit()) {
+                plaintextEditor.apply();
             }
         } catch (Exception e) {
             Log.e(TAG, "Error during preference migration; will retry on next launch", e);
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -190,7 +186,7 @@ public class SharedPreferencesManager {
         try {
             sharedPreferences.edit().putString(key, value).apply();
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -208,7 +204,7 @@ public class SharedPreferencesManager {
         try {
             return sharedPreferences.getString(key, defaultValue);
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
             return defaultValue;
         }
     }
@@ -225,7 +221,7 @@ public class SharedPreferencesManager {
         try {
             sharedPreferences.edit().putBoolean(key, value).apply();
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -243,7 +239,7 @@ public class SharedPreferencesManager {
         try {
             return sharedPreferences.getBoolean(key, defaultValue);
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
             return defaultValue;
         }
     }
@@ -253,7 +249,7 @@ public class SharedPreferencesManager {
         try {
             sharedPreferences.edit().putLong(key, value).apply();
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -262,7 +258,7 @@ public class SharedPreferencesManager {
         try {
             return sharedPreferences.getLong(key, defaultValue);
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
             return defaultValue;
         }
     }

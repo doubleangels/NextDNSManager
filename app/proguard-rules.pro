@@ -11,12 +11,6 @@
 # General ProGuard rules
 -dontwarn javax.annotation.**
 
-# AndroidX App Startup (InitializationProvider runs before Application.onCreate)
--keep class androidx.startup.** { *; }
--keep class * extends androidx.startup.Initializer {
-    <init>();
-}
-
 # Webkit
 -keep class androidx.webkit.** { *; }
 -dontwarn androidx.webkit.**
@@ -25,9 +19,6 @@
 -dontwarn okhttp3.**
 -dontwarn okio.**
 
-# Gson (VisualIndicator JSON parsing)
--keep class com.google.gson.** { *; }
--dontwarn com.google.gson.**
 -keep class de.hdodenhof.circleimageview.** { *; }
 -dontwarn de.hdodenhof.circleimageview.**
 

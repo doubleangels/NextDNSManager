@@ -1,12 +1,9 @@
 package com.doubleangels.nextdnsmanagement.sentry;
 
 import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.util.Log;
 
 import com.doubleangels.nextdnsmanagement.sharedpreferences.SharedPreferencesManager;
-
-import java.lang.ref.WeakReference;
 
 import java.io.EOFException;
 import java.net.ConnectException;
@@ -15,31 +12,34 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLHandshakeException;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import io.sentry.Sentry;
 import io.sentry.SentryOptions;
 import okhttp3.internal.http2.ConnectionShutdownException;
 
 /**
- * A helper class to manage Sentry error logging.
- * It checks user preferences to see if Sentry is enabled before capturing
- * messages and exceptions.
+ * Static helper for Sentry error logging. Every call checks the user's opt-in
+ * preference before sending anything, and transient infrastructure failures are
+ * only logged locally.
+ * <p>
+ * This class is intentionally stateless: holding an instance in an Activity field
+ * meant callbacks that outlived the Activity could hit a nulled-out reference and
+ * crash while trying to report a different error.
  */
-public class SentryManager {
+public final class SentryManager {
 
-    /** Tag for logging purposes. */
     private static final String TAG = "SentryManager";
 
     private static final AtomicBoolean FILTERED_UNCAUGHT_HANDLER_INSTALLED = new AtomicBoolean(false);
 
     /**
-     * List of exception types to ignore when capturing exceptions.
-     * These exceptions will not be sent to Sentry.
+     * Exception types that are never sent to Sentry. Subclasses are listed
+     * explicitly because Sentry's own type filter matches exact classes only.
      */
     private static final List<Class<? extends Exception>> IGNORED_ERRORS = Arrays.asList(
             ActivityNotFoundException.class,
@@ -53,32 +53,21 @@ public class SentryManager {
             SSLHandshakeException.class,
             ConnectionShutdownException.class);
 
-    /** Android context used for accessing SharedPreferences and other resources. */
-    private final WeakReference<Context> contextRef;
-
     /**
-     * Constructs a new SentryManager instance.
-     *
-     * @param context The context used to access preferences and other
-     *                application-level resources.
-     */
-    public SentryManager(Context context) {
-        this.contextRef = new WeakReference<>(context);
-    }
-
-    /**
-     * Transient Firebase Messaging / Installations errors that reflect device or
-     * Play Services state, not app bugs.
+     * Firebase Messaging / Installations errors that reflect device or Play
+     * Services state, not app bugs. Matched case-sensitively.
      */
     private static final List<String> TRANSIENT_FIREBASE_MESSAGING_ERRORS = Arrays.asList(
             "SERVICE_NOT_AVAILABLE",
             "FIS_AUTH_ERROR",
             "MISSING_INSTANCEID_SERVICE",
+            "TOO_MANY_REGISTRATIONS",
             "Firebase Installations Service is unavailable",
             "TIMEOUT");
 
     /**
-     * Transient network errors from OkHttp or connectivity checks — not app bugs.
+     * Transient network errors from OkHttp or connectivity checks. Matched
+     * against the lower-cased message.
      */
     private static final List<String> TRANSIENT_NETWORK_ERROR_MESSAGES = Arrays.asList(
             "canceled",
@@ -96,17 +85,14 @@ public class SentryManager {
             "settings preface not received",
             "authenticate with proxy",
             "read timed out",
-            "connection closed");
+            "can only download http/https");
+
+    private SentryManager() {
+    }
 
     /**
-     * Checks whether the provided throwable (including its cause chain) matches an
-     * ignored error type.
-     * <p>
-     * This static method is available for both static and instance contexts.
-     * </p>
-     *
-     * @param throwable The throwable to check.
-     * @return true if the throwable should be ignored; false otherwise.
+     * Returns true if the throwable, or anything in its cause chain, is a known
+     * transient failure that should not be reported.
      */
     public static boolean isIgnored(Throwable throwable) {
         Throwable current = throwable;
@@ -116,10 +102,7 @@ public class SentryManager {
                     return true;
                 }
             }
-            if (isTransientFirebaseMessagingError(current)) {
-                return true;
-            }
-            if (isTransientNetworkError(current)) {
+            if (matchesIgnoredMessage(current.getMessage())) {
                 return true;
             }
             current = current.getCause();
@@ -127,52 +110,25 @@ public class SentryManager {
         return false;
     }
 
-    private static boolean isTransientFirebaseMessagingError(Throwable throwable) {
-        String message = throwable.getMessage();
-        if (message == null) {
-            return false;
-        }
-        for (String error : TRANSIENT_FIREBASE_MESSAGING_ERRORS) {
-            if (message.contains(error)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean isTransientNetworkError(Throwable throwable) {
-        String message = throwable.getMessage();
-        if (message == null) {
-            return false;
-        }
-        String lower = message.toLowerCase();
-        for (String pattern : TRANSIENT_NETWORK_ERROR_MESSAGES) {
-            if (lower.contains(pattern)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
-     * Returns true when a serialized exception message matches a known transient pattern.
+     * Returns true when an exception message matches a known transient pattern.
      */
     public static boolean matchesIgnoredMessage(String message) {
         if (message == null || message.isEmpty()) {
             return false;
         }
-        String lower = message.toLowerCase();
         for (String error : TRANSIENT_FIREBASE_MESSAGING_ERRORS) {
             if (message.contains(error)) {
                 return true;
             }
         }
+        String lower = message.toLowerCase(Locale.ROOT);
         for (String pattern : TRANSIENT_NETWORK_ERROR_MESSAGES) {
             if (lower.contains(pattern)) {
                 return true;
             }
         }
-        return lower.contains("can only download http/https");
+        return false;
     }
 
     /**
@@ -206,97 +162,36 @@ public class SentryManager {
     }
 
     /**
-     * Captures an exception using Sentry.
-     * <p>
-     * If the exception is one of the ignored types or Sentry is disabled in user
-     * preferences,
-     * the exception is logged locally using Log.e() rather than being sent to
-     * Sentry.
-     * </p>
-     *
-     * @param e The exception to capture or log.
+     * Sends the exception to Sentry when the user opted in and it is not a known
+     * transient failure. Always logs locally.
      */
-    public void captureException(Exception e) {
-        if (SentryManager.isIgnored(e)) {
-            Log.e(TAG, "Ignored error:", e);
-            return;
-        }
-
-        if (isEnabled()) {
-            // When enabled, capture the exception in Sentry for remote error tracking
-            Sentry.captureException(e);
-            Log.e(TAG, "Got error:", e);
-        } else {
-            // If not enabled, just log the error locally
-            Log.e(TAG, "Got error:", e);
-        }
-    }
-
-    /**
-     * Captures an exception using Sentry in a static context.
-     * <p>
-     * If the exception is one of the ignored types, the error is logged locally
-     * using Log.e()
-     * without sending it to Sentry. This method assumes Sentry is enabled or uses a
-     * default behavior.
-     * </p>
-     *
-     * @param e The exception to capture or log.
-     */
-    public static void captureStaticException(Exception e) {
+    public static void captureException(Throwable e) {
         if (isIgnored(e)) {
             Log.e(TAG, "Ignored error:", e);
             return;
         }
-
-        if (isSentryEnabledStatic()) {
+        if (isEnabled()) {
             Sentry.captureException(e);
         }
         Log.e(TAG, "Got error:", e);
     }
 
-    private static boolean isSentryEnabledStatic() {
-        if (!SharedPreferencesManager.isInitialized()) {
-            return false;
-        }
-        try {
-            return SharedPreferencesManager.getBoolean("sentry_enable", false);
-        } catch (Exception e) {
-            Log.e(TAG, "Error checking Sentry enable status", e);
-            return false;
-        }
-    }
-
     /**
-     * Logs a message as a breadcrumb in Sentry if enabled,
-     * or logs it using Log.d() otherwise.
-     *
-     * @param message The message to log or capture.
+     * Records the message as a Sentry breadcrumb when the user opted in. Always
+     * logs locally.
      */
-    public void captureMessage(String message) {
+    public static void captureMessage(String message) {
         if (isEnabled()) {
-            // If Sentry is enabled, add a breadcrumb (a trail of events leading to a crash
-            // or issue)
             Sentry.addBreadcrumb(message);
-            Log.d(TAG, message);
-        } else {
-            // Otherwise, log the message locally
-            Log.d(TAG, message);
         }
+        Log.d(TAG, message);
     }
 
     /**
-     * Checks SharedPreferences to determine whether Sentry is enabled.
-     * <p>
-     * The preference ("sentry_enable") is assumed to be managed elsewhere, for
-     * example, in a settings UI.
-     * </p>
-     *
-     * @return true if Sentry is enabled by the user; false otherwise.
+     * Returns true if the user enabled Sentry reporting in settings.
      */
-    public boolean isEnabled() {
-        Context context = contextRef.get();
-        if (context == null || !SharedPreferencesManager.isInitialized()) {
+    public static boolean isEnabled() {
+        if (!SharedPreferencesManager.isInitialized()) {
             return false;
         }
         try {

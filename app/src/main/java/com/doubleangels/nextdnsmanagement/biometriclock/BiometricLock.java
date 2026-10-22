@@ -22,7 +22,6 @@ public class BiometricLock {
         if (activity.isFinishing() || activity.isDestroyed()) {
             return false;
         }
-        SentryManager sentryManager = new SentryManager(activity);
         try {
             BiometricManager biometricManager = BiometricManager.from(activity);
             int canAuth = biometricManager.canAuthenticate(
@@ -30,11 +29,11 @@ public class BiometricLock {
                             | BiometricManager.Authenticators.DEVICE_CREDENTIAL);
             boolean result = (canAuth == BiometricManager.BIOMETRIC_SUCCESS);
             if (!result) {
-                sentryManager.captureMessage("Biometric authentication not available. Status: " + canAuth);
+                SentryManager.captureMessage("Biometric authentication not available. Status: " + canAuth);
             }
             return result;
         } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
             return false;
         }
     }
@@ -48,7 +47,6 @@ public class BiometricLock {
             return;
         }
 
-        SentryManager sentryManager = new SentryManager(activity);
         Executor executor = ContextCompat.getMainExecutor(activity);
 
         BiometricPrompt biometricPrompt = new BiometricPrompt(activity,
@@ -62,7 +60,7 @@ public class BiometricLock {
                             return;
                         }
                         String errorMessage = "Biometric authentication error (" + errorCode + "): " + errString;
-                        sentryManager.captureMessage(errorMessage);
+                        SentryManager.captureMessage(errorMessage);
                         callback.onAuthenticationError(errorCode, errString.toString());
                     }
 
@@ -83,7 +81,7 @@ public class BiometricLock {
                             return;
                         }
                         String failMessage = "Biometric authentication failed: unrecognized biometric input.";
-                        sentryManager.captureMessage(failMessage);
+                        SentryManager.captureMessage(failMessage);
                         callback.onAuthenticationFailed();
                     }
                 });
@@ -99,7 +97,7 @@ public class BiometricLock {
         try {
             biometricPrompt.authenticate(promptInfo);
         } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
             callback.onAuthenticationError(BiometricPrompt.ERROR_HW_UNAVAILABLE, e.getMessage());
         }
     }

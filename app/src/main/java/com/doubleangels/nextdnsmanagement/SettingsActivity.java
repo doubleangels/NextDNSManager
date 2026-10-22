@@ -4,15 +4,12 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -25,17 +22,12 @@ import com.doubleangels.nextdnsmanagement.sharedpreferences.SharedPreferencesMan
 import com.doubleangels.nextdnsmanagement.utils.ExternalLinkHandler;
 import com.doubleangels.nextdnsmanagement.utils.InsetsHelper;
 
-import java.util.Locale;
-
 /**
  * Activity for application settings. It initializes shared preferences, sets up
  * error logging (Sentry),
  * configures dark mode settings, and loads the SettingsFragment.
  */
 public class SettingsActivity extends BaseActivity {
-
-    // Sentry manager instance for capturing errors
-    public SentryManager sentryManager;
 
     /**
      * Called when the activity is created. Sets up shared preferences, error
@@ -50,7 +42,6 @@ public class SettingsActivity extends BaseActivity {
         setContentView(R.layout.activity_settings);
         setupInsets();
 
-        sentryManager = new SentryManager(this);
         if (SharedPreferencesManager.isInitialized()) {
             finishSettingsStartup();
         } else {
@@ -59,25 +50,18 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void finishSettingsStartup() {
-        if (isFinishing()) {
+        if (isFinishing() || isDestroyed()) {
             return;
         }
         try {
-            if (sentryManager.isEnabled()) {
-                SentryInitializer.initialize(this);
-            }
+            applyDarkMode(SharedPreferencesManager.getString("dark_mode", "match"));
         } catch (Exception e) {
-            sentryManager.captureException(e);
-        }
-        try {
-            setupDarkModeForActivity(SharedPreferencesManager.getString("dark_mode", "match"));
-        } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
         try {
             initializeViews();
         } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -86,38 +70,6 @@ public class SettingsActivity extends BaseActivity {
         InsetsHelper.installOnRoot(root);
         View settingsContainer = findViewById(R.id.settings);
         InsetsHelper.applySystemBarPadding(settingsContainer);
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        // Retrieve the current configuration
-        Configuration config = newBase.getResources().getConfiguration();
-        // Get the primary locale from the configuration, or default if empty
-        Locale newLocale = (!config.getLocales().isEmpty()) ? config.getLocales().get(0) : Locale.getDefault();
-        // Create a new configuration overriding the locale
-        Configuration overrideConfig = new Configuration(config);
-        overrideConfig.setLocale(newLocale);
-        // Create a localized context with the new configuration
-        Context localizedContext = newBase.createConfigurationContext(overrideConfig);
-        super.attachBaseContext(localizedContext);
-    }
-
-    /**
-     * Configures the dark mode settings for the activity.
-     *
-     * @param darkMode The dark mode setting value from shared preferences.
-     */
-    public void setupDarkModeForActivity(String darkMode) {
-        if (sentryManager != null) {
-            sentryManager.captureMessage("Dark mode setting: " + darkMode);
-        }
-        if (darkMode.contains("match")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        } else if (darkMode.contains("on")) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
     }
 
     /**
@@ -136,9 +88,6 @@ public class SettingsActivity extends BaseActivity {
      */
     public static class SettingsFragment extends PreferenceFragmentCompat {
 
-        // Shared SentryManager instance for this fragment — avoids repeated instantiation
-        private SentryManager sentryManager;
-
         /**
          * Called during fragment creation to initialize the preference hierarchy from
          * an XML resource.
@@ -148,12 +97,11 @@ public class SettingsActivity extends BaseActivity {
          */
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            sentryManager = new SentryManager(requireContext());
             try {
                 // Load preferences from the XML resource
                 setPreferencesFromResource(R.xml.root_preferences, rootKey);
             } catch (Exception e) {
-                sentryManager.captureException(e);
+                SentryManager.captureException(e);
             }
             if (!SharedPreferencesManager.isInitialized()) {
                 return;
@@ -162,7 +110,7 @@ public class SettingsActivity extends BaseActivity {
                 // Set the initial visibility of Sentry-related preferences
                 setInitialSentryVisibility(SharedPreferencesManager.getBoolean("sentry_enable", false));
             } catch (Exception e) {
-                sentryManager.captureException(e);
+                SentryManager.captureException(e);
             }
             try {
                 // Retrieve references to various preferences
@@ -209,30 +157,7 @@ public class SettingsActivity extends BaseActivity {
                     versionPreference.setSummary(versionName);
                 }
             } catch (Exception e) {
-                sentryManager.captureException(e);
-            }
-        }
-
-        /**
-         * Releases resources when the fragment's view is destroyed.
-         */
-        @Override
-        public void onDestroyView() {
-            super.onDestroyView();
-            sentryManager = null;
-        }
-
-        private void captureMessageIfAvailable(String message) {
-            if (sentryManager != null) {
-                sentryManager.captureMessage(message);
-            }
-        }
-
-        private void captureExceptionIfAvailable(Exception e) {
-            if (sentryManager != null) {
-                sentryManager.captureException(e);
-            } else if (getContext() != null) {
-                new SentryManager(requireContext()).captureException(e);
+                SentryManager.captureException(e);
             }
         }
 
@@ -285,9 +210,7 @@ public class SettingsActivity extends BaseActivity {
                                     Uri.parse(getString(textResource)));
                         }
                     } catch (Exception e) {
-                        if (getContext() != null) {
-                            new SentryManager(getContext()).captureException(e);
-                        }
+                        SentryManager.captureException(e);
                     }
                     return true;
                 });
@@ -316,9 +239,7 @@ public class SettingsActivity extends BaseActivity {
                         Toast.makeText(getContext(), R.string.activity_open_security_error,
                                 Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
-                        if (getContext() != null) {
-                            new SentryManager(getContext()).captureException(e);
-                        }
+                        SentryManager.captureException(e);
                     }
                     return true;
                 });
@@ -334,16 +255,12 @@ public class SettingsActivity extends BaseActivity {
             setting.setOnPreferenceChangeListener((preference, newValue) -> {
                 try {
                     // Log and save the new dark mode setting
-                    new SentryManager(requireContext())
-                            .captureMessage("Dark mode set to " + newValue.toString() + ".");
+                    SentryManager.captureMessage("Dark mode set to " + newValue + ".");
                     SharedPreferencesManager.putString("dark_mode", newValue.toString());
-
                     // Apply the dark mode change immediately
-                    if (getActivity() instanceof SettingsActivity) {
-                        ((SettingsActivity) getActivity()).setupDarkModeForActivity(newValue.toString());
-                    }
+                    applyDarkMode(newValue.toString());
                 } catch (Exception e) {
-                    captureExceptionIfAvailable(e);
+                    SentryManager.captureException(e);
                 }
                 return true;
             });
@@ -380,33 +297,33 @@ public class SettingsActivity extends BaseActivity {
                                         public void onAuthenticationSucceeded() {
                                             SharedPreferencesManager.putBoolean("app_lock_enable", newValueBoolean);
                                             setting.setChecked(newValueBoolean);
-                                            captureMessageIfAvailable(
+                                            SentryManager.captureMessage(
                                                     "App lock set to " + newValueBoolean + " after biometric authentication.");
                                         }
 
                                         @Override
                                         public void onAuthenticationError(int errorCode, String error) {
                                             setting.setChecked(currentValue);
-                                            captureMessageIfAvailable(
+                                            SentryManager.captureMessage(
                                                     "App lock change failed - authentication error: " + error);
                                         }
 
                                         @Override
                                         public void onAuthenticationFailed() {
                                             setting.setChecked(currentValue);
-                                            captureMessageIfAvailable(
+                                            SentryManager.captureMessage(
                                                     "App lock change failed - authentication failed");
                                         }
                                     });
                         } else {
                             setting.setChecked(currentValue);
-                            captureMessageIfAvailable(
+                            SentryManager.captureMessage(
                                     "Cannot change app lock - biometric authentication not available");
                         }
                         return false;
                     }
                 } catch (Exception e) {
-                    captureExceptionIfAvailable(e);
+                    SentryManager.captureException(e);
                 }
                 return true;
             });
@@ -418,24 +335,20 @@ public class SettingsActivity extends BaseActivity {
          * @param switchPreference The Sentry switch preference.
          */
         private void setupSentryChangeListener(SwitchPreference switchPreference) {
-            if (switchPreference != null) {
-                switchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
-                    try {
-                        // Log and update the Sentry preference
-                        sentryManager
-                                .captureMessage("Sentry set to " + newValue.toString() + ".");
-                        boolean isEnabled = (boolean) newValue;
-                        SharedPreferencesManager.putBoolean("sentry_enable", isEnabled);
-                        // Update visibility for Sentry-related preferences
-                        setPreferenceVisibility("whitelist_domains", isEnabled);
-                        setPreferenceVisibility("whitelist_domain_1_button", isEnabled);
-                        setPreferenceVisibility("whitelist_domain_2_button", isEnabled);
-                    } catch (Exception e) {
-                        sentryManager.captureException(e);
-                    }
-                    return true;
-                });
-            }
+            switchPreference.setOnPreferenceChangeListener((preference, newValue) -> {
+                try {
+                    boolean isEnabled = (boolean) newValue;
+                    SentryManager.captureMessage("Sentry set to " + isEnabled + ".");
+                    SharedPreferencesManager.putBoolean("sentry_enable", isEnabled);
+                    // Start or stop reporting right away instead of on next launch,
+                    // so opting out stops crash reports immediately.
+                    SentryInitializer.applyPreference(requireContext(), isEnabled);
+                    setInitialSentryVisibility(isEnabled);
+                } catch (Exception e) {
+                    SentryManager.captureException(e);
+                }
+                return true;
+            });
         }
     }
 }

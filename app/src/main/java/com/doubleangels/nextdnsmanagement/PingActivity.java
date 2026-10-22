@@ -1,9 +1,6 @@
 package com.doubleangels.nextdnsmanagement;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,13 +10,10 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
 import com.doubleangels.nextdnsmanagement.utils.ExternalLinkHandler;
 import com.doubleangels.nextdnsmanagement.utils.InsetsHelper;
 import com.doubleangels.nextdnsmanagement.webview.WebViewInteractionScript;
-
-import java.util.Locale;
 
 /**
  * Activity that handles ping functionality by loading two web pages in separate
@@ -27,9 +21,8 @@ import java.util.Locale;
  */
 public class PingActivity extends BaseActivity {
 
-    public SentryManager sentryManager;
-    public WebView webView;
-    public WebView webView2;
+    private WebView webView;
+    private WebView webView2;
     private boolean webView2Initialized;
 
     @Override
@@ -42,18 +35,10 @@ public class PingActivity extends BaseActivity {
                 android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED,
                 android.view.WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
 
-        sentryManager = new SentryManager(this);
-        try {
-            if (sentryManager.isEnabled()) {
-                SentryInitializer.initialize(this);
-            }
-        } catch (Exception e) {
-            sentryManager.captureException(e);
-        }
         try {
             setupWebViewsForActivity(getString(R.string.ping_url), getString(R.string.test_url));
         } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -91,20 +76,9 @@ public class PingActivity extends BaseActivity {
             webView = null;
             destroyWebView(webView2);
             webView2 = null;
-            sentryManager = null;
         } catch (Exception e) {
-            SentryManager.captureStaticException(e);
+            SentryManager.captureException(e);
         }
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        Configuration config = newBase.getResources().getConfiguration();
-        Locale newLocale = (!config.getLocales().isEmpty()) ? config.getLocales().get(0) : Locale.getDefault();
-        Configuration overrideConfig = new Configuration(config);
-        overrideConfig.setLocale(newLocale);
-        Context localizedContext = newBase.createConfigurationContext(overrideConfig);
-        super.attachBaseContext(localizedContext);
     }
 
     private void setupInsets() {
@@ -113,8 +87,7 @@ public class PingActivity extends BaseActivity {
         InsetsHelper.applySystemBarPadding(root);
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
-    public void setupWebViewsForActivity(String url1, String url2) {
+    private void setupWebViewsForActivity(String url1, String url2) {
         try {
             webView = findViewById(R.id.webView);
             webView2 = findViewById(R.id.webView2);
@@ -128,7 +101,7 @@ public class PingActivity extends BaseActivity {
                 }
             });
         } catch (Exception e) {
-            sentryManager.captureException(e);
+            SentryManager.captureException(e);
         }
     }
 
@@ -172,9 +145,6 @@ public class PingActivity extends BaseActivity {
             ((ViewGroup) targetWebView.getParent()).removeView(targetWebView);
         }
         targetWebView.setWebViewClient(new WebViewClient());
-        targetWebView.clearCache(true);
-        targetWebView.clearHistory();
-        targetWebView.clearFormData();
         targetWebView.destroy();
     }
 }
