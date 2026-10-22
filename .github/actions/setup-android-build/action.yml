@@ -11,6 +11,12 @@ runs:
         distribution: temurin
         cache: gradle
 
+    - name: Cache Android SDK platform 37.0
+      uses: actions/cache@v6.1.0
+      with:
+        path: /usr/local/lib/android/sdk/platforms/android-37.0
+        key: android-sdk-platform-37.0
+
     - name: Prepare Android SDK
       shell: bash
       run: |

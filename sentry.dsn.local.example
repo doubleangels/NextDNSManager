@@ -1,0 +1,3 @@
+# Copy to sentry.dsn.local (gitignored) for local debug builds.
+# One line: your Sentry project DSN from Settings → Client Keys.
+https://YOUR_KEY@oYOUR_ORG.ingest.us.sentry.io/YOUR_PROJECT_ID

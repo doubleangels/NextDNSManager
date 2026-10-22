@@ -1,0 +1,44 @@
+[versions]
+activity = "1.13.0"
+agp = "9.4.1"
+appcompat = "1.8.0"
+biometric = "1.1.0"
+circleimageview = "3.1.0"
+core = "1.19.1"
+firebaseMessaging = "26.0.0"
+googleServices = "4.5.0"
+leakcanary = "2.14"
+material = "1.14.0"
+okhttp = "5.5.0"
+preference = "1.2.1"
+profileinstaller = "1.4.1"
+securityCrypto = "1.1.0"
+sentry = "8.61.0"
+sentryGradlePlugin = "6.24.0"
+splashscreen = "1.2.0"
+swiperefreshlayout = "1.2.0"
+webkit = "1.18.0"
+
+[libraries]
+activity = { module = "androidx.activity:activity", version.ref = "activity" }
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
+circleimageview = { module = "de.hdodenhof:circleimageview", version.ref = "circleimageview" }
+core = { module = "androidx.core:core", version.ref = "core" }
+core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessaging" }
+leakcanary-android = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakcanary" }
+material = { module = "com.google.android.material:material", version.ref = "material" }
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+preference = { module = "androidx.preference:preference", version.ref = "preference" }
+profileinstaller = { module = "androidx.profileinstaller:profileinstaller", version.ref = "profileinstaller" }
+# Only reads settings saved by older versions, once; see SharedPreferencesManager.
+security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+sentry-android = { module = "io.sentry:sentry-android", version.ref = "sentry" }
+swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
+webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+sentry-android-gradle = { id = "io.sentry.android.gradle", version.ref = "sentryGradlePlugin" }
