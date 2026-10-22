@@ -46,6 +46,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -63,6 +64,7 @@ import com.doubleangels.nextdnsmanagement.ui.components.SectionCard
 fun AppSettingsScreen(session: SessionViewModel, contentPadding: PaddingValues) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
+    val resources = LocalResources.current
     var appLock by remember { mutableStateOf(AppPreferences.appLock) }
     var errorReporting by remember { mutableStateOf(AppPreferences.errorReporting) }
     var confirmSignOut by remember { mutableStateOf(false) }
@@ -111,9 +113,9 @@ fun AppSettingsScreen(session: SessionViewModel, contentPadding: PaddingValues) 
                     ) { enable ->
                         // Changing app lock always requires authenticating first.
                         BiometricLock(activity).showPrompt(
-                            context.getString(if (enable) R.string.enable_app_lock_title else R.string.disable_app_lock_title),
-                            context.getString(if (enable) R.string.enable_app_lock_subtitle else R.string.disable_app_lock_subtitle),
-                            context.getString(R.string.app_lock_confirm_action),
+                            resources.getString(if (enable) R.string.enable_app_lock_title else R.string.disable_app_lock_title),
+                            resources.getString(if (enable) R.string.enable_app_lock_subtitle else R.string.disable_app_lock_subtitle),
+                            resources.getString(R.string.app_lock_confirm_action),
                             object : BiometricLock.BiometricLockCallback {
                                 override fun onAuthenticationSucceeded() {
                                     AppPreferences.appLock = enable
@@ -166,7 +168,7 @@ fun AppSettingsScreen(session: SessionViewModel, contentPadding: PaddingValues) 
         }
         item {
             SectionCard(stringResource(R.string.settings_tools)) {
-                LinkRow(Icons.Outlined.NetworkPing, stringResource(R.string.ping_title)) { open(context.getString(R.string.ping_url)) }
+                LinkRow(Icons.Outlined.NetworkPing, stringResource(R.string.ping_title)) { open(resources.getString(R.string.ping_url)) }
                 LinkRow(Icons.Outlined.SettingsEthernet, stringResource(R.string.private_dns)) {
                     runCatching { context.startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS)) }
                 }
@@ -179,7 +181,7 @@ fun AppSettingsScreen(session: SessionViewModel, contentPadding: PaddingValues) 
                     leadingContent = { Icon(Icons.Outlined.Info, contentDescription = null) },
                     headlineContent = { Text(stringResource(R.string.version)) },
                     supportingContent = { Text(BuildConfig.VERSION_NAME) },
-                    modifier = Modifier.clickable { open(context.getString(R.string.versions_url)) },
+                    modifier = Modifier.clickable { open(resources.getString(R.string.versions_url)) },
                 )
                 val links = listOf(
                     R.string.github to R.string.github_url,
@@ -189,7 +191,7 @@ fun AppSettingsScreen(session: SessionViewModel, contentPadding: PaddingValues) 
                     R.string.donation to R.string.donation_url,
                 )
                 links.forEach { (label, url) ->
-                    LinkRow(Icons.AutoMirrored.Outlined.OpenInNew, stringResource(label)) { open(context.getString(url)) }
+                    LinkRow(Icons.AutoMirrored.Outlined.OpenInNew, stringResource(label)) { open(resources.getString(url)) }
                 }
                 HorizontalDivider()
                 listOf(
@@ -197,7 +199,7 @@ fun AppSettingsScreen(session: SessionViewModel, contentPadding: PaddingValues) 
                     R.string.nextdns_privacy_policy to R.string.nextdns_privacy_policy_url,
                     R.string.nextdns_user_agreement to R.string.nextdns_user_agreement_url,
                 ).forEach { (label, url) ->
-                    LinkRow(Icons.Outlined.Policy, stringResource(label)) { open(context.getString(url)) }
+                    LinkRow(Icons.Outlined.Policy, stringResource(label)) { open(resources.getString(url)) }
                 }
                 Text(
                     stringResource(R.string.disclaimer),

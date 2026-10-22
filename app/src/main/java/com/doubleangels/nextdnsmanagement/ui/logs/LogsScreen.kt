@@ -53,6 +53,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -86,7 +87,7 @@ fun LogsScreen(
         }
     }
     val scope = rememberCoroutineScope()
-    val context = LocalContext.current
+    val resources = LocalResources.current
     val listState = rememberLazyListState()
     var selected by remember { mutableStateOf<LogEntry?>(null) }
     var confirmClear by remember { mutableStateOf(false) }
@@ -183,7 +184,7 @@ fun LogsScreen(
                 scope.launch {
                     val failure = viewModel.addTo(list, domain)
                     showMessage(
-                        failure ?: context.getString(
+                        failure ?: resources.getString(
                             if (list == EntryList.ALLOWLIST) R.string.logs_added_allowlist else R.string.logs_added_denylist,
                             domain,
                         ),
