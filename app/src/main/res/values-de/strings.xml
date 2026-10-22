@@ -2,77 +2,29 @@
 <resources>
     <string name="app_lock">App-Sperre</string>
     <string name="app_lock_instructions">Biometrie oder PIN erforderlich, um auf diese App zuzugreifen.</string>
-    <string name="webview_load_error">Seite konnte nicht geladen werden. Tippen, um es erneut zu versuchen.</string>
-    <string name="webview_unavailable">Die WebView-Komponente dieses Geräts ist nicht verfügbar oder beschädigt. Bitte aktualisiere Android System WebView über den Play Store und versuche es erneut.</string>
-    <string name="app_lock_unavailable">App-Sperre ist aktiviert, aber auf diesem Gerät ist keine Authentifizierung verfügbar.</string>
-    <string name="download_started">Datei wird heruntergeladen!</string>
-    <string name="download_failed">Download fehlgeschlagen</string>
-    <string name="link_open_security_error">Link kann aufgrund von Sicherheitsbeschränkungen nicht geöffnet werden.</string>
-    <string name="no_browser_found">Kein Browser zum Öffnen des Links gefunden.</string>
-    <string name="no_email_client_found">Kein E-Mail-Client gefunden.</string>
-    <string name="email_open_security_error">E-Mail-Client kann aufgrund von Sicherheitsbeschränkungen nicht geöffnet werden.</string>
     <string name="text_copied">Text kopiert!</string>
-    <string name="activity_open_security_error">Aktivität kann aufgrund von Sicherheitsbeschränkungen nicht geöffnet werden.</string>
     <string name="enable_app_lock_title">App-Sperre aktivieren</string>
     <string name="disable_app_lock_title">App-Sperre deaktivieren</string>
     <string name="enable_app_lock_subtitle">Authentifizieren, um App-Sperre zu aktivieren</string>
     <string name="disable_app_lock_subtitle">Authentifizieren, um App-Sperre zu deaktivieren</string>
     <string name="app_lock_confirm_action">Biometrie oder Geräte-PIN zur Bestätigung verwenden</string>
-    <string name="send_email">E-Mail senden</string>
     <string name="app_name">NextDNS Manager</string>
-    <string name="author">Autor</string>
-    <string name="back_title">Zurück</string>
     <string name="dark_mode">Dunkelmodus</string>
-    <string name="dark_mode_instructions">Dunkelmodus-Einstellung</string>
-    <string name="developer">Entwickler</string>
     <string name="disclaimer">Diese App und ihr Entwickler sind NICHT mit NextDNS verbunden.</string>
-    <string name="disclaimer_title">Haftungsausschluss</string>
     <string name="donation">Spenden</string>
-    <string name="donation_name">Wenn Sie diese App genießen und spenden möchten, können Sie dies hier tun. Bitte beachten Sie, dass dies vollständig optional ist. Vielen Dank für Ihre Unterstützung!</string>
-    <string name="sentry">Sentry</string>
-    <string name="feedback">Wenn Sie möchten, füllen Sie bitte eine kurze Umfrage aus, um mir zu helfen, die App zu verbessern</string>
     <string name="feedback_title">Feedback</string>
-    <string name="generic_content_description">Dies ist eine allgemeine Inhaltsbeschreibung.</string>
     <string name="github">Github</string>
-    <string name="github_summary">Tippen, um das Github Repository dieser App anzuzeigen.</string>
     <string name="issues">Ein Problem melden</string>
-    <string name="github_issues_summary">Tippen, um ein Problem zu melden oder aktuelle Probleme anzuzeigen.</string>
-    <string name="help_green">Sicheres DNS wird verwendet UND das Gerät ist mit NextDNS verbunden.</string>
-    <string name="help_orange">Sicheres DNS wird NICHT verwendet UND das Gerät ist mit NextDNS verbunden.</string>
-    <string name="help_red">Sicheres DNS wird NICHT verwendet.</string>
-    <string name="help_yellow">Sicheres DNS wird verwendet, aber das Gerät ist NICHT mit NextDNS verbunden.</string>
-    <string name="home_title">Startseite</string>
     <string name="nextdns_privacy_policy">NextDNS-Datenschutzrichtlinie</string>
     <string name="nextdns_user_agreement">NextDNS Benutzervereinbarung</string>
-    <string name="other">Andere</string>
-    <string name="permission">Tippen, um die Berechtigungen dieser App anzuzeigen.</string>
-    <string name="permission_details">Diese App nutzt folgende Berechtigungen:</string>
-    <string name="permission_question">Wenn Sie eine Frage zu diesen Berechtigungen haben, öffnen Sie bitte ein Problem auf Github.</string>
-    <string name="permission_title">Berechtigungen</string>
     <string name="ping_title">Ping-Test</string>
-    <string name="privacy">Datenschutz</string>
     <string name="privacy_policy">NextDNS Manager-Datenschutzrichtlinie</string>
     <string name="private_dns">Privater DNS</string>
-    <string name="refresh_title">Auffrischen</string>
-    <string name="redact">Redact</string>
-    <string name="redact_summary">Entdecke Redact - entferne versteckte EXIF-Metadaten aus Fotos und Videos, bevor du sie teilst.</string>
-    <string name="sentry_enable_instructions">Sentry Aktivieren</string>
-    <string name="sentry_info">Mehr Erfahren</string>
-    <string name="sentry_info_instructions">Tippen, um mehr über Sentry zu erfahren.</string>
     <string name="settings">Einstellungen</string>
-    <string name="settings_activity_title">Einstellungen</string>
-    <string name="tally_issues">Wenn Sie keinen GitHub-Account haben, können Sie hier ein Problem melden.</string>
     <string name="translate">Übersetzen</string>
-    <string name="translate_summary">Wenn Sie falsche Übersetzungen sehen, helfen Sie mir bitte, sie hier zu reparieren.</string>
     <string name="unlock_description">Authentifizieren Sie sich, um auf Ihre Einstellungen zuzugreifen und sie zu ändern.</string>
     <string name="unlock_title">Entsperren</string>
-    <string name="user_agreement">Benutzervereinbarung</string>
     <string name="version">Version</string>
     <string name="whitelist_domains">Wenn Sie Sentry aktivieren, können Sie diese Domains in Ihrer NextDNS-Konfiguration auf die Whitelist setzen.</string>
     <string name="whitelist_instructions">Bitte erwägen Sie, die Fehlerverfolgung von Sentry zu aktivieren. Dies sammelt keine persönlichen Informationen und hilft mir, die App zu verbessern.</string>
-    <string-array name="dark_mode_entries">
-        <item>System folgen</item>
-        <item>An</item>
-        <item>Aus</item>
-    </string-array>
 </resources>

@@ -1,78 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_lock">App Lock</string>
-    <string name="app_lock_instructions">Require biometrics or PIN to access this app.</string>
-    <string name="webview_load_error">Unable to load page. Tap to retry.</string>
-    <string name="webview_unavailable">This device\'s WebView component is unavailable or broken. Please update Android System WebView from the Play Store and try again.</string>
-    <string name="app_lock_unavailable">App lock is enabled but authentication is unavailable on this device.</string>
-    <string name="download_started">Downloading file!</string>
-    <string name="download_failed">Download failed</string>
-    <string name="link_open_security_error">Unable to open link due to security restrictions.</string>
-    <string name="no_browser_found">No browser found to open link.</string>
-    <string name="no_email_client_found">No email client found.</string>
-    <string name="email_open_security_error">Unable to open email client due to security restrictions.</string>
-    <string name="text_copied">Text copied!</string>
-    <string name="activity_open_security_error">Unable to open activity due to security restrictions.</string>
-    <string name="enable_app_lock_title">Enable App Lock</string>
-    <string name="disable_app_lock_title">Disable App Lock</string>
-    <string name="enable_app_lock_subtitle">Authenticate to enable app lock</string>
-    <string name="disable_app_lock_subtitle">Authenticate to disable app lock</string>
     <string name="app_lock_confirm_action">Use biometric or device credentials to confirm this action</string>
-    <string name="send_email">Send Email</string>
+    <string name="app_lock_instructions">Require biometrics or PIN to access this app.</string>
     <string name="app_name">NextDNS Manager</string>
-    <string name="author">Author</string>
-    <string name="back_title">Back</string>
     <string name="dark_mode">Dark Mode</string>
-    <string name="dark_mode_instructions">Dark Mode Setting</string>
-    <string name="developer">Developer</string>
+    <string name="disable_app_lock_subtitle">Authenticate to disable app lock</string>
+    <string name="disable_app_lock_title">Disable App Lock</string>
     <string name="disclaimer">This app and its developer are NOT affiliated with NextDNS.</string>
-    <string name="disclaimer_title">Disclaimer</string>
     <string name="donation">Donate</string>
-    <string name="donation_name">If you enjoy this app and wish to donate, you can do so here. Please note, this is completely optional. Thanks for your support!</string>
-    <string name="sentry">Sentry</string>
-    <string name="feedback">If you wish, please fill out a quick survey to help me improve the app.</string>
+    <string name="enable_app_lock_subtitle">Authenticate to enable app lock</string>
+    <string name="enable_app_lock_title">Enable App Lock</string>
     <string name="feedback_title">Feedback</string>
-    <string name="generic_content_description">This is a generic content description.</string>
     <string name="github">Github</string>
-    <string name="github_summary">Tap to view this app\'s Github repository.</string>
     <string name="issues">Report an Issue</string>
-    <string name="github_issues_summary">Tap to report an issue or view currently reported ones.</string>
-    <string name="help_green">Secure DNS is being used AND device is connected to NextDNS.</string>
-    <string name="help_orange">Secure DNS is NOT being used AND device is connected to NextDNS.</string>
-    <string name="help_red">Secure DNS is NOT being used.</string>
-    <string name="help_yellow">Secure DNS is being used but device is NOT connected to NextDNS.</string>
-    <string name="home_title">Home</string>
     <string name="nextdns_privacy_policy">NextDNS Privacy Policy</string>
     <string name="nextdns_user_agreement">NextDNS User Agreement</string>
-    <string name="other">Other</string>
-    <string name="permission">Tap to see this app\'s permissions.</string>
-    <string name="permission_details">This app uses the following permissions:</string>
-    <string name="permission_question">If you have a question about these permissions, please open an issue on Github.</string>
-    <string name="permission_title">Permissions</string>
     <string name="ping_title">Ping Test</string>
-    <string name="privacy">Privacy</string>
     <string name="privacy_policy">NextDNS Manager Privacy Policy</string>
     <string name="private_dns">Private DNS</string>
-    <string name="refresh_title">Refresh</string>
-    <string name="redact">Redact</string>
-    <string name="redact_summary">Check out Redact - remove hidden EXIF metadata from photos and videos before you share.</string>
-    <string name="sentry_enable_instructions">Enable Sentry</string>
-    <string name="sentry_info">Learn More</string>
-    <string name="sentry_info_instructions">Tap to learn more about Sentry.</string>
     <string name="settings">Settings</string>
-    <string name="settings_activity_title">Settings</string>
-    <string name="tally_issues">If you don\'t have a GitHub account, you can report an issue here.</string>
+    <string name="text_copied">Text copied!</string>
     <string name="translate">Translate</string>
-    <string name="translate_summary">If you see any incorrect translations, please help me fix them here.</string>
     <string name="unlock_description">Authenticate to access and change your settings.</string>
     <string name="unlock_title">Unlock</string>
-    <string name="user_agreement">User Agreement</string>
     <string name="version">Version</string>
     <string name="whitelist_domains">If you enable Sentry, please whitelist these domains in your NextDNS configuration.</string>
     <string name="whitelist_instructions">Please consider opting in to Sentry error tracking. This doesn\'t collect any personal information and helps me make the app better.</string>
-    <string-array name="dark_mode_entries">
-        <item>Match System</item>
-        <item>On</item>
-        <item>Off</item>
-    </string-array>
+
+    <!-- Common -->
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="remove">Remove</string>
+    <string name="remove_entry_title">Remove %1$s?</string>
+    <string name="retry">Retry</string>
+    <string name="save">Save</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="switch_profile">Switch profile</string>
+    <string name="no_profiles">This NextDNS account has no profiles yet. Create one at my.nextdns.io, then try again.</string>
+
+    <!-- Tabs -->
+    <string name="tab_overview">Overview</string>
+    <string name="tab_logs">Logs</string>
+    <string name="tab_lists">Lists</string>
+    <string name="tab_profile">Profile</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Connect your NextDNS account</string>
+    <string name="onboarding_body">Paste your NextDNS API key to see your analytics, query logs and settings right in the app.</string>
+    <string name="onboarding_find_key">Find your API key</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_invalid_key">NextDNS did not accept this API key. Check it and try again.</string>
+    <string name="onboarding_show_key">Show API key</string>
+    <string name="onboarding_hide_key">Hide API key</string>
+    <string name="onboarding_key_storage">Your API key is stored encrypted on this device and is only sent to api.nextdns.io.</string>
+
+    <!-- Query status -->
+    <string name="status_default">Resolved</string>
+    <string name="status_blocked">Blocked</string>
+    <string name="status_allowed">Allowed</string>
+
+    <!-- Overview -->
+    <string name="range_day">24h</string>
+    <string name="range_week">7d</string>
+    <string name="range_month">30d</string>
+    <string name="range_quarter">90d</string>
+    <string name="overview_total_queries">Queries</string>
+    <string name="overview_queries">queries</string>
+    <string name="overview_all_queries">All</string>
+    <string name="overview_encrypted">Encrypted</string>
+    <string name="overview_queries_over_time">Queries over time</string>
+    <string name="overview_status">Query status</string>
+    <string name="overview_top_domains">Top domains</string>
+    <string name="overview_tap_for_logs">Tap a domain to see its logs</string>
+    <string name="overview_block_reasons">Block reasons</string>
+    <string name="overview_devices">Devices</string>
+    <string name="overview_unidentified_device">Unidentified devices</string>
+    <string name="overview_protocols">Protocols</string>
+    <string name="overview_health">Connection health</string>
+    <string name="overview_dnssec">DNSSEC validated</string>
+    <string name="overview_ipv6">IPv6</string>
+    <string name="overview_query_types">Query types</string>
+    <string name="overview_countries">Destination countries</string>
+    <string name="overview_companies">Big tech</string>
+    <string name="overview_companies_subtitle">Queries to Google, Apple, Meta, Amazon and Microsoft</string>
+    <string name="overview_no_data">No data for this period.</string>
+
+    <!-- Connection check -->
+    <string name="connection_title">This device</string>
+    <string name="connection_checking">Checking your connection…</string>
+    <string name="connection_check_again">Check again</string>
+    <string name="connection_secure">Using NextDNS with encrypted DNS</string>
+    <string name="connection_unencrypted">Using NextDNS, but DNS is not encrypted</string>
+    <string name="connection_not_using">Not using NextDNS</string>
+    <string name="connection_details">%1$s · profile %2$s · %3$s</string>
+    <string name="connection_other_profile">This device uses a different profile (%1$s).</string>
+    <string name="connection_open_private_dns">Open Private DNS settings</string>
+
+    <!-- Logs -->
+    <string name="logs_search">Search domains</string>
+    <string name="logs_clear_search">Clear search</string>
+    <string name="logs_filter_all">All</string>
+    <string name="logs_live">Live</string>
+    <string name="logs_empty">No queries found.</string>
+    <string name="logs_clear">Clear logs</string>
+    <string name="logs_clear_confirm">Delete all query logs of this profile? This cannot be undone.</string>
+    <string name="logs_detail_time">Time</string>
+    <string name="logs_detail_status">Status</string>
+    <string name="logs_detail_reasons">Reasons</string>
+    <string name="logs_detail_root">Root domain</string>
+    <string name="logs_detail_device">Device</string>
+    <string name="logs_detail_ip">Client IP</string>
+    <string name="logs_detail_protocol">Protocol</string>
+    <string name="logs_detail_tracker">Tracker</string>
+    <string name="logs_allow_domain">Allow %1$s</string>
+    <string name="logs_block_domain">Block %1$s</string>
+    <string name="logs_copy_domain">Copy domain</string>
+    <string name="logs_added_allowlist">%1$s added to the allowlist</string>
+    <string name="logs_added_denylist">%1$s added to the denylist</string>
+
+    <!-- Lists -->
+    <string name="lists_denylist">Denylist</string>
+    <string name="lists_allowlist">Allowlist</string>
+    <string name="lists_denylist_help">Domains here are always blocked, including their subdomains.</string>
+    <string name="lists_allowlist_help">Domains here are never blocked, including their subdomains.</string>
+    <string name="lists_empty">Nothing here yet.</string>
+    <string name="lists_add_domain">Add domain</string>
+    <string name="lists_add_to_denylist">Add to denylist</string>
+    <string name="lists_add_to_allowlist">Add to allowlist</string>
+    <string name="lists_domain">Domain</string>
+
+    <!-- Profile -->
+    <string name="profile_id">ID %1$s</string>
+    <string name="profile_rename">Rename profile</string>
+    <string name="profile_open_dashboard">Open in NextDNS</string>
+    <string name="profile_setup_hint">Private DNS hostname: %1$s</string>
+    <string name="profile_security">Security</string>
+    <string name="profile_security_help">Protection against malware, phishing and other threats.</string>
+    <string name="profile_blocked_tlds">Blocked top-level domains</string>
+    <string name="profile_tld">Top-level domain (e.g. zip)</string>
+    <string name="profile_privacy">Privacy</string>
+    <string name="profile_privacy_help">Ads and trackers blocking.</string>
+    <string name="profile_blocklists">Blocklists</string>
+    <string name="profile_blocklist_id">Blocklist ID</string>
+    <string name="profile_native_tracking">Native tracking protection</string>
+    <string name="profile_native_id">Vendor ID</string>
+    <string name="profile_parental_control">Parental control</string>
+    <string name="profile_parental_help">Restrict apps, websites and content categories.</string>
+    <string name="profile_services">Websites, apps and games</string>
+    <string name="profile_service_id">Service ID</string>
+    <string name="profile_categories">Categories</string>
+    <string name="profile_category_id">Category ID</string>
+    <string name="profile_list_empty">None.</string>
+    <string name="profile_settings">Settings</string>
+    <string name="profile_settings_help">Logging, block page and performance.</string>
+    <string name="profile_logs">Logs</string>
+    <string name="profile_logs_enabled">Keep query logs</string>
+    <string name="profile_logs_drop_ip">Do not log client IPs</string>
+    <string name="profile_logs_drop_domain">Do not log domains</string>
+    <string name="profile_logs_retention">Retention</string>
+    <string name="profile_logs_location">Storage location</string>
+    <string name="profile_performance">Performance</string>
+    <string name="profile_rewrites">Rewrites</string>
+    <string name="profile_rewrites_help">Answer queries for a domain with your own address.</string>
+    <string name="profile_add_rewrite">Add rewrite</string>
+    <string name="profile_rewrite_answer">Answer (IP address or domain)</string>
+
+    <!-- Profile setting names -->
+    <string name="setting_threat_intelligence">Threat intelligence feeds</string>
+    <string name="setting_ai_threat_detection">AI-driven threat detection</string>
+    <string name="setting_safe_browsing">Google Safe Browsing</string>
+    <string name="setting_cryptojacking">Cryptojacking protection</string>
+    <string name="setting_dns_rebinding">DNS rebinding protection</string>
+    <string name="setting_homographs">IDN homograph attacks protection</string>
+    <string name="setting_typosquatting">Typosquatting protection</string>
+    <string name="setting_dga">Domain generation algorithms protection</string>
+    <string name="setting_nrd">Block newly registered domains</string>
+    <string name="setting_ddns">Block dynamic DNS hostnames</string>
+    <string name="setting_parked">Block parked domains</string>
+    <string name="setting_csam">Block child sexual abuse material</string>
+    <string name="setting_disguised_trackers">Block disguised third-party trackers</string>
+    <string name="setting_allow_affiliate">Allow affiliate and tracking links</string>
+    <string name="setting_safe_search">SafeSearch</string>
+    <string name="setting_youtube_restricted">YouTube Restricted Mode</string>
+    <string name="setting_block_bypass">Block bypass methods</string>
+    <string name="setting_block_page">Block page</string>
+    <string name="setting_ecs">Anonymized EDNS Client Subnet</string>
+    <string name="setting_cache_boost">Cache boost</string>
+    <string name="setting_cname_flattening">CNAME flattening</string>
+    <string name="setting_web3">Web3</string>
+
+    <plurals name="duration_hours">
+        <item quantity="one">%1$d hour</item>
+        <item quantity="other">%1$d hours</item>
+    </plurals>
+    <plurals name="duration_days">
+        <item quantity="one">%1$d day</item>
+        <item quantity="other">%1$d days</item>
+    </plurals>
+    <plurals name="duration_months">
+        <item quantity="one">%1$d month</item>
+        <item quantity="other">%1$d months</item>
+    </plurals>
+    <plurals name="duration_years">
+        <item quantity="one">%1$d year</item>
+        <item quantity="other">%1$d years</item>
+    </plurals>
+
+    <!-- App settings -->
+    <string name="settings_appearance">Appearance</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Dark</string>
+    <string name="settings_dynamic_color">Dynamic color</string>
+    <string name="settings_dynamic_color_help">Use colors from your wallpaper.</string>
+    <string name="settings_security_privacy">Security and privacy</string>
+    <string name="settings_error_reporting">Error reporting</string>
+    <string name="settings_account">Account</string>
+    <string name="settings_api_key">API key</string>
+    <string name="settings_sign_out">Sign out</string>
+    <string name="settings_sign_out_confirm">Remove the API key from this device? Your NextDNS settings are not changed.</string>
+    <string name="settings_tools">Tools</string>
+    <string name="settings_about">About</string>
 </resources>

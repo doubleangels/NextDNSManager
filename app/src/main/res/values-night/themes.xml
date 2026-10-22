@@ -1,86 +1,9 @@
 <resources>
 
-        <style name="Theme.App.Starting" parent="Theme.SplashScreen">
-
-                <item name="windowSplashScreenBackground">@color/main_dark</item>
-
-                <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
-
-                <item name="postSplashScreenTheme">@style/AppTheme</item>
-
-        </style>
-
-        <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-
-                <item name="android:background">@color/main_dark</item>
-
-                <item name="colorPrimary">@color/main</item>
-
-                <item name="colorSecondary">@color/main</item>
-
-                <item name="colorTertiary">?android:attr/textColorPrimary</item>
-
-                <item name="android:statusBarColor">@android:color/transparent</item>
-
-                <item name="android:navigationBarColor">@android:color/transparent</item>
-
-                <item name="android:textColorSecondary">@color/white</item>
-
-                <item name="windowNoTitle">true</item>
-
-                <item name="popupTheme">@style/PopupTheme</item>
-
-        </style>
-
-        <style name="PopupTheme" parent="AppTheme">
-
-                <item name="android:popupBackground">@color/main_dark</item>
-
-                <item name="android:textColorPrimary">@color/white</item>
-
-        </style>
-
-        <style name="ToolbarTheme" parent="AppTheme">
-
-                <item name="android:background">@color/toolbar_background</item>
-
-                <item name="android:textColorSecondary">@color/white</item>
-
-        </style>
-
-        <style name="PreferenceTheme" parent="@style/AppTheme">
-
-                <item name="colorAccent">@color/main</item>
-
-                <item name="android:textColorSecondary">@color/white</item>
-
-                <item name="android:windowBackground">@color/main_dark</item>
-
-        </style>
-
-        <style name="StatusTheme" parent="@style/AppTheme">
-
-                <item name="android:background">@color/main_dark</item>
-
-        </style>
-
-        <style name="AuthorTheme" parent="@style/AppTheme">
-
-                <item name="android:background">@color/main_dark</item>
-
-        </style>
-
-        <style name="PermissionTheme" parent="@style/AppTheme">
-
-                <item name="android:background">@color/main_dark</item>
-
-        </style>
-
-        <style name="PingTheme" parent="@style/AppTheme">
-
-            <item name="android:background">@color/main_dark</item>
-
-        </style>
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/main_dark</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
+    </style>
 
 </resources>
-

@@ -2,77 +2,29 @@
 <resources>
     <string name="app_lock">App-vergrendeling</string>
     <string name="app_lock_instructions">Biometrie of PIN vereist om toegang te krijgen tot deze app.</string>
-    <string name="webview_load_error">Kan pagina niet laden. Tik om opnieuw te proberen.</string>
-    <string name="webview_unavailable">De WebView-component van dit apparaat is niet beschikbaar of beschadigd. Werk Android System WebView bij via de Play Store en probeer het opnieuw.</string>
-    <string name="app_lock_unavailable">App-vergrendeling is ingeschakeld, maar authenticatie is niet beschikbaar op dit apparaat.</string>
-    <string name="download_started">Bestand wordt gedownload!</string>
-    <string name="download_failed">Download mislukt</string>
-    <string name="link_open_security_error">Kan link niet openen vanwege beveiligingsbeperkingen.</string>
-    <string name="no_browser_found">Geen browser gevonden om de link te openen.</string>
-    <string name="no_email_client_found">Geen e-mailclient gevonden.</string>
-    <string name="email_open_security_error">Kan e-mailclient niet openen vanwege beveiligingsbeperkingen.</string>
     <string name="text_copied">Tekst gekopieerd!</string>
-    <string name="activity_open_security_error">Kan activiteit niet openen vanwege beveiligingsbeperkingen.</string>
     <string name="enable_app_lock_title">App-vergrendeling inschakelen</string>
     <string name="disable_app_lock_title">App-vergrendeling uitschakelen</string>
     <string name="enable_app_lock_subtitle">Authenticeer om app-vergrendeling in te schakelen</string>
     <string name="disable_app_lock_subtitle">Authenticeer om app-vergrendeling uit te schakelen</string>
     <string name="app_lock_confirm_action">Gebruik biometrie of apparaatreferenties om deze actie te bevestigen</string>
-    <string name="send_email">E-mail verzenden</string>
     <string name="app_name">NextDNS Manager</string>
-    <string name="author">Auteur</string>
-    <string name="back_title">Terug</string>
     <string name="dark_mode">Donkere Modus</string>
-    <string name="dark_mode_instructions">Donkere Modus Instelling</string>
-    <string name="developer">Ontwikkelaar</string>
     <string name="disclaimer">Deze app en zijn ontwikkelaar zijn NIET verbonden met NextDNS.</string>
-    <string name="disclaimer_title">Vrijwaring</string>
     <string name="donation">Doneer</string>
-    <string name="donation_name">Als u deze app leuk vindt en wilt doneren, kunt u dit hier doen. Let op, dit is volledig optioneel. Bedankt voor uw steun!</string>
-    <string name="sentry">Sentry</string>
-    <string name="feedback">Als je wilt, vul dan een korte enquête in om me te helpen de app te verbeteren.</string>
     <string name="feedback_title">Feedback</string>
-    <string name="generic_content_description">Dit is een algemene inhoudsbeschrijving.</string>
     <string name="github">Github</string>
-    <string name="github_summary">Tik om de Github repository van deze app te bekijken.</string>
     <string name="issues">Een probleem melden</string>
-    <string name="github_issues_summary">Tik om een probleem te melden of de momenteel gerapporteerde problemen te bekijken.</string>
-    <string name="help_green">Secure DNS wordt gebruikt EN het apparaat is verbonden met NextDNS.</string>
-    <string name="help_orange">Secure DNS wordt NIET gebruikt EN het apparaat is verbonden met NextDNS.</string>
-    <string name="help_red">Secure DNS wordt NIET gebruikt.</string>
-    <string name="help_yellow">Secure DNS wordt gebruikt, maar het apparaat is NIET verbonden met NextDNS.</string>
-    <string name="home_title">Home</string>
     <string name="nextdns_privacy_policy">Privacybeleid van NextDNS</string>
     <string name="nextdns_user_agreement">NextDNS-gebruikersovereenkomst</string>
-    <string name="other">Andere</string>
-    <string name="permission">Tik om de machtigingen van deze app te zien.</string>
-    <string name="permission_details">Deze app maakt gebruik van de volgende rechten:</string>
-    <string name="permission_question">Als je een vraag hebt over deze machtigingen, open dan een issue op Github.</string>
-    <string name="permission_title">Machtigingen</string>
     <string name="ping_title">Ping-test</string>
-    <string name="privacy">Privacy</string>
     <string name="privacy_policy">Privacybeleid van NextDNS Manager</string>
     <string name="private_dns">Privé DNS</string>
-    <string name="refresh_title">Vernieuwen</string>
-    <string name="redact">Redact</string>
-    <string name="redact_summary">Bekijk Redact - verwijder verborgen EXIF-metadata uit foto\'s en video\'s voordat je ze deelt.</string>
-    <string name="sentry_enable_instructions">Sentry Inschakelen</string>
-    <string name="sentry_info">Meer Informatie</string>
-    <string name="sentry_info_instructions">Tik voor meer informatie over Sentry.</string>
     <string name="settings">Instellingen</string>
-    <string name="settings_activity_title">Instellingen</string>
-    <string name="tally_issues">Als je geen GitHub-account hebt, kun je hier een probleem melden.</string>
     <string name="translate">Vertaal</string>
-    <string name="translate_summary">Als je een onjuiste vertaling ziet, help me dan deze hier op te lossen.</string>
     <string name="unlock_description">Verifieer je identiteit om toegang te krijgen tot en wijzigingen aan te brengen in je instellingen.</string>
     <string name="unlock_title">Ontgrendel</string>
-    <string name="user_agreement">Gebruikersovereenkomst</string>
     <string name="version">Versie</string>
     <string name="whitelist_domains">Als u Sentry inschakelt, kunt u deze domeinen in uw NextDNS configuratie op de whitelist zetten.</string>
     <string name="whitelist_instructions">Overweeg een opting in to Sentry error tracking. Dit verzamelt geen persoonlijke informatie en helpt mij de app beter te maken.</string>
-    <string-array name="dark_mode_entries">
-        <item>Systeem volgen</item>
-        <item>Aan</item>
-        <item>Uit</item>
-    </string-array>
 </resources>

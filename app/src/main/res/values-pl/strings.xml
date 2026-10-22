@@ -2,77 +2,29 @@
 <resources>
     <string name="app_lock">Blokada aplikacji</string>
     <string name="app_lock_instructions">Wymagane są dane biometryczne lub PIN, aby uzyskać dostęp do tej aplikacji.</string>
-    <string name="webview_load_error">Nie można załadować strony. Stuknij, aby spróbować ponownie.</string>
-    <string name="webview_unavailable">Komponent WebView na tym urządzeniu jest niedostępny lub uszkodzony. Zaktualizuj Android System WebView w Sklepie Play i spróbuj ponownie.</string>
-    <string name="app_lock_unavailable">Blokada aplikacji jest włączona, ale uwierzytelnianie jest niedostępne na tym urządzeniu.</string>
-    <string name="download_started">Pobieranie pliku!</string>
-    <string name="download_failed">Pobieranie nie powiodło się</string>
-    <string name="link_open_security_error">Nie można otworzyć linku z powodu ograniczeń bezpieczeństwa.</string>
-    <string name="no_browser_found">Nie znaleziono przeglądarki do otwarcia linku.</string>
-    <string name="no_email_client_found">Nie znaleziono klienta poczty e-mail.</string>
-    <string name="email_open_security_error">Nie można otworzyć klienta poczty z powodu ograniczeń bezpieczeństwa.</string>
     <string name="text_copied">Tekst skopiowany!</string>
-    <string name="activity_open_security_error">Nie można otworzyć aktywności z powodu ograniczeń bezpieczeństwa.</string>
     <string name="enable_app_lock_title">Włącz blokadę aplikacji</string>
     <string name="disable_app_lock_title">Wyłącz blokadę aplikacji</string>
     <string name="enable_app_lock_subtitle">Uwierzytelnij się, aby włączyć blokadę aplikacji</string>
     <string name="disable_app_lock_subtitle">Uwierzytelnij się, aby wyłączyć blokadę aplikacji</string>
     <string name="app_lock_confirm_action">Użyj biometrii lub danych logowania urządzenia, aby potwierdzić tę czynność</string>
-    <string name="send_email">Wyślij e-mail</string>
     <string name="app_name">NextDNS Manager</string>
-    <string name="author">Autor</string>
-    <string name="back_title">Wstecz</string>
     <string name="dark_mode">Tryb Ciemny</string>
-    <string name="dark_mode_instructions">Ustawienia trybu Ciemnego</string>
-    <string name="developer">Deweloper</string>
     <string name="disclaimer">Ta aplikacja i jej programista NIE są powiązane z NextDNS.</string>
-    <string name="disclaimer_title">Zrzeczenie się odpowiedzialności</string>
     <string name="donation">Wpłać</string>
-    <string name="donation_name">Jeśli podoba Ci się ta aplikacja i chcesz ją wesprzeć, możesz to zrobić tutaj. Pamiętaj, że jest to całkowicie opcjonalne. Dziękujemy za wsparcie!</string>
-    <string name="sentry">Sentry</string>
-    <string name="feedback">Jeśli chcesz, wypełnij krótką ankietę, aby pomóc mi ulepszyć aplikację.</string>
     <string name="feedback_title">Opinie</string>
-    <string name="generic_content_description">Jest to ogólny opis treści.</string>
     <string name="github">Github</string>
-    <string name="github_summary">Dotknij, aby wyświetlić repozytorium Github tej aplikacji.</string>
     <string name="issues">Zgłoś problem</string>
-    <string name="github_issues_summary">Dotknij, aby zgłosić problem lub wyświetlić aktualnie zgłoszone.</string>
-    <string name="help_green">Bezpieczny DNS jest używany, a urządzenie jest podłączone do NextDNS.</string>
-    <string name="help_orange">Bezpieczny DNS NIE jest używany, A urządzenie jest podłączone do NextDNS.</string>
-    <string name="help_red">Bezpieczny DNS nie jest używany.</string>
-    <string name="help_yellow">Używany jest bezpieczny DNS, ale urządzenie NIE jest podłączone do NextDNS.</string>
-    <string name="home_title">Strona główna</string>
     <string name="nextdns_privacy_policy">NextDNS Polityka prywatności</string>
     <string name="nextdns_user_agreement">Umowa użytkownika NextDNS</string>
-    <string name="other">Pozostałe</string>
-    <string name="permission">Dotknij, aby zobaczyć uprawnienia tej aplikacji.</string>
-    <string name="permission_details">Ta aplikacja używa następujących uprawnień:</string>
-    <string name="permission_question">Jeśli masz pytanie o te uprawnienia, proszę otworzyć problem na Githubie.</string>
-    <string name="permission_title">Uprawnienia</string>
     <string name="ping_title">Test ping</string>
-    <string name="privacy">Prywatność</string>
     <string name="privacy_policy">NextDNS Manager Polityka prywatności</string>
     <string name="private_dns">Prywatny DNS</string>
-    <string name="refresh_title">Odśwież</string>
-    <string name="redact">Redact</string>
-    <string name="redact_summary">Sprawdź Redact - usuwaj ukryte metadane EXIF ze zdjęć i filmów przed udostępnieniem.</string>
-    <string name="sentry_enable_instructions">Włącz Sentry</string>
-    <string name="sentry_info">Poznaj Więcej</string>
-    <string name="sentry_info_instructions">Dotknij, aby dowiedzieć się więcej o Sentry.</string>
     <string name="settings">Ustawienia</string>
-    <string name="settings_activity_title">Ustawienia</string>
-    <string name="tally_issues">Jeśli nie masz konta na GitHub, możesz zgłosić problem tutaj.</string>
     <string name="translate">Przetłumacz</string>
-    <string name="translate_summary">Jeśli widzisz niepoprawne tłumaczenia, pomóż mi naprawić je tutaj.</string>
     <string name="unlock_description">Uwierzytelnij się, aby uzyskać dostęp do ustawień i je zmienić.</string>
     <string name="unlock_title">Odblokuj</string>
-    <string name="user_agreement">Umowa użytkownika</string>
     <string name="version">Wersja</string>
     <string name="whitelist_domains">Jeśli włączysz Sentry proszę dodać te domeny do konfiguracji NextDNS.</string>
     <string name="whitelist_instructions">Proszę zastanowić się nad opcją śledzenia błędów Sentry. To nie zbiera żadnych danych osobowych i pomaga mi ulepszyć aplikację.</string>
-    <string-array name="dark_mode_entries">
-        <item>Dopasuj do systemu</item>
-        <item>Włączone</item>
-        <item>Wyłączone</item>
-    </string-array>
 </resources>

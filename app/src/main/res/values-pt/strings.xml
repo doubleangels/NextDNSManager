@@ -2,77 +2,29 @@
 <resources>
     <string name="app_lock">Bloqueio da aplicação</string>
     <string name="app_lock_instructions">É necessário utilizar biometria ou um PIN para aceder a esta aplicação.</string>
-    <string name="webview_load_error">Não foi possível carregar a página. Toque para tentar novamente.</string>
-    <string name="webview_unavailable">O componente WebView deste dispositivo está indisponível ou danificado. Atualize o Android System WebView na Play Store e tente novamente.</string>
-    <string name="app_lock_unavailable">O bloqueio da aplicação está ativado, mas a autenticação não está disponível neste dispositivo.</string>
-    <string name="download_started">A transferir ficheiro!</string>
-    <string name="download_failed">Falha na transferência</string>
-    <string name="link_open_security_error">Não foi possível abrir a ligação devido a restrições de segurança.</string>
-    <string name="no_browser_found">Nenhum navegador encontrado para abrir a ligação.</string>
-    <string name="no_email_client_found">Nenhum cliente de e-mail encontrado.</string>
-    <string name="email_open_security_error">Não foi possível abrir o cliente de e-mail devido a restrições de segurança.</string>
     <string name="text_copied">Texto copiado!</string>
-    <string name="activity_open_security_error">Não foi possível abrir a atividade devido a restrições de segurança.</string>
     <string name="enable_app_lock_title">Ativar bloqueio da aplicação</string>
     <string name="disable_app_lock_title">Desativar bloqueio da aplicação</string>
     <string name="enable_app_lock_subtitle">Autentique-se para ativar o bloqueio da aplicação</string>
     <string name="disable_app_lock_subtitle">Autentique-se para desativar o bloqueio da aplicação</string>
     <string name="app_lock_confirm_action">Use biometria ou credenciais do dispositivo para confirmar esta ação</string>
-    <string name="send_email">Enviar e-mail</string>
     <string name="app_name">NextDNS Manager</string>
-    <string name="author">Autor</string>
-    <string name="back_title">Voltar</string>
     <string name="dark_mode">Modo Escuro</string>
-    <string name="dark_mode_instructions">Configuração do Modo Escuro</string>
-    <string name="developer">Desenvolvedor</string>
     <string name="disclaimer">Este aplicativo e seu desenvolvedor NÃO são associados ao NextDNS.</string>
-    <string name="disclaimer_title">Aviso de responsabilidade</string>
     <string name="donation">Doe</string>
-    <string name="donation_name">Se você gosta deste aplicativo e deseja fazer uma doação, você pode fazê-lo aqui. Por favor, note que isso é completamente opcional. Obrigado pelo seu apoio!</string>
-    <string name="sentry">Sentry</string>
-    <string name="feedback">Se desejar, preencha uma rápida pesquisa para me ajudar a melhorar o aplicativo.</string>
     <string name="feedback_title">Feedback</string>
-    <string name="generic_content_description">Essa é uma descrição genérica do conteúdo.</string>
     <string name="github">Github</string>
-    <string name="github_summary">Toque para ver o repositório Github deste aplicativo.</string>
     <string name="issues">Relatar um problema</string>
-    <string name="github_issues_summary">Toque para relatar um problema ou ver relatados atualmente.</string>
-    <string name="help_green">O DNS seguro está sendo usado E o dispositivo está conectado ao NextDNS.</string>
-    <string name="help_orange">O DNS seguro NÃO está a ser usado E o aparelho está ligado ao NextDNS.</string>
-    <string name="help_red">O DNS seguro NÃO está sendo usado.</string>
-    <string name="help_yellow">O DNS seguro está sendo usado, mas o dispositivo NÃO está conectado ao NextDNS.</string>
-    <string name="home_title">Início</string>
     <string name="nextdns_privacy_policy">Política de privacidade do NextDNS</string>
     <string name="nextdns_user_agreement">Contrato de usuário NextDNS</string>
-    <string name="other">Outros</string>
-    <string name="permission">Toque para ver as permissões deste aplicativo.</string>
-    <string name="permission_details">Este aplicativo usa as seguintes permissões:</string>
-    <string name="permission_question">Se você tem uma pergunta sobre essas permissões, por favor, abra uma issue no Github.</string>
-    <string name="permission_title">Permissões</string>
     <string name="ping_title">Teste de ping</string>
-    <string name="privacy">Privacidade</string>
     <string name="privacy_policy">Política de privacidade do NextDNS Manager</string>
     <string name="private_dns">DNS Particular</string>
-    <string name="refresh_title">Atualizar</string>
-    <string name="redact">Redact</string>
-    <string name="redact_summary">Conheça o Redact - remova metadados EXIF ocultos de fotos e vídeos antes de partilhar.</string>
-    <string name="sentry_enable_instructions">Habilitar Sentry</string>
-    <string name="sentry_info">Saiba Mais</string>
-    <string name="sentry_info_instructions">Toque para saber mais sobre o Sentry.</string>
     <string name="settings">Configurações</string>
-    <string name="settings_activity_title">Configurações</string>
-    <string name="tally_issues">Se não tens uma conta no GitHub, podes relatar um problema aqui.</string>
     <string name="translate">Traduza</string>
-    <string name="translate_summary">Se você ver alguma tradução incorreta, por favor me ajude a corrigi-la aqui.</string>
     <string name="unlock_description">Autentique-se para aceder e alterar as suas definições.</string>
     <string name="unlock_title">Desbloquear</string>
-    <string name="user_agreement">Contrato de usuário</string>
     <string name="version">Versão</string>
     <string name="whitelist_domains">Se você habilitar o Sentry, por favor whitelist esses domínios na sua configuração de NextDNS.</string>
     <string name="whitelist_instructions">Por favor, considere optar pelo rastreamento de erros do Sentry. Isso não coleta nenhuma informação pessoal e me ajuda a melhorar o aplicativo.</string>
-    <string-array name="dark_mode_entries">
-        <item>Seguir sistema</item>
-        <item>Ativado</item>
-        <item>Desativado</item>
-    </string-array>
 </resources>

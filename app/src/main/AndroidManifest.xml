@@ -38,7 +38,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:localeConfig="@xml/locales_config"
-        android:hardwareAccelerated="true"
         tools:targetApi="37"
         android:enableOnBackInvokedCallback="true">
         <service
@@ -51,31 +50,10 @@
         </service>
 
         <activity
-            android:name=".SettingsActivity"
-            android:exported="false"
-            android:label="@string/settings_activity_title"
-            android:theme="@style/PreferenceTheme" />
-        <activity
-            android:name=".PingActivity"
-            android:exported="false"
-            android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".StatusActivity"
-            android:exported="false" />
-        <activity android:name=".AuthorActivity"
-            android:exported="false"
-            android:theme="@style/AuthorTheme" />
-        <activity android:name=".PermissionActivity"
-            android:exported="false"
-            android:theme="@style/PermissionTheme" />
-        <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:hardwareAccelerated="true"
             android:theme="@style/Theme.App.Starting"
-            android:windowSoftInputMode="adjustResize"
-            android:configChanges="screenLayout|smallestScreenSize|screenSize|orientation">
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

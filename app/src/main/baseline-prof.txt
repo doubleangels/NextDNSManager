@@ -1,8 +1,0 @@
-Lcom/doubleangels/nextdnsmanagement/MainActivity;
-Lcom/doubleangels/nextdnsmanagement/BaseActivity;
-Lcom/doubleangels/nextdnsmanagement/AppStartupHelper;
-Lcom/doubleangels/nextdnsmanagement/sharedpreferences/SharedPreferencesManager;
-Lcom/doubleangels/nextdnsmanagement/sentry/SentryManager;
-Landroidx/core/splashscreen/SplashScreen;
-HSPLcom/doubleangels/nextdnsmanagement/MainActivity;->onCreate(Landroid/os/Bundle;)V
-HSPLcom/doubleangels/nextdnsmanagement/AppStartupHelper;->initializePreferencesAsync(Landroidx/appcompat/app/AppCompatActivity;Landroidx/core/splashscreen/SplashScreen;Lcom/doubleangels/nextdnsmanagement/AppStartupHelper$StartupCallback;)V

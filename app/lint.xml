@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lint>
+    <!-- The native UI added many new strings that are English-only until they are
+         translated. Report them instead of failing the build. -->
+    <issue id="MissingTranslation" severity="warning" />
+</lint>

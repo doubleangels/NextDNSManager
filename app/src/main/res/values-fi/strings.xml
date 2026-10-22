@@ -2,77 +2,29 @@
 <resources>
     <string name="app_lock">Sovelluksen lukitus</string>
     <string name="app_lock_instructions">Sovelluksen avaamiseen vaaditaan biometria tai PIN-koodi.</string>
-    <string name="webview_load_error">Sivua ei voitu ladata. Napauta yrittääksesi uudelleen.</string>
-    <string name="webview_unavailable">Tämän laitteen WebView-komponentti ei ole käytettävissä tai on viallinen. Päivitä Android System WebView Play Kaupasta ja yritä uudelleen.</string>
-    <string name="app_lock_unavailable">Sovelluksen lukitus on käytössä, mutta tunnistautuminen ei ole saatavilla tällä laitteella.</string>
-    <string name="download_started">Ladataan tiedostoa!</string>
-    <string name="download_failed">Lataus epäonnistui</string>
-    <string name="link_open_security_error">Linkkiä ei voi avata turvarajoitusten vuoksi.</string>
-    <string name="no_browser_found">Selainta linkin avaamiseen ei löytynyt.</string>
-    <string name="no_email_client_found">Sähköpostisovellusta ei löytynyt.</string>
-    <string name="email_open_security_error">Sähköpostisovellusta ei voi avata turvarajoitusten vuoksi.</string>
     <string name="text_copied">Teksti kopioitu!</string>
-    <string name="activity_open_security_error">Toimintoa ei voi avata turvarajoitusten vuoksi.</string>
     <string name="enable_app_lock_title">Ota sovelluksen lukitus käyttöön</string>
     <string name="disable_app_lock_title">Poista sovelluksen lukitus käytöstä</string>
     <string name="enable_app_lock_subtitle">Tunnistaudu ottaaksesi sovelluksen lukituksen käyttöön</string>
     <string name="disable_app_lock_subtitle">Tunnistaudu poistaaksesi sovelluksen lukituksen käytöstä</string>
     <string name="app_lock_confirm_action">Vahvista toiminto biometrialla tai laitteen PIN-koodilla</string>
-    <string name="send_email">Lähetä sähköposti</string>
     <string name="app_name">NextDNS Manager</string>
-    <string name="author">Kirjoittaja</string>
-    <string name="back_title">Takaisin</string>
     <string name="dark_mode">Tumma Tila</string>
-    <string name="dark_mode_instructions">Tumma Tilan Asetus</string>
-    <string name="developer">Kehittäjä</string>
     <string name="disclaimer">Tämä sovellus ja sen kehittäjä EIVÄT ole sidoksissa NextDNS.</string>
-    <string name="disclaimer_title">Vastuuvapauslauseke</string>
     <string name="donation">Lahjoita</string>
-    <string name="donation_name">Jos pidät tästä sovelluksesta ja haluat lahjoittaa, voit tehdä sen tässä. Huomaa, että tämä on täysin valinnainen. Kiitos tuestasi!</string>
-    <string name="sentry">Paikka</string>
-    <string name="feedback">Jos haluat, täytä nopea kysely auttaaksesi minua parantamaan sovellusta.</string>
     <string name="feedback_title">Palaute</string>
-    <string name="generic_content_description">Tämä on yleinen sisällönkuvaus.</string>
     <string name="github">Github</string>
-    <string name="github_summary">Napauta nähdäksesi tämän sovelluksen Github repository.</string>
     <string name="issues">Ilmoita ongelmasta</string>
-    <string name="github_issues_summary">Napauta raportoidaksesi ongelmasta tai katsoaksesi tällä hetkellä raportoituja ongelmia.</string>
-    <string name="help_green">Suojattua DNS: ää käytetään JA laite on kytketty NextDNS: ään.</string>
-    <string name="help_orange">Suojattua DNS:ää EI käytetä JA laite on kytketty NextDNS: ään.</string>
-    <string name="help_red">Suojattua DNS:ää ei käytetä.</string>
-    <string name="help_yellow">Suojattua DNS: ää käytetään, mutta laite EI ole yhteydessä NextDNS: ään.</string>
-    <string name="home_title">Koti</string>
     <string name="nextdns_privacy_policy">NextDNS Tietosuojakäytäntö</string>
     <string name="nextdns_user_agreement">NextDNS-käyttäjäsopimus</string>
-    <string name="other">Muu</string>
-    <string name="permission">Napauta nähdäksesi tämän sovelluksen oikeudet.</string>
-    <string name="permission_details">Tämä sovellus käyttää seuraavia käyttöoikeuksia:</string>
-    <string name="permission_question">Jos sinulla on kysymys näistä käyttöoikeuksista, avaa ongelma GitHubissa.</string>
-    <string name="permission_title">Käyttöoikeudet</string>
     <string name="ping_title">Ping-testi</string>
-    <string name="privacy">Yksityisyys</string>
     <string name="privacy_policy">NextDNS Managerin tietosuojakäytäntö</string>
     <string name="private_dns">Yksityinen DNS</string>
-    <string name="refresh_title">Päivitä</string>
-    <string name="redact">Redact</string>
-    <string name="redact_summary">Tutustu Redactiin - poista piilotetut EXIF-metatiedot kuvista ja videoista ennen jakamista.</string>
-    <string name="sentry_enable_instructions">Ota Käyttöön Sentry</string>
-    <string name="sentry_info">Lue Lisää</string>
-    <string name="sentry_info_instructions">Napauta saadaksesi lisätietoja Sentrystä.</string>
     <string name="settings">Asetukset</string>
-    <string name="settings_activity_title">Asetukset</string>
-    <string name="tally_issues">Jos sinulla ei ole GitHub-tiliä, voit raportoida ongelman täältä.</string>
     <string name="translate">Kääntää</string>
-    <string name="translate_summary">Jos näet virheellisiä käännöksiä, auta minua korjaamaan ne täällä.</string>
     <string name="unlock_description">Tunnistaudu päästäksesi käsiksi ja muuttaaksesi asetuksiasi.</string>
     <string name="unlock_title">Avaa</string>
-    <string name="user_agreement">Käyttäjäsopimus</string>
     <string name="version">Versio</string>
     <string name="whitelist_domains">Jos otat Sentryn käyttöön, ole hyvä ja salli nämä verkkotunnukset NextDNS-asetuksessasi.</string>
     <string name="whitelist_instructions">Harkitse valintaa Sentry-virheiden seurantaan. Tämä ei kerää henkilökohtaisia tietoja ja auttaa minua tekemään sovelluksesta paremman.</string>
-    <string-array name="dark_mode_entries">
-        <item>Seuraa järjestelmää</item>
-        <item>Päällä</item>
-        <item>Pois</item>
-    </string-array>
 </resources>

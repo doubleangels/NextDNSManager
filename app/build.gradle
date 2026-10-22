@@ -1,5 +1,7 @@
 plugins {
     id "com.android.application"
+    id "org.jetbrains.kotlin.android"
+    id "org.jetbrains.kotlin.plugin.compose"
     id "io.sentry.android.gradle" version "6.24.0"
     id "com.google.gms.google-services"
 }
@@ -59,23 +61,35 @@ android {
 
     buildFeatures {
         buildConfig = true
+        compose = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
     }
 }
 
 dependencies {
     implementation "androidx.activity:activity:1.13.0"
+    implementation "androidx.activity:activity-compose:1.13.0"
     implementation 'androidx.core:core:1.19.1'
     implementation 'androidx.appcompat:appcompat:1.8.0'
     implementation 'androidx.biometric:biometric:1.1.0'
-    implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.security:security-crypto:1.1.0'
     implementation 'androidx.core:core-splashscreen:1.2.0'
-    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'
-    implementation 'androidx.webkit:webkit:1.18.0'
-    implementation 'com.google.android.material:material:1.14.0'
+    implementation 'androidx.compose.ui:ui:1.12.1'
+    implementation 'androidx.compose.foundation:foundation:1.12.1'
+    implementation 'androidx.compose.material3:material3:1.4.0'
+    implementation 'androidx.compose.material:material-icons-extended:1.7.8'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.11.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.11.0'
+    implementation 'androidx.navigation:navigation-compose:2.10.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.11.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.12.0'
     gmsImplementation 'com.google.firebase:firebase-messaging:26.0.0'
     implementation 'com.squareup.okhttp3:okhttp:5.5.0'
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.profileinstaller:profileinstaller:1.4.1'
     implementation 'io.sentry:sentry-android:8.61.0'
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'

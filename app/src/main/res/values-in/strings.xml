@@ -2,77 +2,29 @@
 <resources>
     <string name="app_lock">Kunci Aplikasi</string>
     <string name="app_lock_instructions">Memerlukan biometrik atau PIN untuk mengakses aplikasi ini.</string>
-    <string name="webview_load_error">Tidak dapat memuat halaman. Ketuk untuk coba lagi.</string>
-    <string name="webview_unavailable">Komponen WebView perangkat ini tidak tersedia atau rusak. Perbarui Android System WebView dari Play Store lalu coba lagi.</string>
-    <string name="app_lock_unavailable">Kunci aplikasi diaktifkan, tetapi autentikasi tidak tersedia di perangkat ini.</string>
-    <string name="download_started">Mengunduh file!</string>
-    <string name="download_failed">Unduhan gagal</string>
-    <string name="link_open_security_error">Tidak dapat membuka tautan karena pembatasan keamanan.</string>
-    <string name="no_browser_found">Tidak ada browser untuk membuka tautan.</string>
-    <string name="no_email_client_found">Tidak ada klien email ditemukan.</string>
-    <string name="email_open_security_error">Tidak dapat membuka klien email karena pembatasan keamanan.</string>
     <string name="text_copied">Teks disalin!</string>
-    <string name="activity_open_security_error">Tidak dapat membuka aktivitas karena pembatasan keamanan.</string>
     <string name="enable_app_lock_title">Aktifkan kunci aplikasi</string>
     <string name="disable_app_lock_title">Nonaktifkan kunci aplikasi</string>
     <string name="enable_app_lock_subtitle">Autentikasi untuk mengaktifkan kunci aplikasi</string>
     <string name="disable_app_lock_subtitle">Autentikasi untuk menonaktifkan kunci aplikasi</string>
     <string name="app_lock_confirm_action">Gunakan biometrik atau kredensial perangkat untuk mengonfirmasi tindakan ini</string>
-    <string name="send_email">Kirim Email</string>
     <string name="app_name">NextDNS Manager</string>
-    <string name="author">Penulis</string>
-    <string name="back_title">Kembali</string>
     <string name="dark_mode">Mode Gelap</string>
-    <string name="dark_mode_instructions">Pengaturan Mode Gelap</string>
-    <string name="developer">Pengembang</string>
     <string name="disclaimer">Aplikasi ini dan pengembangnya TIDAK berafiliasi dengan NextDNS.</string>
-    <string name="disclaimer_title">Penafian</string>
     <string name="donation">Donasi</string>
-    <string name="donation_name">Jika Anda menikmati aplikasi ini dan ingin menyumbang, Anda bisa melakukannya di sini. Harap dicatat, ini sepenuhnya bersifat sukarela. Terima kasih atas dukungan Anda!</string>
-    <string name="sentry">Sentry</string>
-    <string name="feedback">Jika Anda bersedia, silakan isi survei singkat untuk membantu saya meningkatkan aplikasi.</string>
     <string name="feedback_title">Umpan Balik</string>
-    <string name="generic_content_description">Ini adalah deskripsi konten generik.</string>
     <string name="github">Github</string>
-    <string name="github_summary">Ketuk untuk melihat repositori Github aplikasi ini.</string>
     <string name="issues">Laporkan Masalah</string>
-    <string name="github_issues_summary">Ketuk untuk melaporkan masalah atau melihat masalah yang dilaporkan saat ini.</string>
-    <string name="help_green">DNS aman sedang digunakan DAN perangkat terhubung ke NextDNS.</string>
-    <string name="help_orange">DNS aman TIDAK digunakan DAN perangkat terhubung ke NextDNS.</string>
-    <string name="help_red">DNS aman tidak digunakan.</string>
-    <string name="help_yellow">DNS aman sedang digunakan tetapi perangkat TIDAK terhubung ke NextDNS.</string>
-    <string name="home_title">Rumah</string>
     <string name="nextdns_privacy_policy">Kebijakan Privasi NextDNS</string>
     <string name="nextdns_user_agreement">Perjanjian Pengguna NextDNS</string>
-    <string name="other">Lainnya</string>
-    <string name="permission">Ketuk untuk melihat izin aplikasi ini.</string>
-    <string name="permission_details">Aplikasi ini menggunakan izin-izin berikut:</string>
-    <string name="permission_question">Jika Anda memiliki pertanyaan tentang izin-izin ini, silakan buka masalah di Github.</string>
-    <string name="permission_title">Izin</string>
     <string name="ping_title">Tes Ping</string>
-    <string name="privacy">Privasi</string>
     <string name="privacy_policy">Kebijakan Privasi Manajer NextDNS</string>
     <string name="private_dns">DNS Pribadi</string>
-    <string name="refresh_title">Menyegarkan</string>
-    <string name="redact">Redact</string>
-    <string name="redact_summary">Coba Redact - hapus metadata EXIF tersembunyi dari foto dan video sebelum Anda membagikannya.</string>
-    <string name="sentry_enable_instructions">Aktifkan Sentry</string>
-    <string name="sentry_info">Pelajari Lebih Lanjut</string>
-    <string name="sentry_info_instructions">Ketuk untuk mempelajari lebih lanjut tentang Sentry.</string>
     <string name="settings">Pengaturan</string>
-    <string name="settings_activity_title">Pengaturan</string>
-    <string name="tally_issues">Jika Anda tidak memiliki akun GitHub, Anda dapat melaporkan masalah di sini.</string>
     <string name="translate">Terjemahkan</string>
-    <string name="translate_summary">Jika Anda menemukan terjemahan yang tidak tepat, tolong bantu saya memperbaikinya di sini.</string>
     <string name="unlock_description">Otentikasi untuk mengakses dan mengubah pengaturan Anda.</string>
     <string name="unlock_title">Buka kunci</string>
-    <string name="user_agreement">Perjanjian Pengguna</string>
     <string name="version">Versi</string>
     <string name="whitelist_domains">Jika Anda mengaktifkan Sentry, harap masukkan domain-domain berikut ke dalam konfigurasi NextDNS Anda.</string>
     <string name="whitelist_instructions">Harap pertimbangkan untuk mengaktifkan pelacakan kesalahan Sentry. Ini tidak mengumpulkan informasi pribadi dan membantu saya membuat aplikasi menjadi lebih baik.</string>
-    <string-array name="dark_mode_entries">
-        <item>Sistem Pencocokan</item>
-        <item>Dihidupkan</item>
-        <item>Dimatikan</item>
-    </string-array>
 </resources>
