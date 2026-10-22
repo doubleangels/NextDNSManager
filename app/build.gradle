@@ -1,24 +1,17 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.sentry.android.gradle)
-    alias(libs.plugins.google.services)
+    id "com.android.application"
+    id "io.sentry.android.gradle" version "6.24.0"
+    id "com.google.gms.google-services"
 }
 
 android {
-    compileSdk {
-        version = release(37) {
-            minorApiLevel = 0
-        }
-    }
+    compileSdk = 37
     defaultConfig {
         applicationId "com.doubleangels.nextdnsmanagement"
         minSdkVersion 32
         targetSdk = 37
         versionCode 274
         versionName "5.5.25"
-
-        def sentryRelease = "${applicationId}@${versionName}+${versionCode}"
-        buildConfigField "String", "SENTRY_RELEASE", "\"${sentryRelease}\""
         resourceConfigurations += ["en", "zh", "nl", "fi", "fr", "de", "in", "it", "ja", "pl", "pt", "es", "sv", "tr"]
     }
 
@@ -35,11 +28,7 @@ android {
     }
 
     buildTypes {
-        debug {
-            buildConfigField "String", "SENTRY_DSN", "\"${resolveSentryDsnForDebug()}\""
-        }
         release {
-            buildConfigField "String", "SENTRY_DSN", "\"${resolveSentryDsnForRelease()}\""
             minifyEnabled true
             shrinkResources = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -74,96 +63,35 @@ android {
 }
 
 dependencies {
-    implementation libs.activity
-    implementation libs.core
-    implementation libs.appcompat
-    implementation libs.biometric
-    implementation libs.preference
-    implementation libs.security.crypto
-    implementation libs.core.splashscreen
-    implementation libs.swiperefreshlayout
-    implementation libs.webkit
-    implementation libs.material
-    gmsImplementation libs.firebase.messaging
-    implementation libs.okhttp
-    implementation libs.circleimageview
-    implementation libs.profileinstaller
-    implementation libs.sentry.android
-    debugImplementation libs.leakcanary.android
-}
-
-def resolveSentryDsnForRelease() {
-    def ciDsn = System.getenv("SENTRY_DSN")
-    if (ciDsn != null && !ciDsn.trim().isEmpty()) {
-        return ciDsn.trim()
-    }
-    // Public DSN used when no SENTRY_DSN is provided. F-Droid builds the release
-    // from source without CI secrets, and those users must still be able to opt in
-    // to error reporting. A Sentry DSN only allows sending events, so it is safe
-    // to publish.
-    return "https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.us.sentry.io/6270764"
-}
-
-// Debug builds only report when a DSN is configured locally, so development
-// crashes stay out of the production project.
-def resolveSentryDsnForDebug() {
-    def ciDsn = System.getenv("SENTRY_DSN")
-    if (ciDsn != null && !ciDsn.trim().isEmpty()) {
-        return ciDsn.trim()
-    }
-    def fromFile = readSentryDsnLocalFile()
-    if (!fromFile.isEmpty()) {
-        return fromFile
-    }
-    def localProps = new Properties()
-    def localPropsFile = rootProject.file("local.properties")
-    if (localPropsFile.exists()) {
-        localPropsFile.withInputStream { localProps.load(it) }
-        def fromLocal = localProps.getProperty("sentry.dsn")
-        if (fromLocal != null && !fromLocal.trim().isEmpty()) {
-            return fromLocal.trim()
-        }
-    }
-    return ""
-}
-
-def readSentryDsnLocalFile() {
-    def dsnFile = rootProject.file("sentry.dsn.local")
-    if (!dsnFile.exists()) {
-        return ""
-    }
-    for (line in dsnFile.readLines()) {
-        def trimmed = line.trim()
-        if (!trimmed.isEmpty() && !trimmed.startsWith("#")) {
-            return trimmed
-        }
-    }
-    return ""
+    implementation "androidx.activity:activity:1.13.0"
+    implementation 'androidx.core:core:1.19.1'
+    implementation 'androidx.appcompat:appcompat:1.8.0'
+    implementation 'androidx.biometric:biometric:1.1.0'
+    implementation 'androidx.preference:preference:1.2.1'
+    implementation 'androidx.security:security-crypto:1.1.0'
+    implementation 'androidx.core:core-splashscreen:1.2.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0'
+    implementation 'androidx.webkit:webkit:1.18.0'
+    implementation 'com.google.android.material:material:1.14.0'
+    gmsImplementation 'com.google.firebase:firebase-messaging:26.0.0'
+    implementation 'com.squareup.okhttp3:okhttp:5.5.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'androidx.profileinstaller:profileinstaller:1.4.1'
+    implementation 'io.sentry:sentry-android:8.61.0'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 }
 
 def sentryUploadEnabled = System.getenv("SENTRY_AUTH_TOKEN") != null
 
 sentry {
-    org = "doubleangels"
-    projectName = "nextdns-manager"
     authToken = System.getenv("SENTRY_AUTH_TOKEN")
     includeProguardMapping = true
     autoUploadProguardMapping = sentryUploadEnabled
+    uploadNativeSymbols = sentryUploadEnabled
+    autoUploadNativeSymbols = sentryUploadEnabled
+    includeNativeSources = sentryUploadEnabled
     includeSourceContext = sentryUploadEnabled
     ignoredBuildTypes = ["debug"]
-    telemetry = false
-    // Auto-instrumentation wrapped every OkHttp call (including the test.nextdns.io
-    // connectivity probe) and reported expected network failures as errors.
-    tracingInstrumentation {
-        enabled = false
-        logcat {
-            enabled = false
-        }
-    }
-    // sentry-android is declared explicitly in the version catalog.
-    autoInstallation {
-        enabled = false
-    }
 }
 
 afterEvaluate {

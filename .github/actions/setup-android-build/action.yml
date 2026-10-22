@@ -1,21 +1,15 @@
 name: Setup Android build
-description: JDK 21.0.12.1, Android SDK licenses, API 37.0 platform, and Gradle wrapper permissions.
+description: JDK 21, Android SDK licenses, API 37.0 platform, and Gradle wrapper permissions.
 
 runs:
   using: composite
   steps:
     - name: Set up JDK 21
-      uses: actions/setup-java@v6.1.0
+      uses: actions/setup-java@v5.3.0
       with:
-        java-version: "21.0.12.1+1"
+        java-version: "21"
         distribution: temurin
         cache: gradle
-
-    - name: Cache Android SDK platform 37.0
-      uses: actions/cache@v6.1.0
-      with:
-        path: /usr/local/lib/android/sdk/platforms/android-37.0
-        key: android-sdk-platform-37.0
 
     - name: Prepare Android SDK
       shell: bash

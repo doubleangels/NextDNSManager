@@ -1,3 +1,10 @@
+# Keep WebView JavaScript bridge methods.
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
+}
+
+-keep class com.doubleangels.nextdnsmanagement.webview.WebAppInterface { *; }
+
 -keepattributes *Annotation*
 -dontwarn com.doubleangels.nextdnsmanagement.**
 

@@ -18,7 +18,6 @@ import androidx.preference.SwitchPreference;
 import com.doubleangels.nextdnsmanagement.biometriclock.BiometricLock;
 import com.doubleangels.nextdnsmanagement.sentry.SentryInitializer;
 import com.doubleangels.nextdnsmanagement.sentry.SentryManager;
-import com.doubleangels.nextdnsmanagement.sharedpreferences.SecurePreferenceDataStore;
 import com.doubleangels.nextdnsmanagement.sharedpreferences.SharedPreferencesManager;
 import com.doubleangels.nextdnsmanagement.utils.ExternalLinkHandler;
 import com.doubleangels.nextdnsmanagement.utils.InsetsHelper;
@@ -98,17 +97,14 @@ public class SettingsActivity extends BaseActivity {
          */
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-            if (!SharedPreferencesManager.isInitialized()) {
-                return;
-            }
-            // Must be set before inflating so the switches read the encrypted store
-            // rather than a plaintext default SharedPreferences file.
-            getPreferenceManager().setPreferenceDataStore(new SecurePreferenceDataStore());
             try {
                 // Load preferences from the XML resource
                 setPreferencesFromResource(R.xml.root_preferences, rootKey);
             } catch (Exception e) {
                 SentryManager.captureException(e);
+            }
+            if (!SharedPreferencesManager.isInitialized()) {
+                return;
             }
             try {
                 // Set the initial visibility of Sentry-related preferences

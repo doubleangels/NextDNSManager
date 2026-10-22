@@ -1,8 +1,8 @@
 package com.doubleangels.nextdnsmanagement.webview;
 
 /**
- * JavaScript injected after each NextDNS page load to coordinate swipe-refresh
- * with in-page horizontal tab scrolling and modal dialogs.
+ * JavaScript injected after each page load to coordinate swipe-refresh with
+ * in-page horizontal tab scrolling and modal dialogs.
  */
 public final class WebViewInteractionScript {
 
@@ -11,17 +11,15 @@ public final class WebViewInteractionScript {
 
     public static final String PAGE_FINISHED_SCRIPT =
             "(function() {" +
-            // NdmsBridge only exists on https://my.nextdns.io; see SwipeRefreshBridge.
-            "   function postToBridge(message) {" +
-            "       if (window." + SwipeRefreshBridge.OBJECT_NAME + ") {" +
-            "           window." + SwipeRefreshBridge.OBJECT_NAME + ".postMessage(message);" +
+            "   function disableSwipeRefresh() {" +
+            "       if (typeof AndroidInterface !== 'undefined') {" +
+            "           AndroidInterface.setSwipeRefreshEnabled(false);" +
             "       }" +
             "   }" +
-            "   function disableSwipeRefresh() {" +
-            "       postToBridge('" + SwipeRefreshBridge.MESSAGE_DISABLE + "');" +
-            "   }" +
             "   function enableSwipeRefresh() {" +
-            "       postToBridge('" + SwipeRefreshBridge.MESSAGE_ENABLE + "');" +
+            "       if (typeof AndroidInterface !== 'undefined') {" +
+            "           AndroidInterface.setSwipeRefreshEnabled(true);" +
+            "       }" +
             "   }" +
             "   function attachSwipeRefreshGuard(element) {" +
             "       if (!element || element.getAttribute('data-swipe-refresh-guard')) return;" +

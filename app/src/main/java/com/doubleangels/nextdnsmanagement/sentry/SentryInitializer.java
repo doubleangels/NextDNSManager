@@ -38,19 +38,17 @@ public final class SentryInitializer {
      *                initialization.
      */
     public static synchronized void initialize(Context context) {
-        // No DSN means reporting is not configured for this build (e.g. a debug
-        // build without sentry.dsn.local); see app/build.gradle.
-        if (Sentry.isEnabled() || BuildConfig.SENTRY_DSN.isEmpty()) {
+        if (Sentry.isEnabled()) {
             return;
         }
         SentryAndroid.init(context.getApplicationContext(), options -> {
             // The DSN (Data Source Name) for your Sentry project:
             // This tells Sentry where to send the error data
-            options.setDsn(BuildConfig.SENTRY_DSN);
+            options.setDsn("https://8b52cc2148b94716a69c9a4f0c0b4513@o244019.ingest.us.sentry.io/6270764");
 
-            // "<applicationId>@<versionName>+<versionCode>", matching the release the
-            // deploy workflow finalizes in Sentry.
-            options.setRelease(BuildConfig.SENTRY_RELEASE);
+            // Set the release version in Sentry to match the app's version name
+            // Useful for tracking errors that occur across different app releases
+            options.setRelease(BuildConfig.VERSION_NAME);
 
             // Enable all auto-breadcrumbs. This helps capture UI events,
             // network calls, and more to provide context around errors

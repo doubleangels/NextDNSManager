@@ -1,50 +1,30 @@
-# Gradle / build output
-.gradle/
-.kotlin/
-build/
-/captures
-.externalNativeBuild
-.cxx
+# Built application files
 *.apk
-*.aab
 *.aar
 *.ap_
+*.aab
+
+# Files for the ART/Dalvik VM
 *.dex
+
+# Java class files
 *.class
 
-# Local config and secrets
+# Generated files
+build/
+.gradle/
+
+# Local configuration files
 local.properties
-sentry.dsn.local
-sentry.properties
-*.jks
-*.keystore
 
-# IDE (shared project files under .idea are tracked; per-user state is not)
+# IDE-specific files
+.idea/
 *.iml
-.idea/caches/
-.idea/libraries/
-.idea/modules.xml
-.idea/workspace.xml
-.idea/navEditor.xml
-.idea/assetWizardSettings.xml
-.idea/appInsightsSettings.xml
-.idea/AndroidProjectSystem.xml
-.idea/markdown.xml
-.idea/.name
 
-# OS / editor / misc
-.DS_Store
+# Miscellaneous files
 *.log
 *.swp
-*.hprof
-
-# Scripts and fastlane
-__pycache__/
-*.py[cod]
-vendor/bundle/
-
-# CodeGraph index
-.codegraph/
+*.DS_Store
 
 # Intermediate files
 /app/src/build/*
