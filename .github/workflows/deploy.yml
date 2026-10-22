@@ -260,7 +260,7 @@ jobs:
       # Installs the exact gems (and checksums) from the committed Gemfile.lock in
       # frozen/deployment mode.
       - name: Set up Ruby and install Fastlane
-        uses: ruby/setup-ruby@v1.329.0
+        uses: ruby/setup-ruby@v1.331.0
         with:
           ruby-version: "3.3.12"
           bundler-cache: true
