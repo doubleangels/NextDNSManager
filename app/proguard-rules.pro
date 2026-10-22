@@ -3,6 +3,10 @@
 # General ProGuard rules
 -dontwarn javax.annotation.**
 
+# Tink (used by androidx.security-crypto) references compile-time-only Error Prone
+# annotations that are not shipped at runtime.
+-dontwarn com.google.errorprone.annotations.**
+
 # OkHttp
 -dontwarn okhttp3.**
 -dontwarn okio.**
